@@ -246,3 +246,10 @@ export const updateMyEvent = payload=>{
     payload,
   }
 }
+
+export const updateLocation = payload=>{
+  return{
+    type:ActionTypes.UPDATE_LOCATION,
+    payload,
+  }
+}

@@ -19,7 +19,7 @@ const GetEmailOtpRequest = function* (data) {
       email: data.payload,
     };
     const requesUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/auth/signup-email-send-otp';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/auth/signup-email-send-otp';
     const response = yield call(GetRecord, requesUrl, postData);
 
     if (response != null && response.status == 200) {
@@ -39,7 +39,7 @@ const GetEmailOtpVerify = function* (data) {
   try {
     const postData = {id: data.payload.id, otp: data.payload.otp};
     const requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/auth/signup-verify-otp';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/auth/signup-verify-otp';
     const res = yield call(GetRecord, requestUrl, postData);
     // console.log('show res', res);
     if (res != null && res.status == 200) {
@@ -56,7 +56,7 @@ const fetchCountryCode = function* () {
   try {
     // yield put({type: actions.SHOW_LOADING, payload: true});
     const requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/get-all-countries-list';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-countries-list';
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null && res.data.status == 200) {
       yield put({type: actions.GET_COUNTRY_CODE_SUCCESS, payload: res?.data});
@@ -75,7 +75,7 @@ const GetPhoneOtp = function* (data) {
     yield put({type: actions.SHOW_LOADING, payload: true});
 
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/auth/signup-phone-send-otp';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/auth/signup-phone-send-otp';
     console.log('show post data get otp', postData, requestUrl);
     let res = yield call(GetRecord, requestUrl, postData);
     console.log('show phone otp response', res.data);
@@ -108,7 +108,7 @@ const getPhoneNumberVerify = function* (data) {
   console.log('show data verify', data);
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/auth/signup-verify-otp';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/auth/signup-verify-otp';
     let postData = {
       otp: data.payload.otp,
       id: data.payload.id,

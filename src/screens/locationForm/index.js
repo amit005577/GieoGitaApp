@@ -31,6 +31,7 @@ import {
   getCountryName,
   getEventPlace,
   getStateName,
+  updateLocation,
   updateMyEvent,
 } from '../../redux/actions';
 import {ms} from 'react-native-size-matters';
@@ -72,6 +73,8 @@ const LocationForm = ({route}) => {
   const [country, setCountry] = useState(null);
   const [cityName, setcityName] = useState('');
   const dispatch = useDispatch();
+  console.log("show country id",country)
+  console.log("show selected state id",selectedState)
 
   const [formValid, setFormValid] = useState(false);
   const [check, setCheck] = useState(false);
@@ -82,7 +85,8 @@ const LocationForm = ({route}) => {
   //   const isAnyFieldEmpty = requiredFields.some(field => field == null || field == '');
   //   setFormValid(!isAnyFieldEmpty);
   // };
-
+  const currentEvent = useSelector(state => state.EventReducer.currentEvent);
+  console.log("show current reducer",currentEvent)
   const handlefirstCheckBox = () => {
     setSelectIconOne('1');
     setSelectIcontwo('0');
@@ -125,44 +129,48 @@ const LocationForm = ({route}) => {
   console.log('show item data inrout', item);
 
   let data = {
-    name: item.name,
-    publicEvent: item.publicEvent,
-    start: item.start,
-    end: item.end,
-    phone: item.phone,
-    email: item.email,
-    organizer: item.organizer,
-    event_type: item.event_type,
-    participants: item.participants,
-    personPerDay: item.personPerDay,
-    phonepublic: item.phonepublic,
-    frequency: item.frequency,
-    instraction: item.instraction,
+    // name: item.name,
+    // publicEvent: item.publicEvent,
+    // start: item.start,
+    // end: item.end,
+    // phone: item.phone,
+    // email: item.email,
+    // organizer: item.organizer,
+    // event_type: item.event_type,
+    // participants: item.participants,
+    // personPerDay: item.personPerDay,
+    // phonepublic: item.phonepublic,
+    // frequency: item.frequency,
+    // instraction: item.instraction,
+    place_name:name,
     place_type: selectedValue,
-    pin: pin,
-    CountryState: selectedState?.name,
-    public_event: selectIconOne,
-    country: country?.name,
+    pincode: pin,
+    CountryState: selectedState?.id,
+    is_public_place: selectIconOne,
+    country_id: country?.id,
+    state_id:selectedState?.id,
     address: address,
     city: cityName,
+    address:address,
+    id:currentEvent?.id
   };
 
   //edited data
 
   let editedData = {
-    name: item.name,
-    publicEvent: item.publicEvent,
-    start: item.start,
-    end: item.end,
-    phone: item.phone,
-    email: item.email,
-    organizer: item.organizer,
-    event_type: item.event_type,
-    participants: item.participants,
-    personPerDay: item.personPerDay,
-    phonepublic: item.phonepublic,
-    frequency: item.frequency,
-    instraction: item.instraction,
+    // name: item.name,
+    // publicEvent: item.publicEvent,
+    // start: item.start,
+    // end: item.end,
+    // phone: item.phone,
+    // email: item.email,
+    // organizer: item.organizer,
+    // event_type: item.event_type,
+    // participants: item.participants,
+    // personPerDay: item.personPerDay,
+    // phonepublic: item.phonepublic,
+    // frequency: item.frequency,
+    // instraction: item.instraction,
     place_type: selectedValue,
     pin: pin,
     CountryState: selectedState?.name,
@@ -170,7 +178,7 @@ const LocationForm = ({route}) => {
     country: country?.name,
     address: address,
     city: cityName,
-    id: item.ID,
+    // id: item.ID,
   };
 
   // name, pin, address, selectedValue, selectIconOne, selectedState,country,cityName
@@ -192,27 +200,19 @@ const LocationForm = ({route}) => {
     } else if (cityName == '' && cityName == null) {
       Alert.alert('Please Enter cityName');
     } else {
-      if (route?.params.Editable) {
-        // alert('update');
+      // if (route?.params.Editable) {
+      //   dispatch(updateMyEvent(editedData));
+      // } else {
+        console.log("show location data from page",data)
 
-        dispatch(updateMyEvent(editedData));
-      } else {
-        // alert('create');
-        dispatch(createEvent(data));
-      }
+        dispatch(updateLocation(data));
+      // }
     }
     console.log('show all form data', data);
-
-    // validateForm();
-    // if(formValid){
-
-    // }else{
-    // Alert.alert("Please Enter Required Fields")
-    // }
   };
+
+
   const handleselectState = item => {
-    // alert("enter")
-    // console.log("shwo itemm data state scren",item)
     setselectedState(item);
     setstateModata(false);
   };
@@ -223,32 +223,31 @@ const LocationForm = ({route}) => {
       <ScrollView style={{paddingHorizontal: 10}}>
         <TouchableOpacity
           style={styles.iconContianer}
-          // onPress={() => handleOnpress(item)}
         >
           <View style={{width: '90%'}}>
             <View style={styles.singleItem}>
-              <IconV name="globe" size={18} />
+              <IconV name="globe" size={18} color={"black"}/>
               <Text numberOfLines={2} style={styles.textstyle}>
-                {item.event_type}
+                {currentEvent.event_type}
               </Text>
             </View>
             <View style={styles.itemlistcontainer}>
               <View style={styles.oneItem}>
-                <Icon name="calendar" size={15} />
+                <Icon name="calendar" size={15} color={"black"} />
                 <Text style={{...styles.textstyle, fontSize: 14}}>
-                  {moment(item?.create_at).format('DD-MMM-YYYY')}
+                  {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
                 </Text>
               </View>
               <View style={styles.oneItem}>
-                <IconE name="location" size={15} />
+                <IconE name="location" size={15} color={"black"}/>
                 <Text style={{...styles.textstyle, fontSize: 14}}>
-                  {item.place_type}
+                  {currentEvent.place_type}
                 </Text>
               </View>
               <View style={{...styles.oneItem}}>
-                <IconF name="users" size={15} />
+                <IconF name="users" size={15} color={"black"}/>
                 <Text style={{...styles.textstyle, fontSize: 14}}>
-                  {item.participants}
+                  {currentEvent.participants}
                 </Text>
               </View>
             </View>
@@ -270,6 +269,7 @@ const LocationForm = ({route}) => {
               placeholder="Please Enter Name"
               onChangeText={setName}
               value={name}
+              placeholderTextColor={'black'}
               //   style={styles.textINput}
             />
           </View>
@@ -308,7 +308,7 @@ const LocationForm = ({route}) => {
                   selectIconOne == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={selectIconOne == '1' ? 'blue' : undefined}
+                color={selectIconOne == '1' ? 'blue' : 'black'}
               />
               <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
                 Yes
@@ -322,7 +322,7 @@ const LocationForm = ({route}) => {
                   selectIcontwo == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={selectIcontwo == '1' ? 'blue' : undefined}
+                color={selectIcontwo == '1' ? 'blue' : 'black'}
               />
               <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
                 No
@@ -384,6 +384,7 @@ const LocationForm = ({route}) => {
               placeholder="Please Enter Address"
               onChangeText={setAddress}
               value={address}
+              placeholderTextColor={'black'}
               //   style={styles.textINput}
             />
           </View>
@@ -405,6 +406,7 @@ const LocationForm = ({route}) => {
                 placeholder="Please Enter city"
                 onChangeText={setcityName}
                 value={cityName}
+                placeholderTextColor={'black'}
                 //   style={styles.textINput}
               />
             </View>
@@ -420,7 +422,7 @@ const LocationForm = ({route}) => {
               <Text style={styles.haderStyle}>State</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{alignSelf: 'center', fontSize: 16}}>
+              <Text style={{alignSelf: 'center', fontSize: 16,color:'black'}}>
                 {selectedState ? selectedState.name : '--Select State--'}
               </Text>
               {/* <CustomPicker

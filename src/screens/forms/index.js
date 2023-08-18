@@ -17,7 +17,7 @@ import CustomPicker from '../../Components/CustomPicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCountryName, getEventType, getStateName} from '../../redux/actions';
+import {createEvent, getCountryName, getEventType, getStateName} from '../../redux/actions';
 import {navigationRef} from '../../../App';
 import CustomCountrySelector from '../../Components/CustomCountrySelector';
 import {ms} from 'react-native-size-matters';
@@ -29,7 +29,7 @@ const EventForm = ({route}) => {
   const [selectIcontwo, setSelectIcontwo] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const [frequency, setFrequency] = useState(null);
-  const [platform, setPlatform] = useState(null)
+  const [platform, setPlatform] = useState(null);
   const [startDate, setstartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +43,7 @@ const EventForm = ({route}) => {
   const [formValid, setFormValid] = useState(false);
   const [check, setCheck] = useState(false);
   const [laoder, setLaoder] = useState(false);
-  const [joiningLink, setJoiningLink] = useState('')
+  const [joiningLink, setJoiningLink] = useState('');
 
   // if data is comming for edit
 
@@ -104,11 +104,9 @@ const EventForm = ({route}) => {
   const newItem = {id: 0, name: 'select'};
 
   useEffect(() => {
-    if(eventtypeData[0].name!="select"){
+    if (eventtypeData[0].name != 'select') {
       eventtypeData.unshift(newItem);
     }
-   
-
   }, [eventtypeData]);
 
   // console.log('show event type data00000', eventtypeData);
@@ -172,12 +170,12 @@ const EventForm = ({route}) => {
   // console.log('show eventType', selectedValue);
   let formData = {
     name: name,
-    publicEvent: selectIconOne,
+    // publicEvent: selectIconOne,
     event_type: selectedValue,
     frequency: frequency,
     start: startDate,
     participants: participant,
-    phonepublic: phonepublic,
+    phone_visible: phonepublic,
     personPerDay: personPerDay,
     end: endDate,
     phone: number,
@@ -185,6 +183,11 @@ const EventForm = ({route}) => {
     organizer: organizer,
     instraction: description,
     short_content: description,
+    plateform:platform,
+    joing_links:joiningLink,
+    targe_chants:personPerDay,
+    public_event:selectIconOne,
+    content:description
   };
 
   let formDataEdit = {
@@ -216,7 +219,7 @@ const EventForm = ({route}) => {
     } else if (selectIconOne == null) {
       setLaoder(false);
       Alert.alert('please list as prublic event or not');
-    } else if (selectedValue == null ) {
+    } else if (selectedValue == null) {
       setLaoder(false);
       Alert.alert('please envent type');
     } else if (frequency == null) {
@@ -244,10 +247,12 @@ const EventForm = ({route}) => {
       setLaoder(false);
       if (routeData?.editable) {
         // alert('update')
-        navigationRef.navigate('formPlace', formDataEdit);
+        dispatch(createEvent(data));
+        navigationRef.navigate('formPlace');
       } else {
         // alert('create')
-        navigationRef.navigate('formPlace', formData);
+        dispatch(createEvent(formData));
+        // navigationRef.navigate('formPlace');
       }
     }
   };
@@ -388,6 +393,7 @@ const EventForm = ({route}) => {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+
         />
         <DateTimePickerModal
           isVisible={showModal}
@@ -403,7 +409,7 @@ const EventForm = ({route}) => {
               <Text style={styles.haderStyle}>Start Date</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text>
+              <Text style={{color:'black'}}>
                 {startDate
                   ? moment(startDate).format('DD-MMM-YYYY')
                   : 'Slect start date'}
@@ -421,7 +427,7 @@ const EventForm = ({route}) => {
               <Text style={styles.haderStyle}>End Date</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text>
+              <Text style={{color:'black'}}>
                 {' '}
                 {endDate
                   ? moment(endDate).format('DD-MMM-YYYY')
@@ -449,7 +455,8 @@ const EventForm = ({route}) => {
               onChangeText={setDescription}
               value={description}
               multiline
-              placeholder='Description...'
+              placeholder='Enter description'
+              placeholderTextColor={'black'}
             />
           </View>
         </View>
@@ -468,6 +475,7 @@ const EventForm = ({route}) => {
               value={participant}
               keyboardType="numeric"
               placeholder="0000"
+              placeholderTextColor={'black'}
             />
           </View>
         </View>
@@ -484,6 +492,7 @@ const EventForm = ({route}) => {
               value={personPerDay}
               keyboardType="numeric"
               placeholder="0000"
+              placeholderTextColor={'black'}
             />
           </View>
         </View>
@@ -506,6 +515,7 @@ const EventForm = ({route}) => {
               placeholder="Please Enter Name"
               onChangeText={setOrganizer}
               value={organizer}
+              placeholderTextColor={'black'}
               //   style={styles.textINput}
             />
           </View>
@@ -546,8 +556,8 @@ const EventForm = ({route}) => {
                   height={20}
                   width={20}
                 />
-                <Text>+{countryCode.id}</Text>
-                <Text>{countryCode.code}</Text>
+                <Text style={{color:'black'}}>+{countryCode.id}</Text>
+                <Text style={{color:'black'}}>{countryCode.code}</Text>
 
                 {/* <Text>Select country Code </Text> */}
               </View>
@@ -564,6 +574,7 @@ const EventForm = ({route}) => {
                 borderLeftWidth: 1,
                 borderColor: 'grey',
               }}
+              placeholderTextColor={'black'}
             />
           </View>
         </View>
@@ -581,7 +592,7 @@ const EventForm = ({route}) => {
               <Icon
                 name={phonepublic == '1' ? 'circle-slice-8' : 'circle-outline'}
                 size={24}
-                color={phonepublic == '1' ? 'blue' : undefined}
+                color={phonepublic == '1' ? 'blue' : 'black'}
               />
               <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
                 Yes
@@ -595,7 +606,7 @@ const EventForm = ({route}) => {
                   checkboxSlect == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={checkboxSlect == '1' ? 'blue' : undefined}
+                color={checkboxSlect == '1' ? 'blue' : 'black'}
               />
               <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
                 No

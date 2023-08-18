@@ -5,6 +5,8 @@ const initialState = {
   eventTypeData: '',
   eventPlaceData: '',
   eventLoading: '',
+  currentEvent:"",
+  myEvent:"",
 };
 
 const EventReducer = (state = initialState, action) => {
@@ -39,6 +41,12 @@ const EventReducer = (state = initialState, action) => {
           ...state,
           myEvent: action.payload,
         };
+        case actions.CREATE_EVENT_SUCCESS:
+          console.log('shw tken form reducer ST-========>', action?.payload);
+          return {
+            ...state,
+            currentEvent: action.payload,
+          };
     default: {
       return state;
     }

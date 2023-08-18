@@ -157,9 +157,6 @@ const EventPage = ({ navigation }) => {
   const handleOnlongPress = item => {
     setModalVisible(true);
     setSelectedItemFromList(item);
-    // searchEditable(item);
-    //
-    // searchEditable(item)
   };
 
   const renderItem = ({ item }) => {
@@ -422,6 +419,7 @@ const styles = StyleSheet.create({
   },
   eventText: {
     fontSize: 24,
+    color:'black'
   },
   addText: {
     color: 'white',

@@ -8,6 +8,10 @@ const CustomPicker = ({data, selectedValue, setSelectedValue}) => {
       <Picker
         placeholder='select value'
         selectedValue={selectedValue}
+        selectionColor={"black"}
+        dropdownIconColor={"black"}
+        style={{color:'black'}}
+        itemStyle={{color:'black'}}
         onValueChange={itemValue => setSelectedValue(itemValue)}>
         {data?.map(item => (
           <Picker.Item key={item.id} label={item.name} value={item.id} color='#111211' />

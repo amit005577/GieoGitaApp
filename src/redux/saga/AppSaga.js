@@ -21,7 +21,7 @@ const PledgeSagaFunction = function* (data) {
   console.log('show data count', data);
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/change-traget-count';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/change-traget-count';
     let postData = {
       count: data,
     };
@@ -43,7 +43,7 @@ const UpdateChant = function* (data) {
   console.log('show data count single', data);
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/user/reads-update';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/user/reads-update';
     let postData = {
       count: data,
     };
@@ -66,7 +66,7 @@ const getHomePageData = function* () {
   console.log('Home Page Data');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/pages/20';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/20';
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     if (res.data != null) {
@@ -82,7 +82,7 @@ const chantHistoryapi = function* () {
   console.log('chat history');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/user/reads-get/';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/user/reads-get/';
  console.log("show ruy=nning...............")
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null) {
@@ -102,7 +102,7 @@ const getPdfSaga = function* () {
   console.log('cha pdf');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/pages/1';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/1';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show response pdf saga', res);
@@ -122,7 +122,7 @@ const getVideoData = function* () {
   console.log('vide enter');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/pages/25';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/25';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show response video saga', res);
@@ -142,7 +142,7 @@ const getLanguageList = function* () {
   console.log('list lang enter');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/show-all-language';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/show-all-language';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show response list language data saga', res);
@@ -161,7 +161,7 @@ const getTargetPledgeData = function* () {
   console.log('list pledge dnfksdnf enter');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/profile-details';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-details';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show response list target chant profigle data saga', res);
@@ -183,7 +183,7 @@ const getCurrenCountData = function* () {
   console.log('list current montthly count');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/show-current-chants-count';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/show-current-chants-count';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show  montuhly data res data saga', res);
@@ -202,7 +202,7 @@ const getAllpdfDataSaga = function* () {
   console.log('list pdf saga  count');
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/pages/1';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/1';
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     console.log(
@@ -232,7 +232,7 @@ const reisterDetailSaga = function* (data) {
   };
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/profile-update';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-update';
 
     const res = yield call(registerApi, requestUrl, _data);
     console.log(
@@ -255,7 +255,7 @@ const getliveDatasaga = function* () {
 
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/show-current-chants-count';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/show-current-chants-count';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show live chants', JSON.stringify(res.data.data));
@@ -276,7 +276,7 @@ const getCountryNameSaga = function* () {
 
   try {
     let requestUrl =
-      'https://projects.cityinnovates.in/gieo_gita/api/v1/get-all-countries-list';
+      'https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-countries-list';
 
     const res = yield call(fetchRecord, requestUrl);
     console.log('show country name', JSON.stringify(res.data.data));
@@ -297,7 +297,7 @@ const getCountryStateSaga = function* (payload) {
 
   try {
     let requestUrl =
-      `https://projects.cityinnovates.in/gieo_gita/api/v1/get-all-state-list/${payload.payload}`;
+      `https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-state-list/${payload.payload}`;
       console.log("show request url state",requestUrl)
 
     const res = yield call(fetchRecord, requestUrl);
@@ -317,7 +317,7 @@ const getTranslationsSaga = function* (payload) {
 
   try {
     let requestUrl =
-      `https://projects.cityinnovates.in/gieo_gita/api/v1/translators`;
+      `https://projects.cilearningschool.com/gieo_gita/api/v1/translators`;
       console.log("show request url state",requestUrl)
 
     const res = yield call(fetchRecord, requestUrl);
