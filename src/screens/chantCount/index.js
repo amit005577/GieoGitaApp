@@ -364,7 +364,6 @@ const styles = StyleSheet.create({
 
     alignContent: 'center',
 
-
     marginTop: 10,
 
     borderRadius: 25,

@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-
   textHeader: {
     top: -14,
     position: 'absolute',

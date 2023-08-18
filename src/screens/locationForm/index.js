@@ -684,7 +684,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-
   textHeader: {
     top: -11,
     position: 'absolute',
