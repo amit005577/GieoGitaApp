@@ -17,11 +17,18 @@ import CustomPicker from '../../Components/CustomPicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
-import {createEvent, getCountryName, getEventType, getStateName} from '../../redux/actions';
+import {createEvent, getCountryName, getEventType, getStateName, updateMyEvent} from '../../redux/actions';
 import {navigationRef} from '../../../App';
 import CustomCountrySelector from '../../Components/CustomCountrySelector';
 import {ms} from 'react-native-size-matters';
-
+const dataFrequency = [
+  {id: 1, name: '--Selectt--'},
+  {id: 2, name: 'One Time'},
+  {name: 'Daily', id: 3},
+  {name: 'Weekly', id: 4},
+  {name: 'Monthly', id: 5},
+  {name: 'Random', id: 6},
+];
 const EventForm = ({route}) => {
   const [name, setName] = useState('');
   const [organizer, setOrganizer] = useState('');
@@ -47,24 +54,37 @@ const EventForm = ({route}) => {
 
   // if data is comming for edit
 
-  let routeData = route.params;
-  // console.log('show routeData', routeData);
+  let routeData = route?.params;
+  console.log('show routeData', routeData?.data.public_event);
   // alert(selectedValue)
+  const frequencyRecord=()=>{
+    let response = []
+  dataFrequency.map((item)=>{
+    if(item.id==routeData?.data.frequency){
+     response.push(item)
+    }
+   
+  })
+    return response
+  }
 
   useEffect(() => {
     if (routeData != null) {
-      setName(routeData.name);
-      setSelectIconOne(routeData.public_event);
-      setDescription(routeData.content);
-      setstartDate(routeData.create_at);
-      setEmail(routeData.email);
-      setEndDate(routeData.end);
-      setSelectedValue(routeData.event_type);
-      setFrequency(routeData.frequency);
-      setOrganizer(routeData.organizer);
-      setParticipant(routeData.participants);
-      setNumber(routeData.phone);
-      setPhonepublic(routeData.phone_visible);
+      setName(routeData?.data.name);
+      setSelectIconOne(routeData?.data.public_event);
+      setDescription(routeData?.data.content);
+      setstartDate(routeData?.data.create_at);
+      setEmail(routeData?.data.email);
+      setEndDate(routeData?.data.end);
+      setSelectedValue(routeData?.data.event_type);
+      setFrequency(frequencyRecord());
+      setOrganizer(routeData?.data.organizer);
+      setParticipant(routeData?.data.participants);
+      setNumber(routeData?.data.phone);
+      setPhonepublic(routeData?.data.phone_visible);
+      setSelectIconOne(routeData?.data.public_event=='Yes'?"1":"0")
+      setPersonPerDay(routeData?.data.targe_chants)
+      setPhonepublic(routeData?.data.phone_visible=='Yes'?"1":"0")
     }
   }, [routeData]);
 
@@ -136,14 +156,7 @@ const EventForm = ({route}) => {
     {name: 'All Event', value: 'item1', id: 1},
     {name: 'My Event', value: 'item2', id: 2},
   ];
-  const dataFrequency = [
-    {id: 1, name: '--Selectt--'},
-    {id: 2, name: 'One Time'},
-    {name: 'Daily', id: 3},
-    {name: 'Weekly', id: 4},
-    {name: 'Monthly', id: 5},
-    {name: 'Random', id: 6},
-  ];
+
   const platformData = [
     {id: 1, name: '--Selectt--'},
     {id: 2, name: 'Zoom'},
@@ -170,7 +183,6 @@ const EventForm = ({route}) => {
   // console.log('show eventType', selectedValue);
   let formData = {
     name: name,
-    // publicEvent: selectIconOne,
     event_type: selectedValue,
     frequency: frequency,
     start: startDate,
@@ -192,12 +204,11 @@ const EventForm = ({route}) => {
 
   let formDataEdit = {
     name: name,
-    publicEvent: selectIconOne,
     event_type: selectedValue,
     frequency: frequency,
     start: startDate,
     participants: participant,
-    phonepublic: phonepublic,
+    phone_visible: phonepublic,
     personPerDay: personPerDay,
     end: endDate,
     phone: number,
@@ -205,8 +216,12 @@ const EventForm = ({route}) => {
     organizer: organizer,
     instraction: description,
     short_content: description,
-    ID: routeData?.id,
-    Editable: routeData?.editable,
+    plateform:platform,
+    joing_links:joiningLink,
+    targe_chants:personPerDay,
+    public_event:selectIconOne,
+    content:description,
+    id:routeData?.data.id
   };
 
   const handleONsubmit = () => {
@@ -245,10 +260,10 @@ const EventForm = ({route}) => {
       Alert.alert('please Enter email fileds');
     } else {
       setLaoder(false);
-      if (routeData?.editable) {
+      if (routeData!=null) {
         // alert('update')
-        dispatch(createEvent(data));
-        navigationRef.navigate('formPlace');
+        dispatch(updateMyEvent(formDataEdit));
+        // navigationRef.navigate('formPlace');
       } else {
         // alert('create')
         dispatch(createEvent(formData));

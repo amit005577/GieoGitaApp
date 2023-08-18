@@ -112,21 +112,15 @@ const AllEventSaga = function* () {
     console.log('list CreateEventSaga count', data);
     let _data = {
         name: data.payload.name,
-      // CountryState: data.payload.CountryState,
-      // address:data.payload.address,
       instraction:data.payload.instraction,
-      // city: data.payload.city,
-      // country: data.payload.country,
       start: data.payload.start,
       end:data.payload.end,
       event_type: data.payload.event_type,
       frequency: data.payload.frequency,
       participants: data.payload.participants,
       personPerDay: data.payload.personPerDay,
-      phone_visible: data.payload.phonepublic,
-      // pin: data.payload.pin,
+      phone_visible: data.payload.phone_visible,
       place_type: "0",
-      // publicEvent: data.payload.publicEvent,
       public_event: data.payload.public_event,
       organizer:data.payload.organizer,
       targe_chants:data.payload.targe_chants,
@@ -138,7 +132,7 @@ const AllEventSaga = function* () {
       plateform:data.payload.plateform,
       content:data.payload.content
     }
-    console.log("show updated list",_data)
+    console.log("show crteate event list",_data)
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events-store';
@@ -194,26 +188,27 @@ const AllEventSaga = function* () {
     let _data = {
       id:data.payload.id,
       name: data.payload.name,
-      start:data.payload.start,
-      end:data.payload.end,
-      instraction:data.payload.instraction,
-      joing_links:"dfsmksd",
-      plateform:"fklsdjf",
-      organizer:data.payload.organizer,
-      targe_chants:"100",
-      participants: data.payload.participants,
-      phone:data.payload.phone,
-      public_event:data.payload.publicEvent,
-      email:data.payload.email,
-      frequency:data.payload.frequency,
-      short_content:"fjshdfjk",
-      event_type:"2",
-      place_type:data.payload.place_type,
-      content:"fsjdfkhk" ,
-      status:"true"
-      
-    }
-    console.log("show updated list",_data)
+    instraction:data.payload.instraction,
+    start: data.payload.start,
+    end:data.payload.end,
+    event_type: data.payload.event_type,
+    frequency: data.payload.frequency,
+    participants: data.payload.participants,
+    personPerDay: data.payload.personPerDay,
+    phone_visible: data.payload.phone_visible,
+    place_type: '0',
+    public_event: data.payload.public_event,
+    organizer:data.payload.organizer,
+    targe_chants:data.payload.targe_chants,
+    phone:data.payload.phone,
+    email:data.payload.email,
+    short_content:data.payload.short_content,
+    status:"true",
+    joing_links:data.payload.joing_links,
+    plateform:data.payload.plateform,
+    content:data.payload.content
+  }
+    console.log("show updated list-==-=-=-=-=",_data)
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events-update';
@@ -225,11 +220,11 @@ const AllEventSaga = function* () {
       );
       if (res.data != null) {
         Alert.alert("Event is updated")
-        navigationRef.navigate("myEvent")
-        yield put({
-          type: actions.GET_MY_EVENT,
+        navigationRef.navigate("formPlace")
+        // yield put({
+        //   type: actions.GET_MY_EVENT,
  
-        });
+        // });
       }
     } catch (error) {
       console.log('show error api update Event', error);
@@ -266,14 +261,15 @@ const AllEventSaga = function* () {
         'show  updated location from saga=-=-=-= saga',
         JSON.stringify(res.data.data),
       );
-      // if (res.data != null) {
-      //   Alert.alert("Event is updated")
-      //   navigationRef.navigate("myEvent")
-      //   yield put({
-      //     type: actions.GET_MY_EVENT,
+      if (res?.data != null) {
+  
+        yield put({
+          type: actions.UPDATE_LOCATION_SUCCESS,payload:res?.data?.data
  
-      //   });
-      // }
+        });
+        Alert.alert("Event is updated")
+        navigationRef.navigate("updatedEvent")
+      }
     } catch (error) {
       console.log('show error api update Event', error);
     }

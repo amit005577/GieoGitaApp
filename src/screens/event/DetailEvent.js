@@ -13,6 +13,7 @@ import { colors } from '../../helper/colors';
 const windowWidth = Dimensions.get('window').width;
 const DetailEvent = ({ route }) => {
   const item = route.params;
+  console.log("show details item",item)
   // console.log('show props data', route.params);
   const url = 'https://img.freepik.com/premium-vector/torn-ripped-paper-hole-transparent-background_755228-1779.jpg'
   const message = "Some message"
@@ -90,7 +91,7 @@ const DetailEvent = ({ route }) => {
           </View>
           <View style={styles.oneItem}>
             <IconE name="location" size={25} />
-            <Text style={{ ...styles.textstyle, fontSize: 14 }}>bhopal</Text>
+            <Text style={{ ...styles.textstyle, fontSize: 14 }}>{item.city}</Text>
           </View>
         </View>
         <Text
@@ -100,7 +101,7 @@ const DetailEvent = ({ route }) => {
             marginLeft: 0,
             marginTop: 10,
           }}>
-          Description
+          {item.content}
         </Text>
         <Text
           style={{
@@ -114,8 +115,8 @@ const DetailEvent = ({ route }) => {
         </Text>
         <View style={styles.addresStyle}>
           <View style={{ width: '50%', alignSelf: 'flex-end' }}>
-            <Text style={{ fontSize: 18, color: 'black' }}>Address:</Text>
-            <Text
+            <Text style={{ fontSize: 18, color: 'black' }}>Address: <Text style={{fontSize:14}}>{item.address}</Text> </Text>
+            {/* <Text
               style={{
                 ...styles.textstyle,
                 fontSize: 14,
@@ -124,7 +125,7 @@ const DetailEvent = ({ route }) => {
                 fontWeight: '400',
               }}>
               centeral jail, bhopal madhy pradesh mp{' '}
-            </Text>
+            </Text> */}
           </View>
           <View>
             <Text
@@ -144,7 +145,7 @@ const DetailEvent = ({ route }) => {
                 marginTop: 10,
                 fontWeight: '400',
               }}>
-              {item.name}
+             {item.organizer}
             </Text>
           </View>
         </View>

@@ -76,17 +76,20 @@ const LocationForm = ({route}) => {
   console.log("show country id",country)
   console.log("show selected state id",selectedState)
 
-  const [formValid, setFormValid] = useState(false);
   const [check, setCheck] = useState(false);
-  // alert(selectedValue)
-
-  // const validateForm = () => {
-  //   const requiredFields = [name, pin, address, selectedValue, selectIconOne, selectedState,country,cityName];
-  //   const isAnyFieldEmpty = requiredFields.some(field => field == null || field == '');
-  //   setFormValid(!isAnyFieldEmpty);
-  // };
   const currentEvent = useSelector(state => state.EventReducer.currentEvent);
   console.log("show current reducer",currentEvent)
+
+ 
+  const newItem = {id: 0, name: 'select'};
+
+  useEffect(() => {
+    if (eventPlacetype[0].name != 'select') {
+      eventPlacetype.unshift(newItem);
+    }
+  }, [eventPlacetype]);
+
+
   const handlefirstCheckBox = () => {
     setSelectIconOne('1');
     setSelectIcontwo('0');
@@ -129,19 +132,6 @@ const LocationForm = ({route}) => {
   console.log('show item data inrout', item);
 
   let data = {
-    // name: item.name,
-    // publicEvent: item.publicEvent,
-    // start: item.start,
-    // end: item.end,
-    // phone: item.phone,
-    // email: item.email,
-    // organizer: item.organizer,
-    // event_type: item.event_type,
-    // participants: item.participants,
-    // personPerDay: item.personPerDay,
-    // phonepublic: item.phonepublic,
-    // frequency: item.frequency,
-    // instraction: item.instraction,
     place_name:name,
     place_type: selectedValue,
     pincode: pin,
@@ -158,19 +148,6 @@ const LocationForm = ({route}) => {
   //edited data
 
   let editedData = {
-    // name: item.name,
-    // publicEvent: item.publicEvent,
-    // start: item.start,
-    // end: item.end,
-    // phone: item.phone,
-    // email: item.email,
-    // organizer: item.organizer,
-    // event_type: item.event_type,
-    // participants: item.participants,
-    // personPerDay: item.personPerDay,
-    // phonepublic: item.phonepublic,
-    // frequency: item.frequency,
-    // instraction: item.instraction,
     place_type: selectedValue,
     pin: pin,
     CountryState: selectedState?.name,
@@ -178,7 +155,7 @@ const LocationForm = ({route}) => {
     country: country?.name,
     address: address,
     city: cityName,
-    // id: item.ID,
+    // id: item?.ID,
   };
 
   // name, pin, address, selectedValue, selectIconOne, selectedState,country,cityName

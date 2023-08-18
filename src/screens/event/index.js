@@ -25,6 +25,7 @@ import {
   getEventPlace,
   getEventType,
   getMyEvent,
+  targetChantData,
 } from '../../redux/actions';
 import moment from 'moment';
 
@@ -62,21 +63,20 @@ const EventPage = ({ navigation }) => {
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   const [editLoder, setEditLoder] = useState(false)
 
-  //  const data = ['1',"2","3"];
 
-  // console.log('show selected item in liset dskfjs', selectedItemFromList);
-
-  //  const showMethod=()=>{
-
-  //  }
+ console.log("show selected item from list obhecjdkfj=-===",selectedItemFromList)
 
   useEffect(() => {
+    dispatch(targetChantData());
+
     dispatch(getAllEvent());
     dispatch(getEventType());
     dispatch(getEventPlace());
     dispatch(getMyEvent());
   }, []);
-  ``;
+  const profileDetail = useSelector(state => state.AppReducers.getTargetpledge);
+
+  console.log("show event profile  data ",profileDetail[0].name)
   useEffect(() => {
     setEventData(allEventData);
   }, [allEventData]);
@@ -338,7 +338,7 @@ const EventPage = ({ navigation }) => {
             </Pressable>
             <View style={styles.fistRow}>
               <Text style={styles.itemHeading}>Event ID:HAV!3</Text>
-              {selectedItemFromList?.editable ? (
+              {profileDetail[0].name == selectedItemFromList?.organizer ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
                   <IconV name="pencil" color='#149103' size={20} />
                 </TouchableOpacity>

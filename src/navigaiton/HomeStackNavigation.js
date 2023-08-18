@@ -24,6 +24,7 @@ import DetailEvent from '../screens/event/DetailEvent';
 import EventForm from '../screens/forms';
 import LocationForm from '../screens/locationForm';
 import MyEvent from '../screens/event/MyEvent';
+import UpdatedEvent from '../screens/event/updatedEvent';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -62,6 +63,7 @@ function HomeStackNavigation() {
           <HomeStack.Screen name="form" component={EventForm} />,
           <HomeStack.Screen name="formPlace" component={LocationForm} />,
           <HomeStack.Screen name="myEvent" component={MyEvent} />,
+          <HomeStack.Screen name="updatedEvent" component={UpdatedEvent} />,
         ]
       )}
     </HomeStack.Navigator>
