@@ -68,6 +68,34 @@ You've successfully run and modified your React Native App. :partying_face:
 
 If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
+# Setup SSH key on github
+Please copy and paste bellow command on you terminal
+
+- $ ls -al ~/.ssh
+- $ ssh-keygen -t rsa -b 4096 -C "amitpatel005577@gmail.com"
+Please follow the instructions and press Enter key
+
+Verify new rsa key
+- $ ls -al ~/.ssh
+
+- $ ssh-agent -s
+You will see the output
+
+- $ eval "$(ssh-agent -s)"
+Output:  Agent pid 31586
+
+- $ ssh-add ~/.ssh/id_rsa
+Output: Identity added: /home/jazzz/.ssh/id_rsa (amitpatel005577@gmail.com)
+
+Now  install a clipboard by bellow command
+- $ sudo apt-get install xclip
+
+Use this command to copy the SSH key
+- $ xclip -sel clip < ~/.ssh/id_rsa.pub
+
+Now go to your github account and navigate> Profile > Setting > SSH and GPG keys > New SSH key > Paste and give a title to your ssh key and Click on Add SSH key button now you can push your code.
+
+
 # Learn More
 
 To learn more about React Native, take a look at the following resources:

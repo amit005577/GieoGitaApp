@@ -39,14 +39,14 @@ const EventPage = ({navigation}) => {
   const allEventData = useSelector(state => state.EventReducer.allEventData);
   const eventtypeData = useSelector(state => state.EventReducer.eventTypeData);
   const EventLoading = useSelector(state => state.EventReducer.eventLoading);
-  console.log('show Event Loading', EventLoading);
+  // console.log('show Event Loading', EventLoading);
   const eventPlaceData = useSelector(
     state => state.EventReducer.eventPlaceData,
   );
-  console.log('show allEventData type', allEventData);
-  console.log('show eventPlaceData', eventPlaceData);
+  // console.log('show allEventData type', allEventData);
+  // console.log('show eventPlaceData', eventPlaceData);
   const [EventData, setEventData] = useState(null);
-  console.log('show ditagdjfsldjf', EventData);
+  // console.log('show ditagdjfsldjf', EventData);
 
   const [selectedItem, setselectedItem] = useState(data[0]?.name);
   const [showModal, setShowModal] = useState(false);
@@ -64,7 +64,7 @@ const EventPage = ({navigation}) => {
 
   //  const data = ['1',"2","3"];
 
-  console.log('show selected item in liset dskfjs', selectedItemFromList);
+  // console.log('show selected item in liset dskfjs', selectedItemFromList);
 
   //  const showMethod=()=>{
 
@@ -87,7 +87,7 @@ const EventPage = ({navigation}) => {
 
   const filterEvent = item => {
     let newData = allEventData?.filter(val => item === val.event_type);
-    console.log('show new Data', newData);
+    // console.log('show new Data', newData);
     setEventData(newData);
   };
 
@@ -355,9 +355,9 @@ const EventPage = ({navigation}) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-       
           setModalVisible(!modalVisible);
         }}>
+
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {/* <Text style={styles.modalText}>Hello World!</Text> */}
@@ -369,10 +369,12 @@ const EventPage = ({navigation}) => {
             <View style={styles.fistRow}>
               <Text style={styles.itemHeading}>Event ID:HAV!3</Text>
               {selectedItemFromList?.editable ? (
-                <TouchableOpacity onPress={()=> navigation.navigate('form', selectedItemFromList)}>
-                  <IconV name="pencil" size={20} />
+                <TouchableOpacity style={styles.editIcon} onPress={()=> navigation.navigate('form', {data:selectedItemFromList})}>
+                  <IconV name="pencil" color='#149103' size={20} />
+                  <Text>{'tttt'}</Text>
                 </TouchableOpacity>
-              ) : null}
+              ) : null} 
+
             </View>
             <Text style={styles.txtItem}>
               {selectedItemFromList?.event_type}
@@ -566,6 +568,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
+    padding:10,
+    paddingTop:20,
     backgroundColor: 'white',
     borderRadius: 20,
     // padding: 35,
@@ -634,6 +638,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 10,
   },
+  editIcon:{
+    padding:5,
+  }
 });
 
 //   <CustomPicker

@@ -10,7 +10,7 @@ const CustomPicker = ({data, selectedValue, setSelectedValue}) => {
         selectedValue={selectedValue}
         onValueChange={itemValue => setSelectedValue(itemValue)}>
         {data?.map(item => (
-          <Picker.Item key={item.id} label={item.name} value={item.id} />
+          <Picker.Item key={item.id} label={item.name} value={item.id} color='#111211' />
         ))}
       </Picker>
     </View>

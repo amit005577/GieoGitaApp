@@ -267,7 +267,7 @@ const EventForm = ({route}) => {
               placeholder="Please Enter Name"
               onChangeText={setName}
               value={name}
-              //   style={styles.textINput}
+                style={styles.textINput}
             />
           </View>
         </View>
@@ -287,7 +287,7 @@ const EventForm = ({route}) => {
                   selectIconOne == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={selectIconOne == '1' ? 'blue' : undefined}
+                color={selectIconOne == '1' ? 'blue' : 'gray'}
               />
               <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
                 Yes
@@ -301,7 +301,7 @@ const EventForm = ({route}) => {
                   selectIcontwo == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={selectIcontwo == '1' ? 'blue' : undefined}
+                color={selectIcontwo == '1' ? 'blue' : 'gray'}
               />
               <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
                 No
@@ -356,7 +356,7 @@ const EventForm = ({route}) => {
         placeholder="Please Enter Name"
         onChangeText={setJoiningLink}
         value={joiningLink}
-        //   style={styles.textINput}
+          style={styles.textINput}
       />
     </View>
   </View>
@@ -614,7 +614,7 @@ const EventForm = ({route}) => {
               placeholder="Please Enter Name"
               onChangeText={setEmail}
               value={email}
-              //   style={styles.textINput}
+                style={styles.textINput}
             />
           </View>
         </View>
@@ -685,7 +685,8 @@ const styles = StyleSheet.create({
     left: 20,
   },
   textINput: {
-    marginLeft: 15,
+    // marginLeft: 15,
+    color:'gray'
   },
   firstBlock: {
     flexDirection: 'row',
