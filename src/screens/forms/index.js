@@ -48,7 +48,7 @@ const EventForm = ({route}) => {
   // if data is comming for edit
 
   let routeData = route.params;
-  console.log('show routeData', routeData);
+  // console.log('show routeData', routeData);
   // alert(selectedValue)
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const EventForm = ({route}) => {
   // if data is comming for edit
 
   const pickerRef = useRef();
-  console.log('frequencjfksljf', frequency);
+  // console.log('frequencjfksljf', frequency);
   const [countryCode, setCountryCode] = useState({
     code: 'IN',
     icon: 'https://projects.cityinnovates.in/gieo_gita/public/assets/img/flags/in.png',
@@ -80,18 +80,18 @@ const EventForm = ({route}) => {
     phone_code: 91,
   });
   const [modalVisible, setmodalVisible] = useState(false);
-  console.log('show frequency', frequency);
-  console.log('show date');
+  // console.log('show frequency', frequency);
+  // console.log('show date');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const dispatch = useDispatch();
-  console.log('show slected value data', selectedValue);
+  // console.log('show slected value data', selectedValue);
   const countryRespose = useSelector(
     state => state.AppReducers.countryNamelistData,
   );
   const countryStateLIstData = useSelector(
     state => state.AppReducers.countryStateListData,
   );
-  console.log('show country pade dfdsflks', countryRespose);
+  // console.log('show country pade dfdsflks', countryRespose);
 
   useEffect(() => {
     // dispatch(getAllEvent());
@@ -111,7 +111,7 @@ const EventForm = ({route}) => {
 
   }, [eventtypeData]);
 
-  console.log('show event type data00000', eventtypeData);
+  // console.log('show event type data00000', eventtypeData);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -125,12 +125,12 @@ const EventForm = ({route}) => {
   };
 
   const handleConfirm = date => {
-    console.warn('A date has been picked: ', date);
+    // console.warn('A date has been picked: ', date);
     setstartDate(date);
     hideDatePicker();
   };
   const handleConfirmEnd = date => {
-    console.warn('A date has been picked: ', date);
+    // console.warn('A date has been picked: ', date);
     setEndDate(date);
     setShowModal(false);
   };
@@ -169,7 +169,7 @@ const EventForm = ({route}) => {
     setCheckboxSlect('1');
     setPhonepublic('0');
   };
-  console.log('show eventType', selectedValue);
+  // console.log('show eventType', selectedValue);
   let formData = {
     name: name,
     publicEvent: selectIconOne,
@@ -449,6 +449,7 @@ const EventForm = ({route}) => {
               onChangeText={setDescription}
               value={description}
               multiline
+              placeholder='Description...'
             />
           </View>
         </View>
@@ -552,6 +553,7 @@ const EventForm = ({route}) => {
               </View>
             </TouchableOpacity>
             <TextInput
+            placeholder='Mobile'
               onChangeText={setNumber}
               maxLength={10}
               value={number}

@@ -19,7 +19,7 @@ const CustomModal = ({
   setShowModal,
   data,
 }) => {
-  console.log("show selected item",selectedItem)
+  // console.log("show selected item",selectedItem)
   return (
     <View>
       <Modal
