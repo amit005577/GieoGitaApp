@@ -1,0 +1,8 @@
+update filter search button
+update icons and text color
+add filter search option in country selection
+on share add dianamic image url and message
+implement push Notifications
+resolve   event type and frequency  selection
+update past cahnts list item
+language translations

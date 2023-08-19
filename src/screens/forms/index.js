@@ -205,7 +205,7 @@ const EventForm = ({route}) => {
   let formDataEdit = {
     name: name,
     event_type: selectedValue,
-    frequency: frequency,
+    frequency:frequency.length>0? frequency[0].id:null,
     start: startDate,
     participants: participant,
     phone_visible: phonepublic,
@@ -262,6 +262,7 @@ const EventForm = ({route}) => {
       setLaoder(false);
       if (routeData!=null) {
         // alert('update')
+        console.log("show edit data===============>",formDataEdit)
         dispatch(updateMyEvent(formDataEdit));
         // navigationRef.navigate('formPlace');
       } else {
