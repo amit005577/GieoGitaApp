@@ -30,12 +30,12 @@ const HomeStack = createNativeStackNavigator();
 
 function HomeStackNavigation() {
   const [pledgeStatus, setpledgeStatus] = React.useState(true);
-  console.log('show pledge status', pledgeStatus);
+  // console.log('show pledge status', pledgeStatus);
   // const data = useSelector(pledgeConditionalStatus);
   // console.log('show data pledge status', data);
   // let resStatus = useSelector(statusOfPledge);
   let resss = useSelector(state => state.AuthReducer);
-  console.log(resss, 'Use Selector Value');
+  // console.log(resss, 'Use Selector Value');
   React.useEffect(() => {
     asyncFunction();
   }, [resss]);
@@ -43,7 +43,7 @@ function HomeStackNavigation() {
   const asyncFunction = async () => {
     const data = await AsyncStorage.getItem('pledge');
     let res = await JSON.parse(data);
-    console.log('show data parsse', res);
+    // console.log('show data parsse', res);
     setpledgeStatus(res);
   };
   return (

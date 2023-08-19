@@ -64,7 +64,7 @@ const EventPage = ({ navigation }) => {
   const [editLoder, setEditLoder] = useState(false)
 
 
-  console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
+  // console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -340,7 +340,6 @@ const EventPage = ({ navigation }) => {
               <Text style={styles.textStyle}>Close</Text>
             </Pressable>
             <View style={styles.fistRow}>
-              {console.log('selectedItemFromList::::::::::::::', selectedItemFromList)}
               <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
               {validateUser() ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>

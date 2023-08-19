@@ -22,11 +22,11 @@ import {navigationRef} from '../../../App';
 
 const UpdatePledge = () => {
   const [count, setCount] = React.useState('');
-  console.log('show cout number-=-->', count);
+  // console.log('show cout number-=-->', count);
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
-  //   console.log('show datapledge data page jfsdkjfkl', datapledge[0].targetChant);
+    // console.log('show datapledge data page jfsdkjfkl', datapledge[0].targetChant);
   const targetCountDAta = datapledge[0]?.target_count;
-  console.log('show targetcountData', targetCountDAta);
+  // console.log('show targetcountData', targetCountDAta);
 
   const dispatch = useDispatch();
   const handleOnsubmit = () => {
@@ -50,7 +50,7 @@ const UpdatePledge = () => {
   let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
   let noOfDays = targetDate.diff(currentDateData, 'days');
   
-  console.log("Number of days:", noOfDays);
+  // console.log("Number of days:", noOfDays);
   let dailyCount= count/noOfDays
   let monthCountNumber = dailyCount*30
   let weekCountNummber = dailyCount*7

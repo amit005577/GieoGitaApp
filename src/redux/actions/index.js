@@ -44,7 +44,7 @@ export const getCountryCode = payload => {
 };
 
 export const getPhoneOtp = payload => {
-  console.log('show payload action phone number', payload);
+  // console.log('show payload action phone number', payload);
   return {
     type: ActionTypes.GET_PHONE_OTP,
     payload,
@@ -60,7 +60,7 @@ export const getPhoneOtpVerify = payload => {
 };
 
 export const requestPhoneData = payload => {
-  console.log('show data reques acction', payload);
+  // console.log('show data reques acction', payload);
   return {
     type: ActionTypes.STORE_REQUEST_PHONE_DATA,
     payload,
@@ -68,7 +68,7 @@ export const requestPhoneData = payload => {
 };
 
 export const STORETOKEN = payload => {
-  console.log('show action access token', payload);
+  // console.log('show action access token', payload);
   return {
     type: ActionTypes.STORE_ACCESS_TOKEN,
     payload,
@@ -76,7 +76,7 @@ export const STORETOKEN = payload => {
 };
 
 export const setPledge = payload => {
-  console.log('show pledge count action', payload);
+  // console.log('show pledge count action', payload);
   return {
     type: ActionTypes.TARGET_COUNT_PLEDGE,
     payload,
@@ -91,7 +91,7 @@ export const getHomeData = payload => {
 };
 
 export const setcoditionalStatus = payload => {
-  console.log('show action access token', payload);
+  // console.log('show action access token', payload);
   return {
     type: ActionTypes.SET_PLEDGE_STATUS_CONDITION,
     payload,
@@ -99,7 +99,7 @@ export const setcoditionalStatus = payload => {
 };
 
 export const chantUpdatecount = payload => {
-  console.log('show count number reducer ', payload);
+  // console.log('show count number reducer ', payload);
   return {
     type: ActionTypes.CHANT_COUNT_UPDATE,
     payload,
@@ -156,7 +156,7 @@ export const getAllpdfData = payload => {
 };
 
 export const saveLangCode = payload => {
-  console.log(payload, '-->>>> Inside FUnc');
+  // console.log(payload, '-->>>> Inside FUnc');
   return {
     type: ActionTypes.GET_LANG_CODE,
     payload,
@@ -164,28 +164,28 @@ export const saveLangCode = payload => {
 };
 
 export const registerMethod = payload => {
-  console.log(payload, 'reg FUnc');
+  // console.log(payload, 'reg FUnc');
   return {
     type: ActionTypes.REGISTER_DETAILS,
     payload,
   };
 };
 export const liveChants = payload => {
-  console.log(payload, '-->>>LIVE');
+  // console.log(payload, '-->>>LIVE');
   return {
     type: ActionTypes.GET_lIVE_CHANTS,
     payload,
   };
 };
 export const getCountryName = payload => {
-  console.log(payload, '-->>>country');
+  // console.log(payload, '-->>>country');
   return {
     type: ActionTypes.COUTRY_NAME_LIST,
     payload,
   };
 };
 export const getStateName = payload => {
-  console.log(payload, '-->>>state');
+  // console.log(payload, '-->>>state');
   return {
     type: ActionTypes.COUTRY_STATE_NAME,
     payload,
@@ -194,7 +194,7 @@ export const getStateName = payload => {
 
 
 export const getTranslations = payload => {
-  console.log(payload, '-->>>translation');
+  // console.log(payload, '-->>>translation');
   return {
     type: ActionTypes.GET_LANGUAGE_TRANSLATION,
     payload,

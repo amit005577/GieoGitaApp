@@ -32,12 +32,12 @@ const Register = ({navigation}) => {
   const countryRespose = useSelector((state)=>state.AppReducers.countryNamelistData)
   const countryStateLIstData = useSelector((state)=>state.AppReducers.countryStateListData)
   const [selectedState, setselectedState] = useState(null)
-  console.log("selectedState",selectedState)
-  console.log("show country data dfksjdjf",countryRespose)
-  console.log('show single country name',countryName.id)
+  // console.log("selectedState",selectedState)
+  // console.log("show country data dfksjdjf",countryRespose)
+  // console.log('show single country name',countryName.id)
   let countryNameData = countryName?.name
   let stateNameData = selectedState?.name
-  console.log("show country name or state",countryNameData,stateNameData)
+  // console.log("show country name or state",countryNameData,stateNameData)
   const [dataset, setData] = useState([
     {
       id: 1,
@@ -59,7 +59,7 @@ const Register = ({navigation}) => {
 
 
   const handleGenderSElect = item => {
-    console.log('show item', item);
+    // console.log('show item', item);
     // alert(item);
     setGender(item.gender);
     setModalVisible(false);

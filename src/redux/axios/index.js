@@ -39,7 +39,7 @@ export const fetchRecord = async url => {
 //   });
 //   return 
 
-  console.log("show token inapi -===>",token,url)
+  // console.log("show token inapi -===>",token,url)
   return axios({
     method: 'GET',
     crossDomain: true,
@@ -127,7 +127,7 @@ export const postApi = async (url, data) => {
 
 
 
-  console.log('🚀 ~ file: index.js:31 ~ postApi ~ data:', data.count.payload);
+  // console.log('🚀 ~ file: index.js:31 ~ postApi ~ data:', data.count.payload);
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
@@ -152,7 +152,7 @@ export const postApi = async (url, data) => {
 };
 
 export const registerApi = async (url, data) => {
-  console.log('🚀 ~ file: index.js:79 ~ postApi ~ data:', data, url);
+  // console.log('🚀 ~ file: index.js:79 ~ postApi ~ data:', data, url);
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;

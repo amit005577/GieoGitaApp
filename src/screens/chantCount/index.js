@@ -44,16 +44,16 @@ const ChantCount = ({navigation}) => {
   );
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
-  console.log('show live data chants', liveChantsData);
-  console.log('name data name', datapledge);
-  console.log('show monthly data', monthlyData);
+  // console.log('show live data chants', liveChantsData);
+  // console.log('name data name', datapledge);
+  // console.log('show monthly data', monthlyData);
   useEffect(() => {
     dispatch(targetChantData());
     dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
     dispatch(liveChants());
   }, []);
-  console.log('show historydata ', historydata);
+  // console.log('show historydata ', historydata);
   const [disable, setDisable] = React.useState(true);
 
   const handleOnpress = () => {

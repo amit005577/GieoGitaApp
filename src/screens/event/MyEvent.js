@@ -21,7 +21,7 @@ import { navigationRef } from '../../../App';
 const windowWidth = Dimensions.get('window').width;
 const MyEvent = ({navigation}) => {
   const myEventData = useSelector(state => state.EventReducer.myEvent);
-  console.log('show my list item', myEventData);
+  // console.log('show my list item', myEventData);
   const handleOnpress=(item)=>{
     navigation.navigate('details', item);
   }

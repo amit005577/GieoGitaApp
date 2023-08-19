@@ -16,16 +16,16 @@ import { navigationRef } from '../../../App';
 
 const AllEventSaga = function* () {
     yield put({type:actions.LODER,payload:true})
-    console.log('list event ');
+    // console.log('list event ');
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events';
   
       const res = yield call(fetchRecordWithoutToken, requestUrl);
-      console.log(
-        'show  event data res data saga',
-        JSON.stringify(res),
-      );
+      // console.log(
+      //   'show  event data res data saga',
+      //   JSON.stringify(res),
+      // );
       if (res.data != null) {
         yield put({
           type: actions.GET_ALL_EVENT_SUCCESS,
@@ -34,22 +34,22 @@ const AllEventSaga = function* () {
       }
       yield put({type:actions.LODER,payload:false})
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
       yield put({type:actions.LODER,payload:false})
     }
   };
   const GetEventTypeSaga = function* () {
    
-    console.log('list GetEventTypeSaga saga 0-0----');
+    // console.log('list GetEventTypeSaga saga 0-0----');
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/event-types';
   
       const res = yield call(fetchRecordWithoutToken, requestUrl);
-      console.log(
-        'show  GetEventTypeSaga data saga',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  GetEventTypeSaga data saga',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
         yield put({
           type: actions.GET_EVENT_TYPE_SUCCESS,
@@ -57,22 +57,22 @@ const AllEventSaga = function* () {
         });
       }
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
     }
   };
 
   const GetEventPlaceSaga = function* () {
    
-    console.log('list GetEventPlaceSaga ');
+    // console.log('list GetEventPlaceSaga ');
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/event-place-types';
   
       const res = yield call(fetchRecordWithoutToken, requestUrl);
-      console.log(
-        'show  GetEventPlaceSaga saga',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  GetEventPlaceSaga saga',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
         yield put({
           type: actions.GET_EVENT_PLACE_SUCCESS,
@@ -80,22 +80,22 @@ const AllEventSaga = function* () {
         });
       }
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
     }
   };
 
   const SearchEventSaga = function* () {
    
-    console.log('list GetEventPlaceSaga ');
+    // console.log('list GetEventPlaceSaga ');
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events-search';
   
       const res = yield call(fetchRecordWithoutToken, requestUrl);
-      console.log(
-        'show  GetEventPlaceSaga saga',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  GetEventPlaceSaga saga',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
         yield put({
           type: actions.GET_EVENT_PLACE_SUCCESS,
@@ -103,13 +103,13 @@ const AllEventSaga = function* () {
         });
       }
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
     }
   };
 
 
   const CreateEventSaga = function* (data) {
-    console.log('list CreateEventSaga count', data);
+    // console.log('list CreateEventSaga count', data);
     let _data = {
         name: data.payload.name,
       instraction:data.payload.instraction,
@@ -132,16 +132,16 @@ const AllEventSaga = function* () {
       plateform:data.payload.plateform,
       content:data.payload.content
     }
-    console.log("show crteate event list",_data)
+    // console.log("show crteate event list",_data)
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events-store';
   
       const res = yield call(registerApi, requestUrl, _data);
-      console.log(
-        'show  CreateEventSaga=-=-=-= saga',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  CreateEventSaga=-=-=-= saga',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
       
         yield put({
@@ -152,14 +152,14 @@ const AllEventSaga = function* () {
         navigationRef.navigate("formPlace")
       }
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
     }
   };
 
 
 
   const MyEventSaga = function* () {
-    console.log('list MyEventSaga count');
+    // console.log('list MyEventSaga count');
     
     // console.log("show updated list",_data)
     try {
@@ -167,10 +167,10 @@ const AllEventSaga = function* () {
         'https://projects.cilearningschool.com/gieo_gita/api/v1/my-events';
   
       const res = yield call(fetchRecord, requestUrl);
-      console.log(
-        'show  MyEventSaga=-=-=',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  MyEventSaga=-=-=',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
         yield put({
           type: actions.GET_MY_EVENT_SUCCESS,
@@ -178,13 +178,13 @@ const AllEventSaga = function* () {
         });
       }
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
     }
   };
 
 
   const UpdateMyEventSaga = function* (data) {
-    console.log('list update event run', data);
+    // console.log('list update event run', data);
     let _data = {
       id:data.payload.id,
       name: data.payload.name,
@@ -208,16 +208,16 @@ const AllEventSaga = function* () {
     plateform:data.payload.plateform,
     content:data.payload.content
   }
-    console.log("show updated list-==-=-=-=-=",_data)
+    // console.log("show updated list-==-=-=-=-=",_data)
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events-update';
   
       const res = yield call(registerApi, requestUrl, _data);
-      console.log(
-        'show  UpdateMYEcewnt=-=-=-= saga',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  UpdateMYEcewnt=-=-=-= saga',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
         Alert.alert("Event is updated")
         navigationRef.navigate("formPlace")
@@ -227,14 +227,14 @@ const AllEventSaga = function* () {
         // });
       }
     } catch (error) {
-      console.log('show error api update Event', error);
+      // console.log('show error api update Event', error);
     }
   };
 
 
 
   const UpdateMyLocation = function* (data) {
-    console.log('list update event run', data);
+    // console.log('list update event run', data);
 
    let _data ={
     place_name:data.payload.place_name,
@@ -251,16 +251,16 @@ const AllEventSaga = function* () {
     status:"true"
    }
 
-    console.log("show  update my lodacton list",_data)
+    // console.log("show  update my lodacton list",_data)
     try {
       let requestUrl =
         'https://projects.cilearningschool.com/gieo_gita/api/v1/events-store-location';
   
       const res = yield call(registerApi, requestUrl, _data);
-      console.log(
-        'show  updated location from saga=-=-=-= saga',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show  updated location from saga=-=-=-= saga',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res?.data != null) {
   
         yield put({
@@ -271,22 +271,22 @@ const AllEventSaga = function* () {
         navigationRef.navigate("updatedEvent")
       }
     } catch (error) {
-      console.log('show error api update Event', error);
+      // console.log('show error api update Event', error);
     }
   };
 
   const SubscribeEventSaga = function* (data) {
-    console.log("show id payload",data)
+    // console.log("show id payload",data)
     
     try {
       let requestUrl =
         `https://projects.cilearningschool.com/gieo_gita/api/v1/events-subscriptions/${data.payload}`;
   
       const res = yield call(fetchRecord, requestUrl);
-      console.log(
-        'show   subscribe event-------=-=-=',
-        JSON.stringify(res.data.data),
-      );
+      // console.log(
+      //   'show   subscribe event-------=-=-=',
+      //   JSON.stringify(res.data.data),
+      // );
       if (res.data != null) {
        
         yield put({
@@ -296,7 +296,7 @@ const AllEventSaga = function* () {
         Alert.alert("Event Subscribe Successfully")
       }
     } catch (error) {
-      console.log('show error api', error);
+      // console.log('show error api', error);
     }
   };
 const EventSaga = [

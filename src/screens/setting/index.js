@@ -28,9 +28,9 @@ const SettingScreen = ({navigation}) => {
   const [selected, setSelected] = useState(languageData[0]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const langList = useSelector(state => state.AppReducers.languageList);
-  console.log(langList, '-->>>>>Listing');
+  // console.log(langList, '-->>>>>Listing');
   const handleOnpressLanguage = item => {
-    console.log(item, 'utemskdfmaks');
+    // console.log(item, 'utemskdfmaks');
     setSelected(item);
     setModalVisible(false);
     alert(item.name + ' is Selected');
@@ -41,7 +41,7 @@ const SettingScreen = ({navigation}) => {
       await AsyncStorage.clear();
       dispatch(Logout(false));
     } catch (error) {
-      console.log('show error async', error);
+      // console.log('show error async', error);
     }
   };
   useEffect(() => {

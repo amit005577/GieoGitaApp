@@ -30,15 +30,15 @@ const OtpScreen = () => {
 
   const dispatch = useDispatch();
   const previousRequestedOtpData = useSelector(requestedOtpData);
-  console.log('show previousRequestedOtpData', previousRequestedOtpData);
+  // console.log('show previousRequestedOtpData', previousRequestedOtpData);
 
   let phoneOtpdata = useSelector(phoneOtp);
-  console.log('show screen otp data id', otpInput);
+  // console.log('show screen otp data id', otpInput);
   let res = {
     otp: otp,
     id: phoneOtpdata?.user_id,
   };
-  console.log(' show otp data-=-=====?>', res);
+  // console.log(' show otp data-=-=====?>', res);
 
   const [counter, setCounter] = React.useState(30);
 

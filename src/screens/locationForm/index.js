@@ -73,12 +73,12 @@ const LocationForm = ({route}) => {
   const [country, setCountry] = useState(null);
   const [cityName, setcityName] = useState('');
   const dispatch = useDispatch();
-  console.log("show country id",country)
-  console.log("show selected state id",selectedState)
+  // console.log("show country id",country)
+  // console.log("show selected state id",selectedState)
 
   const [check, setCheck] = useState(false);
   const currentEvent = useSelector(state => state.EventReducer.currentEvent);
-  console.log("show current reducer",currentEvent)
+  // console.log("show current reducer",currentEvent)
 
  
   const newItem = {id: 0, name: 'select'};
@@ -127,9 +127,9 @@ const LocationForm = ({route}) => {
       alert('please select country');
     }
   };
-  console.log('show data rout', route.params);
+  // console.log('show data rout', route.params);
   let item = route.params;
-  console.log('show item data inrout', item);
+  // console.log('show item data inrout', item);
 
   let data = {
     place_name:name,
@@ -180,12 +180,12 @@ const LocationForm = ({route}) => {
       // if (route?.params.Editable) {
       //   dispatch(updateMyEvent(editedData));
       // } else {
-        console.log("show location data from page",data)
+        // console.log("show location data from page",data)
 
         dispatch(updateLocation(data));
       // }
     }
-    console.log('show all form data', data);
+    // console.log('show all form data', data);
   };
 
 
