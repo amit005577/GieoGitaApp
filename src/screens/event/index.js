@@ -64,7 +64,7 @@ const EventPage = ({ navigation }) => {
   const [editLoder, setEditLoder] = useState(false)
 
 
- console.log("show selected item from list obhecjdkfj=-===",selectedItemFromList)
+  console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -76,7 +76,6 @@ const EventPage = ({ navigation }) => {
   }, []);
   const profileDetail = useSelector(state => state.AppReducers.getTargetpledge);
 
-  console.log("show event profile  data ",profileDetail[0].name)
   useEffect(() => {
     setEventData(allEventData);
   }, [allEventData]);
@@ -217,6 +216,14 @@ const EventPage = ({ navigation }) => {
     }
   }
 
+  const validateUser = () => {
+    if (profileDetail && profileDetail?.length > 0 && selectedItemFromList?.phone != null && selectedItemFromList?.phone != undefined) {
+      return profileDetail[0]?.phone?.includes(selectedItemFromList?.phone)
+    } else {
+      return false
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <HeaderPage />
@@ -338,8 +345,9 @@ const EventPage = ({ navigation }) => {
               <Text style={styles.textStyle}>Close</Text>
             </Pressable>
             <View style={styles.fistRow}>
+              {console.log('selectedItemFromList::::::::::::::', selectedItemFromList)}
               <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
-              {profileDetail[0].name == selectedItemFromList?.organizer ? (
+              {validateUser() ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
                   <IconV name="pencil" color='#149103' size={20} />
                 </TouchableOpacity>
@@ -353,7 +361,7 @@ const EventPage = ({ navigation }) => {
               <Text style={styles.itemHeading}>Address:</Text>
               <View style={{ width: '60%' }}>
                 <Text style={styles.textDetails}>
-                 {selectedItemFromList?.address}
+                  {selectedItemFromList?.address}
                 </Text>
                 <Text style={styles.textDetails}>{selectedItemFromList?.country_id}</Text>
               </View>
@@ -420,7 +428,7 @@ const styles = StyleSheet.create({
   },
   eventText: {
     fontSize: 24,
-    color:'black'
+    color: 'black'
   },
   addText: {
     color: 'white',
