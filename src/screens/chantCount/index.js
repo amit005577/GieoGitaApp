@@ -32,7 +32,10 @@ import {navigationRef} from '../../../App';
 
 // import HeaderPage from '../components/header';
 
-const ChantCount = ({navigation}) => {
+const ChantCount = ({navigation,},route) => {
+
+   let RoutData = route.params
+   console.log("show route data from chants",RoutData)
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
