@@ -7,7 +7,8 @@ const initialState = {
   eventLoading: '',
   currentEvent:"",
   myEvent:"",
-  locationUpdated:""
+  locationUpdated:"",
+  subscribeEventResponse:''
 };
 
 const EventReducer = (state = initialState, action) => {
@@ -54,6 +55,12 @@ const EventReducer = (state = initialState, action) => {
               ...state,
               locationUpdated: action.payload,
             };
+            case actions.SUBSCRIBE_EVENT_SUCCESS:
+              console.log('shw tken form reducer ST-========>', action?.payload);
+              return {
+                ...state,
+                subscribeEventResponse: action.payload,
+              };
     default: {
       return state;
     }

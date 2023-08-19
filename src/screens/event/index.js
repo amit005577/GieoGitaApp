@@ -133,6 +133,7 @@ const EventPage = ({ navigation }) => {
       }, 1000)
 
     }
+    setEditLoder(false)
   }, [myEventData, placeType, eventType]);
 
   const checkEditableOrNot = () => {
@@ -337,7 +338,7 @@ const EventPage = ({ navigation }) => {
               <Text style={styles.textStyle}>Close</Text>
             </Pressable>
             <View style={styles.fistRow}>
-              <Text style={styles.itemHeading}>Event ID:HAV!3</Text>
+              <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
               {profileDetail[0].name == selectedItemFromList?.organizer ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
                   <IconV name="pencil" color='#149103' size={20} />
@@ -352,9 +353,9 @@ const EventPage = ({ navigation }) => {
               <Text style={styles.itemHeading}>Address:</Text>
               <View style={{ width: '60%' }}>
                 <Text style={styles.textDetails}>
-                  city Dehradun place, rajpur mussorrie
+                 {selectedItemFromList?.address}
                 </Text>
-                <Text style={styles.textDetails}>IN -772</Text>
+                <Text style={styles.textDetails}>{selectedItemFromList?.country_id}</Text>
               </View>
             </View>
             <View
@@ -377,7 +378,7 @@ const EventPage = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <IconV name="old-phone" size={20} style={{ marginRight: 5 }} />
                   <Text style={styles.textDetails}>
-                    {selectedItemFromList?.name}
+                    {selectedItemFromList?.organizer}
                   </Text>
                 </View>
               </View>

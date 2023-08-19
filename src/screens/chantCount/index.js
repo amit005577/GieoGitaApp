@@ -7,7 +7,7 @@ import {
   ScrollView,
   Modal,
   Pressable,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 
 import React, {useDebugValue, useEffect} from 'react';
@@ -28,7 +28,7 @@ import {
 } from '../../redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
-import { navigationRef } from '../../../App';
+import {navigationRef} from '../../../App';
 
 // import HeaderPage from '../components/header';
 
@@ -98,7 +98,9 @@ const ChantCount = ({navigation}) => {
       <HeaderPage />
 
       <ScrollView>
-        <TouchableOpacity onPress={()=>navigationRef.navigate("event")} style={styles.eventstyle}>
+        <TouchableOpacity
+          onPress={() => navigationRef.navigate('event')}
+          style={styles.eventstyle}>
           <Text style={{color: 'white', fontSize: 21}}>घटनाएँ और समूह</Text>
         </TouchableOpacity>
         <Text style={styles.chantsTitle}>कुल मंत्र</Text>
@@ -110,7 +112,9 @@ const ChantCount = ({navigation}) => {
             </Text>
           </View>
         </View>
-       {!datapledge?<ActivityIndicator size={'small'} color={'orange'} />:null}
+        {!datapledge ? (
+          <ActivityIndicator size={'small'} color={'orange'} />
+        ) : null}
 
         <TouchableOpacity
           style={styles.userNameContainer}
@@ -211,15 +215,9 @@ const ChantCount = ({navigation}) => {
                 {moment(todaysDate, 'DD MMMM').format('ddd')}
               </Text> */}
             </View>
-
-            <Text
-              style={[
-                styles.countTextNumber,
-
-                {position: 'absolute', right: 85, top: 56},
-              ]}>
-              {number}
-            </Text>
+            <View style={{position: 'absolute', right: 50, top: 56,width:100}}>
+              <Text style={{...styles.countTextNumber,alignSelf:'center'}}>{number}</Text>
+            </View>
           </View>
 
           <TouchableOpacity

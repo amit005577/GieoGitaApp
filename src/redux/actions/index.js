@@ -253,3 +253,10 @@ export const updateLocation = payload=>{
     payload,
   }
 }
+export const subscribeEvent = payload=>{
+  
+  return{
+    type:ActionTypes.SUBSCRIBE_EVENT,
+    payload,
+  }
+}

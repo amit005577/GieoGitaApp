@@ -275,7 +275,30 @@ const AllEventSaga = function* () {
     }
   };
 
-
+  const SubscribeEventSaga = function* (data) {
+    console.log("show id payload",data)
+    
+    try {
+      let requestUrl =
+        `https://projects.cilearningschool.com/gieo_gita/api/v1/events-subscriptions/${data.payload}`;
+  
+      const res = yield call(fetchRecord, requestUrl);
+      console.log(
+        'show   subscribe event-------=-=-=',
+        JSON.stringify(res.data.data),
+      );
+      if (res.data != null) {
+       
+        yield put({
+          type: actions.SUBSCRIBE_EVENT_SUCCESS,
+          payload: res.data.data,
+        });
+        Alert.alert("Event Subscribe Successfully")
+      }
+    } catch (error) {
+      console.log('show error api', error);
+    }
+  };
 const EventSaga = [
     takeLatest(actions.GET_ALL_EVENT, AllEventSaga),
     takeLatest(actions.GET_EVENT_TYPE, GetEventTypeSaga),
@@ -285,6 +308,7 @@ const EventSaga = [
     takeLatest(actions.GET_MY_EVENT,MyEventSaga ),
     takeLatest(actions.UPDATE_MY_EVENT,UpdateMyEventSaga ),
     takeLatest(actions.UPDATE_LOCATION,UpdateMyLocation ),
+    takeLatest(actions.SUBSCRIBE_EVENT,SubscribeEventSaga)
    
   
   ];

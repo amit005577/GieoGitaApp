@@ -27,7 +27,6 @@ const CustomModal = ({
         transparent={true}
         visible={showModal}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setShowModal(!showModal);
         }}>
         <View style={styles.centeredView}>
