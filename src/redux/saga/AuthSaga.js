@@ -30,7 +30,7 @@ const GetEmailOtpRequest = function* (data) {
       navigationRef.navigate('emailOtp');
     }
   } catch (error) {
-    console.log('show error', error);
+    // console.log('show error', error);
     alert('Network Error');
   }
 };
@@ -48,7 +48,7 @@ const GetEmailOtpVerify = function* (data) {
       yield put({type: actions.EMAIL_LOGIN_SUCCESS, payload: true});
     }
   } catch (error) {
-    console.log('show error');
+    // console.log('show error');
   }
 };
 
@@ -63,7 +63,7 @@ const fetchCountryCode = function* () {
       // yield put({type: actions.SHOW_LOADING, payload: false});
     }
   } catch (error) {
-    console.log('show error', error);
+    // console.log('show error', error);
     yield put({type: actions.SHOW_LOADING, payload: false});
   }
 };
@@ -76,9 +76,9 @@ const GetPhoneOtp = function* (data) {
 
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/auth/signup-phone-send-otp';
-    console.log('show post data get otp', postData, requestUrl);
+    // console.log('show post data get otp', postData, requestUrl);
     let res = yield call(GetRecord, requestUrl, postData);
-    console.log('show phone otp response', res.data);
+    // console.log('show phone otp response', res.data);
     if (res?.data != null) {
       let otpdata = res.data.data.otp;
       // console.log('show inside res ', otpdata);
@@ -97,7 +97,7 @@ const GetPhoneOtp = function* (data) {
 
     // console.log('show otp res saga', res.data.data.otp);
   } catch (error) {
-    console.log('show error from phone', error);
+    // console.log('show error from phone', error);
     yield put({type: actions.SHOW_LOADING, payload: false});
   }
 };
@@ -105,7 +105,7 @@ const GetPhoneOtp = function* (data) {
 const getPhoneNumberVerify = function* (data) {
   // alert("enter")
 
-  console.log('show data verify', data);
+  // console.log('show data verify', data);
   try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/auth/signup-verify-otp';
@@ -114,7 +114,7 @@ const getPhoneNumberVerify = function* (data) {
       id: data.payload.id,
     };
     const res = yield call(GetRecord, requestUrl, postData);
-    console.log('show outside res', res);
+    // console.log('show outside res', res);
     if (res !== null && res.status == 200) {
       // console.log("show inside res",res)
       let tokenData = res?.data?.data?.access_token;

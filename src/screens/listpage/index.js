@@ -18,7 +18,7 @@ import moment from 'moment/moment';
 const ListPageScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const historydata = useSelector(state => state.AppReducers.chantHistory);
-  console.log('show history data', historydata);
+  // console.log('show history data', historydata);
   const monthlyData = useSelector(
     state => state.AppReducers.getCurrentCountData,
   );

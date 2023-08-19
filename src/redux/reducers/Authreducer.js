@@ -28,7 +28,7 @@ const AuthReducer = (state = initialState, action) => {
         isSignedIn: action.payload,
       };
     case actions.LOGOUT:
-      console.log('reducer', action.payload);
+      // console.log('reducer', action.payload);
       return {
         ...state,
         isSignedIn: action.payload,
@@ -56,7 +56,7 @@ const AuthReducer = (state = initialState, action) => {
         countryCode: action.payload,
       };
     case actions.GET_PHONE_OTP_SUCCESS:
-      console.log('show otp data reducers==-=>', action.payload);
+      // console.log('show otp data reducers==-=>', action.payload);
       return {
         ...state,
         phoneOtpResponse: action.payload,
@@ -67,19 +67,19 @@ const AuthReducer = (state = initialState, action) => {
         isSignedIn: action.payload,
       };
     case actions.STORE_REQUEST_PHONE_DATA:
-      console.log('show reducer request data', action.payload);
+      // console.log('show reducer request data', action.payload);
       return {
         ...state,
         requestOtpData: action.payload,
       };
     case actions.STORE_ACCESS_TOKEN:
-      console.log('shw tken form reducer', action.payload);
+      // console.log('shw tken form reducer', action.payload);
       return {
         ...state,
         accessToken: action.payload,
       };
     case actions.SET_PLEDGE_STATUS_CONDITION:
-      console.log('shw tken form reducer ST-========>', action?.payload);
+      // console.log('shw tken form reducer ST-========>', action?.payload);
       return {
         ...state,
         pledgeStatusWWWW: action.payload,

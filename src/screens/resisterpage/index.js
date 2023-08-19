@@ -65,7 +65,7 @@ const Register = ({navigation}) => {
   }, []);
 
   const handleGenderSElect = item => {
-    console.log('show item', item);
+    // console.log('show item', item);
     // alert(item);
     setGender(item.gender);
     setModalVisible(false);

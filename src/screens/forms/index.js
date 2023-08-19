@@ -1,26 +1,24 @@
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
   Image,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import HeaderPage from '../../Components/header';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CustomPicker from '../../Components/CustomPicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
-import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
-import { navigationRef } from '../../../App';
-import CustomCountrySelector from '../../Components/CustomCountrySelector';
 import { ms } from 'react-native-size-matters';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomCountrySelector from '../../Components/CustomCountrySelector';
+import CustomPicker from '../../Components/CustomPicker';
+import HeaderPage from '../../Components/header';
+import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
 const dataFrequency = [
   { id: 1, name: '--Selectt--' },
   { id: 2, name: 'One Time' },
@@ -47,51 +45,41 @@ const EventForm = ({ route }) => {
   const [checkboxSlect, setCheckboxSlect] = useState(null);
   const [number, setNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [formValid, setFormValid] = useState(false);
   const [check, setCheck] = useState(false);
   const [laoder, setLaoder] = useState(false);
   const [joiningLink, setJoiningLink] = useState('');
 
-  // if data is comming for edit
 
   let routeData = route?.params;
-  console.log('show routeData', routeData?.data.public_event);
-  // alert(selectedValue)
   const frequencyRecord = () => {
-    let response = []
-    dataFrequency.map((item) => {
-      if (item.id == routeData?.data.frequency) {
-        response.push(item)
-      }
+    const res = dataFrequency.find((item) => item.id == routeData?.data.frequency)
+    return res.id
+  }
 
-    })
-    return response
+  const findEventType = () => {
+    const item = eventtypeData.find((item) => item.name == routeData?.data.event_type)
+    return item.id
   }
 
   useEffect(() => {
-    if (routeData != null) {
-      setName(routeData?.data.name);
-      setSelectIconOne(routeData?.data.public_event);
-      setDescription(routeData?.data.content);
-      setstartDate(routeData?.data.create_at);
-      setEmail(routeData?.data.email);
-      setEndDate(routeData?.data.end);
-      setSelectedValue(routeData?.data.event_type);
-      setFrequency(frequencyRecord());
-      setOrganizer(routeData?.data.organizer);
-      setParticipant(routeData?.data.participants);
-      setNumber(routeData?.data.phone);
-      setPhonepublic(routeData?.data.phone_visible);
-      setSelectIconOne(routeData?.data.public_event == 'Yes' ? "1" : "0")
-      setPersonPerDay(routeData?.data.targe_chants)
-      setPhonepublic(routeData?.data.phone_visible == 'Yes' ? "1" : "0")
-    }
-  }, [routeData]);
-
-  // if data is comming for edit
+    setName(routeData?.data.name);
+    setSelectIconOne(routeData?.data.public_event);
+    setDescription(routeData?.data.content);
+    setstartDate(routeData?.data.create_at);
+    setEmail(routeData?.data.email);
+    setEndDate(routeData?.data.end);
+    setSelectedValue(findEventType());
+    setFrequency(frequencyRecord());
+    setOrganizer(routeData?.data.organizer);
+    setParticipant(routeData?.data.participants);
+    setNumber(routeData?.data.phone);
+    setPhonepublic(routeData?.data.phone_visible);
+    setSelectIconOne(routeData?.data.public_event == 'Yes' ? "1" : "0")
+    setPersonPerDay(routeData?.data.targe_chants)
+    setPhonepublic(routeData?.data.phone_visible == 'Yes' ? "1" : "0")
+  }, []);
 
   const pickerRef = useRef();
-  // console.log('frequencjfksljf', frequency);
   const [countryCode, setCountryCode] = useState({
     code: 'IN',
     icon: 'https://projects.cityinnovates.in/gieo_gita/public/assets/img/flags/in.png',
@@ -100,25 +88,16 @@ const EventForm = ({ route }) => {
     phone_code: 91,
   });
   const [modalVisible, setmodalVisible] = useState(false);
-  // console.log('show frequency', frequency);
-  // console.log('show date');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const dispatch = useDispatch();
-  // console.log('show slected value data', selectedValue);
   const countryRespose = useSelector(
     state => state.AppReducers.countryNamelistData,
   );
-  const countryStateLIstData = useSelector(
-    state => state.AppReducers.countryStateListData,
-  );
-  // console.log('show country pade dfdsflks', countryRespose);
 
   useEffect(() => {
-    // dispatch(getAllEvent());
     dispatch(getCountryName());
     dispatch(getStateName());
     dispatch(getEventType());
-    // dispatch(getEventPlace());
   }, []);
   const eventtypeData = useSelector(state => state.EventReducer.eventTypeData);
   const newItem = { id: 0, name: 'select' };
@@ -129,7 +108,6 @@ const EventForm = ({ route }) => {
     }
   }, [eventtypeData]);
 
-  // console.log('show event type data00000', eventtypeData);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -143,12 +121,10 @@ const EventForm = ({ route }) => {
   };
 
   const handleConfirm = date => {
-    // console.warn('A date has been picked: ', date);
     setstartDate(date);
     hideDatePicker();
   };
   const handleConfirmEnd = date => {
-    // console.warn('A date has been picked: ', date);
     setEndDate(date);
     setShowModal(false);
   };
@@ -180,29 +156,7 @@ const EventForm = ({ route }) => {
     setCheckboxSlect('1');
     setPhonepublic('0');
   };
-  // console.log('show eventType', selectedValue);
-  let formData = {
-    name: name,
-    event_type: selectedValue,
-    frequency: frequency,
-    start: startDate,
-    participants: participant,
-    phone_visible: phonepublic,
-    personPerDay: personPerDay,
-    end: endDate,
-    phone: number,
-    email: email,
-    organizer: organizer,
-    instraction: description,
-    short_content: description,
-    plateform: platform,
-    joing_links: joiningLink,
-    targe_chants: personPerDay,
-    public_event: selectIconOne,
-    content: description
-  };
 
-  console.log('frequency:::::::',frequency);
   const handleONsubmit = () => {
     setLaoder(true);
     setCheck(true);
@@ -243,7 +197,7 @@ const EventForm = ({ route }) => {
       let formDataEdit = {
         name: name,
         event_type: selectedValue,
-        frequency: frequency.length > 0 ? frequency[0].id : null,
+        frequency: frequency,
         start: startDate,
         participants: participant,
         phone_visible: phonepublic,
@@ -262,15 +216,33 @@ const EventForm = ({ route }) => {
         id: routeData?.data.id
       };
 
+
+      let formData = {
+        name: name,
+        event_type: selectedValue,
+        frequency: frequency,
+        start: startDate,
+        participants: participant,
+        phone_visible: phonepublic,
+        personPerDay: personPerDay,
+        end: endDate,
+        phone: number,
+        email: email,
+        organizer: organizer,
+        instraction: description,
+        short_content: description,
+        plateform: platform,
+        joing_links: joiningLink,
+        targe_chants: personPerDay,
+        public_event: selectIconOne,
+        content: description
+      };
+
       if (routeData != null) {
-        // alert('update')
-        console.log("show edit data===============>", formDataEdit)
         dispatch(updateMyEvent(formDataEdit));
-        // navigationRef.navigate('formPlace');
       } else {
-        // alert('create')
+
         dispatch(createEvent(formData));
-        // navigationRef.navigate('formPlace');
       }
     }
   };
@@ -534,7 +506,6 @@ const EventForm = ({ route }) => {
               onChangeText={setOrganizer}
               value={organizer}
               placeholderTextColor={'black'}
-            //   style={styles.textINput}
             />
           </View>
         </View>
@@ -692,31 +663,25 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: 'lightgrey',
     height: 60,
-    // justifyContent:'center',
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    // paddingHorizontal:10
   },
   haderStyle: {
-    // color: 'black',
     fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
     backgroundColor: '#fff',
-    // elevation:2
   },
   textHeader: {
     top: -11,
     position: 'absolute',
     backgroundColor: 'white',
     zIndex: 100,
-    // elevation:5,
     width: ms(85),
     left: 20,
   },
   textINput: {
-    // marginLeft: 15,
     color: 'gray'
   },
   firstBlock: {

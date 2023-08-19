@@ -14,7 +14,7 @@ const windowWidth = Dimensions.get('window').width;
 const UpdatedEvent = () => {
   const dispatch = useDispatch()
   const currentEvent = useSelector(state => state.EventReducer.locationUpdated);
-  console.log("show cureendt event",currentEvent)
+  // console.log("show cureendt event",currentEvent)
 const handleOnpress=()=>{
   dispatch(getMyEvent())
   navigationRef.navigate("myEvent")

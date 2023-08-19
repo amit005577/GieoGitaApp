@@ -21,14 +21,14 @@ import bhawan from '../../../../assets/images/patanjali.jpeg';
 const VideoScreen = () => {
   const dispatch = useDispatch();
   const videoData = useSelector(state => state.AppReducers.videoData);
-  console.log(JSON.stringify(videoData), 'show datat from videojf');
+  // console.log(JSON.stringify(videoData), 'show datat from videojf');
   const [videoId, setVideoId] = useState(videoJson[0])
-  console.log("show content data",videoData)
+  // console.log("show content data",videoData)
   useEffect(() => {
     dispatch(getVideoData());
   }, []);
  const handleOnpressVideo=(el)=>{
-  console.log("show url",el)
+  // console.log("show url",el)
   setVideoId(el)
  }
   const renderItem = ({item}) => {
@@ -47,7 +47,7 @@ const VideoScreen = () => {
   };
 
   const [error, setError] = React.useState('');
-  console.log(error);
+  // console.log(error);
   // let videoId ="https://youtu.be/-nKlaiMSdag";
   // const youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
   let idd = 'yCTpMpyEpUg';

@@ -64,7 +64,7 @@ const EventPage = ({ navigation }) => {
   const [editLoder, setEditLoder] = useState(false)
 
 
-  console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
+  // console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -167,26 +167,26 @@ const EventPage = ({ navigation }) => {
         onLongPress={() => handleOnlongPress(item)}>
         <View style={{ width: '95%' }}>
           <View style={styles.singleItem}>
-            <IconV name="globe" size={18} />
+            <IconV name="globe" color ='#4d4c4a' size={18} />
             <Text numberOfLines={2} style={styles.textstyle}>
               {item.event_type}
             </Text>
           </View>
           <View style={styles.itemlistcontainer}>
             <View style={styles.oneItem}>
-              <Icon name="calendar" size={15} />
+              <Icon name="calendar"color ='#4d4c4a' size={15} />
               <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {moment(item?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
             <View style={styles.oneItem}>
-              <IconE name="location" size={15} />
+              <IconE name="location" color ='#4d4c4a' size={15} />
               <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {item.place_type}
               </Text>
             </View>
             <View style={{ ...styles.oneItem }}>
-              <IconF name="users" size={15} />
+              <IconF name="users" color ='#4d4c4a' size={15} />
               <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {item.participants}
               </Text>
@@ -194,7 +194,7 @@ const EventPage = ({ navigation }) => {
           </View>
         </View>
         <View>
-          <Icon name="right" size={25} />
+          <Icon name="right" color ='#4d4c4a' size={25} />
         </View>
       </TouchableOpacity>
     );
@@ -291,27 +291,22 @@ const EventPage = ({ navigation }) => {
           setShowModal={setshowModalPlaceType}
           handleSelectedItem={handlePlacetypeFunction}
         />
-        <View style={styles.textInputContainer}>
-          <View style={styles.textContainer}>
-            <TextInput
-              placeholder="Find Event"
-              onChangeText={handleFilter}
-              // value={text}
-              autoCapitalize="none"
-              clearButtonMode="always"
-              autoCorrect={false}
-              placeholderTextColor={'gray'}
-              style={{ color: '#111211', }}
-            />
-          </View>
-          <TouchableOpacity
-            // onPress={() => handleSearch()}
-            style={styles.serchContainer}>
-            <Text style={styles.searchText}>Search</Text>
-          </TouchableOpacity>
+        <View style={styles.textContainer}>
+          <TextInput
+            placeholder="Find Event"
+            onChangeText={handleFilter}
+            autoCapitalize="none"
+            clearButtonMode="always"
+            autoCorrect={false}
+            placeholderTextColor={'gray'}
+            style={{ color: '#111211',flex:1}}
+          >
+          </TextInput>
+          <IconF name="search" size={25} color ='gray' />
         </View>
+
         <Text style={styles.textShowingHeadingData}>
-          Shwoing 0 out of 0 events or groups
+          {"Shwoing 0 out of 0 events or groups"}
         </Text>
         <View style={styles.flatlistContaner}>
           {EventLoading ? (
@@ -345,7 +340,6 @@ const EventPage = ({ navigation }) => {
               <Text style={styles.textStyle}>Close</Text>
             </Pressable>
             <View style={styles.fistRow}>
-              {console.log('selectedItemFromList::::::::::::::', selectedItemFromList)}
               <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
               {validateUser() ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
@@ -384,7 +378,7 @@ const EventPage = ({ navigation }) => {
                   Organizer
                 </Text>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                  <IconV name="old-phone" size={20} style={{ marginRight: 5 }} />
+                  <IconV name="old-phone" size={20}color ='gray' style={{ marginRight: 5 }} />
                   <Text style={styles.textDetails}>
                     {selectedItemFromList?.organizer}
                   </Text>
@@ -468,10 +462,15 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     borderWidth: 1,
-    width: '75%',
+    width: '95%',
     borderRadius: 20,
     paddingHorizontal: 10,
     height: 42,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    alignSelf:'center',
+    marginTop:20
   },
   serchContainer: {
     borderWidth: 1,
@@ -510,13 +509,12 @@ const styles = StyleSheet.create({
   iconContianer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignContent: 'center',
     alignItems: 'center',
-    // height: 80,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#e0e0de',
     marginTop: 10,
     paddingHorizontal: 10,
     padding: 10,
+    borderRadius:5
   },
   singleItem: {
     flexDirection: 'row',

@@ -15,7 +15,7 @@ import { subscribeEvent } from '../../redux/actions';
 const windowWidth = Dimensions.get('window').width;
 const DetailEvent = ({ route }) => {
   const item = route.params;
-  console.log("show details item",item)
+  // console.log("show details item",item)
   // console.log('show props data', route.params);
   const url = 'https://img.freepik.com/premium-vector/torn-ripped-paper-hole-transparent-background_755228-1779.jpg'
   const message = "Some message"
@@ -31,10 +31,10 @@ const DetailEvent = ({ route }) => {
   }
  
   const subscribeResponse = useSelector(state => state.EventReducer.subscribeEventResponse);
-  console.log("show subscribe event response",subscribeResponse)
+  // console.log("show subscribe event response",subscribeResponse)
  const [subscription, setsubscription] = useState(item?.subscriptions)
 
-console.log("show event subsciption",subscription)
+// console.log("show event subsciption",subscription)
  useEffect(()=>{
    if(subscribeResponse.id==item.id){
     setsubscription(subscribeResponse.subscriptions)

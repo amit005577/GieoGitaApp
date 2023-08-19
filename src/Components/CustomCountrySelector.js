@@ -33,12 +33,12 @@ const CustomCountrySelector = ({
   //   const countryCode = useSelector(countryCodeNumber);
   //   let newCountryCode = countryCode?.data;
   // const [searchdata, setSearchdata] = useState(countryCode);
-  console.log('show data country', selectedItem);
+  // console.log('show data country', selectedItem);
   const [searchText, setSearchText] = useState('');
 
   // console.log('show code structure', countryCode?.data.length);
   const handleItemSelect = item => {
-    console.log("show item name ",item)
+    // console.log("show item name ",item)
     setSelectedItem(item);
     setSearchText('');
     setModalVisible(false);
@@ -126,7 +126,7 @@ const CustomCountrySelector = ({
                         .toLocaleLowerCase()
                         .includes(searchText.toLocaleLowerCase())
                     ) {
-                      console.log('show data item', item);
+                      // console.log('show data item', item);
                       return (
                         <TouchableOpacity
                           onPress={() => handleItemSelect(item)}

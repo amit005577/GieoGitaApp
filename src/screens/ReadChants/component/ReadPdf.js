@@ -49,7 +49,7 @@ const ReadPdfScreen = () => {
   useEffect(() => {
     dispatch(languageList());
   }, []);
-  console.log('show pdflist data', JSON.stringify(completeList));
+  // console.log('show pdflist data', JSON.stringify(completeList));
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -57,7 +57,7 @@ const ReadPdfScreen = () => {
   }, []);
   // console.log('show page', page);
   const handleOnpressLanguage = _item => {
-    console.log(_item, '-->>>>>>>>');
+    // console.log(_item, '-->>>>>>>>');
     let _data = '';
     pdfList[0].translations.map(item => {
       item.lang == _item.code && (_data = item);
@@ -230,7 +230,7 @@ const ReadPdfScreen = () => {
                 keyExtractor={item => item.id}
                 ListFooterComponent={() => <View style={{height:200}} />}
                 renderItem={({item}) => {
-                  console.log('show item data ddkfdk', item);
+                  // console.log('show item data ddkfdk', item);
                   return (
                     <TouchableOpacity
                       onPress={() => handleOnpressLanguage(item)}

@@ -41,7 +41,7 @@ const SankalpScreen = () => {
  let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
  let noOfDays = targetDate.diff(currentDateData, 'days');
  
- console.log("Number of days:", noOfDays);
+//  console.log("Number of days:", noOfDays);
  let dailyCount= count/noOfDays
  let monthCountNumber = dailyCount*30
  let weekCountNummber = dailyCount*7
