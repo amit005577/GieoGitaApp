@@ -233,7 +233,7 @@ const reisterDetailSaga = function* (data) {
     email:data.payload.email
   };
   // console.log('show submitting saga data', _data);
-  // try {
+  try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-update';
       console.log("show hit api before data ",_data,requestUrl)
@@ -243,20 +243,23 @@ const reisterDetailSaga = function* (data) {
       'show  montuhly data res data saga',
       JSON.stringify(res),
     );
-    // if (res.data != null) {
+    if (res.data != null) {
       // if (res.data.data.message.email == 'The email has already been taken.') {
       //   Alert.alert('The email has already been taken.');
       // } else {
-      //   yield put({
-      //     type: actions.SAVE_PDF_DATA,
-      //     payload: res.data.data,
-      //   });
-      //   alert("profile updated successfully")
-      // }
-  //   }
-  // } catch (error) {
-  //   console.log('show reisterDetailSaga error api', error);
-  // }
+        yield put({
+          type: actions.SAVE_PDF_DATA,
+          payload: res.data.data,
+        });
+        yield put({type: actions.TARGET_CHANT_DATA})
+        Alert.alert("profile updated successfully")
+        navigationRef.navigate("chant")
+      }
+    // }
+  } catch (error) {
+    Alert.alert("This email is already taken")
+    console.log('This data regiter taken', error);
+  }
 };
 
 const getliveDatasaga = function* () {
