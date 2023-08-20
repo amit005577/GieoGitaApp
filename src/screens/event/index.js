@@ -183,6 +183,7 @@ const EventPage = ({ navigation }) => {
   //   }
   // }
   console.log(profileDetail);
+
   const validateCurrentUser = (phone, email) => {
     if (profileDetail && profileDetail?.length > 0) {
       return profileDetail[0]?.phone?.includes(phone) || profileDetail[0]?.email?.includes(email)
@@ -226,7 +227,8 @@ const EventPage = ({ navigation }) => {
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('form', { data: item })} style={{ justifyContent: 'center', alignItems: 'center' }} >
+        
+        <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
           {
             validateCurrentUser(item.phone, item.email) ?
               <IconF name="edit" color='orange' size={25} />
