@@ -156,6 +156,7 @@ export const registerApi = async (url, data) => {
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
+  console.log("show token data",token)
   if (token) {
     return axios({
       method: 'POST',

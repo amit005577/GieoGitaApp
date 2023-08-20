@@ -78,7 +78,7 @@ const LocationForm = ({route}) => {
 
   const [check, setCheck] = useState(false);
   const currentEvent = useSelector(state => state.EventReducer.currentEvent);
-  // console.log("show current reducer",currentEvent)
+  console.log("show current reducer",currentEvent)
 
  
   const newItem = {id: 0, name: 'select'};
@@ -173,19 +173,17 @@ const LocationForm = ({route}) => {
     } else if (country == null) {
       Alert.alert('Please select country');
     } else if (selectedState == null) {
-      Alert.alert('Please select select');
+      Alert.alert('Please select state');
     } else if (cityName == '' && cityName == null) {
       Alert.alert('Please Enter cityName');
     } else {
       // if (route?.params.Editable) {
       //   dispatch(updateMyEvent(editedData));
       // } else {
-        // console.log("show location data from page",data)
 
         dispatch(updateLocation(data));
       // }
     }
-    // console.log('show all form data', data);
   };
 
 
@@ -247,7 +245,7 @@ const LocationForm = ({route}) => {
               onChangeText={setName}
               value={name}
               placeholderTextColor={'black'}
-              //   style={styles.textINput}
+                style={styles.textINput}
             />
           </View>
         </View>
@@ -344,7 +342,7 @@ const LocationForm = ({route}) => {
                 value={pin}
                 keyboardType="numeric"
                 maxLength={6}
-                //   style={styles.textINput}
+                  style={styles.textINput}
               />
             </View>
             {check && pin == null && (
@@ -362,7 +360,7 @@ const LocationForm = ({route}) => {
               onChangeText={setAddress}
               value={address}
               placeholderTextColor={'black'}
-              //   style={styles.textINput}
+                style={styles.textINput}
             />
           </View>
         </View>
@@ -384,7 +382,7 @@ const LocationForm = ({route}) => {
                 onChangeText={setcityName}
                 value={cityName}
                 placeholderTextColor={'black'}
-                //   style={styles.textINput}
+                  style={styles.textINput}
               />
             </View>
             {check && cityName == '' && (
@@ -674,6 +672,7 @@ const styles = StyleSheet.create({
   },
   textINput: {
     marginLeft: 15,
+    color:colors.black
   },
   firstTextinput: {
     borderWidth: 1,
@@ -733,7 +732,7 @@ const styles = StyleSheet.create({
     // marginHorizontal:20,
     width: '100%',
     backgroundColor: 'white',
-    borderRadius: 20,
+    // borderRadius: 20,
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',

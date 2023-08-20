@@ -32,7 +32,12 @@ import {navigationRef} from '../../../App';
 
 // import HeaderPage from '../components/header';
 
-const ChantCount = ({navigation}) => {
+const ChantCount = ({navigation,route}) => {
+
+  //  let RoutData = route.params
+  //  let chantDate = moment(RoutData?.create_at).utc().format('DD MMM')
+
+  
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
@@ -165,7 +170,7 @@ const ChantCount = ({navigation}) => {
 
           <View style={styles.monthContentStyle}>
             <Text style={{fontWeight: 'bold', color: '#434343'}}>
-              {todaysDate}
+              { todaysDate}
             </Text>
           </View>
 
