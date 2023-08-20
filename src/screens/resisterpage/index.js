@@ -10,6 +10,7 @@ import {
   Pressable,
   ActivityIndicator,
   ScrollView,
+  Alert,
 } from 'react-native';
 import logo from '../../../assets/images/Logo.png';
 
