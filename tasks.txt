@@ -1,4 +1,4 @@
-add filter search option in country selection
+event confirmation task
 implement push Notifications
 update past cahnts list item
 language translations

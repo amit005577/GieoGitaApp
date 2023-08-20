@@ -6721,6 +6721,11 @@ react-native-code-push@^8.0.2:
     semver "^7.3.5"
     xcode "3.0.1"
 
+react-native-image-picker@^5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.6.1.tgz#34ec5e26c48d5caa88ae7b273663c59d1793eecc"
+  integrity sha512-LPPlgJi97EzCDY4NWp7z0oUWmCbagnB6HSoKcLJHJD/DaFYN/dJPrqjqKaqqw8K/5Ze6DIsNg9PZohjNEYQQWQ==
+
 react-native-localize@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-3.0.2.tgz#43fa75c0097dbdb24a54ff320b3c8ad732407365"

@@ -304,6 +304,36 @@ const AllEventSaga = function* () {
       // console.log('show error api', error);
     }
   };
+
+  const confirmationEventSaga = function* (data) {
+    // console.log("show id payload",data)
+    
+    let _data={
+      id:data.payload.params.id,
+      banner:data.payload.params.image,
+      thumbnail:data.payload.params.image,
+    }
+    
+    try {
+      let requestUrl =
+        `https://projects.cilearningschool.com/gieo_gita/api/v1/events-store-banner`;
+   console.log("show resposne api previos;;;;;;;",requestUrl,_data)
+      const res = yield call(registerApi, requestUrl,_data);
+      console.log(
+        'show   subscribe event-------=-=-=',
+        JSON.stringify(res.data.data),
+      );
+      if (res.data.data!= null) {
+         data.payload.callback()
+        //  return res.data.data
+  
+        // Alert.alert("Event Confirmed Successfully")
+        // navigationRef.navigate("home")
+      }
+    } catch (error) {
+      console.log('show error api', error);
+    }
+  };
 const EventSaga = [
     takeLatest(actions.GET_ALL_EVENT, AllEventSaga),
     takeLatest(actions.GET_EVENT_TYPE, GetEventTypeSaga),
@@ -313,7 +343,8 @@ const EventSaga = [
     takeLatest(actions.GET_MY_EVENT,MyEventSaga ),
     takeLatest(actions.UPDATE_MY_EVENT,UpdateMyEventSaga ),
     takeLatest(actions.UPDATE_LOCATION,UpdateMyLocation ),
-    takeLatest(actions.SUBSCRIBE_EVENT,SubscribeEventSaga)
+    takeLatest(actions.SUBSCRIBE_EVENT,SubscribeEventSaga),
+    takeLatest(actions.EVENT_CONFERMATION_IMAGE,confirmationEventSaga)
    
   
   ];

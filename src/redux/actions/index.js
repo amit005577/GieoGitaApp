@@ -260,3 +260,11 @@ export const subscribeEvent = payload=>{
     payload,
   }
 }
+
+export const eventConfirmation = payload=>{
+  
+  return{
+    type:ActionTypes.EVENT_CONFERMATION_IMAGE,
+    payload,
+  }
+}
