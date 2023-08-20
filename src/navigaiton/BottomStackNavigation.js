@@ -45,7 +45,7 @@ function BottomTabnavigator() {
                 ...styles.bottomIconTopBar,
                 borderColor: focused ? 'white' : 'white',
               }}>
-             <Image source={Sankh} style={{height:60,width:60,bottom:20}} />
+             <Image source={Sankh} style={{height:60,width:60,bottom:20,}} />
             </View>
           ),
         }}

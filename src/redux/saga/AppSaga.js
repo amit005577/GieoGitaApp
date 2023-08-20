@@ -158,7 +158,6 @@ const getLanguageList = function* () {
   }
 };
 const getTargetPledgeData = function* () {
-  console.log('list pledge dnfksdnf enter');
   try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-details';
@@ -176,7 +175,7 @@ const getTargetPledgeData = function* () {
       JSON.stringify(res.data.data),
     );
   } catch (error) {
-    Alert.alert('server error');
+    // Alert.alert('server error');
     // console.log('show getTargetPledgeData error api', error);
   }
 };
@@ -239,10 +238,10 @@ const reisterDetailSaga = function* (data) {
       console.log("show hit api before data ",_data,requestUrl)
     const res = yield call(registerApi, requestUrl, _data);
 
-    console.log(
-      'show  montuhly data res data saga',
-      JSON.stringify(res),
-    );
+    // console.log(
+    //   'show  montuhly data res data saga',
+    //   JSON.stringify(res),
+    // );
     if (res.data != null) {
       // if (res.data.data.message.email == 'The email has already been taken.') {
       //   Alert.alert('The email has already been taken.');
@@ -258,7 +257,7 @@ const reisterDetailSaga = function* (data) {
     // }
   } catch (error) {
     Alert.alert("This email is already taken")
-    console.log('This data regiter taken', error);
+    // console.log('This data regiter taken', error);
   }
 };
 

@@ -78,9 +78,13 @@ const LocationForm = ({route}) => {
 
   const [check, setCheck] = useState(false);
   const currentEvent = useSelector(state => state.EventReducer.currentEvent);
-  console.log("show current reducer",currentEvent)
+  console.log('show current reducer', currentEvent);
+  const countryRespose = useSelector(
+    state => state.AppReducers.countryNamelistData,
+  );
 
- 
+  const [countrylistData, setcountrylistData] = useState(countryRespose);
+
   const newItem = {id: 0, name: 'select'};
 
   useEffect(() => {
@@ -88,7 +92,6 @@ const LocationForm = ({route}) => {
       eventPlacetype.unshift(newItem);
     }
   }, [eventPlacetype]);
-
 
   const handlefirstCheckBox = () => {
     setSelectIconOne('1');
@@ -110,10 +113,6 @@ const LocationForm = ({route}) => {
     dispatch(getEventPlace());
   }, []);
 
-  const countryRespose = useSelector(
-    state => state.AppReducers.countryNamelistData,
-  );
-
   const handleOnpressCountry = item => {
     setCountry(item);
     setCountryModal(false);
@@ -132,17 +131,17 @@ const LocationForm = ({route}) => {
   // console.log('show item data inrout', item);
 
   let data = {
-    place_name:name,
+    place_name: name,
     place_type: selectedValue,
     pincode: pin,
     CountryState: selectedState?.id,
     is_public_place: selectIconOne,
     country_id: country?.id,
-    state_id:selectedState?.id,
+    state_id: selectedState?.id,
     address: address,
     city: cityName,
-    address:address,
-    id:currentEvent?.id
+    address: address,
+    id: currentEvent?.id,
   };
 
   //edited data
@@ -181,46 +180,51 @@ const LocationForm = ({route}) => {
       //   dispatch(updateMyEvent(editedData));
       // } else {
 
-        dispatch(updateLocation(data));
+      dispatch(updateLocation(data));
       // }
     }
   };
-
 
   const handleselectState = item => {
     setselectedState(item);
     setstateModata(false);
   };
 
+  const [searchText, setSearchText] = useState('');
+  const [searchStateText, setSearchStateText] = useState('');
+  // const handleFilter = item => {
+  //   setcountrylistData(item);
+  //   setSearchText('');
+  //   setModalVisible(false);
+  // };
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <HeaderPage />
       <ScrollView style={{paddingHorizontal: 10}}>
-        <TouchableOpacity
-          style={styles.iconContianer}
-        >
+        <TouchableOpacity style={styles.iconContianer}>
           <View style={{width: '90%'}}>
             <View style={styles.singleItem}>
-              <IconV name="globe" size={18} color={"black"}/>
+              <IconV name="globe" size={18} color={'black'} />
               <Text numberOfLines={2} style={styles.textstyle}>
                 {currentEvent.event_type}
               </Text>
             </View>
             <View style={styles.itemlistcontainer}>
               <View style={styles.oneItem}>
-                <Icon name="calendar" size={15} color={"black"} />
+                <Icon name="calendar" size={15} color={'black'} />
                 <Text style={{...styles.textstyle, fontSize: 14}}>
                   {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
                 </Text>
               </View>
               <View style={styles.oneItem}>
-                <IconE name="location" size={15} color={"black"}/>
+                <IconE name="location" size={15} color={'black'} />
                 <Text style={{...styles.textstyle, fontSize: 14}}>
                   {currentEvent.place_type}
                 </Text>
               </View>
               <View style={{...styles.oneItem}}>
-                <IconF name="users" size={15} color={"black"}/>
+                <IconF name="users" size={15} color={'black'} />
                 <Text style={{...styles.textstyle, fontSize: 14}}>
                   {currentEvent.participants}
                 </Text>
@@ -245,7 +249,7 @@ const LocationForm = ({route}) => {
               onChangeText={setName}
               value={name}
               placeholderTextColor={'black'}
-                style={styles.textINput}
+              style={styles.textINput}
             />
           </View>
         </View>
@@ -342,7 +346,7 @@ const LocationForm = ({route}) => {
                 value={pin}
                 keyboardType="numeric"
                 maxLength={6}
-                  style={styles.textINput}
+                style={styles.textINput}
               />
             </View>
             {check && pin == null && (
@@ -360,7 +364,7 @@ const LocationForm = ({route}) => {
               onChangeText={setAddress}
               value={address}
               placeholderTextColor={'black'}
-                style={styles.textINput}
+              style={styles.textINput}
             />
           </View>
         </View>
@@ -382,7 +386,7 @@ const LocationForm = ({route}) => {
                 onChangeText={setcityName}
                 value={cityName}
                 placeholderTextColor={'black'}
-                  style={styles.textINput}
+                style={styles.textINput}
               />
             </View>
             {check && cityName == '' && (
@@ -397,7 +401,7 @@ const LocationForm = ({route}) => {
               <Text style={styles.haderStyle}>State</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{alignSelf: 'center', fontSize: 16,color:'black'}}>
+              <Text style={{alignSelf: 'center', fontSize: 16, color: 'black'}}>
                 {selectedState ? selectedState.name : '--Select State--'}
               </Text>
               {/* <CustomPicker
@@ -429,35 +433,79 @@ const LocationForm = ({route}) => {
                 onPress={() => setCountryModal(!countryModal)}>
                 <Text style={styles.textStyle}>रद्द करना</Text>
               </Pressable>
+
+              <View style={styles.searchStyle}>
+                <TextInput
+                  placeholder="Find Event"
+                  onChangeText={value => setSearchText(value)}
+                  autoCapitalize="none"
+                  clearButtonMode="always"
+                  autoCorrect={false}
+                  placeholderTextColor={'gray'}
+                  style={{color: '#111211', flex: 1}}></TextInput>
+                <IconF name="search" size={25} color="gray" />
+              </View>
               <View style={{marginTop: 20}}>
                 <FlatList
-                  data={countryRespose}
+                  data={countrylistData}
                   keyExtractor={item => item.id}
                   ListFooterComponent={() => <View style={{height: 200}} />}
                   ListEmptyComponent={() => {
                     return <ActivityIndicator size={'small'} color={'blue'} />;
                   }}
                   renderItem={({item}) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => handleOnpressCountry(item)}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          width: '100%',
-                        }}>
+                    if (searchText === '') {
+                      return (
                         <View>
-                          <Text style={styles.modalText}>{item?.name}</Text>
+                          <TouchableOpacity
+                            onPress={() => handleOnpressCountry(item)}
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}>
+                            <View>
+                              <Text style={styles.modalText}>{item?.name}</Text>
+                            </View>
+                            <FIcon
+                              name="check-circle"
+                              size={20}
+                              color={
+                                item.name == country?.name ? 'green' : 'orange'
+                              }
+                            />
+                          </TouchableOpacity>
                         </View>
-                        <FIcon
-                          name="check-circle"
-                          size={20}
-                          color={
-                            item.name == country?.name ? 'green' : 'orange'
-                          }
-                        />
-                      </TouchableOpacity>
-                    );
+                      );
+                    }
+                    if (
+                      item.name
+                        .toLocaleLowerCase()
+                        .includes(searchText.toLocaleLowerCase())
+                    ) {
+                      return (
+                        <View>
+                          <TouchableOpacity
+                            onPress={() => handleOnpressCountry(item)}
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}>
+                            <View>
+                              <Text style={styles.modalText}>{item?.name}</Text>
+                            </View>
+                            <FIcon
+                              name="check-circle"
+                              size={20}
+                              color={
+                                item.name == country?.name ? 'green' : 'orange'
+                              }
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    }
                   }}
                 />
               </View>
@@ -480,6 +528,17 @@ const LocationForm = ({route}) => {
                 onPress={() => setstateModata(!stateModata)}>
                 <Text style={styles.textStyle}>रद्द करना</Text>
               </Pressable>
+              <View style={styles.searchStyle}>
+                <TextInput
+                  placeholder="Find Event"
+                  onChangeText={value => setSearchStateText(value)}
+                  autoCapitalize="none"
+                  clearButtonMode="always"
+                  autoCorrect={false}
+                  placeholderTextColor={'gray'}
+                  style={{color: '#111211', flex: 1}}></TextInput>
+                <IconF name="search" size={25} color="gray" />
+              </View>
               <View style={{marginTop: 20}}>
                 <FlatList
                   data={countryStateLIstData}
@@ -489,28 +548,57 @@ const LocationForm = ({route}) => {
                     return <ActivityIndicator size={'small'} color={'blue'} />;
                   }}
                   renderItem={({item}) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => handleselectState(item)}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          width: '100%',
-                        }}>
-                        <View>
-                          <Text style={styles.modalText}>{item.name}</Text>
-                        </View>
-                        <FIcon
-                          name="check-circle"
-                          size={20}
-                          color={
-                            item.name == selectedState?.name
-                              ? 'green'
-                              : 'orange'
-                          }
-                        />
-                      </TouchableOpacity>
-                    );
+                    if(searchStateText===''){
+                      return (
+                        <TouchableOpacity
+                          onPress={() => handleselectState(item)}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                          }}>
+                          <View>
+                            <Text style={styles.modalText}>{item.name}</Text>
+                          </View>
+                          <FIcon
+                            name="check-circle"
+                            size={20}
+                            color={
+                              item.name == selectedState?.name
+                                ? 'green'
+                                : 'orange'
+                            }
+                          />
+                        </TouchableOpacity>
+                      );
+                    } 
+                    if(      item.name
+                      .toLocaleLowerCase()
+                      .includes(searchStateText.toLocaleLowerCase())){
+                      return (
+                        <TouchableOpacity
+                          onPress={() => handleselectState(item)}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                          }}>
+                          <View>
+                            <Text style={styles.modalText}>{item.name}</Text>
+                          </View>
+                          <FIcon
+                            name="check-circle"
+                            size={20}
+                            color={
+                              item.name == selectedState?.name
+                                ? 'green'
+                                : 'orange'
+                            }
+                          />
+                        </TouchableOpacity>
+                      );
+                    }
+                   
                   }}
                 />
               </View>
@@ -672,7 +760,7 @@ const styles = StyleSheet.create({
   },
   textINput: {
     marginLeft: 15,
-    color:colors.black
+    color: colors.black,
   },
   firstTextinput: {
     borderWidth: 1,
@@ -764,6 +852,18 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     color: 'black',
+  },
+  searchStyle: {
+    borderWidth: 1,
+    width: '95%',
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    height: 42,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
   },
 });
 

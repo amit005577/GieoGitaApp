@@ -51,15 +51,12 @@ const ReadPdfScreen = () => {
   useEffect(() => {
     dispatch(languageList());
   }, []);
-  // console.log('show pdflist data', JSON.stringify(completeList));
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPdfData());
   }, []);
-  // console.log('show page', page);
   const handleOnpressLanguage = _item => {
-    // console.log(_item, '-->>>>>>>>');
     let _data = '';
     pdfList[0].translations.map(item => {
       item.lang == _item.code && (_data = item);
