@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
-  FlatList,ActivityIndicator
+  FlatList,ActivityIndicator, Alert
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderPage from '../../Components/header';
@@ -28,14 +28,23 @@ const SettingScreen = ({navigation}) => {
   const [selected, setSelected] = useState(languageData[0]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const langList = useSelector(state => state.AppReducers.languageList);
-  // console.log(langList, '-->>>>>Listing');
-  const handleOnpressLanguage = item => {
-    // console.log(item, 'utemskdfmaks');
-    setSelected(item);
+  const [languageListData, setlanguageList] = useState([])
+
+  const handleOnpressLanguage = data => {
+    let newData=[]
+    languageListData.map((item)=>{
+      if (item.id==data.id) {
+        newData.push({...item,isSelected:true})
+      } else {
+        newData.push({...item,isSelected:false})
+      }
+      setlanguageList(newData)
+    })
+    setSelected(data);
     setModalVisible(false);
-    alert(item.name + ' is Selected');
-    dispatch(saveLangCode(item));
+    dispatch(saveLangCode(data));
   };
+
   const handleLogout = async () => {
     try {
       await AsyncStorage.clear();
@@ -44,41 +53,28 @@ const SettingScreen = ({navigation}) => {
       // console.log('show error async', error);
     }
   };
+
+  useEffect(() => {
+    setlanguageList(langList)
+  }, [langList])
+  
   useEffect(() => {
     dispatch(languageList());
   }, []);
+
   return (
     <View style={styles.container}>
       <HeaderPage />
-      {/* <TouchableOpacity
-        onPress={() => navigation.navigate('HomeStack')}
-        style={styles.backContainer}>
-        <FIcon name="arrow-left-circle" size={34} color={'black'} style={{}} />
-        <Text style={{color: 'black', fontSize: 18, left: 10}}>Back</Text>
-      </TouchableOpacity> */}
-      {/* <View
-        style={{
-          width: '100%',
-          height: 1,
-          backgroundColor: 'black',
-          marginTop: 5,
-        }}
-      /> */}
+   
       <View style={styles.rowContainer}>
         <View style={styles.imageConatier}>{/* <Text>image</Text> */}</View>
         <View>
-          {/* <Text style={styles.texttitle}>hello amit</Text> */}
-          {/* <Text style={{...styles.texttitle, fontSize: 14}}>Profile</Text> */}
+        
         </View>
       </View>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('update');
-          // dispatch(setcoditionalStatus(true));
-          // AsyncStorage.clear();
-          // setTimeout(() => {
-          //   navigationRef.navigate('sankalp');
-          // }, 1200);
         }}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
@@ -88,19 +84,12 @@ const SettingScreen = ({navigation}) => {
           <Icon name={'right'} size={10} color={'orange'} />
         </View>
       </TouchableOpacity>
-      {/* <View style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>Old Counts(18 jan to 11 jul,2023)</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </View> */}
+   
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>भाषा चुने</Text>
+          <Text style={styles.texstyle}>{"भाषा चुने "}{selected.name}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -169,7 +158,7 @@ const SettingScreen = ({navigation}) => {
             </Pressable>
             <View style={{marginTop: 20}}>
               <FlatList
-                data={langList}
+                data={languageListData}
                 keyExtractor={item => item.id}
                 ListFooterComponent={() => <View style={{height:200}} />}
                 ListEmptyComponent={()=>{
@@ -194,9 +183,9 @@ const SettingScreen = ({navigation}) => {
                         name="check-circle"
                         size={20}
                         color={
-                          item.language == selected.language
+                          item.isSelected
                             ? 'green'
-                            : 'orange'
+                            : 'lightgray'
                         }
                       />
                     </TouchableOpacity>
