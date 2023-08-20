@@ -1,4 +1,4 @@
-event confirmation task
+
 implement push Notifications
 update past cahnts list item
 language translations
