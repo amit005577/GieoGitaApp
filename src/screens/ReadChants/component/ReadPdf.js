@@ -67,154 +67,79 @@ const ReadPdfScreen = () => {
   const handleOnpress = () => {
     setModalVisible(true);
   };
-  const pageDecrease = () => {
-    if (currentPage == 1) {
-      return currentPage;
-    } else {
-      setCurrentPage(x => {
-        let y = x - 1;
-
-        pdfRef.current?.setPage(y);
-        return y;
-      });
-    }
+ 
+  const [zoom, setZoom] = useState(1);
+  const zoomIncrease = () => {
+    setZoom(zoom + 0.1);
   };
-  const pageIncrease = () => {
-    if (totalPage == currentPage) {
-      return currentPage;
-    } else {
-      setCurrentPage(x => {
-        let y = x + 1;
-        pdfRef.current?.setPage(y);
-        return y;
-      });
-    }
+
+  const zoomdecrease = () => {
+    setZoom(zoom - 0.1);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{paddingHorizontal: 0}}>
+      <View style={{paddingHorizontal: 0}}>
         <View style={styles.monthContainer}>
-          <TouchableOpacity
-            style={styles.monthContentStyle}
-            // setDisable(true);
-            onPress={() => handleOnpress()}>
-            <Text style={{color: 'black', fontWeight: 'bold'}}>भाषा चुनें</Text>
-            {/* <Text style={{color: 'black', fontWeight: 'bold'}}> भाषा</Text> */}
+         
+          <TouchableOpacity onPress={zoomdecrease}>
+            <FIcon name="minus-circle" size={40} style={{...styles.iconStyle}} />
           </TouchableOpacity>
-
-          {/* <View style={styles.monthContentStyle}>
-            <Text style={{fontWeight: 'bold', color: 'black'}}>
-              {todaysDate}
-            </Text>
-          </View> */}
-          {/* 
           <View>
-            <TouchableOpacity onPress={() => dateIncrement()}>
-              <FIcon
-                name="arrow-right-circle"
-                size={30}
-                style={{...styles.iconStyle}}
-              />
+            <TouchableOpacity
+              style={styles.monthContentStyle}
+              onPress={() => handleOnpress()}>
+              <Text style={{color: 'black', fontWeight: 'bold',alignSelf:'center'}}>
+                भाषा चुनें
+              </Text>
             </TouchableOpacity>
-          </View> */}
-          <TouchableOpacity onPress={() => handleOnpress()}>
-            <Icon name="language" size={40} style={{...styles.iconStyle}} />
+            <Text style={{fontSize: 12, color: 'red',alignSelf:'center',marginTop:2}}>
+              {currentPage}/{totalPage}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={zoomIncrease}>
+            <FIcon name="plus-circle" size={40} style={{...styles.iconStyle}} />
           </TouchableOpacity>
+    
         </View>
-        {/* <WebView
-          source={{
-            // uri: `http://docs.google.com/gview?embedded=true&url=${'https://drive.google.com/file/d/1jEGCvlJAszVRYVTejiUCYe3D05LAxq5Z/view?usp=sharing'}`,
-            // uri: `https://drive.google.com/file/d/1jEGCvlJAszVRYVTejiUCYe3D05LAxq5Z/view?usp=sharing`,
-            uri: selected?.file_short_content,
-          }}
-          style={{height: 400, width: Dimensions.get('window').width}}
-          nestedScrollEnabled
-        /> */}
-        {/* <WebView
-          style={{height: 500, width: 350}}
-          nestedScrollEnabled={true}
-          source={{
-            uri: selected?.file_short_content,
-            // uri: 'https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.africau.edu/images/default/sample.pdf',
-          }}
-        /> */}
 
-        <Pdf
-          trustAllCerts={false}
-          source={{
-            // uri: `http://docs.google.com/gview?embedded=true&url=${'https://drive.google.com/file/d/1jEGCvlJAszVRYVTejiUCYe3D05LAxq5Z/view?usp=sharing'}`,
-            uri: selected?.file_short_content,
-            // uri:
-            //   pdflist.length > 0 &&
-            //   pdflist[0]?.translations[0]?.file_short_content,
-            // 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-          }}
-          page={currentPage}
-          fitPolicy={Dimensions.get('window').width}
-          // scale={.3}
-          renderActivityIndicator={() => (
-            <ActivityIndicator color="black" size="large" />
-          )}
-          enablePaging={true}
-          onLoadProgress={percentage => console.log(`Loading :${percentage}`)}
-          onLoadComplete={numberOfPages => {
-            setTotalPage(numberOfPages);
-          }}
-          onError={error => console.log('show error', error)}
-          // onPageSingleTap={page => alert(page)}
-          onPressLink={link => Linking.openURL(link)}
-          spacing={10}
-          style={{height: 590, width: Dimensions.get('window').width}}
-        />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            marginTop: 20,
-            alignItems: 'center',
-          }}>
-          <TouchableOpacity onPress={() => pageDecrease()}>
-            <FIcon name="arrow-left-circle" size={41} color={colors.black} />
-          </TouchableOpacity>
-          <Text style={{fontSize: 18, color: '#F7941C'}}>
-            {currentPage}/{totalPage}
-          </Text>
-          <TouchableOpacity onPress={() => pageIncrease()}>
-            <FIcon name="arrow-right-circle" size={41} color={colors.black} />
-          </TouchableOpacity>
-        </View>
-        <View style={{paddingHorizontal: 0}}>
-          {/* <TouchableOpacity style={styles.submitstyle}>
-            <Text style={{color: 'white'}}>Complete</Text>
-          </TouchableOpacity> */}
-          {/* <View
+        {/* <ScrollView> */}
+        <View>
+          <Pdf
+            trustAllCerts={false}
+            source={{
+              uri: selected?.file_short_content,
+            }}
+            page={currentPage}
+            onPageChanged={(page, numberOfPages) => {
+              setCurrentPage(page);
+              console.log(`Current page: ${page}`);
+            }}
+            fitPolicy={Dimensions.get('window').width}
+            scale={zoom}
+            renderActivityIndicator={() => (
+              <ActivityIndicator color="black" size="large" />
+            )}
+            // onScaleChanged={.1}
+            // enablePaging={true}
+            onLoadProgress={percentage => console.log(`Loading :${percentage}`)}
+            onLoadComplete={numberOfPages => {
+              setTotalPage(numberOfPages);
+            }}
+            onError={error => console.log('show error', error)}
+            // onPageSingleTap={page => alert(page)}
+            onPressLink={link => Linking.openURL(link)}
+            spacing={30}
             style={{
-              paddingHorizontal: 20,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginTop: 30,
-            }}>
-            <View
-              style={{...styles.insideContainer, backgroundColor: '#C7E9C9'}}>
-              <Text style={styles.numberText}>24</Text>
-              <Text style={styles.currentText}>Current Week</Text>
-            </View>
-            <View
-              style={{...styles.insideContainer, backgroundColor: '#E9E1C7'}}>
-              <Text style={styles.numberText}>24</Text>
-              <Text style={styles.currentText}>Current Week</Text>
-            </View>
-            <View
-              style={{...styles.insideContainer, backgroundColor: '#C7DBE9'}}>
-              <Text style={styles.numberText}>24</Text>
-              <Text style={styles.currentText}>Current Week</Text>
-            </View>
-          </View> */}
+              height: 590,
+              width: Dimensions.get('window').width,
+              marginBottom: 100,
+            }}
+          />
+          <View style={{height: 100}} />
         </View>
-        <View style={{height: 100}} />
-      </ScrollView>
+        {/* </ScrollView> */}
+      </View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -288,7 +213,7 @@ const styles = StyleSheet.create({
   },
   monthContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignContent: 'center',
     alignItems: 'center',
     height: 100,
@@ -311,7 +236,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     borderColor: 'orange',
-    margin: 20,
+    // margin: 20,
   },
   container: {
     flex: 1,
@@ -408,6 +333,14 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     borderRadius: 10,
     marginTop: 10,
+  },
+  countBtn: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 100,
+    // right:10,
+    // top:90
   },
 });
 

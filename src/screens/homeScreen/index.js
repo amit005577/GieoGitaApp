@@ -10,7 +10,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import HeaderPage from '../../Components/header';
 import Patanjali from '../../../assets/images/patanjali.jpeg';
 import updesh from '../../../assets/images/updesh3.png';
@@ -25,6 +25,9 @@ import logo5 from '../../../assets/images/logo5.jpg';
 import logo4 from '../../../assets/images/logo4.jpg';
 import maharaj from '../../../assets/images/Magaraj.png';
 import {useIsFocused} from '@react-navigation/native';
+import Pdf from 'react-native-pdf';
+import TelguPdf from '../../../assets/pdf/Telgu.pdf';
+// import Telgupdf from
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
@@ -35,9 +38,25 @@ const HomeScreen = () => {
     dispatch(getTranslations());
   }, []);
 
+  const [selected, setSelected] = useState({
+    id: 17,
+    title: 'App PDF Setting',
+    short_content: '21',
+    file_short_content:
+      'https://projects.cityinnovates.in/gieo_gita/public/uploads/all/21/Single-Page-Setting-English.pdf',
+    content: null,
+    lang: 'en',
+    create_at: '2023-07-18T12:47:47.000000Z',
+    updated_at: '2023-07-20T09:22:33.000000Z',
+  });
+
+
+
+
   return (
     <ScrollView style={styles.container}>
       <HeaderPage />
+     
       {/* {homeData.data != null ? ( */}
       <ScrollView contentContainerStyle={{}}>
         <ImageBackground
@@ -267,6 +286,7 @@ const HomeScreen = () => {
           <View style={{height: 50}} />
         </View>
       </ScrollView>
+   
     </ScrollView>
   );
 };
