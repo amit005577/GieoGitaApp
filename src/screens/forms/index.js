@@ -623,10 +623,11 @@ const EventForm = ({ route }) => {
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
-              placeholder="Please Enter Name"
+              placeholder="Email"
               onChangeText={setEmail}
               value={email}
               style={styles.textINput}
+              placeholderTextColor={colors.placeholder}
             />
           </View>
         </View>

@@ -1,4 +1,3 @@
-add filter search option in country selection
 implement push Notifications
 update past cahnts list item
 language translations

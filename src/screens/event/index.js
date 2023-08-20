@@ -159,47 +159,6 @@ const EventPage = ({ navigation }) => {
     setSelectedItemFromList(item);
   };
 
-  const renderItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        style={styles.iconContianer}
-        onPress={() => handleOnpress(item)}
-        onLongPress={() => handleOnlongPress(item)}>
-        <View style={{ width: '95%' }}>
-          <View style={styles.singleItem}>
-            <IconV name="globe" color ='#4d4c4a' size={18} />
-            <Text numberOfLines={2} style={styles.textstyle}>
-              {item.event_type}
-            </Text>
-          </View>
-          <View style={styles.itemlistcontainer}>
-            <View style={styles.oneItem}>
-              <Icon name="calendar"color ='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
-                {moment(item?.create_at).format('DD-MMM-YYYY')}
-              </Text>
-            </View>
-            <View style={styles.oneItem}>
-              <IconE name="location" color ='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
-                {item.place_type}
-              </Text>
-            </View>
-            <View style={{ ...styles.oneItem }}>
-              <IconF name="users" color ='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
-                {item.participants}
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View>
-          <Icon name="right" color ='#4d4c4a' size={25} />
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
   const handleFilter = (input) => {
     const text = input.toLowerCase()
     var filteredData = EventData.filter((item, i) => {
@@ -216,13 +175,70 @@ const EventPage = ({ navigation }) => {
     }
   }
 
-  const validateUser = () => {
-    if (profileDetail && profileDetail?.length > 0 && selectedItemFromList?.phone != null && selectedItemFromList?.phone != undefined) {
-      return profileDetail[0]?.phone?.includes(selectedItemFromList?.phone)
+  // const validateUser = () => {
+  //   if (profileDetail && profileDetail?.length > 0 && selectedItemFromList?.phone != null && selectedItemFromList?.phone != undefined) {
+  //     return profileDetail[0]?.phone?.includes(selectedItemFromList?.phone)
+  //   } else {
+  //     return false
+  //   }
+  // }
+  console.log(profileDetail);
+  const validateCurrentUser = (phone, email) => {
+    if (profileDetail && profileDetail?.length > 0) {
+      return profileDetail[0]?.phone?.includes(phone) || profileDetail[0]?.email?.includes(email)
     } else {
       return false
     }
   }
+
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        style={styles.iconContianer}
+        onPress={() => handleOnpress(item)}
+        onLongPress={() => handleOnlongPress(item)}>
+        <View style={{ flex: 1 }}>
+          <View style={styles.singleItem}>
+            <IconV name="globe" color='#4d4c4a' size={18} />
+            <Text numberOfLines={2} style={styles.textstyle}>
+              {item.event_type}
+            </Text>
+          </View>
+          <View style={styles.itemlistcontainer}>
+            <View style={styles.oneItem}>
+              <Icon name="calendar" color='#4d4c4a' size={15} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {moment(item?.create_at).format('DD-MMM-YYYY')}
+              </Text>
+            </View>
+            <View style={styles.oneItem}>
+              <IconE name="location" color='#4d4c4a' size={15} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {item.place_type}
+              </Text>
+            </View>
+            <View style={{ ...styles.oneItem }}>
+              <IconF name="users" color='#4d4c4a' size={15} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {item.participants}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('form', { data: item })} style={{ justifyContent: 'center', alignItems: 'center' }} >
+          {
+            validateCurrentUser(item.phone, item.email) ?
+              <IconF name="edit" color='orange' size={25} />
+              : null
+          }
+          <Icon name="right" color='#4d4c4a' size={25} />
+        </TouchableOpacity>
+      </TouchableOpacity>
+    );
+  };
+
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -237,7 +253,7 @@ const EventPage = ({ navigation }) => {
             <Text style={styles.addText}>Add Group or Event</Text>
           </TouchableOpacity>
         </View>
-   
+
 
         <View style={styles.btnContainersss}>
           <TouchableOpacity
@@ -246,7 +262,7 @@ const EventPage = ({ navigation }) => {
             <Text numberOfLines={1} style={styles.btnTextall}>
               {selectedItem ? selectedItem : 'All Event'}
             </Text>
-            <Icon name="down"color='#4d4c4a' size={10} />
+            <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.eventBtn}
@@ -255,7 +271,7 @@ const EventPage = ({ navigation }) => {
               {' '}
               {eventType ? eventType : 'Event type'}
             </Text>
-            <Icon name="down"color='#4d4c4a' size={10} />
+            <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.eventBtn}
@@ -264,7 +280,7 @@ const EventPage = ({ navigation }) => {
               {' '}
               {placeType ? placeType : 'Place type'}
             </Text>
-            <Icon name="down" color='#4d4c4a'size={10} />
+            <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
         </View>
 
@@ -300,10 +316,10 @@ const EventPage = ({ navigation }) => {
             clearButtonMode="always"
             autoCorrect={false}
             placeholderTextColor={'gray'}
-            style={{ color: '#111211',flex:1}}
+            style={{ color: '#111211', flex: 1 }}
           >
           </TextInput>
-          <IconF name="search" size={25} color ='gray' />
+          <IconF name="search" size={25} color='gray' />
         </View>
 
         <Text style={styles.textShowingHeadingData}>
@@ -324,7 +340,7 @@ const EventPage = ({ navigation }) => {
           />
         </View>
       </View>
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -334,7 +350,6 @@ const EventPage = ({ navigation }) => {
 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Text style={styles.modalText}>Hello World!</Text> */}
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
@@ -379,7 +394,7 @@ const EventPage = ({ navigation }) => {
                   Organizer
                 </Text>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                  <IconV name="old-phone" size={20}color ='gray' style={{ marginRight: 5 }} />
+                  <IconV name="old-phone" size={20} color='gray' style={{ marginRight: 5 }} />
                   <Text style={styles.textDetails}>
                     {selectedItemFromList?.organizer}
                   </Text>
@@ -395,7 +410,7 @@ const EventPage = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
@@ -467,11 +482,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
     height: 42,
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    alignSelf:'center',
-    marginTop:20
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20
   },
   serchContainer: {
     borderWidth: 1,
@@ -515,7 +530,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 10,
     padding: 10,
-    borderRadius:5
+    borderRadius: 5
   },
   singleItem: {
     flexDirection: 'row',
