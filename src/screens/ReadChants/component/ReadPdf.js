@@ -67,7 +67,7 @@ const ReadPdfScreen = () => {
   const handleOnpress = () => {
     setModalVisible(true);
   };
- 
+
   const [zoom, setZoom] = useState(1);
   const zoomIncrease = () => {
     setZoom(zoom + 0.1);
@@ -81,26 +81,39 @@ const ReadPdfScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={{paddingHorizontal: 0}}>
         <View style={styles.monthContainer}>
-         
           <TouchableOpacity onPress={zoomdecrease}>
-            <FIcon name="minus-circle" size={40} style={{...styles.iconStyle}} />
+            <FIcon
+              name="minus-circle"
+              size={40}
+              style={{...styles.iconStyle}}
+            />
           </TouchableOpacity>
           <View>
             <TouchableOpacity
               style={styles.monthContentStyle}
               onPress={() => handleOnpress()}>
-              <Text style={{color: 'black', fontWeight: 'bold',alignSelf:'center'}}>
+              <Text
+                style={{
+                  color: 'black',
+                  fontWeight: 'bold',
+                  alignSelf: 'center',
+                }}>
                 भाषा चुनें
               </Text>
             </TouchableOpacity>
-            <Text style={{fontSize: 12, color: 'red',alignSelf:'center',marginTop:2}}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: 'red',
+                alignSelf: 'center',
+                marginTop: 2,
+              }}>
               {currentPage}/{totalPage}
             </Text>
           </View>
           <TouchableOpacity onPress={zoomIncrease}>
             <FIcon name="plus-circle" size={40} style={{...styles.iconStyle}} />
           </TouchableOpacity>
-    
         </View>
 
         {/* <ScrollView> */}

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import logo from '../../../assets/images/Logo.png';
 
-import React, {useDebugValue, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getCountryName,
@@ -21,9 +21,8 @@ import {
   registerMethod,
   targetChantData,
 } from '../../redux/actions';
-import {navigationRef} from '../../../App';
-import {videoJson} from '../../Components/videoJson';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
+import { colors } from '../../helper/colors';
 
 const Register = ({navigation}) => {
   const [name, setname] = useState('');
@@ -31,11 +30,9 @@ const Register = ({navigation}) => {
   const [selectedGender, setGender] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [countryModal, setCountryModal] = useState(false);
-  const [city, setCity] = useState('');
-  const [selected, setSelected] = useState(videoJson);
   const [stateModata, setstateModata] = useState(false);
   const [countryName, setcountryName] = useState('');
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const countryRespose = useSelector(
     state => state.AppReducers.countryNamelistData,
   );
@@ -43,12 +40,8 @@ const Register = ({navigation}) => {
     state => state.AppReducers.countryStateListData,
   );
   const [selectedState, setselectedState] = useState(null);
-  // console.log('selectedState', selectedState);
-  // console.log('show country data dfksjdjf', countryRespose);
-  // console.log('show single country name', countryName.id);
   let countryNameData = countryName?.name;
   let stateNameData = selectedState?.name;
-  // console.log('show country name or state', countryNameData, stateNameData);
   const [dataset, setData] = useState([
     {
       id: 1,
@@ -60,20 +53,33 @@ const Register = ({navigation}) => {
     },
   ]);
 
+  const profileData = useSelector(state => state.AppReducers.getTargetpledge);
+  useEffect(() => {
+    if (profileData != null) {
+      if (profileData[0].name !== '' && profileData[0].name !== null) {
+        setname(profileData[0].name);
+      }
+      if (profileData[0].age !== '' && profileData[0].age !== null) {
+        setage(profileData[0].age);
+      }
+      if (profileData[0].email !== '' && profileData[0].email !== null) {
+        setEmail(profileData[0].email);
+      }
+      if (profileData[0].gender !== '' && profileData[0].gender !== null) {
+        setGender(profileData[0].gender);
+      }
+    }
+  }, [profileData]);
   useEffect(() => {
     dispatch(getCountryName());
     dispatch(getStateName());
   }, []);
 
   const handleGenderSElect = item => {
-    // console.log('show item', item);
-    // alert(item);
     setGender(item.gender);
     setModalVisible(false);
   };
 
-  //   const [password, setpassword] = useState('');
- 
   const dispatch = useDispatch();
   const handleOnpress = () => {
     let data = {
@@ -82,14 +88,10 @@ const Register = ({navigation}) => {
       selectedGender,
       countryNameData,
       stateNameData,
-      email
+      email,
     };
-    // console.log("show register data",data)
     dispatch(registerMethod(data));
-    // alert('Data Updated Successfully!');
     dispatch(targetChantData());
-
-    // navigationRef.goBack();
   };
 
   const handleOnpressCountry = item => {
@@ -106,16 +108,7 @@ const Register = ({navigation}) => {
     }
   };
 
-  const handleOnpressState = item => {
-    alert('enter');
-    // console.log("shwo itemm data state scren",item)
-    setselectedState(item);
-    setstateModata(false);
-  };
-
   const handleselectState = item => {
-    // alert("enter")
-    // console.log("shwo itemm data state scren",item)
     setselectedState(item);
     setstateModata(false);
   };
@@ -165,7 +158,7 @@ const Register = ({navigation}) => {
             justifyContent: 'center',
             alignContent: 'center',
           }}>
-          <Text style={{color: '#808080'}}>
+          <Text style={{color: colors.black}}>
             {selectedGender != ''
               ? selectedGender != null
                 ? selectedGender
@@ -180,7 +173,7 @@ const Register = ({navigation}) => {
             justifyContent: 'center',
             alignContent: 'center',
           }}>
-          <Text style={{color: '#808080'}}>
+          <Text style={{color: colors.black}}>
             {countryName.name ? countryName.name : 'देश का नाम'}
           </Text>
         </TouchableOpacity>
@@ -192,7 +185,7 @@ const Register = ({navigation}) => {
             justifyContent: 'center',
             alignContent: 'center',
           }}>
-          <Text style={{color: '#808080'}}>
+          <Text style={{color: colors.black}}>
             {selectedState?.name ? selectedState?.name : 'राज्य'}
           </Text>
         </TouchableOpacity>
@@ -216,7 +209,6 @@ const Register = ({navigation}) => {
         <View
           style={{
             width: '100%',
-            // justifyContent: 'center',
             alignContent: 'center',
             paddingHorizontal: 20,
             alignSelf: 'center',
@@ -231,7 +223,6 @@ const Register = ({navigation}) => {
               justifyContent: 'center',
               alignContent: 'center',
               marginTop: 320,
-              //   alignItems: 'center',
             }}
             renderItem={({item}) => {
               return (
@@ -354,7 +345,7 @@ const Register = ({navigation}) => {
           </View>
         </View>
       </Modal>
-      <View style={{height:100}}/>
+      <View style={{height: 100}} />
     </ScrollView>
   );
 };

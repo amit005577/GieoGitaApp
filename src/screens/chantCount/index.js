@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   ScrollView,
   Modal,
@@ -10,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import React, {useDebugValue, useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import FIcon from 'react-native-vector-icons/Feather';
@@ -27,38 +26,25 @@ import {
   targetChantData,
 } from '../../redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
 import {navigationRef} from '../../../App';
 
-// import HeaderPage from '../components/header';
-
-const ChantCount = ({navigation,route}) => {
-
-  //  let RoutData = route.params
-  //  let chantDate = moment(RoutData?.create_at).utc().format('DD MMM')
-
-  
+const ChantCount = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
-  const isfocused = useIsFocused();
   const [number, setNumber] = React.useState(0);
-  const historydata = useSelector(state => state.AppReducers.chantHistory);
   const monthlyData = useSelector(
     state => state.AppReducers.getCurrentCountData,
   );
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
-  // console.log('show live data chants', liveChantsData);
-  // console.log('name data name', datapledge);
-  // console.log('show monthly data', monthlyData);
+
   useEffect(() => {
     dispatch(targetChantData());
     dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
     dispatch(liveChants());
   }, []);
-  // console.log('show historydata ', historydata);
   const [disable, setDisable] = React.useState(true);
 
   const handleOnpress = () => {
@@ -67,24 +53,19 @@ const ChantCount = ({navigation,route}) => {
     dispatch(chantUpdatecount(number));
     dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
-    // setNumber(0);
   };
 
   const dateIncrement = () => {
     let _newDate = moment(todaysDate, 'DD MMMM')
       .add(1, 'day')
-
       .format('DD MMMM');
-
     setTodaysDate(_newDate);
   };
 
   const dateDecrement = () => {
     let _newDate = moment(todaysDate, 'DD MMMM')
       .subtract(1, 'day')
-
       .format('DD MMMM');
-
     setTodaysDate(_newDate);
   };
 
@@ -170,7 +151,7 @@ const ChantCount = ({navigation,route}) => {
 
           <View style={styles.monthContentStyle}>
             <Text style={{fontWeight: 'bold', color: '#434343'}}>
-              { todaysDate}
+              {todaysDate}
             </Text>
           </View>
 
@@ -190,10 +171,6 @@ const ChantCount = ({navigation,route}) => {
             ...styles.btncountcontaiiner,
             alignSelf: 'center',
             backgroundColor: '#EFEFEF',
-            // borderRadius: 10,
-            // height: 42,
-            // borderWidth: 1,
-            // borderColor: '#E5CE004F',
           }}>
           <Text style={styles.countToday}>आज:{monthlyData?.today_count}</Text>
         </View>
@@ -209,19 +186,12 @@ const ChantCount = ({navigation,route}) => {
           </TouchableOpacity>
 
           <View>
+            <View style={[styles.Bigcountercontainer]}></View>
             <View
-              style={[
-                styles.Bigcountercontainer,
-
-                //   {transform: [{rotate: `${rotation}deg`}
-                // ]},
-              ]}>
-              {/* <Text style={{position: 'absolute', right: -32}}>
-                {moment(todaysDate, 'DD MMMM').format('ddd')}
-              </Text> */}
-            </View>
-            <View style={{position: 'absolute', right: 50, top: 56,width:100}}>
-              <Text style={{...styles.countTextNumber,alignSelf:'center'}}>{number}</Text>
+              style={{position: 'absolute', right: 50, top: 56, width: 100}}>
+              <Text style={{...styles.countTextNumber, alignSelf: 'center'}}>
+                {number}
+              </Text>
             </View>
           </View>
 
