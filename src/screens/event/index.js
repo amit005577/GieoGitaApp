@@ -237,6 +237,7 @@ const EventPage = ({ navigation }) => {
             <Text style={styles.addText}>Add Group or Event</Text>
           </TouchableOpacity>
         </View>
+   
 
         <View style={styles.btnContainersss}>
           <TouchableOpacity
@@ -245,7 +246,7 @@ const EventPage = ({ navigation }) => {
             <Text numberOfLines={1} style={styles.btnTextall}>
               {selectedItem ? selectedItem : 'All Event'}
             </Text>
-            <Icon name="down" size={10} />
+            <Icon name="down"color='#4d4c4a' size={10} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.eventBtn}
@@ -254,7 +255,7 @@ const EventPage = ({ navigation }) => {
               {' '}
               {eventType ? eventType : 'Event type'}
             </Text>
-            <Icon name="down" size={10} />
+            <Icon name="down"color='#4d4c4a' size={10} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.eventBtn}
@@ -263,7 +264,7 @@ const EventPage = ({ navigation }) => {
               {' '}
               {placeType ? placeType : 'Place type'}
             </Text>
-            <Icon name="down" size={10} />
+            <Icon name="down" color='#4d4c4a'size={10} />
           </TouchableOpacity>
         </View>
 
