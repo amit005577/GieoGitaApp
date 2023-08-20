@@ -115,7 +115,7 @@ const EventPage = ({ navigation }) => {
   };
 
   const handleOnpress = item => {
-    navigation.navigate('details', item);
+    navigation.navigate('details', {data: item,isCurrentUser: validateCurrentUser(item.phone, item.email)});
   };
 
   const handleDetailsPage = item => {

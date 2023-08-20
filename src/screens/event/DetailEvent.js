@@ -26,7 +26,8 @@ import {ms} from 'react-native-size-matters';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const DetailEvent = ({route}) => {
-  const item = route.params;
+  const item = route.params.data;
+  const isCurrentUser = route.params.isCurrentUser
   console.log('show details item', item);
   // console.log('show props data', route.params);
   const url = item?.thumbnail;
@@ -158,7 +159,7 @@ const DetailEvent = ({route}) => {
   };
   const handleClearData = () => {
     alert('Event confirmed successfully');
-    setCamerPhoto(null)
+    setCamerPhoto(null);
   };
   return (
     <View style={styles.contaier}>
@@ -179,7 +180,7 @@ const DetailEvent = ({route}) => {
             </Text>
           </View>
           <View style={styles.oneItem}>
-            <IconE name="location" size={25} />
+            <IconE name="location" size={25} color={colors.black} />
             <Text style={{...styles.textstyle, fontSize: 14}}>{item.city}</Text>
           </View>
         </View>
@@ -294,15 +295,13 @@ const DetailEvent = ({route}) => {
         </TouchableOpacity>
       </View>
       {/* </View> */}
-{
-  routeData.isCurrentUser&&
-  <TouchableOpacity
-  style={styles.confimationContianer}
-  onPress={() => handleImagePick()}>
-  <Text style={styles.confirmbtn}>Event Confirmation</Text>
-</TouchableOpacity>
-}
-    
+      {isCurrentUser ? (
+        <TouchableOpacity
+          style={styles.confimationContianer}
+          onPress={() => handleImagePick()}>
+          <Text style={styles.confirmbtn}>Event Confirmation</Text>
+        </TouchableOpacity>
+       ) : null}
 
       <TouchableOpacity
         style={{
