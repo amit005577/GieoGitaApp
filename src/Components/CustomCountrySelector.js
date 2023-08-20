@@ -1,26 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import {
-  View,
-  Modal,
-  Button,
-  FlatList,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Pressable,
-  TextInput,
-  Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
   Alert,
+  FlatList,
+  KeyboardAvoidingView,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {countryCodeData} from '../../../helper/countryCode';
 // import {ms} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Entypo';
 import EvilIcon from 'react-native-vector-icons/Fontisto';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
 // import {Colors} from '../../../themes/colorHelper';
-import {useSelector} from 'react-redux';
 // import {countryCodeNumber} from '../../../redux/reducers/selectors/userSelector';
 
 const CustomCountrySelector = ({
