@@ -164,7 +164,7 @@ export const saveLangCode = payload => {
 };
 
 export const registerMethod = payload => {
-  // console.log(payload, 'reg FUnc');
+  // console.log(payload, 'reg register details dta ',payload);
   return {
     type: ActionTypes.REGISTER_DETAILS,
     payload,

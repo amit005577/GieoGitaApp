@@ -33,26 +33,26 @@ const MyEvent = ({navigation}) => {
         >
         <View style={{width: '90%'}}>
           <View style={styles.singleItem}>
-            <IconV name="globe" size={18} />
+            <IconV name="globe" size={18} color={colors.black} />
             <Text numberOfLines={2} style={styles.textstyle}>
               {item.event_type}
             </Text>
           </View>
           <View style={styles.itemlistcontainer}>
-            <View style={styles.oneItem}>
-              <Icon name="calendar" size={15} />
+            <View style={styles.oneItem} color={colors.black} >
+              <Icon name="calendar" size={15} color={colors.black}  />
               <Text style={{...styles.textstyle, fontSize: 14}}>
                 {moment(item?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
             <View style={styles.oneItem}>
-              <IconE name="location" size={15} />
+              <IconE name="location" size={15} color={colors.black} />
               <Text style={{...styles.textstyle, fontSize: 14}}>
                 {item.place_type}
               </Text>
             </View>
             <View style={{...styles.oneItem}}>
-              <IconF name="users" size={15} />
+              <IconF name="users" size={15}color={colors.black}  />
               <Text style={{...styles.textstyle, fontSize: 14}}>
                 {item.participants}
               </Text>
@@ -60,7 +60,7 @@ const MyEvent = ({navigation}) => {
           </View>
         </View>
         <View>
-          <Icon name="right" size={25} />
+          <Icon name="right" size={25} color={colors.black} />
         </View>
       </TouchableOpacity>
     );

@@ -35,6 +35,7 @@ const Register = ({navigation}) => {
   const [selected, setSelected] = useState(videoJson);
   const [stateModata, setstateModata] = useState(false);
   const [countryName, setcountryName] = useState('');
+  const [email, setEmail] = useState('')
   const countryRespose = useSelector(
     state => state.AppReducers.countryNamelistData,
   );
@@ -42,12 +43,12 @@ const Register = ({navigation}) => {
     state => state.AppReducers.countryStateListData,
   );
   const [selectedState, setselectedState] = useState(null);
-  console.log('selectedState', selectedState);
-  console.log('show country data dfksjdjf', countryRespose);
-  console.log('show single country name', countryName.id);
+  // console.log('selectedState', selectedState);
+  // console.log('show country data dfksjdjf', countryRespose);
+  // console.log('show single country name', countryName.id);
   let countryNameData = countryName?.name;
   let stateNameData = selectedState?.name;
-  console.log('show country name or state', countryNameData, stateNameData);
+  // console.log('show country name or state', countryNameData, stateNameData);
   const [dataset, setData] = useState([
     {
       id: 1,
@@ -72,21 +73,23 @@ const Register = ({navigation}) => {
   };
 
   //   const [password, setpassword] = useState('');
-  let data = {
-    name,
-    age,
-    city,
-    selectedGender,
-    countryNameData,
-    stateNameData,
-  };
+ 
   const dispatch = useDispatch();
   const handleOnpress = () => {
+    let data = {
+      name,
+      age,
+      selectedGender,
+      countryNameData,
+      stateNameData,
+      email
+    };
+    // console.log("show register data",data)
     dispatch(registerMethod(data));
-    alert('Data Updated Successfully!');
+    // alert('Data Updated Successfully!');
     dispatch(targetChantData());
 
-    navigationRef.goBack();
+    // navigationRef.goBack();
   };
 
   const handleOnpressCountry = item => {
@@ -150,10 +153,10 @@ const Register = ({navigation}) => {
         />
         <TextInput
           style={styles.TextInputStyle}
-          onChangeText={setCity}
+          onChangeText={setEmail}
           placeholderTextColor={'#808080'}
-          value={city}
-          placeholder={'शहर'}
+          value={email}
+          placeholder={'email'}
         />
         <TouchableOpacity
           onPress={() => setModalVisible(true)}

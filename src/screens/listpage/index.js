@@ -22,15 +22,13 @@ const ListPageScreen = ({navigation}) => {
   const monthlyData = useSelector(
     state => state.AppReducers.getCurrentCountData,
   );
-  console.log('show monthly data of count', monthlyData);
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   useEffect(() => {
     dispatch(chantHistory());
   }, []);
 
 const handleChantCountEdit =(val)=>{
-  console.log("show val-::::::",val)
-  navigation.navigate("chant")
+  navigation.navigate("chant",val)
 }
 
   const renderItem = ({item}) => {
@@ -154,11 +152,16 @@ const handleChantCountEdit =(val)=>{
           <Text style={styles.currentText}>कुल</Text>
         </View>
       </View>
-      <View style={{paddingHorizontal: 30}}>
+      <View style={{paddingHorizontal: 30,marginBottom:100}}>
         <FlatList
           data={historydata}
           keyExtractor={item => item.id}
           renderItem={renderItem}
+          contentContainerStyle={{
+            paddingBottom:100,
+            marginBottom:100
+
+          }}
           // horizontal
           style={{paddingHorizontal: 0, marginTop: 20, borderWidth: 0}}
           ListHeaderComponent={() => {
@@ -221,9 +224,10 @@ const handleChantCountEdit =(val)=>{
               <View
                 style={{
                   flexDirection: 'row',
-                  // justifyContent: 'space-around',
-                  // borderWidth: 1,
+                
                   borderBottomWidth: 0,
+                  paddingBottom:100,
+                  marginBottom:50
                 }}>
                 <View
                   style={{

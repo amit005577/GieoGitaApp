@@ -219,6 +219,11 @@ const AllEventSaga = function* () {
       //   JSON.stringify(res.data.data),
       // );
       if (res.data != null) {
+
+        yield put({
+          type: actions.CREATE_EVENT_SUCCESS,payload:res.data.data
+ 
+        });
         Alert.alert("Event is updated")
         navigationRef.navigate("formPlace")
         // yield put({

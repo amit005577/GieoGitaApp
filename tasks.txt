@@ -1,4 +1,4 @@
-update icons and text color
+
 add filter search option in country selection
 on share add dianamic image url and message
 implement push Notifications

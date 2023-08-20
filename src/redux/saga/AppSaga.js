@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import {useNotificaiton} from '../../Notifications/AuthNotifications';
 import configureStore from '../store';
+import {Alert} from 'react-native';
 
 const PledgeSagaFunction = function* (data) {
   // console.log('show data count', data);
@@ -53,7 +54,7 @@ const UpdateChant = function* (data) {
     const res = yield call(postApi, requestUrl, postData);
     // console.log('show post count datasaga ddfsd', res);
     // if (res.data.data != null) {
-      // console.log('show runn inside');
+    // console.log('show runn inside');
     //   yield put({type: actions.PLEDGE_DATA, payload: res.data.data});
     // }
     // console.log('show count res', res.data.data);
@@ -83,10 +84,9 @@ const chantHistoryapi = function* () {
   try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/user/reads-get/';
-//  console.log("show ruy=nning...............")
+    //  console.log("show ruy=nning...............")
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null) {
-      
       yield put({type: actions.STORE_CHANT_HISTORY, payload: res.data.data});
     }
     // console.log(
@@ -150,7 +150,7 @@ const getLanguageList = function* () {
       yield put({type: actions.LANGUAGE_LIST_SUCCESS, payload: res.data.data});
     }
     // console.log(
-      // '🚀 ~ file: chant language list data ~ res:=-=-=>',
+    // '🚀 ~ file: chant language list data ~ res:=-=-=>',
     //   JSON.stringify(res.data.data),
     // );
   } catch (error) {
@@ -158,7 +158,7 @@ const getLanguageList = function* () {
   }
 };
 const getTargetPledgeData = function* () {
-  // console.log('list pledge dnfksdnf enter');
+  console.log('list pledge dnfksdnf enter');
   try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-details';
@@ -171,11 +171,12 @@ const getTargetPledgeData = function* () {
         payload: res.data.data,
       });
     }
-    // console.log(
+    console.log(
       // '🚀 ~ file: chant profole list data ~ res:=-=-=>',
-    //   JSON.stringify(res.data.data),
-    // );
+      JSON.stringify(res.data.data),
+    );
   } catch (error) {
+    Alert.alert('server error');
     // console.log('show getTargetPledgeData error api', error);
   }
 };
@@ -206,7 +207,7 @@ const getAllpdfDataSaga = function* () {
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     // console.log(
-      // 'show  montuhly data res data saga',
+    // 'show  montuhly data res data saga',
     //   JSON.stringify(res.data.data),
     // );
     if (res.data != null) {
@@ -224,30 +225,38 @@ const reisterDetailSaga = function* (data) {
   // console.log('list pdf register detail  count', data);
   let _data = {
     name: data.payload.name,
-    city:data.payload.city,
+    // city: data.payload.city,
     age: data.payload.age,
     gender: data.payload.selectedGender,
-    state:data.payload.stateNameData,
-    country:data.payload.countryNameData
+    state: data.payload.stateNameData,
+    country: data.payload.countryNameData,
+    email:data.payload.email
   };
-  try {
+  // console.log('show submitting saga data', _data);
+  // try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-update';
-
+      console.log("show hit api before data ",_data,requestUrl)
     const res = yield call(registerApi, requestUrl, _data);
-    // console.log(
-      // 'show  montuhly data res data saga',
-    //   JSON.stringify(res.data.data),
-    // );
-    if (res.data != null) {
-      yield put({
-        type: actions.SAVE_PDF_DATA,
-        payload: res.data.data,
-      });
-    }
-  } catch (error) {
-    // console.log('show reisterDetailSaga error api', error);
-  }
+
+    console.log(
+      'show  montuhly data res data saga',
+      JSON.stringify(res),
+    );
+    // if (res.data != null) {
+      // if (res.data.data.message.email == 'The email has already been taken.') {
+      //   Alert.alert('The email has already been taken.');
+      // } else {
+      //   yield put({
+      //     type: actions.SAVE_PDF_DATA,
+      //     payload: res.data.data,
+      //   });
+      //   alert("profile updated successfully")
+      // }
+  //   }
+  // } catch (error) {
+  //   console.log('show reisterDetailSaga error api', error);
+  // }
 };
 
 const getliveDatasaga = function* () {
@@ -270,7 +279,6 @@ const getliveDatasaga = function* () {
   }
 };
 
-
 const getCountryNameSaga = function* () {
   // console.log('enter country name data ');
 
@@ -291,14 +299,12 @@ const getCountryNameSaga = function* () {
   }
 };
 
-
 const getCountryStateSaga = function* (payload) {
   // console.log('enter country state data simgle',payload);
 
   try {
-    let requestUrl =
-      `https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-state-list/${payload.payload}`;
-      // console.log("show request url state",requestUrl)
+    let requestUrl = `https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-state-list/${payload.payload}`;
+    // console.log("show request url state",requestUrl)
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show country state name list', JSON.stringify(res.data.data));
@@ -316,9 +322,8 @@ const getTranslationsSaga = function* (payload) {
   // console.log('enter translation');
 
   try {
-    let requestUrl =
-      `https://projects.cilearningschool.com/gieo_gita/api/v1/translators`;
-      // console.log("show request url state",requestUrl)
+    let requestUrl = `https://projects.cilearningschool.com/gieo_gita/api/v1/translators`;
+    // console.log("show request url state",requestUrl)
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show translat ', JSON.stringify(res.data.data));
@@ -331,7 +336,7 @@ const getTranslationsSaga = function* (payload) {
   } catch (error) {
     // console.log('show getTranslationsSaga error api saga', error);
   }
-};  
+};
 
 const AppSaga = [
   takeLatest(actions.TARGET_COUNT_PLEDGE, PledgeSagaFunction),
@@ -348,8 +353,7 @@ const AppSaga = [
   takeLatest(actions.GET_lIVE_CHANTS, getliveDatasaga),
   takeLatest(actions.COUTRY_NAME_LIST, getCountryNameSaga),
   takeLatest(actions.COUTRY_STATE_NAME, getCountryStateSaga),
-  takeLatest(actions.GET_LANGUAGE_TRANSLATION,getTranslationsSaga)
-
+  takeLatest(actions.GET_LANGUAGE_TRANSLATION, getTranslationsSaga),
 ];
 
 export default AppSaga;

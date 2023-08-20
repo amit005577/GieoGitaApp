@@ -21,6 +21,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPdfData, languageList} from '../../../redux/actions';
+import {colors} from '../../../helper/colors';
+import WebView from 'react-native-webview';
 // import TelguPdf from '../../../../assets/pdf/Telgu.pdf';
 // import EnglishPdf from '../../../../assets/pdf/English.pdf';
 // import banglaPdf from '../../../../assets/pdf/Bangla.pdf';
@@ -119,19 +121,26 @@ const ReadPdfScreen = () => {
               />
             </TouchableOpacity>
           </View> */}
-          <TouchableOpacity
-          onPress={() => handleOnpress()}
-         >
+          <TouchableOpacity onPress={() => handleOnpress()}>
             <Icon name="language" size={40} style={{...styles.iconStyle}} />
           </TouchableOpacity>
         </View>
         {/* <WebView
           source={{
             // uri: `http://docs.google.com/gview?embedded=true&url=${'https://drive.google.com/file/d/1jEGCvlJAszVRYVTejiUCYe3D05LAxq5Z/view?usp=sharing'}`,
-            uri: `https://drive.google.com/file/d/1jEGCvlJAszVRYVTejiUCYe3D05LAxq5Z/view?usp=sharing`,
+            // uri: `https://drive.google.com/file/d/1jEGCvlJAszVRYVTejiUCYe3D05LAxq5Z/view?usp=sharing`,
+            uri: selected?.file_short_content,
           }}
           style={{height: 400, width: Dimensions.get('window').width}}
           nestedScrollEnabled
+        /> */}
+        {/* <WebView
+          style={{height: 500, width: 350}}
+          nestedScrollEnabled={true}
+          source={{
+            uri: selected?.file_short_content,
+            // uri: 'https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.africau.edu/images/default/sample.pdf',
+          }}
         /> */}
 
         <Pdf
@@ -170,13 +179,13 @@ const ReadPdfScreen = () => {
             alignItems: 'center',
           }}>
           <TouchableOpacity onPress={() => pageDecrease()}>
-            <FIcon name="arrow-left-circle" size={41} />
+            <FIcon name="arrow-left-circle" size={41} color={colors.black} />
           </TouchableOpacity>
           <Text style={{fontSize: 18, color: '#F7941C'}}>
             {currentPage}/{totalPage}
           </Text>
           <TouchableOpacity onPress={() => pageIncrease()}>
-            <FIcon name="arrow-right-circle" size={41} />
+            <FIcon name="arrow-right-circle" size={41} color={colors.black} />
           </TouchableOpacity>
         </View>
         <View style={{paddingHorizontal: 0}}>
@@ -228,7 +237,7 @@ const ReadPdfScreen = () => {
               <FlatList
                 data={completeList}
                 keyExtractor={item => item.id}
-                ListFooterComponent={() => <View style={{height:200}} />}
+                ListFooterComponent={() => <View style={{height: 200}} />}
                 renderItem={({item}) => {
                   // console.log('show item data ddkfdk', item);
                   return (

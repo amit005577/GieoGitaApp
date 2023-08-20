@@ -104,7 +104,8 @@ const HomeScreen = () => {
                 style={{
                   color: '#2A2A2A',
                   fontSize: 12,
-                  textAlign: 'justify',
+                  // textAlign: 'justify',
+                  flexWrap:'wrap',
                   fontWeight: 'bold',
                 }}>
                 {'                    '}गीता केवल पाठ्य या पूज्य ग्रन्थ ही नहीं

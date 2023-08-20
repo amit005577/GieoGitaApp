@@ -19,8 +19,9 @@ import CustomCountrySelector from '../../Components/CustomCountrySelector';
 import CustomPicker from '../../Components/CustomPicker';
 import HeaderPage from '../../Components/header';
 import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
+import { colors } from '../../helper/colors';
 const dataFrequency = [
-  { id: 1, name: '--Selectt--' },
+  { id: 1, name: '--Select--' },
   { id: 2, name: 'One Time' },
   { name: 'Daily', id: 3 },
   { name: 'Weekly', id: 4 },
@@ -53,12 +54,12 @@ const EventForm = ({ route }) => {
   let routeData = route?.params;
   const frequencyRecord = () => {
     const res = dataFrequency.find((item) => item.id == routeData?.data.frequency)
-    return res.id
+    return res?.id
   }
 
   const findEventType = () => {
     const item = eventtypeData.find((item) => item.name == routeData?.data.event_type)
-    return item.id
+    return item?.id
   }
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const EventForm = ({ route }) => {
   ];
 
   const platformData = [
-    { id: 1, name: '--Selectt--' },
+    { id: 1, name: '--Select--' },
     { id: 2, name: 'Zoom' },
     { name: 'WhatsApp', id: 3 },
     { name: 'YouTube', id: 4 },
@@ -161,7 +162,7 @@ const EventForm = ({ route }) => {
     setLaoder(true);
     setCheck(true);
 
-    if (name.length <= 2) {
+    if (name== '') {
       setLaoder(false);
       Alert.alert('please Enter Event Name');
     } else if (selectIconOne == null) {
@@ -173,7 +174,7 @@ const EventForm = ({ route }) => {
     } else if (frequency == null) {
       setLaoder(false);
       Alert.alert('please Enter frequency fileds');
-    } else if (description.length <= 2) {
+    } else if (description=='') {
       setLaoder(false);
       Alert.alert('please Enter description fileds');
     } else if (participant == '') {
@@ -239,9 +240,11 @@ const EventForm = ({ route }) => {
       };
 
       if (routeData != null) {
+
+        // console.log("show forem edit data",formDataEdit)
         dispatch(updateMyEvent(formDataEdit));
       } else {
-
+        
         dispatch(createEvent(formData));
       }
     }
@@ -263,6 +266,8 @@ const EventForm = ({ route }) => {
               onChangeText={setName}
               value={name}
               style={styles.textINput}
+              placeholderTextColor={colors.black}
+              // style={{color:colors.black}}
             />
           </View>
         </View>
@@ -284,7 +289,7 @@ const EventForm = ({ route }) => {
                 size={24}
                 color={selectIconOne == '1' ? 'blue' : 'gray'}
               />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
                 Yes
               </Text>
             </TouchableOpacity>
@@ -298,7 +303,7 @@ const EventForm = ({ route }) => {
                 size={24}
                 color={selectIcontwo == '1' ? 'blue' : 'gray'}
               />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
                 No
               </Text>
             </TouchableOpacity>
@@ -399,10 +404,10 @@ const EventForm = ({ route }) => {
               <Text style={styles.haderStyle}>Start Date</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{ color: 'black' }}>
+              <Text style={{ color: colors.black }}>
                 {startDate
                   ? moment(startDate).format('DD-MMM-YYYY')
-                  : 'Slect start date'}
+                  : 'Select start date'}
               </Text>
             </View>
             {check && startDate == null && (
@@ -417,11 +422,11 @@ const EventForm = ({ route }) => {
               <Text style={styles.haderStyle}>End Date</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{ color: 'black' }}>
+              <Text style={{ color: colors.black }}>
                 {' '}
                 {endDate
                   ? moment(endDate).format('DD-MMM-YYYY')
-                  : 'Slect end date'}
+                  : 'Select end date'}
               </Text>
             </View>
             {check && startDate == null && (
@@ -446,7 +451,8 @@ const EventForm = ({ route }) => {
               value={description}
               multiline
               placeholder='Enter description'
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
+              style={{color:colors.black}}
             />
           </View>
         </View>
@@ -465,7 +471,8 @@ const EventForm = ({ route }) => {
               value={participant}
               keyboardType="numeric"
               placeholder="0000"
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
+              style={{color:colors.black}}
             />
           </View>
         </View>
@@ -482,7 +489,8 @@ const EventForm = ({ route }) => {
               value={personPerDay}
               keyboardType="numeric"
               placeholder="0000"
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
+              style={{color:colors.black}}
             />
           </View>
         </View>
@@ -505,7 +513,8 @@ const EventForm = ({ route }) => {
               placeholder="Please Enter Name"
               onChangeText={setOrganizer}
               value={organizer}
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
+              style={{color:colors.black}}
             />
           </View>
         </View>
@@ -545,8 +554,8 @@ const EventForm = ({ route }) => {
                   height={20}
                   width={20}
                 />
-                <Text style={{ color: 'black' }}>+{countryCode.id}</Text>
-                <Text style={{ color: 'black' }}>{countryCode.code}</Text>
+                <Text style={{ color: colors.black }}>+{countryCode.phone_code}</Text>
+                <Text style={{ color: colors.black }}>{countryCode.code}</Text>
 
                 {/* <Text>Select country Code </Text> */}
               </View>
@@ -562,8 +571,9 @@ const EventForm = ({ route }) => {
                 height: 60,
                 borderLeftWidth: 1,
                 borderColor: 'grey',
+                color:colors.black
               }}
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
             />
           </View>
         </View>
@@ -581,9 +591,9 @@ const EventForm = ({ route }) => {
               <Icon
                 name={phonepublic == '1' ? 'circle-slice-8' : 'circle-outline'}
                 size={24}
-                color={phonepublic == '1' ? 'blue' : 'black'}
+                color={phonepublic == '1' ? 'blue' : colors.black}
               />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
                 Yes
               </Text>
             </TouchableOpacity>
@@ -595,9 +605,9 @@ const EventForm = ({ route }) => {
                   checkboxSlect == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={checkboxSlect == '1' ? 'blue' : 'black'}
+                color={checkboxSlect == '1' ? 'blue' : colors.black}
               />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
                 No
               </Text>
             </TouchableOpacity>
@@ -647,7 +657,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 22,
     fontWeight: 'bold',
-    color: 'black',
+    color: colors.black,
   },
   firstTextinput: {
     borderWidth: 1,
@@ -669,7 +679,7 @@ const styles = StyleSheet.create({
   },
   haderStyle: {
     fontSize: 16,
-    color: 'black',
+    color: colors.black,
     fontWeight: 'bold',
     backgroundColor: '#fff',
   },
@@ -682,7 +692,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   textINput: {
-    color: 'gray'
+    color: colors.black
   },
   firstBlock: {
     flexDirection: 'row',
