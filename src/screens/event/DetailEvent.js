@@ -1,50 +1,52 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Clipboard, Dimensions, Linking, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Clipboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Share from 'react-native-share';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconW from 'react-native-vector-icons/FontAwesome';
 import IconIonic from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomeToast from '../../Components/CustomeToast';
 import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
-import { useDispatch, useSelector } from 'react-redux';
 import { subscribeEvent } from '../../redux/actions';
 
-const windowWidth = Dimensions.get('window').width;
+
 const DetailEvent = ({ route }) => {
   const item = route.params;
-  // console.log("show details item",item)
+  // console.log("show details item", item)
   // console.log('show props data', route.params);
-  const url = 'https://img.freepik.com/premium-vector/torn-ripped-paper-hole-transparent-background_755228-1779.jpg'
-  const message = "Some message"
+  const url = item?.thumbnail
+  const message = item?.short_content
+  const title = "Shared by " + item?.organizer
   const dispatch = useDispatch()
+  const [isCopied, setisCopied] = useState(false)
+
+  const subscribeResponse = useSelector(state => state.EventReducer.subscribeEventResponse);
+  const [subscription, setsubscription] = useState(item?.subscriptions)
+
+  useEffect(() => {
+    if (subscribeResponse.id == item.id) {
+      setsubscription(subscribeResponse.subscriptions)
+    }
+
+  }, [subscribeResponse])
+
   const onPressWhatsApp = async () => {
     const options = {
-      title: 'Share via',
+      title: title,
       message: message,
       url: url,
       social: Share.Social.WHATSAPP,
     };
     handleShare(options)
   }
- 
-  const subscribeResponse = useSelector(state => state.EventReducer.subscribeEventResponse);
-  // console.log("show subscribe event response",subscribeResponse)
- const [subscription, setsubscription] = useState(item?.subscriptions)
-
-// console.log("show event subsciption",subscription)
- useEffect(()=>{
-   if(subscribeResponse.id==item.id){
-    setsubscription(subscribeResponse.subscriptions)
-   }
- 
- },[subscribeResponse])
 
   const onPressFacebook = async () => {
     const options = {
-      title: 'Share via',
+      title: title,
       message: message,
       url: url,
       social: Share.Social.FACEBOOK,
@@ -54,7 +56,7 @@ const DetailEvent = ({ route }) => {
 
   const onPressTwitter = async () => {
     const options = {
-      title: 'Share via',
+      title: title,
       message: message,
       url: url,
       social: Share.Social.TWITTER,
@@ -65,7 +67,7 @@ const DetailEvent = ({ route }) => {
   const handleShare = (options) => {
     Share.open(options)
       .then((res) => {
-        // console.log(res);
+        // console.log('::::::::', res);
       })
       .catch((err) => {
         err && console.log(err);
@@ -74,29 +76,28 @@ const DetailEvent = ({ route }) => {
 
   const email = `${message}: ${url}`
   const onPressCopy = () => {
-
     Clipboard.setString(email)
-    showToastWithGravity()
+    setisCopied(true)
   }
 
-  const showToastWithGravity = () => {
-    ToastAndroid.showWithGravity(
-      'Copied to clipboard!',
-      ToastAndroid.SHORT,
-      ToastAndroid.TOP,
-    );
-  };
 
-
-  const handleSubscrible=(val)=>{
+  const handleSubscrible = (val) => {
     // alert(val)
     dispatch(subscribeEvent(val))
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      setisCopied(false)
+    }, 2000);
+  }, [isCopied])
 
   return (
     <View style={styles.contaier}>
       <HeaderPage />
+      {isCopied ?
+        <CustomeToast /> : null
+      }
       <View style={{ paddingHorizontal: 10 }}>
         <Text style={styles.idstyle}>Event ID:{item.id}</Text>
         <View style={styles.singleItem}>
@@ -135,7 +136,7 @@ const DetailEvent = ({ route }) => {
         </Text>
         <View style={styles.addresStyle}>
           <View style={{ width: '50%', alignSelf: 'flex-end' }}>
-            <Text style={{ fontSize: 18, color: 'black' }}>Address: <Text style={{fontSize:14}}>{item.address}</Text> </Text>
+            <Text style={{ fontSize: 18, color: 'black' }}>Address: <Text style={{ fontSize: 14 }}>{item.address}</Text> </Text>
             <Text
               style={{
                 ...styles.textstyle,
@@ -165,7 +166,7 @@ const DetailEvent = ({ route }) => {
                 marginTop: 10,
                 fontWeight: '400',
               }}>
-             {item.organizer}
+              {item.organizer}
             </Text>
           </View>
         </View>
@@ -175,8 +176,8 @@ const DetailEvent = ({ route }) => {
           <IconV onPress={() => { onPressFacebook() }} name="facebook" color='#1b32a1' size={30} />
           <Icon onPress={() => { onPressTwitter() }} name="twitter" color='#119af5' size={30} />
           <IconIonic onPress={() => { onPressCopy() }} name="copy-outline" color='gray' size={30} />
-          <TouchableOpacity style={styles.subscribecontainer} onPress={()=>handleSubscrible(item.id)} >
-            <Text style={{ color: 'white' }}>{ subscription=="1" ?'Subscribed':"Subscribe"}</Text>
+          <TouchableOpacity style={styles.subscribecontainer} onPress={() => handleSubscrible(item.id)} >
+            <Text style={{ color: 'white' }}>{subscription == "1" ? 'Subscribed' : "Subscribe"}</Text>
           </TouchableOpacity>
         </View>
       </View>

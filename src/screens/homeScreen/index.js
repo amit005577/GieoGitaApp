@@ -104,7 +104,7 @@ const HomeScreen = () => {
                 style={{
                   color: '#2A2A2A',
                   fontSize: 12,
-                  // textAlign: 'justify',
+                  textAlign: 'justify',
                   flexWrap:'wrap',
                   fontWeight: 'bold',
                 }}>
@@ -125,7 +125,7 @@ const HomeScreen = () => {
                 और स्वाभाविक आत्मिक प्रसन्नता।
               </Text>
               <Text
-                style={{color: '#2A2A2A', fontSize: 12, fontWeight: 'bold'}}>
+                style={{color: '#2A2A2A', fontSize: 12,textAlign: 'justify', fontWeight: 'bold'}}>
                 {'      '} आइये, मिलकर संकल्प लें जीओ गीता द्वारा प्रेरित
                 अष्टादश श्लोकी गीता पाठ के इस वैश्विक अभियान में जुड़कर
                 नित्यप्रति अधिकाधिक पाठ करने - करवाने का, तथा सबल स्वस्थ राष्ट्र

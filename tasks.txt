@@ -1,6 +1,4 @@
-
 add filter search option in country selection
-on share add dianamic image url and message
 implement push Notifications
 update past cahnts list item
 language translations

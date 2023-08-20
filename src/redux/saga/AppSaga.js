@@ -158,7 +158,7 @@ const getLanguageList = function* () {
   }
 };
 const getTargetPledgeData = function* () {
-  console.log('list pledge dnfksdnf enter');
+  // console.log('list pledge dnfksdnf enter');
   try {
     let requestUrl =
       'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-details';
@@ -171,10 +171,10 @@ const getTargetPledgeData = function* () {
         payload: res.data.data,
       });
     }
-    console.log(
+    // console.log(
       // '🚀 ~ file: chant profole list data ~ res:=-=-=>',
-      JSON.stringify(res.data.data),
-    );
+    //   JSON.stringify(res.data.data),
+    // );
   } catch (error) {
     Alert.alert('server error');
     // console.log('show getTargetPledgeData error api', error);
