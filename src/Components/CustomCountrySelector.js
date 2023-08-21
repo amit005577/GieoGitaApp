@@ -88,7 +88,7 @@ const CustomCountrySelector = ({
               {data && (
                 <FlatList
                   data={data}
-                  keyExtractor={item => item.name.toString()}
+                  keyExtractor={item => item.i}
                   renderItem={({item}) => {
                     // alert('run');
                     if (searchText === '') {

@@ -1,48 +1,52 @@
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
+  ActivityIndicator, Alert,
+  FlatList,
   Modal,
   Pressable,
-  FlatList,ActivityIndicator, Alert
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import HeaderPage from '../../Components/header';
 import Icon from 'react-native-vector-icons/AntDesign';
+import HeaderPage from '../../Components/header';
 // import FIcon from 'react-native-vector-icons/Feather';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import FIcon from 'react-native-vector-icons/FontAwesome5';
+import { useDispatch, useSelector } from 'react-redux';
+import { navigationRef } from '../../../App';
 import {
   Logout,
-  languageList,
-  saveLangCode,
-  setcoditionalStatus,
+  languageList
 } from '../../redux/actions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {navigationRef} from '../../../App';
-import FIcon from 'react-native-vector-icons/FontAwesome5';
-const SettingScreen = ({navigation}) => {
-  //   const navigation = useNavigation();
+import { useTranslation } from '../../utills.js/translation-hook';
+
+
+const SettingScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState(languageData[0]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const langList = useSelector(state => state.AppReducers.languageList);
+
   const [languageListData, setlanguageList] = useState([])
+  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage } = useTranslation()
+
 
   const handleOnpressLanguage = data => {
-    let newData=[]
-    languageListData.map((item)=>{
-      if (item.id==data.id) {
-        newData.push({...item,isSelected:true})
+    let newData = []
+    handleUpdateLanuage({ langCode: data.code })
+
+    languageListData.map((item) => {
+      if (item.id == data.id) {
+        newData.push({ ...item, isSelected: true })
       } else {
-        newData.push({...item,isSelected:false})
+        newData.push({ ...item, isSelected: false })
       }
       setlanguageList(newData)
     })
-    setSelected(data);
     setModalVisible(false);
-    dispatch(saveLangCode(data));
+    handleSelectedLanguage(data)
+
   };
 
   const handleLogout = async () => {
@@ -57,7 +61,7 @@ const SettingScreen = ({navigation}) => {
   useEffect(() => {
     setlanguageList(langList)
   }, [langList])
-  
+
   useEffect(() => {
     dispatch(languageList());
   }, []);
@@ -65,11 +69,11 @@ const SettingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <HeaderPage />
-   
+
       <View style={styles.rowContainer}>
         <View style={styles.imageConatier}>{/* <Text>image</Text> */}</View>
         <View>
-        
+
         </View>
       </View>
       <TouchableOpacity
@@ -84,12 +88,12 @@ const SettingScreen = ({navigation}) => {
           <Icon name={'right'} size={10} color={'orange'} />
         </View>
       </TouchableOpacity>
-   
+
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{"भाषा चुने "}{selected.name}</Text>
+          <Text style={styles.texstyle}>{"भाषा चुने "}{selectedLang.name}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -105,9 +109,9 @@ const SettingScreen = ({navigation}) => {
           <Icon name={'right'} size={10} color={'orange'} />
         </View>
       </TouchableOpacity>
-   
-  
-      <TouchableOpacity onPress={()=>navigationRef.navigate("event")} style={styles.onecontainer}>
+
+
+      <TouchableOpacity onPress={() => navigationRef.navigate("event")} style={styles.onecontainer}>
         <View style={styles.textCotaier}>
           <Text style={styles.texstyle}>घटना और समूह</Text>
         </View>
@@ -125,7 +129,7 @@ const SettingScreen = ({navigation}) => {
       </View>
       <TouchableOpacity
         onPress={() => handleLogout()}
-        style={{...styles.onecontainer, borderBottomWidth: 0.5}}>
+        style={{ ...styles.onecontainer, borderBottomWidth: 0.5 }}>
         <View style={styles.textCotaier}>
           <Text
             style={{
@@ -156,17 +160,17 @@ const SettingScreen = ({navigation}) => {
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>रद्द करना</Text>
             </Pressable>
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <FlatList
                 data={languageListData}
                 keyExtractor={item => item.id}
-                ListFooterComponent={() => <View style={{height:200}} />}
-                ListEmptyComponent={()=>{
-                  return(
+                ListFooterComponent={() => <View style={{ height: 200 }} />}
+                ListEmptyComponent={() => {
+                  return (
                     <ActivityIndicator size={'small'} color={'blue'} />
                   )
                 }}
-                renderItem={({item}) => {
+                renderItem={({ item }) => {
                   return (
                     <TouchableOpacity
                       onPress={() => handleOnpressLanguage(item)}

@@ -1,30 +1,34 @@
+import React, { useEffect } from 'react';
 import {
+  Dimensions,
   Image,
   ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  Dimensions,
 } from 'react-native';
-import React, {useEffect} from 'react';
-import HeaderPage from '../../Components/header';
-import {useDispatch,} from 'react-redux';
-import {getHomeData, getTranslations} from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import maharaj from '../../../assets/images/Magaraj.png';
 import ArjunImage from '../../../assets/images/arjun.jpg';
 import logo1 from '../../../assets/images/logo1.jpg';
 import logo2 from '../../../assets/images/logo2.jpg';
 import logo3 from '../../../assets/images/logo3.jpg';
-import logo5 from '../../../assets/images/logo5.jpg';
 import logo4 from '../../../assets/images/logo4.jpg';
-import maharaj from '../../../assets/images/Magaraj.png';
+import logo5 from '../../../assets/images/logo5.jpg';
+import HeaderPage from '../../Components/header';
+import { getHomeData } from '../../redux/actions';
+import { useTranslation } from '../../utills.js/translation-hook';
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
+
+  const { Translation } = useTranslation()
+  console.log('Translation home r:::::::::::::::::::::::', Translation);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getHomeData());
-    dispatch(getTranslations());
   }, []);
 
   return (
@@ -34,8 +38,8 @@ const HomeScreen = () => {
         <ImageBackground
           resizeMode="cover"
           source={ArjunImage}
-          style={{height: 330, width: '100%'}}>
-          <View style={{position: 'absolute', right: 0, bottom: 0}}>
+          style={{ height: 330, width: '100%' }}>
+          <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
             <Image
               source={maharaj}
               style={{
@@ -45,7 +49,7 @@ const HomeScreen = () => {
             />
           </View>
         </ImageBackground>
-        <View style={{marginHorizontal: 20}}>
+        <View style={{ marginHorizontal: 20 }}>
           <View
             style={{
               width: '100%',
@@ -86,9 +90,9 @@ const HomeScreen = () => {
               }}>
               साकार वैश्विक अभिव्यक्ति
             </Text>
-            <View style={{marginTop: 10}}>
+            <View style={{ marginTop: 10 }}>
               <Text
-                style={{color: '#2A2A2A', fontSize: 12, fontWeight: 'bold'}}>
+                style={{ color: '#2A2A2A', fontSize: 12, fontWeight: 'bold' }}>
                 जय श्री कृष्ण,
               </Text>
               <Text
@@ -245,22 +249,22 @@ const HomeScreen = () => {
               <Image source={logo1} style={styles.imagestyle} />
             </View>
           </View>
-          <View style={{...styles.rowImage, paddingHorizontal: 20}}>
+          <View style={{ ...styles.rowImage, paddingHorizontal: 20 }}>
             <View>
               <Image
                 source={logo2}
-                style={{...styles.imagestyle, width: windowWidth / 2.3}}
+                style={{ ...styles.imagestyle, width: windowWidth / 2.3 }}
               />
             </View>
             <View>
               <Image
                 source={logo5}
-                style={{...styles.imagestyle, width: windowWidth / 2.3}}
+                style={{ ...styles.imagestyle, width: windowWidth / 2.3 }}
               />
             </View>
           </View>
 
-          <View style={{height: 50}} />
+          <View style={{ height: 50 }} />
         </View>
       </ScrollView>
     </ScrollView>
@@ -299,5 +303,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 30,
   },
-  imagestyle: {height: 100, width: windowWidth / 3, resizeMode: 'stretch'},
+  imagestyle: { height: 100, width: windowWidth / 3, resizeMode: 'stretch' },
 });

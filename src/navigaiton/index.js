@@ -1,19 +1,20 @@
 // In App.js in a new project
 
-import React, {useState, useEffect} from 'react';
-import HomeStackNavigation from './HomeStackNavigation';
-import AuthStackNavigation from './AuthStackNavigation';
-import {NavigationContainer} from '@react-navigation/native';
-import {navigationRef} from '../../App';
-import {Provider, useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {sigingStatus} from '../redux/reducers/selectors/userSelector';
-import {Logout, STORETOKEN} from '../redux/actions';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { navigationRef } from '../../App';
+import { Logout, STORETOKEN } from '../redux/actions';
+import { sigingStatus } from '../redux/reducers/selectors/userSelector';
+import AuthStackNavigation from './AuthStackNavigation';
+import HomeStackNavigation from './HomeStackNavigation';
 
 function InitialNavigation() {
   const [signed, setSigned] = useState(false);
   const [token, setToken] = useState(null);
   const siginResponse = useSelector(sigingStatus);
+  
   useEffect(() => {
     asyncFunction();
   }, [!siginResponse]);

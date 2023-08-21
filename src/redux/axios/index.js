@@ -22,35 +22,15 @@ export const fetchRecord = async url => {
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
 // console.log("show urll00000000000",token)
-//   let config = {
-//     method: 'get',
-//     url: url,
-//     headers: { 
-//       'Authorization': 'Bearer 1816|VYjztD1AcPoDZCSyGLd4jeL3puGTdwrhWCX0cNoC', 
-//     }
-//   };
-  
-//   axios.request(config)
-//   .then((response) => {
-//     console.log("LLLLllllllllllLLLLLLLL",JSON.stringify(response.data));
-//   })
-//   .catch((error) => {
-//     console.log("show axios eror check",error);
-//   });
-//   return 
 
-  // console.log("show token inapi -===>",token,url)
   return axios({
     method: 'GET',
     crossDomain: true,
-    timeout: 1000,
-    // dataType: 'application/json; charset=utf-8',
     url: url,
     headers: {
-      // 'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       "Authorization": `Bearer ${token}`,
     },
-    // config,
   });
 };
 

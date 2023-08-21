@@ -10,11 +10,11 @@ const initialState = {
   getCurrentCountData: '',
   pdfList: '',
   languageList: '',
-  selectedLangCode: '',
+  selectedLangCode: {"code": "en", "id": 1, "name": "English"},
   liveDataChants: '',
-  countryNamelistData:'',
-  countryStateListData:"",
-  translationData:""
+  countryNamelistData: '',
+  countryStateListData: "",
+  translationData: ""
 };
 
 const AppReducers = (state = initialState, action) => {
@@ -85,24 +85,24 @@ const AppReducers = (state = initialState, action) => {
         ...state,
         liveDataChants: action.payload,
       };
-      case actions.COUTRY_NAME_LIST_SUCCESS:
-        // console.log('country name reducer',action.payload);
-        return {
-          ...state,
-          countryNamelistData: action.payload,
-        };
-        case actions.COUTRY_STATE_NAME_SUCCESS:
-          // console.log('country state list reducer',action.payload);
-          return {
-            ...state,
-            countryStateListData: action.payload,
-          };
-          case actions.GET_LANGUAGE_TRANSLATION_SUCCESS:
-            // console.log('country TRANSLATION reducer',action.payload);
-            return {
-              ...state,
-              translationData: action.payload,
-            };
+    case actions.COUTRY_NAME_LIST_SUCCESS:
+      // console.log('country name reducer',action.payload);
+      return {
+        ...state,
+        countryNamelistData: action.payload,
+      };
+    case actions.COUTRY_STATE_NAME_SUCCESS:
+      // console.log('country state list reducer',action.payload);
+      return {
+        ...state,
+        countryStateListData: action.payload,
+      };
+    case actions.GET_LANGUAGE_TRANSLATION_SUCCESS:
+      // console.log('country TRANSLATION reducer',action.payload);
+      return {
+        ...state,
+        translationData: action.payload,
+      };
     default: {
       return state;
     }

@@ -321,19 +321,24 @@ const getCountryStateSaga = function* (payload) {
     // console.log('show getCountryStateSaga error api', error);
   }
 };
-const getTranslationsSaga = function* (payload) {
-  // console.log('enter translation');
-
+const getTranslationsSaga = function* ({payload}) {
+console.log('>>>>>>>>>>>>>>>>>>>>',payload);
   try {
-    let requestUrl = `https://projects.cilearningschool.com/gieo_gita/api/v1/translators`;
-    // console.log("show request url state",requestUrl)
-
+    let requestUrl = `http://projects.cilearningschool.com/gieo_gita/api/v1/translation-get/${payload.langCode}`;
+    
     const res = yield call(fetchRecord, requestUrl);
-    // console.log('show translat ', JSON.stringify(res.data.data));
     if (res.data != null) {
+      var result = {};
+      const translations = res?.data?.data
+
+      translations.map((item,index) => {
+        result[translations[index].key] = translations[index].value;
+      })
+      console.log('::::::::::::???????', result);
+
       yield put({
         type: actions.GET_LANGUAGE_TRANSLATION_SUCCESS,
-        payload: res.data.data,
+        payload: result,
       });
     }
   } catch (error) {
