@@ -15,6 +15,7 @@ import ReadPdfScreen from './component/ReadPdf';
 import VideoScreen from './component/Viedo';
 import {useDispatch} from 'react-redux';
 import {getAllpdfData, getVideoData} from '../../redux/actions';
+import { colors } from '../../helper/colors';
 // import HeaderPage from '../../components/header';
 
 const ReadChantPage = () => {
@@ -76,18 +77,10 @@ const ReadChantPage = () => {
   return (
     <View style={styles.container}>
       <HeaderPage />
-      {/* <Text
-        style={{
-          alignSelf: 'center',
-          fontSize: 30,
-          color: 'black',
-          marginTop: 10,
-        }}>
-        Archive
-      </Text> */}
       <View style={{flex: 1, marginTop: 10}}>
         <TabView
           style={{flex: 1}}
+          swipeEnabled={false}
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
@@ -134,4 +127,10 @@ const styles = StyleSheet.create({
 
     // backgroundColor: 'white',
   },
+  customTabcontainer: {
+    flexDirection: 'row',
+  },
+  textHeading:{
+    color:colors.black
+  }
 });

@@ -65,35 +65,16 @@ const SettingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <HeaderPage />
-      {/* <TouchableOpacity
-        onPress={() => navigation.navigate('HomeStack')}
-        style={styles.backContainer}>
-        <FIcon name="arrow-left-circle" size={34} color={'black'} style={{}} />
-        <Text style={{color: 'black', fontSize: 18, left: 10}}>Back</Text>
-      </TouchableOpacity> */}
-      {/* <View
-        style={{
-          width: '100%',
-          height: 1,
-          backgroundColor: 'black',
-          marginTop: 5,
-        }}
-      /> */}
+   
       <View style={styles.rowContainer}>
         <View style={styles.imageConatier}>{/* <Text>image</Text> */}</View>
         <View>
-          {/* <Text style={styles.texttitle}>hello amit</Text> */}
-          {/* <Text style={{...styles.texttitle, fontSize: 14}}>Profile</Text> */}
+        
         </View>
       </View>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('update');
-          // dispatch(setcoditionalStatus(true));
-          // AsyncStorage.clear();
-          // setTimeout(() => {
-          //   navigationRef.navigate('sankalp');
-          // }, 1200);
         }}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
@@ -103,14 +84,7 @@ const SettingScreen = ({navigation}) => {
           <Icon name={'right'} size={10} color={'orange'} />
         </View>
       </TouchableOpacity>
-      {/* <View style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>Old Counts(18 jan to 11 jul,2023)</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </View> */}
+   
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={styles.onecontainer}>

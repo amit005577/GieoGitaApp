@@ -4,31 +4,23 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  useWindowDimensions,
   Dimensions,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import HeaderPage from '../../Components/header';
-import Patanjali from '../../../assets/images/patanjali.jpeg';
-import updesh from '../../../assets/images/updesh3.png';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch,} from 'react-redux';
 import {getHomeData, getTranslations} from '../../redux/actions';
 import ArjunImage from '../../../assets/images/arjun.jpg';
 import logo1 from '../../../assets/images/logo1.jpg';
 import logo2 from '../../../assets/images/logo2.jpg';
 import logo3 from '../../../assets/images/logo3.jpg';
-import logo from '../../../assets/images/Logo.png';
 import logo5 from '../../../assets/images/logo5.jpg';
 import logo4 from '../../../assets/images/logo4.jpg';
 import maharaj from '../../../assets/images/Magaraj.png';
-import {useIsFocused} from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
-  const isfocuse = useIsFocused();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getHomeData());
@@ -38,7 +30,6 @@ const HomeScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <HeaderPage />
-      {/* {homeData.data != null ? ( */}
       <ScrollView contentContainerStyle={{}}>
         <ImageBackground
           resizeMode="cover"
@@ -105,7 +96,7 @@ const HomeScreen = () => {
                   color: '#2A2A2A',
                   fontSize: 12,
                   textAlign: 'justify',
-                  flexWrap:'wrap',
+                  flexWrap: 'wrap',
                   fontWeight: 'bold',
                 }}>
                 {'                    '}गीता केवल पाठ्य या पूज्य ग्रन्थ ही नहीं
@@ -125,7 +116,12 @@ const HomeScreen = () => {
                 और स्वाभाविक आत्मिक प्रसन्नता।
               </Text>
               <Text
-                style={{color: '#2A2A2A', fontSize: 12,textAlign: 'justify', fontWeight: 'bold'}}>
+                style={{
+                  color: '#2A2A2A',
+                  fontSize: 12,
+                  textAlign: 'justify',
+                  fontWeight: 'bold',
+                }}>
                 {'      '} आइये, मिलकर संकल्प लें जीओ गीता द्वारा प्रेरित
                 अष्टादश श्लोकी गीता पाठ के इस वैश्विक अभियान में जुड़कर
                 नित्यप्रति अधिकाधिक पाठ करने - करवाने का, तथा सबल स्वस्थ राष्ट्र
@@ -276,7 +272,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // height:"100%"
   },
   headerContainer: {
     flexDirection: 'row',
