@@ -3,7 +3,7 @@ import configureStore from './src/redux/store';
 import {LogBox, PermissionsAndroid} from 'react-native';
 import {createNavigationContainerRef} from '@react-navigation/native';
 import codePush from 'react-native-code-push';
-const {default: InitialNavigation} = require('./src/navigaiton');
+import InitialNavigation from './src/navigaiton';
 LogBox.ignoreLogs(['Warning: ...']);
 PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 export const navigationRef = createNavigationContainerRef();
