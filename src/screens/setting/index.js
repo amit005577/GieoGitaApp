@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderPage from '../../Components/header';
-// import FIcon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +28,7 @@ const SettingScreen = ({ navigation }) => {
   const langList = useSelector(state => state.AppReducers.languageList);
 
   const [languageListData, setlanguageList] = useState([])
-  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage } = useTranslation()
+  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage ,Translation} = useTranslation()
 
 
   const handleOnpressLanguage = data => {
@@ -82,7 +81,7 @@ const SettingScreen = ({ navigation }) => {
         }}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>मेरी प्रतिज्ञा</Text>
+          <Text style={styles.texstyle}>{Translation.my_pledge}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -93,7 +92,7 @@ const SettingScreen = ({ navigation }) => {
         onPress={() => setModalVisible(true)}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{"भाषा चुने "}{selectedLang.name}</Text>
+          <Text style={styles.texstyle}>{Translation.select_language} {selectedLang.name}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -103,7 +102,7 @@ const SettingScreen = ({ navigation }) => {
         onPress={() => navigationRef.navigate('help')}
         style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>मदद</Text>
+          <Text style={styles.texstyle}>{Translation.help}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -113,7 +112,7 @@ const SettingScreen = ({ navigation }) => {
 
       <TouchableOpacity onPress={() => navigationRef.navigate("event")} style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>घटना और समूह</Text>
+          <Text style={styles.texstyle}>{Translation.event_and_group}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -121,7 +120,7 @@ const SettingScreen = ({ navigation }) => {
       </TouchableOpacity>
       <View style={styles.onecontainer}>
         <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>प्रचार सामग्री</Text>
+          <Text style={styles.texstyle}>{Translation.promotional_material}</Text>
         </View>
         <View style={styles.iconStylecontainer}>
           <Icon name={'right'} size={10} color={'orange'} />
@@ -137,7 +136,7 @@ const SettingScreen = ({ navigation }) => {
               textDecorationLine: 'underline',
               color: 'blue',
             }}>
-            लॉग आउट
+            {Translation.log_out}
           </Text>
         </View>
         <View style={styles.iconStylecontainer}>

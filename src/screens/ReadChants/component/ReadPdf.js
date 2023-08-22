@@ -1,32 +1,26 @@
-import React, {useState, useRef, useDebugValue, useEffect} from 'react';
-import Pdf from 'react-native-pdf';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  Dimensions,
   ActivityIndicator,
   Alert,
+  Dimensions,
+  FlatList,
   Linking,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
   Modal,
   Pressable,
-  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
+import Pdf from 'react-native-pdf';
 import FIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
-import {getPdfData, languageList} from '../../../redux/actions';
-import {colors} from '../../../helper/colors';
-import WebView from 'react-native-webview';
-// import TelguPdf from '../../../../assets/pdf/Telgu.pdf';
-// import EnglishPdf from '../../../../assets/pdf/English.pdf';
-// import banglaPdf from '../../../../assets/pdf/Bangla.pdf';
-// import Gujrati from '../../../../assets/pdf/Gujrati.pdf';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPdfData, languageList } from '../../../redux/actions';
+import Constants from '../../../utills.js/Constants';
 
 const ReadPdfScreen = () => {
   const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
@@ -39,7 +33,7 @@ const ReadPdfScreen = () => {
     title: 'App PDF Setting',
     short_content: '21',
     file_short_content:
-      'https://projects.cityinnovates.in/gieo_gita/public/uploads/all/21/Single-Page-Setting-English.pdf',
+      `${Constants.READ_PDF_URL}/public/uploads/all/21/Single-Page-Setting-English.pdf`,
     content: null,
     lang: 'en',
     create_at: '2023-07-18T12:47:47.000000Z',
@@ -79,7 +73,7 @@ const ReadPdfScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{paddingHorizontal: 0}}>
+      <View style={{flex:1}}>
         <View style={styles.monthContainer}>
           <TouchableOpacity onPress={zoomdecrease}>
             <FIcon
@@ -116,8 +110,6 @@ const ReadPdfScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* <ScrollView> */}
-        <View>
           <Pdf
             trustAllCerts={false}
             source={{
@@ -149,10 +141,8 @@ const ReadPdfScreen = () => {
               marginBottom: 100,
             }}
           />
-          <View style={{height: 100}} />
-        </View>
-        {/* </ScrollView> */}
       </View>
+
       <Modal
         animationType="slide"
         transparent={true}

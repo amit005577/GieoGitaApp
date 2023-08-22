@@ -10,11 +10,12 @@ const initialState = {
   getCurrentCountData: '',
   pdfList: '',
   languageList: '',
-  selectedLangCode: {"code": "en", "id": 1, "name": "English"},
+  selectedLangCode: { "code": "en", "id": 1, "name": "English" },
   liveDataChants: '',
   countryNamelistData: '',
   countryStateListData: "",
-  translationData: ""
+  translationData: "",
+  previousChent:null
 };
 
 const AppReducers = (state = initialState, action) => {
@@ -102,6 +103,12 @@ const AppReducers = (state = initialState, action) => {
       return {
         ...state,
         translationData: action.payload,
+      };
+    case actions.SET_PREVIOUS_CHENT:
+      // console.log('SET_PREVIOUS_CHENT reducer',action.payload);
+      return {
+        ...state,
+        previousChent: action.payload,
       };
     default: {
       return state;

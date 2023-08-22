@@ -2,3 +2,9 @@
 implement push Notifications
 update past cahnts list item
 language translations
+
+EOD:
+
+Auh 22
+Translations added in:
+Header, Setting,

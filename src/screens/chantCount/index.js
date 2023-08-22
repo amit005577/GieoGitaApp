@@ -1,44 +1,63 @@
 import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Modal,
-  Pressable,
   ActivityIndicator,
   Alert,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import FIcon from 'react-native-vector-icons/Feather';
 
 import EIcon from 'react-native-vector-icons/Entypo';
 
+import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { navigationRef } from '../../../App';
 import HeaderPage from '../../Components/header';
 import {
   chantHistory,
   chantUpdatecount,
   getcurrentcountStatus,
   liveChants,
+  setPreviousChant,
   targetChantData,
 } from '../../redux/actions';
-import {useDispatch, useSelector} from 'react-redux';
-import {navigationRef} from '../../../App';
+import { colors } from '../../helper/colors';
 
-const ChantCount = ({navigation, route}) => {
+const ChantCount = ({ navigation, route }) => {
+  const isFocused = useIsFocused();
+
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
   const [number, setNumber] = React.useState(0);
-  const monthlyData = useSelector(
-    state => state.AppReducers.getCurrentCountData,
-  );
+  const [disable, setDisable] = React.useState(true);
+
+  const monthlyData = useSelector(state => state.AppReducers.getCurrentCountData);
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
+  const previousChent = useSelector(state => state.AppReducers.previousChent);
+
+
+  useEffect(() => {
+    if (isFocused && previousChent != null) {
+      const created_date = moment(previousChent?.create_at).format('DD MMM')
+      setTodaysDate(created_date)
+      setNumber(parseInt(previousChent.count))
+
+    } else {
+      setNumber(0)
+      dispatch(setPreviousChant(null))
+    }
+  }, [isFocused])
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -46,9 +65,20 @@ const ChantCount = ({navigation, route}) => {
     dispatch(getcurrentcountStatus());
     dispatch(liveChants());
   }, []);
-  const [disable, setDisable] = React.useState(true);
+
 
   const handleOnpress = () => {
+    if (previousChent?.count) {
+      alert('Coming soon...') // need to remove once Update api is ready
+
+      const data = {
+        id: previousChent.id,
+        count: number
+      }
+      return // need to remove once Update api is ready
+      dispatch(chantUpdatecount(data));
+
+    }
     setModalVisible(true);
     setDisable(true);
     dispatch(chantUpdatecount(number));
@@ -80,15 +110,16 @@ const ChantCount = ({navigation, route}) => {
     setDisable(false);
   };
 
+
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       <HeaderPage />
 
       <ScrollView>
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}
           style={styles.eventstyle}>
-          <Text style={{color: 'white', fontSize: 21}}>घटनाएँ और समूह</Text>
+          <Text style={{ color: 'white', fontSize: 21 }}>घटनाएँ और समूह</Text>
         </TouchableOpacity>
         <Text style={styles.chantsTitle}>कुल मंत्र</Text>
 
@@ -115,7 +146,7 @@ const ChantCount = ({navigation, route}) => {
           <Icon
             name={'caretdown'}
             size={10}
-            style={{marginLeft: 10, color: 'black'}}
+            style={{ marginLeft: 10, color: colors.black }}
           />
         </TouchableOpacity>
 
@@ -128,13 +159,13 @@ const ChantCount = ({navigation, route}) => {
             </Text>
           </View>
 
-          <View style={{...styles.btncountcontaiiner, marginTop: 10}}>
+          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
               सप्ताह की प्रगति:{monthlyData?.weekly_count}
             </Text>
           </View>
 
-          <View style={{...styles.btncountcontaiiner, marginTop: 10}}>
+          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
               माह की प्रगति:{monthlyData?.month_count}
             </Text>
@@ -146,12 +177,12 @@ const ChantCount = ({navigation, route}) => {
             <FIcon
               name="arrow-left-circle"
               size={25}
-              style={{...styles.iconStyle}}
+              style={{ ...styles.iconStyle }}
             />
           </TouchableOpacity>
 
           <View style={styles.monthContentStyle}>
-            <Text style={{fontWeight: 'bold', color: '#434343'}}>
+            <Text style={{ fontWeight: 'bold', color: '#434343' }}>
               {todaysDate}
             </Text>
           </View>
@@ -161,7 +192,7 @@ const ChantCount = ({navigation, route}) => {
               <FIcon
                 name="arrow-right-circle"
                 size={25}
-                style={{...styles.iconStyle}}
+                style={{ ...styles.iconStyle }}
               />
             </TouchableOpacity>
           </View>
@@ -186,18 +217,15 @@ const ChantCount = ({navigation, route}) => {
             <EIcon name={'minus'} size={30} style={styles.iconstyle} />
           </TouchableOpacity>
 
-          <View>
-            <View style={[styles.Bigcountercontainer]}></View>
-            <View
-              style={{position: 'absolute', right: 50, top: 56, width: 100}}>
-              <Text style={{...styles.countTextNumber, alignSelf: 'center'}}>
-                {number}
-              </Text>
-            </View>
+          <View
+            style={{ height: 150, width: 150,marginVertical:10, marginHorizontal: 10, justifyContent: 'center', alignItems: 'center', borderWidth: 5, borderColor: colors.orange, borderRadius: 100 }}>
+            <Text numberOfLines={1} style={{ ...styles.countTextNumber, alignSelf: 'center' }}>
+              {number}
+            </Text>
           </View>
 
           <TouchableOpacity
-            style={{...styles.iconContainer, borderColor: 'green'}}
+            style={{ ...styles.iconContainer, borderColor: 'green' }}
             onPress={() => {
               NumberIncreament();
             }}>
@@ -216,24 +244,21 @@ const ChantCount = ({navigation, route}) => {
             borderWidth: 1,
             borderColor: '#E5CE004F',
           }}>
-          <Text style={[styles.textSubmit, {fontSize: 20}]}>अर्पण करे</Text>
+          <Text style={[styles.textSubmit, { fontSize: 20 }]}>अर्पण करे</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate('listpage')}
           style={{
             ...styles.btnContainer,
-
             width: '50%',
-
             marginTop: 20,
-
-            backgroundColor: 'black',
+            backgroundColor: colors.black,
           }}>
           <Text style={styles.textSubmit}>पूर्ण अर्पण सूची</Text>
         </TouchableOpacity>
 
-        <View style={{height: 50}} />
+        <View style={{ height: 50 }} />
       </ScrollView>
       <Modal
         animationType="slide"
@@ -245,7 +270,7 @@ const ChantCount = ({navigation, route}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <Text style={styles.modalText}>जप गिनती</Text>
               <Text style={styles.modalText}>अद्यतन</Text>
               <Text style={styles.modalText}>सफलतापूर्वक</Text>
@@ -323,7 +348,7 @@ const styles = StyleSheet.create({
 
     fontSize: 22,
 
-    color: 'black',
+    color: colors.black,
     fontWeight: 'bold',
   },
 
@@ -354,13 +379,13 @@ const styles = StyleSheet.create({
   numberText: {
     alignSelf: 'center',
 
-    color: 'black',
+    color: colors.black,
   },
 
   userNameContainer: {
     borderWidth: 1,
 
-    borderColor: 'black',
+    borderColor: colors.black,
 
     alignContent: 'center',
 
@@ -385,7 +410,7 @@ const styles = StyleSheet.create({
   userText: {
     fontSize: 23,
 
-    color: 'black',
+    color: colors.black,
 
     fontWeight: '500',
   },
@@ -401,7 +426,7 @@ const styles = StyleSheet.create({
   YourChantStyle: {
     fontSize: 30,
 
-    color: 'black',
+    color: colors.black,
 
     fontWeight: '500',
 
@@ -411,7 +436,7 @@ const styles = StyleSheet.create({
   normalStyle: {
     // fontSize: 16,
 
-    color: 'black',
+    color: colors.black,
 
     // marginTop: 5,
   },
@@ -521,15 +546,13 @@ const styles = StyleSheet.create({
   iconstyle: {
     fontWeight: 'bold',
 
-    color: 'black',
+    color: colors.black,
   },
 
   countTextNumber: {
-    fontSize: 65,
-
+    fontSize: 50,
     fontWeight: 'bold',
-
-    color: 'black',
+    color: colors.black,
   },
 
   btnContainer: {

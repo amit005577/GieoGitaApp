@@ -5,14 +5,17 @@ import logo from '../../assets/images/Logo.png';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {targetChantData} from '../redux/actions';
+import { useTranslation } from '../utills.js/translation-hook';
 // import useTranslation from 'react-i18next';
 
 const HeaderPage = () => {
   // const {t} =  useTranslation()
+  const { Translation } = useTranslation()
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
-  // console.log("show data pledge data ",datapledge)
+  // console.log("datapledge:::::::::::::",datapledge)
   useEffect(() => {
     dispatch(targetChantData());
   }, []);
@@ -29,22 +32,21 @@ const HeaderPage = () => {
         </TouchableOpacity>
 
         <View style={styles.textContainer}>
-          <Text style={{...styles.textStyle, fontSize: 36, color: 'white'}}>
-            गीता जीवन गीत
+          <Text style={{...styles.textStyle, fontSize: 24, color: 'white'}}>
+            {Translation.geeta_jeevan_geet}
           </Text>
           <Text
             style={{
               ...styles.textStyle,
-              fontSize: 13,
+              fontSize: 12,
               color: 'black',
               fontWeight: 'bold',
             }}>
-            अष्टादश श्लोकी गीता पाठ महाअभियान
+            {Translation.eighteen_verse_gita_recitation_campaign}
           </Text>
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate('setting')}
-          // style={{}}
           style={{
             height: 55,
             width: 55,

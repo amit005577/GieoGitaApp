@@ -268,3 +268,10 @@ export const eventConfirmation = payload=>{
     payload,
   }
 }
+
+export const setPreviousChant = payload=>{
+  return{
+    type:ActionTypes.SET_PREVIOUS_CHENT,
+    payload,
+  }
+}

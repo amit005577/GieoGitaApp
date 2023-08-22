@@ -17,12 +17,13 @@ import notifee, {AndroidImportance} from '@notifee/react-native';
 import {useNotificaiton} from '../../Notifications/AuthNotifications';
 import configureStore from '../store';
 import {Alert} from 'react-native';
+import Constants from '../../utills.js/Constants';
 
 const PledgeSagaFunction = function* (data) {
   // console.log('show data count', data);
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/change-traget-count';
+      `${Constants.BASE_URL}change-traget-count`;
     let postData = {
       count: data,
     };
@@ -44,7 +45,7 @@ const UpdateChant = function* (data) {
   // console.log('show data count single', data);
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/user/reads-update';
+      `${Constants.BASE_URL}user/reads-update`;
     let postData = {
       count: data,
     };
@@ -67,13 +68,13 @@ const getHomePageData = function* () {
   // console.log('Home Page Data');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/20';
+      `${Constants.BASE_URL}pages/20`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     if (res.data != null) {
       yield put({type: actions.HOME_DATA, payload: res.data});
     }
-    console.log('Home :::::::::::::::::::::::::', JSON.stringify(res.data));
+    // console.log('Home :::::::::::::::::::::::::', JSON.stringify(res.data));
   } catch (error) {
     // console.log('show getHomePageData error api', error);
   }
@@ -83,7 +84,7 @@ const chantHistoryapi = function* () {
   // console.log('chat history');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/user/reads-get/';
+      `${Constants.BASE_URL}user/reads-get/`;
     //  console.log("show ruy=nning...............")
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null) {
@@ -102,7 +103,7 @@ const getPdfSaga = function* () {
   // console.log('cha pdf');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/1';
+      `${Constants.BASE_URL}pages/1`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response pdf saga', res);
@@ -122,7 +123,7 @@ const getVideoData = function* () {
   // console.log('vide enter');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/25';
+      `${Constants.BASE_URL}pages/25`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response video saga', res);
@@ -142,7 +143,7 @@ const getLanguageList = function* () {
   // console.log('list lang enter');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/show-all-language';
+      `${Constants.BASE_URL}show-all-language`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response list language data saga', res);
@@ -161,7 +162,7 @@ const getTargetPledgeData = function* () {
   // console.log('list pledge dnfksdnf enter');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-details';
+      `${Constants.BASE_URL}profile-details`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response list target chant profigle data saga', res);
@@ -184,7 +185,7 @@ const getCurrenCountData = function* () {
   // console.log('list current montthly count');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/show-current-chants-count';
+      `${Constants.BASE_URL}show-current-chants-count`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show  montuhly data res data saga', res);
@@ -203,7 +204,7 @@ const getAllpdfDataSaga = function* () {
   // console.log('list pdf saga  count');
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/pages/1';
+      `${Constants.BASE_URL}pages/1`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     // console.log(
@@ -235,7 +236,7 @@ const reisterDetailSaga = function* (data) {
   // console.log('show submitting saga data', _data);
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/profile-update';
+      `${Constants.BASE_URL}profile-update`;
       console.log("show hit api before data ",_data,requestUrl)
     const res = yield call(registerApi, requestUrl, _data);
 
@@ -267,7 +268,7 @@ const getliveDatasaga = function* () {
 
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/show-current-chants-count';
+      `${Constants.BASE_URL}show-current-chants-count`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show live chants', JSON.stringify(res.data.data));
@@ -287,7 +288,7 @@ const getCountryNameSaga = function* () {
 
   try {
     let requestUrl =
-      'https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-countries-list';
+      `${Constants.BASE_URL}get-all-countries-list`;
 
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show country name', JSON.stringify(res.data.data));
@@ -306,7 +307,7 @@ const getCountryStateSaga = function* (payload) {
   // console.log('enter country state data simgle',payload);
 
   try {
-    let requestUrl = `https://projects.cilearningschool.com/gieo_gita/api/v1/get-all-state-list/${payload.payload}`;
+    let requestUrl = `${Constants.BASE_URL}get-all-state-list/${payload.payload}`;
     // console.log("show request url state",requestUrl)
 
     const res = yield call(fetchRecord, requestUrl);
@@ -322,9 +323,9 @@ const getCountryStateSaga = function* (payload) {
   }
 };
 const getTranslationsSaga = function* ({payload}) {
-console.log('>>>>>>>>>>>>>>>>>>>>',payload);
+// console.log('>>>>>>>>>>>>>>>>>>>>',payload);
   try {
-    let requestUrl = `http://projects.cilearningschool.com/gieo_gita/api/v1/translation-get/${payload.langCode}`;
+    let requestUrl = `${Constants.BASE_URL}translation-get/${payload.langCode}`;
     
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null) {
@@ -334,7 +335,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>',payload);
       translations.map((item,index) => {
         result[translations[index].key] = translations[index].value;
       })
-      console.log('::::::::::::???????', result);
+      // console.log('::::::::::::???????', result);
 
       yield put({
         type: actions.GET_LANGUAGE_TRANSLATION_SUCCESS,
