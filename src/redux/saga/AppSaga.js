@@ -73,7 +73,7 @@ const getHomePageData = function* () {
     if (res.data != null) {
       yield put({type: actions.HOME_DATA, payload: res.data});
     }
-    // console.log('🚀 ~ file: AppSaga.js:41 ~ res:', JSON.stringify(res.data));
+    console.log('Home :::::::::::::::::::::::::', JSON.stringify(res.data));
   } catch (error) {
     // console.log('show getHomePageData error api', error);
   }

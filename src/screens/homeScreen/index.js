@@ -8,7 +8,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import maharaj from '../../../assets/images/Magaraj.png';
 import ArjunImage from '../../../assets/images/arjun.jpg';
 import logo1 from '../../../assets/images/logo1.jpg';
@@ -17,18 +16,15 @@ import logo3 from '../../../assets/images/logo3.jpg';
 import logo4 from '../../../assets/images/logo4.jpg';
 import logo5 from '../../../assets/images/logo5.jpg';
 import HeaderPage from '../../Components/header';
-import { getHomeData } from '../../redux/actions';
-import { useTranslation } from '../../utills.js/translation-hook';
+import { useHomeHooks } from '../../utills.js/hooke/home-hooks';
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
 
-  const { Translation } = useTranslation()
-  console.log('Translation home r:::::::::::::::::::::::', Translation);
+  const { Translation, handleGetHomeData, homePageData } = useHomeHooks()
 
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getHomeData());
+    handleGetHomeData()
   }, []);
 
   return (
@@ -103,7 +99,8 @@ const HomeScreen = () => {
                   flexWrap: 'wrap',
                   fontWeight: 'bold',
                 }}>
-                {'                    '}गीता केवल पाठ्य या पूज्य ग्रन्थ ही नहीं
+                {Translation.long_live_shri_krishna_description}
+                {/* {'                    '}गीता केवल पाठ्य या पूज्य ग्रन्थ ही नहीं
                 अपितु जीवन को आनन्दमय, प्रेममय, भक्तिमय बनाने के साथ-साथ व्यवहार
                 कुशलता व आत्म उत्थान की विशिष्ट जीवन शैली भी है ! गीता अमृत है
                 और अमृत का एक कण भी मिल जाने से भी अमृततत्व तो मिलेगा ही।
@@ -117,7 +114,7 @@ const HomeScreen = () => {
                 सकते है अपने सपनों के भविष्य में, किस प्रकार उड़ सकते है स्वछन्द
                 आकाश में, किस तरह पहुँच सकते है अपने गन्तव्य तक, जहाँ हमें
                 मिलेगी असीम शान्ति, स्फूर्ति, कार्यकुशलता, उच्च भाव-मृदुल स्वभाव
-                और स्वाभाविक आत्मिक प्रसन्नता।
+                और स्वाभाविक आत्मिक प्रसन्नता। */}
               </Text>
               <Text
                 style={{
