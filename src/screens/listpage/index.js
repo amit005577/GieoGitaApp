@@ -123,7 +123,7 @@ const ListPageScreen = ({ navigation }) => {
           color: colors.black,
           marginTop: 20,
         }}>
-        पूर्ण अर्पण सूची
+      {Translation.submissions_list}
       </Text>
 
       <View
@@ -135,15 +135,15 @@ const ListPageScreen = ({ navigation }) => {
         }}>
         <View style={{ ...styles.insideContainer, backgroundColor: '#C7E9C9' }}>
           <Text style={styles.numberText}>{monthlyData?.weekly_count}</Text>
-          <Text style={styles.currentText}>वर्तमान सप्ताह</Text>
+          <Text style={styles.currentText}>{Translation.Current_Week}</Text>
         </View>
         <View style={{ ...styles.insideContainer, backgroundColor: '#E9E1C7' }}>
           <Text style={styles.numberText}>{monthlyData?.month_count}</Text>
-          <Text style={styles.currentText}>वर्तमान माह</Text>
+          <Text style={styles.currentText}>{monthlyData?.current_month}</Text>
         </View>
         <View style={{ ...styles.insideContainer, backgroundColor: '#C7DBE9' }}>
           <Text style={styles.numberText}>{monthlyData?.life_time_count}</Text>
-          <Text style={styles.currentText}>कुल</Text>
+          <Text style={styles.currentText}>{monthlyData?.total}</Text>
         </View>
       </View>
       <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
@@ -181,7 +181,7 @@ const ListPageScreen = ({ navigation }) => {
                       fontWeight: 'bold',
                       color: colors.black,
                     }}>
-                    दिनांक
+                  {Translation.date}
                   </Text>
                 </View>
                 <View
@@ -202,7 +202,7 @@ const ListPageScreen = ({ navigation }) => {
                       color: colors.black,
                       marginLeft: 20,
                     }}>
-                    संख्या
+                    {Translation.count}
                   </Text>
                 </View>
 

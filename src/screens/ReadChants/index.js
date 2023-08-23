@@ -16,20 +16,21 @@ import VideoScreen from './component/Viedo';
 import {useDispatch} from 'react-redux';
 import {getAllpdfData, getVideoData} from '../../redux/actions';
 import { colors } from '../../helper/colors';
+import { useTranslation } from '../../utills.js/translation-hook';
 // import HeaderPage from '../../components/header';
 
 const ReadChantPage = () => {
+  const { Translation } = useTranslation()
   const layout = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getVideoData());
     dispatch(getAllpdfData());
   }, []);
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'पढ़ना'},
-    {key: 'second', title: 'विडियो'},
+    {key: 'first', title: Translation.read},
+    {key: 'second', title: Translation.video},
   ]);
   const renderScene = SceneMap({
     first: ReadPdfScreen,

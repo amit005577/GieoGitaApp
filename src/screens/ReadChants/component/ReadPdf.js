@@ -21,6 +21,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPdfData, languageList } from '../../../redux/actions';
 import Constants from '../../../utills.js/Constants';
+import { useTranslation } from '../../../utills.js/translation-hook';
 
 const ReadPdfScreen = () => {
   const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
@@ -28,6 +29,7 @@ const ReadPdfScreen = () => {
   const pdfRef = useRef(null);
   const [totalPage, setTotalPage] = React.useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const { Translation } = useTranslation()
   const [selected, setSelected] = useState({
     id: 17,
     title: 'App PDF Setting',
@@ -92,7 +94,7 @@ const ReadPdfScreen = () => {
                   fontWeight: 'bold',
                   alignSelf: 'center',
                 }}>
-                भाषा चुनें
+              {Translation.select_language}
               </Text>
             </TouchableOpacity>
             <Text
@@ -230,15 +232,17 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   monthContentStyle: {
+     minWidth:"40%",
     borderWidth: 2,
     fontWeight: 'bold',
     height: 53,
-    width: 90,
+    // width: 90,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     borderColor: 'orange',
+   
     // margin: 20,
   },
   container: {
