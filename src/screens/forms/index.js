@@ -20,6 +20,7 @@ import CustomPicker from '../../Components/CustomPicker';
 import HeaderPage from '../../Components/header';
 import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
 import { colors } from '../../helper/colors';
+import Constants from '../../utills.js/Constants';
 const dataFrequency = [
   { id: 1, name: '--Select--' },
   { id: 2, name: 'One Time' },
@@ -83,7 +84,7 @@ const EventForm = ({ route }) => {
   const pickerRef = useRef();
   const [countryCode, setCountryCode] = useState({
     code: 'IN',
-    icon: 'https://projects.cityinnovates.in/gieo_gita/public/assets/img/flags/in.png',
+    icon: `${Constants.READ_PDF_URL}public/assets/img/flags/in.png`,
     id: 101,
     name: 'India',
     phone_code: 91,
@@ -536,7 +537,7 @@ const EventForm = ({ route }) => {
             <TouchableOpacity
               onPress={() => setmodalVisible(true)}
               style={{
-                width: '45%',
+                width: '30%',
                 justifyContent: 'flex-start',
                 alignContent: 'flex-start',
               }}>
@@ -551,6 +552,8 @@ const EventForm = ({ route }) => {
                   source={{
                     uri: countryCode.icon,
                   }}
+                  // tintColor={"red"}
+                  
                   height={20}
                   width={20}
                 />

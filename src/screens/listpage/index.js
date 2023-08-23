@@ -146,7 +146,7 @@ const ListPageScreen = ({ navigation }) => {
       </View>
       <View style={{ paddingHorizontal: 30,borderRadius:10, marginBottom: 100 }}>
         <FlatList
-          data={historydata}
+          data={historydata.reverse()}
           keyExtractor={item => item.id}
           renderItem={renderItem}
           contentContainerStyle={{
@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 15,
     padding:8,
+    minWidth:"50%"
   },
 
   userText: {

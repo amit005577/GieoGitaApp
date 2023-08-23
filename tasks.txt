@@ -1,10 +1,5 @@
 
 implement push Notifications
-update past cahnts list item
-language translations
+social login
 
-EOD:
 
-Auh 22
-Translations added in:
-Header, Setting,

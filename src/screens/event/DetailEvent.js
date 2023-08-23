@@ -29,7 +29,7 @@ const DetailEvent = ({route}) => {
   const item = route.params.data;
   const isCurrentUser = route.params.isCurrentUser
   console.log('show details item', item);
-  // console.log('show props data', route.params);
+  console.log('show props data', route.params);
   const url = item?.thumbnail;
   const message = item?.short_content;
   const title = 'Shared by ' + item?.organizer;
@@ -51,7 +51,7 @@ const DetailEvent = ({route}) => {
   const [subscription, setsubscription] = useState(item?.subscriptions);
 
   useEffect(() => {
-    if (subscribeResponse.id == item.id) {
+    if (subscribeResponse.id == item?.id) {
       setsubscription(subscribeResponse.subscriptions);
     }
   }, [subscribeResponse]);
@@ -147,7 +147,7 @@ const DetailEvent = ({route}) => {
     let data = {
       params: {
         image: camerPhoto,
-        id: item.id,
+        id: item?.id,
       },
       callback: () => handleClearData(),
     };
@@ -166,22 +166,22 @@ const DetailEvent = ({route}) => {
       <HeaderPage />
       {isCopied ? <CustomeToast /> : null}
       <View style={{paddingHorizontal: 10}}>
-        <Text style={styles.idstyle}>Event ID:{item.id}</Text>
+        <Text style={styles.idstyle}>Event ID:{item?.id}</Text>
         <View style={styles.singleItem}>
           <IconV color="gray" name="globe" size={24} />
-          <Text style={styles.textstyle}>{item.event_type}</Text>
+          <Text style={styles.textstyle}>{item?.event_type}</Text>
         </View>
 
         <View style={styles.locationstyle}>
           <View style={styles.oneItem}>
             <Icon name="calendar" color="gray" size={25} />
             <Text style={{...styles.textstyle, fontSize: 14}}>
-              {moment(item.start).format('ddd-mm-yy')}
+              {moment(item?.create_at).format('ddd-mm-yy')}
             </Text>
           </View>
           <View style={styles.oneItem}>
             <IconE name="location" size={25} color={colors.black} />
-            <Text style={{...styles.textstyle, fontSize: 14}}>{item.city}</Text>
+            <Text style={{...styles.textstyle, fontSize: 14}}>{item?.city}</Text>
           </View>
         </View>
         <Text
@@ -191,7 +191,7 @@ const DetailEvent = ({route}) => {
             marginLeft: 0,
             marginTop: 10,
           }}>
-          {item.content}
+          {item?.content}
         </Text>
         <Text
           style={{
@@ -201,15 +201,15 @@ const DetailEvent = ({route}) => {
             marginTop: 10,
             fontWeight: '400',
           }}>
-          {item.instraction}
+          {item?.instraction}
         </Text>
         <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
-          Subscrptions:{item.subscriptions}
+          Subscrptions:{item?.subscriptions}
         </Text>
         <View style={styles.addresStyle}>
           <View style={{width: '50%', alignSelf: 'flex-end'}}>
             <Text style={{fontSize: 18, color: 'black'}}>
-              Address: <Text style={{fontSize: 14}}>{item.address}</Text>{' '}
+              Address: <Text style={{fontSize: 14}}>{item?.address}</Text>{' '}
             </Text>
             <Text
               style={{
@@ -219,7 +219,7 @@ const DetailEvent = ({route}) => {
                 marginTop: 10,
                 fontWeight: '400',
               }}>
-              {item.country_id}
+              {item?.country_id}
             </Text>
           </View>
           <View>
@@ -240,7 +240,7 @@ const DetailEvent = ({route}) => {
                 marginTop: 10,
                 fontWeight: '400',
               }}>
-              {item.organizer}
+              {item?.organizer}
             </Text>
           </View>
         </View>
@@ -288,7 +288,7 @@ const DetailEvent = ({route}) => {
         />
         <TouchableOpacity
           style={styles.subscribecontainer}
-          onPress={() => handleSubscrible(item.id)}>
+          onPress={() => handleSubscrible(item?.id)}>
           <Text style={{color: 'white'}}>
             {subscription == '1' ? 'Subscribed' : 'Subscribe'}
           </Text>

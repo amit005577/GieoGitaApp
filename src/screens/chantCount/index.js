@@ -31,13 +31,14 @@ import {
   targetChantData,
 } from '../../redux/actions';
 import { colors } from '../../helper/colors';
+import { useTranslation } from '../../utills.js/translation-hook';
 
-const ChantCount = ({ navigation, route }) => {
+const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
+  const [todaysDate, setTodaysDate] = React.useState(moment().format("DD MMM"));
   const [number, setNumber] = React.useState(0);
   const [disable, setDisable] = React.useState(true);
 
@@ -91,6 +92,8 @@ const ChantCount = ({ navigation, route }) => {
       .add(1, 'day')
       .format('DD MMMM');
     setTodaysDate(_newDate);
+    setNumber(0)
+    dispatch(setPreviousChant(null))
   };
 
   const dateDecrement = () => {
@@ -98,6 +101,8 @@ const ChantCount = ({ navigation, route }) => {
       .subtract(1, 'day')
       .format('DD MMMM');
     setTodaysDate(_newDate);
+    setNumber(0)
+    dispatch(setPreviousChant(null))
   };
 
   const NumberDecreament = () => {
@@ -109,7 +114,7 @@ const ChantCount = ({ navigation, route }) => {
     setNumber(number + 1);
     setDisable(false);
   };
-
+  const { Translation } = useTranslation()
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -119,9 +124,9 @@ const ChantCount = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}
           style={styles.eventstyle}>
-          <Text style={{ color: 'white', fontSize: 21 }}>घटनाएँ और समूह</Text>
+          <Text style={{ color: 'white', fontSize: 21 }}>{Translation.events_and_groups}</Text>
         </TouchableOpacity>
-        <Text style={styles.chantsTitle}>कुल मंत्र</Text>
+        <Text style={styles.chantsTitle}>{Translation.total_chants}</Text>
 
         <View>
           <View style={styles.contContainer}>
@@ -151,23 +156,23 @@ const ChantCount = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <View style={styles.textContainerstyle}>
-          <Text style={styles.YourChantStyle}>कुल मंत्र:</Text>
+          <Text style={styles.YourChantStyle}>{Translation.total_chants}:</Text>
 
           <View style={styles.btncountcontaiiner}>
             <Text style={styles.normalStyle}>
-              कुल मंत्र:{monthlyData?.life_time_count}
+            {Translation.total_chants}:{monthlyData?.life_time_count}
             </Text>
           </View>
 
           <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
-              सप्ताह की प्रगति:{monthlyData?.weekly_count}
+            {Translation.current_week_progress}:{monthlyData?.weekly_count}
             </Text>
           </View>
 
           <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
-              माह की प्रगति:{monthlyData?.month_count}
+            {Translation.current_month_progress}:{monthlyData?.month_count}
             </Text>
           </View>
         </View>
@@ -182,7 +187,7 @@ const ChantCount = ({ navigation, route }) => {
           </TouchableOpacity>
 
           <View style={styles.monthContentStyle}>
-            <Text style={{ fontWeight: 'bold', color: '#434343' }}>
+            <Text numberOfLines={1} style={{ fontWeight: 'bold', color: '#434343' }}>
               {todaysDate}
             </Text>
           </View>
@@ -204,7 +209,7 @@ const ChantCount = ({ navigation, route }) => {
             alignSelf: 'center',
             backgroundColor: '#EFEFEF',
           }}>
-          <Text style={styles.countToday}>आज:{monthlyData?.today_count}</Text>
+          <Text style={styles.countToday}>{Translation.today}:{monthlyData?.today_count}</Text>
         </View>
 
         <View style={styles.countercontainer}>
@@ -244,7 +249,7 @@ const ChantCount = ({ navigation, route }) => {
             borderWidth: 1,
             borderColor: '#E5CE004F',
           }}>
-          <Text style={[styles.textSubmit, { fontSize: 20 }]}>अर्पण करे</Text>
+          <Text style={[styles.textSubmit, { fontSize: 20 }]}>{Translation.submit}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -255,7 +260,7 @@ const ChantCount = ({ navigation, route }) => {
             marginTop: 20,
             backgroundColor: colors.black,
           }}>
-          <Text style={styles.textSubmit}>पूर्ण अर्पण सूची</Text>
+          <Text style={styles.textSubmit}>{Translation.submission_list}</Text>
         </TouchableOpacity>
 
         <View style={{ height: 50 }} />
@@ -271,16 +276,16 @@ const ChantCount = ({ navigation, route }) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={{ marginTop: 20 }}>
-              <Text style={styles.modalText}>जप गिनती</Text>
-              <Text style={styles.modalText}>अद्यतन</Text>
-              <Text style={styles.modalText}>सफलतापूर्वक</Text>
+              <Text style={styles.modalText}>{Translation.chant_count}</Text>
+              <Text style={styles.modalText}>{Translation.update}</Text>
+              <Text style={styles.modalText}>{Translation.successfully}</Text>
               <Text style={styles.modalText}>[{number}]</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
                   setModalVisible(!modalVisible), setNumber(0);
                 }}>
-                <Text style={styles.textStyle}>ठीक</Text>
+                <Text style={styles.textStyle}>{Translation.ok}</Text>
               </Pressable>
             </View>
           </View>
@@ -405,6 +410,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
 
     marginTop: 15,
+    minWidth:"50%"
   },
 
   userText: {
@@ -457,8 +463,10 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     fontWeight: 'bold',
     height: 60,
+    paddingHorizontal:10,
+    minWidth:"40%",
 
-    width: 90,
+    // width: 90,
 
     justifyContent: 'center',
 

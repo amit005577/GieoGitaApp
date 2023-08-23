@@ -23,7 +23,7 @@ const MyEvent = ({navigation}) => {
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   // console.log('show my list item', myEventData);
   const handleOnpress=(item)=>{
-    navigation.navigate('details', item);
+    navigation.navigate('details', {data:item,isCurrentUser:true});
   }
   const renderItem = ({item}) => {
     return (

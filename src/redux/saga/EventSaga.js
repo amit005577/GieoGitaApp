@@ -12,8 +12,6 @@ import { Alert } from 'react-native';
 import { navigationRef } from '../../../App';
 
 
-
-
 const AllEventSaga = function* () {
   yield put({ type: actions.LODER, payload: true })
   // console.log('list event ');
@@ -22,10 +20,10 @@ const AllEventSaga = function* () {
       `${Constants.BASE_URL}events`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
-    // console.log(
-    //   'show  event data res data saga',
-    //   JSON.stringify(res),
-    // );
+    console.log(
+      'show  event data res data saga',
+      JSON.stringify(res),
+    );
     if (res.data != null) {
       yield put({
         type: actions.GET_ALL_EVENT_SUCCESS,
@@ -109,7 +107,7 @@ const SearchEventSaga = function* () {
 
 
 const CreateEventSaga = function* (data) {
-  // console.log('list CreateEventSaga count', data);
+  console.log('list CreateEventSaga count', data);
   let _data = {
     name: data.payload.name,
     instraction: data.payload.instraction,
@@ -132,16 +130,16 @@ const CreateEventSaga = function* (data) {
     plateform: data.payload.plateform,
     content: data.payload.content
   }
-  // console.log("show crteate event list",_data)
+  console.log("show crteate event list",_data)
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-store`;
 
     const res = yield call(registerApi, requestUrl, _data);
-    // console.log(
-    //   'show  CreateEventSaga=-=-=-= saga',
-    //   JSON.stringify(res.data.data),
-    // );
+    console.log(
+      'show  CreateEventSaga=-=-=-= saga',
+      JSON.stringify(res.data.data),
+    );
     if (res.data != null) {
 
       yield put({
@@ -152,7 +150,7 @@ const CreateEventSaga = function* (data) {
       navigationRef.navigate("formPlace")
     }
   } catch (error) {
-    // console.log('show error api', error);
+    console.log('show error api', error);
   }
 };
 

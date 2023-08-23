@@ -24,6 +24,7 @@ import {
 } from '../../redux/actions';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { colors } from '../../helper/colors';
+import { useTranslation } from '../../utills.js/translation-hook';
 
 const Register = ({navigation}) => {
   const [name, setname] = useState('');
@@ -34,6 +35,7 @@ const Register = ({navigation}) => {
   const [stateModata, setstateModata] = useState(false);
   const [countryName, setcountryName] = useState('');
   const [email, setEmail] = useState('');
+  const { Translation } = useTranslation()
   const countryRespose = useSelector(
     state => state.AppReducers.countryNamelistData,
   );
@@ -46,11 +48,11 @@ const Register = ({navigation}) => {
   const [dataset, setData] = useState([
     {
       id: 1,
-      gender: 'Male',
-    },
+      gender: Translation?.male,
+    },  
     {
       id: 2,
-      gender: 'Female',
+      gender: Translation?.female,
     },
   ]);
 
@@ -128,14 +130,14 @@ const Register = ({navigation}) => {
         />
       </View>
 
-      <Text style={styles.loginText}>अपने अकाउंट में लॉग इन करें</Text>
+      <Text style={styles.loginText}>{Translation.login_to_your_account}</Text>
       <View>
         <TextInput
           style={styles.TextInputStyle}
           onChangeText={setname}
           placeholderTextColor={'#808080'}
           value={name}
-          placeholder={'नाम दर्ज करें'}
+          placeholder={Translation.Enter_your_Name}
         />
 
         <TextInput
@@ -143,14 +145,14 @@ const Register = ({navigation}) => {
           onChangeText={setage}
           placeholderTextColor={'#808080'}
           value={age}
-          placeholder={'आयु दर्ज करें'}
+          placeholder={Translation.enter_age}
         />
         <TextInput
           style={styles.TextInputStyle}
           onChangeText={setEmail}
           placeholderTextColor={'#808080'}
           value={email}
-          placeholder={'email'}
+          placeholder={Translation.email}
         />
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
@@ -163,8 +165,8 @@ const Register = ({navigation}) => {
             {selectedGender != ''
               ? selectedGender != null
                 ? selectedGender
-                : 'लिंग चुनें'
-              : 'लिंग चुनें'}
+                : Translation.Select_gender
+              : Translation.Select_gender}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -175,7 +177,7 @@ const Register = ({navigation}) => {
             alignContent: 'center',
           }}>
           <Text style={{color: colors.black}}>
-            {countryName.name ? countryName.name : 'देश का नाम'}
+            {countryName.name ? countryName.name : Translation.country_name}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -187,7 +189,7 @@ const Register = ({navigation}) => {
             alignContent: 'center',
           }}>
           <Text style={{color: colors.black}}>
-            {selectedState?.name ? selectedState?.name : 'राज्य'}
+            {selectedState?.name ? selectedState?.name : Translation.state}
           </Text>
         </TouchableOpacity>
       </View>
@@ -196,7 +198,7 @@ const Register = ({navigation}) => {
         onPress={() => handleOnpress()}
         style={styles.touchableStyle}>
         <Text style={{textAlign: 'center', color: '#fff', fontSize: 28}}>
-          जमा करना
+         {Translation.submit}
         </Text>
       </TouchableOpacity>
       <Modal
@@ -301,7 +303,7 @@ const Register = ({navigation}) => {
         transparent={true}
         visible={stateModata}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          // Alert.alert('Modal has been closed.');
           setstateModata(!stateModata);
         }}>
         <View style={styles.centeredView}>
@@ -309,7 +311,7 @@ const Register = ({navigation}) => {
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setstateModata(!stateModata)}>
-              <Text style={styles.textStyle}>रद्द करना</Text>
+              <Text style={styles.textStyle}>{Translation.close}</Text>
             </Pressable>
             <View style={{marginTop: 20}}>
               <FlatList

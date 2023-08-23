@@ -118,10 +118,10 @@ const EventPage = ({ navigation }) => {
     navigation.navigate('details', {data: item,isCurrentUser: validateCurrentUser(item.phone, item.email)});
   };
 
-  const handleDetailsPage = item => {
-    setModalVisible(false);
-    navigation.navigate('details', item);
-  };
+  // const handleDetailsPage = item => {
+  //   setModalVisible(false);
+  //   navigation.navigate('details', item);
+  // };
 
   useEffect(() => {
     setEditLoder(true)
