@@ -1,3 +1,5 @@
+import moment from 'moment';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   ScrollView,
@@ -7,24 +9,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { navigationRef } from '../../../App';
 import HeaderPage from '../../Components/header';
-import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
 import {
   setPledge,
-  setcoditionalStatus,
-  targetChant,
-  targetChantData,
+  targetChantData
 } from '../../redux/actions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {navigationRef} from '../../../App';
+import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 const UpdatePledge = () => {
+  const { Translation, isLoading } = useTranslation()
+
   const [count, setCount] = React.useState('');
   // console.log('show cout number-=-->', count);
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
-    // console.log('show datapledge data page jfsdkjfkl', datapledge[0].targetChant);
+  // console.log('show datapledge data page jfsdkjfkl', datapledge[0].targetChant);
   const targetCountDAta = datapledge[0]?.target_count;
   // console.log('show targetcountData', targetCountDAta);
 
@@ -49,14 +50,17 @@ const UpdatePledge = () => {
   let currentDateData = moment(new Date(), 'DD-MM-YYYY');
   let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
   let noOfDays = targetDate.diff(currentDateData, 'days');
-  
+
   // console.log("Number of days:", noOfDays);
-  let dailyCount= count/noOfDays
-  let monthCountNumber = dailyCount*30
-  let weekCountNummber = dailyCount*7
+  let dailyCount = count / noOfDays
+  let monthCountNumber = dailyCount * 30
+  let weekCountNummber = dailyCount * 7
 
   return (
     <View style={styles.container}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
       {datapledge ? (
         <ScrollView>
@@ -69,14 +73,14 @@ const UpdatePledge = () => {
             </Text>
             {/* <Text style={{...styles.desctext, marginTop: 0}}></Text> */}
           </View>
-          <Text style={{...styles.desctext,marginTop:20, fontWeight: 'bold',fontSize:20}}>
+          <Text style={{ ...styles.desctext, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
             मैं गीता जयन्ती 23 दिसम्बर 2023 तक
           </Text>
-          <Text style={{...styles.desctext,marginTop:10, fontWeight: 'bold',fontSize:22,color:'#F7941C'}}>
-          अष्टादश श्लोकी गीता पाठ
-        </Text>
-          <Text style={{...styles.desctext,marginTop:10, fontWeight: 'bold',fontSize:18}}>
-          करने का संकल्प लेता/लेती हूं
+          <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 22, color: '#F7941C' }}>
+            अष्टादश श्लोकी गीता पाठ
+          </Text>
+          <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 18 }}>
+            करने का संकल्प लेता/लेती हूं
           </Text>
           <View style={styles.textInputStyleContainer}>
             <TextInput
@@ -91,22 +95,22 @@ const UpdatePledge = () => {
             />
           </View>
           <Text style={styles.chalisaText}>
-            संकल्पित संख्या 
+            संकल्पित संख्या
           </Text>
-       
+
 
           <View
-            style={{...styles.graph1line, marginTop: 20, borderBottomWidth: 0}}>
+            style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>दैनिक</Text>
             </View>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>
-                { Math.round(dailyCount) <1?1:Math.round(dailyCount)}
+                {Math.round(dailyCount) < 1 ? 1 : Math.round(dailyCount)}
               </Text>
             </View>
           </View>
-          <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>साप्ताहिक</Text>
             </View>
@@ -116,7 +120,7 @@ const UpdatePledge = () => {
               </Text>
             </View>
           </View>
-          <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>महीने के</Text>
             </View>
@@ -135,20 +139,20 @@ const UpdatePledge = () => {
               <Text style={styles.graphText}>{count ? count : '0000'}</Text>
             </View>
           </View>
-          <View style={{paddingHorizontal: 30}}>
+          <View style={{ paddingHorizontal: 30 }}>
             <TouchableOpacity
               onPress={() => handleOnsubmit()}
               style={styles.submitContainer}>
               <Text style={styles.submittext}>अर्पण करे</Text>
             </TouchableOpacity>
             <View style={styles.withoutPledge}>
-              <Text style={{fontSize: 12, color: 'black'}}>नोट:</Text>
-              <Text style={{fontSize: 12, color: 'black'}}>
-              आप बिना संकल्प भी ऐप में पाठ सांख्य अर्पण कर सकते हैं
+              <Text style={{ fontSize: 12, color: 'black' }}>नोट:</Text>
+              <Text style={{ fontSize: 12, color: 'black' }}>
+                आप बिना संकल्प भी ऐप में पाठ सांख्य अर्पण कर सकते हैं
               </Text>
             </View>
           </View>
-          <View style={{height: 60}} />
+          <View style={{ height: 60 }} />
         </ScrollView>
       ) : (
         <ActivityIndicator size={'large'} color={'red'} />

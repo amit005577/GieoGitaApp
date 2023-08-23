@@ -6,32 +6,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colors} from '../../helper/colors';
-import React, {useEffect, useState} from 'react';
+import { colors } from '../../helper/colors';
+import React, { useEffect, useState } from 'react';
 import HeaderPage from '../../Components/header';
 import Icont from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconF from 'react-native-vector-icons/Feather';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 import { navigationRef } from '../../../App';
+import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 const windowWidth = Dimensions.get('window').width;
-const MyEvent = ({navigation}) => {
+const MyEvent = ({ navigation }) => {
   const myEventData = useSelector(state => state.EventReducer.myEvent);
+  const { Translation, isLoading } = useTranslation()
+
   // console.log('show my list item', myEventData);
-  const handleOnpress=(item)=>{
-    navigation.navigate('details', {data:item,isCurrentUser:true});
+  const handleOnpress = (item) => {
+    navigation.navigate('details', { data: item, isCurrentUser: true });
   }
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.iconContianer}
         onPress={() => handleOnpress(item)}
-        >
-        <View style={{width: '90%'}}>
+      >
+        <View style={{ width: '90%' }}>
           <View style={styles.singleItem}>
             <IconV name="globe" size={18} color={colors.black} />
             <Text numberOfLines={2} style={styles.textstyle}>
@@ -40,20 +44,20 @@ const MyEvent = ({navigation}) => {
           </View>
           <View style={styles.itemlistcontainer}>
             <View style={styles.oneItem} color={colors.black} >
-              <Icon name="calendar" size={15} color={colors.black}  />
-              <Text style={{...styles.textstyle, fontSize: 14}}>
+              <Icon name="calendar" size={15} color={colors.black} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {moment(item?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
             <View style={styles.oneItem}>
               <IconE name="location" size={15} color={colors.black} />
-              <Text style={{...styles.textstyle, fontSize: 14}}>
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {item.place_type}
               </Text>
             </View>
-            <View style={{...styles.oneItem}}>
-              <IconF name="users" size={15}color={colors.black}  />
-              <Text style={{...styles.textstyle, fontSize: 14}}>
+            <View style={{ ...styles.oneItem }}>
+              <IconF name="users" size={15} color={colors.black} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {item.participants}
               </Text>
             </View>
@@ -67,17 +71,20 @@ const MyEvent = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1,}}>
-      <HeaderPage/>
-      <View style={{paddingHorizontal:10}}>
-      <View>
-        <Text> My Events</Text>
-      </View>
-      <FlatList
-        data={myEventData}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-      />
+    <View style={{ flex: 1, }}>
+      {isLoading ?
+        <Loader /> : null
+      }
+      <HeaderPage />
+      <View style={{ paddingHorizontal: 10 }}>
+        <View>
+          <Text> My Events</Text>
+        </View>
+        <FlatList
+          data={myEventData}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+        />
       </View>
     </View>
   );
@@ -121,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 20,
     shadowColor: 'rgba(0,0,0, .4)', // IOS
-    shadowOffset: {height: 1, width: 1}, // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
     backgroundColor: '#fff',

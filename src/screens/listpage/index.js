@@ -15,10 +15,12 @@ import { colors } from '../../helper/colors';
 import { chantHistory, setPreviousChant } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
 import { useIsFocused } from '@react-navigation/native';
+import Loader from '../../Components/Loader';
+import { useHomeHooks } from '../../utills.js/hooke/home-hooks';
 
 const ListPageScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const { Translation } = useTranslation()
+  const { Translation, isLoading } = useTranslation()
 
   const dispatch = useDispatch();
   const historydata = useSelector(state => state.AppReducers.chantHistory);
@@ -97,6 +99,9 @@ const ListPageScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
 
       <TouchableOpacity

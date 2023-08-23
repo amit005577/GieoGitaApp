@@ -8,6 +8,7 @@ export const useTranslation = () => {
 
     const Translation = useSelector(state => state.AppReducers.translationData);
     const selectedLang = useSelector(state => state.AppReducers.selectedLangCode);
+    const isLoading = useSelector(state => state.AppReducers.isLoading);
 
     const handleUpdateLanuage = (params) => {
         dispatch(getTranslations(params));
@@ -28,6 +29,7 @@ export const useTranslation = () => {
         handleUpdateLanuage,
         selectedLang,
         handleSelectedLanguage,
-        handleDefaultLanguage
+        handleDefaultLanguage,
+        isLoading
     }
 }

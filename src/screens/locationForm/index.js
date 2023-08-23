@@ -1,60 +1,60 @@
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   Dimensions,
+  FlatList,
+  Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Modal,
-  Pressable,
-  FlatList,
-  ActivityIndicator,
-  Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import HeaderPage from '../../Components/header';
-import Icont from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconF from 'react-native-vector-icons/Feather';
-import {useDispatch, useSelector} from 'react-redux';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
+import Icont from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
+import HeaderPage from '../../Components/header';
 // import {useDispatch, useSelector} from 'react-redux';
 // import {getAllEvent, getEventPlace, getEventType} from '../../redux/actions';
 import moment from 'moment';
-import {colors} from '../../helper/colors';
+import { ms } from 'react-native-size-matters';
 import CustomPicker from '../../Components/CustomPicker';
+import Loader from '../../Components/Loader';
+import { colors } from '../../helper/colors';
 import {
-  createEvent,
   getCountryName,
   getEventPlace,
   getStateName,
-  updateLocation,
-  updateMyEvent,
+  updateLocation
 } from '../../redux/actions';
-import {ms} from 'react-native-size-matters';
+import { useTranslation } from '../../utills.js/translation-hook';
 
 const windowWidth = Dimensions.get('window').width;
 const dataFrequency = [
-  {name: '--Selectt--', value: 'item1', id: 1},
-  {name: 'india', value: 'item2', id: 2},
-  {name: 'usa', value: 'item1', id: 3},
-  {name: 'australia', value: 'item2', id: 4},
-  {name: 'england', value: 'item2', id: 5},
-  {name: 'newYork', value: 'item2', id: 6},
+  { name: '--Selectt--', value: 'item1', id: 1 },
+  { name: 'india', value: 'item2', id: 2 },
+  { name: 'usa', value: 'item1', id: 3 },
+  { name: 'australia', value: 'item2', id: 4 },
+  { name: 'england', value: 'item2', id: 5 },
+  { name: 'newYork', value: 'item2', id: 6 },
 ];
 const stateData = [
-  {name: '--Selectt--', value: 'item1', id: 1},
-  {name: 'delhi', value: 'item2', id: 2},
-  {name: 'punjab', value: 'item1', id: 3},
-  {name: 'bihar', value: 'item2', id: 4},
-  {name: 'up', value: 'item2', id: 5},
-  {name: 'mohali', value: 'item2', id: 6},
+  { name: '--Selectt--', value: 'item1', id: 1 },
+  { name: 'delhi', value: 'item2', id: 2 },
+  { name: 'punjab', value: 'item1', id: 3 },
+  { name: 'bihar', value: 'item2', id: 4 },
+  { name: 'up', value: 'item2', id: 5 },
+  { name: 'mohali', value: 'item2', id: 6 },
 ];
 
-const LocationForm = ({route}) => {
+const LocationForm = ({ route }) => {
   const eventPlacetype = useSelector(
     state => state.EventReducer.eventPlaceData,
   );
@@ -84,8 +84,9 @@ const LocationForm = ({route}) => {
   );
 
   const [countrylistData, setcountrylistData] = useState(countryRespose);
+  const { Translation, isLoading } = useTranslation()
 
-  const newItem = {id: 0, name: 'select'};
+  const newItem = { id: 0, name: 'select' };
 
   useEffect(() => {
     if (eventPlacetype[0].name != 'select') {
@@ -198,11 +199,14 @@ const LocationForm = ({route}) => {
   // };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
-      <ScrollView style={{paddingHorizontal: 10}}>
+      <ScrollView style={{ paddingHorizontal: 10 }}>
         <TouchableOpacity style={styles.iconContianer}>
-          <View style={{width: '90%'}}>
+          <View style={{ width: '90%' }}>
             <View style={styles.singleItem}>
               <IconV name="globe" size={18} color={'black'} />
               <Text numberOfLines={2} style={styles.textstyle}>
@@ -212,19 +216,19 @@ const LocationForm = ({route}) => {
             <View style={styles.itemlistcontainer}>
               <View style={styles.oneItem}>
                 <Icon name="calendar" size={15} color={'black'} />
-                <Text style={{...styles.textstyle, fontSize: 14}}>
+                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                   {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
                 </Text>
               </View>
               <View style={styles.oneItem}>
                 <IconE name="location" size={15} color={'black'} />
-                <Text style={{...styles.textstyle, fontSize: 14}}>
+                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                   {currentEvent.place_type}
                 </Text>
               </View>
-              <View style={{...styles.oneItem}}>
+              <View style={{ ...styles.oneItem }}>
                 <IconF name="users" size={15} color={'black'} />
-                <Text style={{...styles.textstyle, fontSize: 14}}>
+                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                   {currentEvent.participants}
                 </Text>
               </View>
@@ -238,8 +242,8 @@ const LocationForm = ({route}) => {
         <View>
           <Text style={styles.locatoionText}>Location</Text>
         </View>
-        <View style={{marginTop: 20}}>
-          <View style={{...styles.textHeader, width: ms(93)}}>
+        <View style={{ marginTop: 20 }}>
+          <View style={{ ...styles.textHeader, width: ms(93) }}>
             <Text style={styles.haderStyle}>Place Name</Text>
           </View>
           <View style={styles.firstTextinput}>
@@ -253,11 +257,11 @@ const LocationForm = ({route}) => {
           </View>
         </View>
         {check && name == '' && (
-          <Text style={{color: 'red', left: 10}}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
         )}
 
-        <View style={{marginTop: 20}}>
-          <View style={{...styles.textHeader, width: ms(87)}}>
+        <View style={{ marginTop: 20 }}>
+          <View style={{ ...styles.textHeader, width: ms(87) }}>
             <Text style={styles.haderStyle}>Place Type</Text>
           </View>
           <View style={styles.firstTextinput}>
@@ -270,11 +274,11 @@ const LocationForm = ({route}) => {
           </View>
         </View>
         {check && selectedValue == null && (
-          <Text style={{color: 'red', left: 10}}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
         )}
 
-        <View style={{marginTop: 20}}>
-          <View style={{...styles.textHeader, width: ms(148)}}>
+        <View style={{ marginTop: 20 }}>
+          <View style={{ ...styles.textHeader, width: ms(148) }}>
             <Text style={styles.haderStyle}>List as public event</Text>
           </View>
           <View style={styles.secondList}>
@@ -288,7 +292,7 @@ const LocationForm = ({route}) => {
                 size={24}
                 color={selectIconOne == '1' ? 'blue' : 'black'}
               />
-              <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
                 Yes
               </Text>
             </TouchableOpacity>
@@ -302,14 +306,14 @@ const LocationForm = ({route}) => {
                 size={24}
                 color={selectIcontwo == '1' ? 'blue' : 'black'}
               />
-              <Text style={{marginLeft: 5, fontSize: 18, color: 'black'}}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
                 No
               </Text>
             </TouchableOpacity>
           </View>
         </View>
         {check && selectIconOne == null && (
-          <Text style={{color: 'red', left: 10}}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
         )}
 
         <View style={styles.calenderContainer}>
@@ -317,24 +321,24 @@ const LocationForm = ({route}) => {
             style={styles.calenderStyle}
             // onPress={showDatePicker}
             onPress={() => setCountryModal(true)}>
-            <View style={{...styles.textHeader, width: ms(64)}}>
+            <View style={{ ...styles.textHeader, width: ms(64) }}>
               <Text style={styles.haderStyle}>Country</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{alignSelf: 'center', fontSize: 16, color: 'black'}}>
+              <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
                 {country ? country.name : '--Select Country--'}
               </Text>
             </View>
             {check && country == null && (
-              <Text style={{color: 'red', left: 10}}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
             )}
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.calenderStyle}
-            //   onPress={()=>setShowModal(true)}
+          //   onPress={()=>setShowModal(true)}
           >
-            <View style={{...styles.textHeader, width: ms(73)}}>
+            <View style={{ ...styles.textHeader, width: ms(73) }}>
               <Text style={styles.haderStyle}>Pin Code</Text>
             </View>
             <View style={styles.firstTextinput}>
@@ -349,12 +353,12 @@ const LocationForm = ({route}) => {
               />
             </View>
             {check && pin == null && (
-              <Text style={{color: 'red', left: 10}}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
             )}
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: 20}}>
-          <View style={{...styles.textHeader, width: ms(68)}}>
+        <View style={{ marginTop: 20 }}>
+          <View style={{ ...styles.textHeader, width: ms(68) }}>
             <Text style={styles.haderStyle}>Address</Text>
           </View>
           <View style={styles.firstTextinput}>
@@ -368,15 +372,15 @@ const LocationForm = ({route}) => {
           </View>
         </View>
         {check && address == '' && (
-          <Text style={{color: 'red', left: 10}}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
         )}
 
         <View style={styles.calenderContainer}>
           <TouchableOpacity
             style={styles.calenderStyle}
-            // onPress={showDatePicker}
+          // onPress={showDatePicker}
           >
-            <View style={{...styles.textHeader, width: ms(37)}}>
+            <View style={{ ...styles.textHeader, width: ms(37) }}>
               <Text style={styles.haderStyle}>City</Text>
             </View>
             <View style={styles.firstTextinput}>
@@ -389,18 +393,18 @@ const LocationForm = ({route}) => {
               />
             </View>
             {check && cityName == '' && (
-              <Text style={{color: 'red', left: 10}}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
             )}
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.calenderStyle}
             onPress={() => handlestateFuction()}>
-            <View style={{...styles.textHeader, width: ms(47)}}>
+            <View style={{ ...styles.textHeader, width: ms(47) }}>
               <Text style={styles.haderStyle}>State</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{alignSelf: 'center', fontSize: 16, color: 'black'}}>
+              <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
                 {selectedState ? selectedState.name : '--Select State--'}
               </Text>
               {/* <CustomPicker
@@ -410,7 +414,7 @@ const LocationForm = ({route}) => {
               /> */}
             </View>
             {check && selectedState == null && (
-              <Text style={{color: 'red', left: 10}}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -441,18 +445,18 @@ const LocationForm = ({route}) => {
                   clearButtonMode="always"
                   autoCorrect={false}
                   placeholderTextColor={'gray'}
-                  style={{color: '#111211', flex: 1}}></TextInput>
+                  style={{ color: '#111211', flex: 1 }}></TextInput>
                 <IconF name="search" size={25} color="gray" />
               </View>
-              <View style={{marginTop: 20}}>
+              <View style={{ marginTop: 20 }}>
                 <FlatList
                   data={countrylistData}
                   keyExtractor={item => item.id}
-                  ListFooterComponent={() => <View style={{height: 200}} />}
+                  ListFooterComponent={() => <View style={{ height: 200 }} />}
                   ListEmptyComponent={() => {
                     return <ActivityIndicator size={'small'} color={'blue'} />;
                   }}
-                  renderItem={({item}) => {
+                  renderItem={({ item }) => {
                     if (searchText === '') {
                       return (
                         <View>
@@ -535,45 +539,19 @@ const LocationForm = ({route}) => {
                   clearButtonMode="always"
                   autoCorrect={false}
                   placeholderTextColor={'gray'}
-                  style={{color: '#111211', flex: 1}}></TextInput>
+                  style={{ color: '#111211', flex: 1 }}></TextInput>
                 <IconF name="search" size={25} color="gray" />
               </View>
-              <View style={{marginTop: 20}}>
+              <View style={{ marginTop: 20 }}>
                 <FlatList
                   data={countryStateLIstData}
                   keyExtractor={item => item.id}
-                  ListFooterComponent={() => <View style={{height: 200}} />}
+                  ListFooterComponent={() => <View style={{ height: 200 }} />}
                   ListEmptyComponent={() => {
                     return <ActivityIndicator size={'small'} color={'blue'} />;
                   }}
-                  renderItem={({item}) => {
-                    if(searchStateText===''){
-                      return (
-                        <TouchableOpacity
-                          onPress={() => handleselectState(item)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            width: '100%',
-                          }}>
-                          <View>
-                            <Text style={styles.modalText}>{item.name}</Text>
-                          </View>
-                          <FIcon
-                            name="check-circle"
-                            size={20}
-                            color={
-                              item.name == selectedState?.name
-                                ? 'green'
-                                : 'orange'
-                            }
-                          />
-                        </TouchableOpacity>
-                      );
-                    } 
-                    if(      item.name
-                      .toLocaleLowerCase()
-                      .includes(searchStateText.toLocaleLowerCase())){
+                  renderItem={({ item }) => {
+                    if (searchStateText === '') {
                       return (
                         <TouchableOpacity
                           onPress={() => handleselectState(item)}
@@ -597,7 +575,33 @@ const LocationForm = ({route}) => {
                         </TouchableOpacity>
                       );
                     }
-                   
+                    if (item.name
+                      .toLocaleLowerCase()
+                      .includes(searchStateText.toLocaleLowerCase())) {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => handleselectState(item)}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                          }}>
+                          <View>
+                            <Text style={styles.modalText}>{item.name}</Text>
+                          </View>
+                          <FIcon
+                            name="check-circle"
+                            size={20}
+                            color={
+                              item.name == selectedState?.name
+                                ? 'green'
+                                : 'orange'
+                            }
+                          />
+                        </TouchableOpacity>
+                      );
+                    }
+
                   }}
                 />
               </View>
@@ -647,7 +651,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 20,
     shadowColor: 'rgba(0,0,0, .4)', // IOS
-    shadowOffset: {height: 1, width: 1}, // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
     backgroundColor: '#fff',

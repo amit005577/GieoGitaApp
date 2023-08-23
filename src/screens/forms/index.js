@@ -21,6 +21,8 @@ import HeaderPage from '../../Components/header';
 import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
 import { colors } from '../../helper/colors';
 import Constants from '../../utills.js/Constants';
+import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 const dataFrequency = [
   { id: 1, name: '--Select--' },
   { id: 2, name: 'One Time' },
@@ -50,6 +52,7 @@ const EventForm = ({ route }) => {
   const [check, setCheck] = useState(false);
   const [laoder, setLaoder] = useState(false);
   const [joiningLink, setJoiningLink] = useState('');
+  const { Translation, isLoading } = useTranslation()
 
 
   let routeData = route?.params;
@@ -163,7 +166,7 @@ const EventForm = ({ route }) => {
     setLaoder(true);
     setCheck(true);
 
-    if (name== '') {
+    if (name == '') {
       setLaoder(false);
       Alert.alert('please Enter Event Name');
     } else if (selectIconOne == null) {
@@ -175,7 +178,7 @@ const EventForm = ({ route }) => {
     } else if (frequency == null) {
       setLaoder(false);
       Alert.alert('please Enter frequency fileds');
-    } else if (description=='') {
+    } else if (description == '') {
       setLaoder(false);
       Alert.alert('please Enter description fileds');
     } else if (participant == '') {
@@ -245,7 +248,7 @@ const EventForm = ({ route }) => {
         // console.log("show forem edit data",formDataEdit)
         dispatch(updateMyEvent(formDataEdit));
       } else {
-        
+
         dispatch(createEvent(formData));
       }
     }
@@ -253,6 +256,9 @@ const EventForm = ({ route }) => {
 
   return (
     <View style={styles.contaier}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
       {laoder && <ActivityIndicator size={'large'} color={'red'} />}
       <ScrollView style={styles.mainContianer}>
@@ -268,7 +274,7 @@ const EventForm = ({ route }) => {
               value={name}
               style={styles.textINput}
               placeholderTextColor={colors.black}
-              // style={{color:colors.black}}
+            // style={{color:colors.black}}
             />
           </View>
         </View>
@@ -453,7 +459,7 @@ const EventForm = ({ route }) => {
               multiline
               placeholder='Enter description'
               placeholderTextColor={colors.black}
-              style={{color:colors.black}}
+              style={{ color: colors.black }}
             />
           </View>
         </View>
@@ -473,7 +479,7 @@ const EventForm = ({ route }) => {
               keyboardType="numeric"
               placeholder="0000"
               placeholderTextColor={colors.black}
-              style={{color:colors.black}}
+              style={{ color: colors.black }}
             />
           </View>
         </View>
@@ -491,7 +497,7 @@ const EventForm = ({ route }) => {
               keyboardType="numeric"
               placeholder="0000"
               placeholderTextColor={colors.black}
-              style={{color:colors.black}}
+              style={{ color: colors.black }}
             />
           </View>
         </View>
@@ -515,7 +521,7 @@ const EventForm = ({ route }) => {
               onChangeText={setOrganizer}
               value={organizer}
               placeholderTextColor={colors.black}
-              style={{color:colors.black}}
+              style={{ color: colors.black }}
             />
           </View>
         </View>
@@ -553,7 +559,7 @@ const EventForm = ({ route }) => {
                     uri: countryCode.icon,
                   }}
                   // tintColor={"red"}
-                  
+
                   height={20}
                   width={20}
                 />
@@ -574,7 +580,7 @@ const EventForm = ({ route }) => {
                 height: 60,
                 borderLeftWidth: 1,
                 borderColor: 'grey',
-                color:colors.black
+                color: colors.black
               }}
               placeholderTextColor={colors.black}
             />

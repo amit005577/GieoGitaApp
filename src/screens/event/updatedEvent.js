@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View,TouchableOpacity} from 'react-native'
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '../../helper/colors';
@@ -10,60 +10,67 @@ import moment from 'moment';
 import HeaderPage from '../../Components/header';
 import { navigationRef } from '../../../App';
 import { getMyEvent } from '../../redux/actions';
+import Loader from '../../Components/Loader';
+import { useTranslation } from '../../utills.js/translation-hook';
 const windowWidth = Dimensions.get('window').width;
 const UpdatedEvent = () => {
   const dispatch = useDispatch()
   const currentEvent = useSelector(state => state.EventReducer.locationUpdated);
   // console.log("show cureendt event",currentEvent)
-const handleOnpress=()=>{
-  dispatch(getMyEvent())
-  navigationRef.navigate("myEvent")
-}
+  const { Translation, isLoading } = useTranslation()
+
+  const handleOnpress = () => {
+    dispatch(getMyEvent())
+    navigationRef.navigate("myEvent")
+  }
   return (
-    <View>
-      <HeaderPage/>
- 
-   <TouchableOpacity onPress={()=>handleOnpress()} style={{justifyContent:'center:',alignContent:'center',alignSelf:'center',marginTop:20}}>
-    <Text style={{color:'red',textDecorationLine:'underline',}}>My Events</Text>
-   </TouchableOpacity>
+    <View style={{ flex: 1 }} >
+      {isLoading ?
+        <Loader /> : null
+      }
+      <HeaderPage />
+
+      <TouchableOpacity onPress={() => handleOnpress()} style={{ justifyContent: 'center:', alignContent: 'center', alignSelf: 'center', marginTop: 20 }}>
+        <Text style={{ color: 'red', textDecorationLine: 'underline', }}>My Events</Text>
+      </TouchableOpacity>
 
 
       <TouchableOpacity
-          style={styles.iconContianer}
-        >
-          <View style={{width: '90%'}}>
-            <View style={styles.singleItem}>
-              <IconV name="globe" size={18} color={"black"}/>
-              <Text numberOfLines={2} style={styles.textstyle}>
-                {currentEvent.event_type}
+        style={styles.iconContianer}
+      >
+        <View style={{ width: '90%' }}>
+          <View style={styles.singleItem}>
+            <IconV name="globe" size={18} color={"black"} />
+            <Text numberOfLines={2} style={styles.textstyle}>
+              {currentEvent.event_type}
+            </Text>
+          </View>
+          <View style={styles.itemlistcontainer}>
+            <View style={styles.oneItem}>
+              <Icon name="calendar" size={15} color={"black"} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
-            <View style={styles.itemlistcontainer}>
-              <View style={styles.oneItem}>
-                <Icon name="calendar" size={15} color={"black"} />
-                <Text style={{...styles.textstyle, fontSize: 14}}>
-                  {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
-                </Text>
-              </View>
-              <View style={styles.oneItem}>
-                <IconE name="location" size={15} color={"black"}/>
-                <Text style={{...styles.textstyle, fontSize: 14}}>
-                  {currentEvent.place_type}
-                </Text>
-              </View>
-              <View style={{...styles.oneItem}}>
-                <IconF name="users" size={15} color={"black"}/>
-                <Text style={{...styles.textstyle, fontSize: 14}}>
-                  {currentEvent.participants}
-                </Text>
-              </View>
+            <View style={styles.oneItem}>
+              <IconE name="location" size={15} color={"black"} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {currentEvent.place_type}
+              </Text>
+            </View>
+            <View style={{ ...styles.oneItem }}>
+              <IconF name="users" size={15} color={"black"} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {currentEvent.participants}
+              </Text>
             </View>
           </View>
+        </View>
 
-          <View>
-            <Icon name="right" size={25} />
-          </View>
-        </TouchableOpacity>
+        <View>
+          <Icon name="right" size={25} />
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
