@@ -18,6 +18,7 @@ import { useNotificaiton } from '../../Notifications/AuthNotifications';
 import configureStore from '../store';
 import { Alert } from 'react-native';
 import Constants from '../../utills.js/Constants';
+import { setIsLoading } from '../actions';
 
 const PledgeSagaFunction = function* (data) {
   // console.log('show data count', data);
@@ -30,7 +31,9 @@ const PledgeSagaFunction = function* (data) {
     // console.log('🚀 ~ file: AppSaga.js:24 ~ postData:', postData);
     // console.log('🚀 ~ file: AppSaga.js:24 ~ requestUrl:', requestUrl);
     // console.log('show post data nn count', data, token);
+    yield put(setIsLoading(true))
     const res = yield call(postApi, requestUrl, postData);
+    yield put(setIsLoading(false))
     if (res.data.data != null) {
       // console.log('show runn inside');
       yield put({ type: actions.PLEDGE_DATA, payload: res.data.data });
@@ -50,7 +53,9 @@ const UpdateChant = function* (data) {
     let postData = {
       count: data,
     };
+    yield put(setIsLoading(true))
     const res = yield call(postApi, requestUrl, postData);
+    yield put(setIsLoading(false))
     // if (res.data.data != null) {
     // console.log('show runn inside');
     //   yield put({type: actions.PLEDGE_DATA, payload: res.data.data});
@@ -67,7 +72,9 @@ const getHomePageData = function* () {
     let requestUrl =
       `${Constants.BASE_URL}pages/20`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecordWithoutToken, requestUrl);
+    yield put(setIsLoading(false))
     if (res.data != null) {
       yield put({ type: actions.HOME_DATA, payload: res.data });
     }
@@ -81,7 +88,9 @@ const chantHistoryapi = function* () {
   try {
     let requestUrl =
       `${Constants.BASE_URL}user/reads-get/`;
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     if (res.data != null) {
       const sortedData = res.data?.data?.reverse()
       yield put({ type: actions.STORE_CHANT_HISTORY, payload: sortedData });
@@ -98,7 +107,9 @@ const getPdfSaga = function* () {
     let requestUrl =
       `${Constants.BASE_URL}pages/1`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show response pdf saga', res);
     if (res.data != null) {
       yield put({ type: actions.PDF_DATA_SUCCESS, payload: res.data.data });
@@ -118,7 +129,9 @@ const getVideoData = function* () {
     let requestUrl =
       `${Constants.BASE_URL}pages/25`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show response video saga', res);
     if (res.data != null) {
       yield put({ type: actions.VIDEO_DATA_SUCCESS, payload: res.data.data });
@@ -138,7 +151,9 @@ const getLanguageList = function* () {
     let requestUrl =
       `${Constants.BASE_URL}show-all-language`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show response list language data saga', res);
     if (res.data != null) {
       yield put({ type: actions.LANGUAGE_LIST_SUCCESS, payload: res.data.data });
@@ -157,7 +172,9 @@ const getTargetPledgeData = function* () {
     let requestUrl =
       `${Constants.BASE_URL}profile-details`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show response list target chant profigle data saga', res);
     if (res.data != null) {
       yield put({
@@ -180,7 +197,9 @@ const getCurrenCountData = function* () {
     let requestUrl =
       `${Constants.BASE_URL}show-current-chants-count`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show  montuhly data res data saga', res);
     if (res.data != null) {
       yield put({
@@ -199,7 +218,9 @@ const getAllpdfDataSaga = function* () {
     let requestUrl =
       `${Constants.BASE_URL}pages/1`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecordWithoutToken, requestUrl);
+    yield put(setIsLoading(false))
     // console.log(
     // 'show  montuhly data res data saga',
     //   JSON.stringify(res.data.data),
@@ -231,7 +252,9 @@ const reisterDetailSaga = function* (data) {
     let requestUrl =
       `${Constants.BASE_URL}profile-update`;
     console.log("show hit api before data ", _data, requestUrl)
+    yield put(setIsLoading(true))
     const res = yield call(registerApi, requestUrl, _data);
+    yield put(setIsLoading(false))
 
     // console.log(
     //   'show  montuhly data res data saga',
@@ -263,7 +286,9 @@ const getliveDatasaga = function* () {
     let requestUrl =
       `${Constants.BASE_URL}show-current-chants-count`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show live chants', JSON.stringify(res.data.data));
     if (res.data != null) {
       yield put({
@@ -283,7 +308,9 @@ const getCountryNameSaga = function* () {
     let requestUrl =
       `${Constants.BASE_URL}get-all-countries-list`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show country name', JSON.stringify(res.data.data));
     if (res.data != null) {
       yield put({
@@ -303,7 +330,9 @@ const getCountryStateSaga = function* (payload) {
     let requestUrl = `${Constants.BASE_URL}get-all-state-list/${payload.payload}`;
     // console.log("show request url state",requestUrl)
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     // console.log('show country state name list', JSON.stringify(res.data.data));
     if (res.data != null) {
       yield put({
@@ -320,7 +349,9 @@ const getTranslationsSaga = function* ({ payload }) {
   try {
     let requestUrl = `${Constants.BASE_URL}translation-get/${payload.langCode}`;
 
+    yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    yield put(setIsLoading(false))
     if (res.data != null) {
       var result = {};
       const translations = res?.data?.data

@@ -28,6 +28,8 @@ import {
   targetChantData,
 } from '../../redux/actions';
 import moment from 'moment';
+import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 const windowWidth = Dimensions.get('window').width;
 const data = [
@@ -62,6 +64,7 @@ const EventPage = ({ navigation }) => {
   const [selectedItemFromList, setSelectedItemFromList] = useState(null);
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   const [editLoder, setEditLoder] = useState(false)
+  const { Translation, isLoading } = useTranslation()
 
 
   // console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
@@ -115,7 +118,7 @@ const EventPage = ({ navigation }) => {
   };
 
   const handleOnpress = item => {
-    navigation.navigate('details', {data: item,isCurrentUser: validateCurrentUser(item.phone, item.email)});
+    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
   };
 
   // const handleDetailsPage = item => {
@@ -227,7 +230,7 @@ const EventPage = ({ navigation }) => {
             </View>
           </View>
         </View>
-        
+
         <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
           {
             validateCurrentUser(item.phone, item.email) ?
@@ -244,6 +247,9 @@ const EventPage = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
       {editLoder && <ActivityIndicator size={'large'} />}
       <View style={styles.container}>

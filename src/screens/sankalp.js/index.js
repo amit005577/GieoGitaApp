@@ -6,15 +6,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import HeaderPage from '../../Components/header';
 import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
-import {setPledge, setcoditionalStatus} from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPledge, setcoditionalStatus } from '../../redux/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {navigationRef} from '../../../App';
+import { navigationRef } from '../../../App';
+import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 const SankalpScreen = () => {
+  const { Translation, isLoading } = useTranslation()
+
   const [count, setCount] = React.useState('');
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -33,22 +37,25 @@ const SankalpScreen = () => {
       setCount(0);
     }
   }, []);
- const handleOnPress=async()=>{
-  await AsyncStorage.setItem('pledge', JSON.stringify(5265));
-  dispatch(setcoditionalStatus(true));
- } 
- let currentDateData = moment(new Date(), 'DD-MM-YYYY');
- let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
- let noOfDays = targetDate.diff(currentDateData, 'days');
- 
-//  console.log("Number of days:", noOfDays);
- let dailyCount= count/noOfDays
- let monthCountNumber = dailyCount*30
- let weekCountNummber = dailyCount*7
- 
- 
+  const handleOnPress = async () => {
+    await AsyncStorage.setItem('pledge', JSON.stringify(5265));
+    dispatch(setcoditionalStatus(true));
+  }
+  let currentDateData = moment(new Date(), 'DD-MM-YYYY');
+  let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
+  let noOfDays = targetDate.diff(currentDateData, 'days');
+
+  //  console.log("Number of days:", noOfDays);
+  let dailyCount = count / noOfDays
+  let monthCountNumber = dailyCount * 30
+  let weekCountNummber = dailyCount * 7
+
+
   return (
     <View style={styles.container}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
       <ScrollView>
         <Text style={styles.myPledge}>मेरी प्रतिज्ञा</Text>
@@ -60,16 +67,16 @@ const SankalpScreen = () => {
           </Text>
           {/* <Text style={{...styles.desctext, marginTop: 0}}>that number</Text> */}
         </View>
-        <Text style={{...styles.desctext, fontWeight: 'bold'}}>
-          <Text style={{...styles.desctext, fontWeight: 'bold'}}>
+        <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
+          <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
             मैं गीता जयन्ती 23 दिसम्बर 2023 तक
           </Text>
-        </Text>  
-        <Text style={{...styles.desctext, fontWeight: 'bold',color:'#F7941C'}}>
-        अष्टादश श्लोकी गीता पाठ
-      </Text>
-        <Text style={{...styles.desctext, fontWeight: 'bold'}}>
-        करने का संकल्प लेता/लेती हूं
+        </Text>
+        <Text style={{ ...styles.desctext, fontWeight: 'bold', color: '#F7941C' }}>
+          अष्टादश श्लोकी गीता पाठ
+        </Text>
+        <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
+          करने का संकल्प लेता/लेती हूं
         </Text>
         <View style={styles.textInputStyleContainer}>
           <TextInput
@@ -83,22 +90,22 @@ const SankalpScreen = () => {
           />
         </View>
         <Text style={styles.chalisaText}>
-          संकल्पित संख्या 
+          संकल्पित संख्या
         </Text>
-        
+
 
         <View
-          style={{...styles.graph1line, marginTop: 20, borderBottomWidth: 0}}>
+          style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>दैनिक</Text>
           </View>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>
-              { Math.round(dailyCount) <1?1:Math.round(dailyCount)}
+              {Math.round(dailyCount) < 1 ? 1 : Math.round(dailyCount)}
             </Text>
           </View>
         </View>
-        <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>साप्ताहिक</Text>
           </View>
@@ -108,7 +115,7 @@ const SankalpScreen = () => {
             </Text>
           </View>
         </View>
-        <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>महीने के</Text>
           </View>
@@ -127,7 +134,7 @@ const SankalpScreen = () => {
             <Text style={styles.graphText}>{count}</Text>
           </View>
         </View>
-        <View style={{paddingHorizontal: 30}}>
+        <View style={{ paddingHorizontal: 30 }}>
           <TouchableOpacity
             onPress={() => handleOnsubmit()}
             style={styles.submitContainer}>
@@ -136,27 +143,27 @@ const SankalpScreen = () => {
             </Text>
           </TouchableOpacity>
           <View style={styles.withoutPledge}>
-            <Text style={{fontSize: 10, color: 'black',alignSelf:'center'}}>नोट:</Text>
-            <Text style={{fontSize: 10, color: 'black'}}>
-            आप बिना संकल्प भी ऐप में पाठ सांख्य अर्पण कर सकते हैं
+            <Text style={{ fontSize: 10, color: 'black', alignSelf: 'center' }}>नोट:</Text>
+            <Text style={{ fontSize: 10, color: 'black' }}>
+              आप बिना संकल्प भी ऐप में पाठ सांख्य अर्पण कर सकते हैं
             </Text>
           </View>
           <TouchableOpacity onPress={() => handleOnPress()}>
-             <Text
+            <Text
               style={{
                 justifyContent: 'center',
                 alignSelf: 'center',
                 fontSize: 16,
                 color: 'orange',
-                textDecorationLine:'underline',
-                textDecorationColor:'orange'
+                textDecorationLine: 'underline',
+                textDecorationColor: 'orange'
               }}>
               बिना संकल्प के प्रवेश करे
             </Text>
-         
+
           </TouchableOpacity>
         </View>
-        <View style={{height: 60}} />
+        <View style={{ height: 60 }} />
       </ScrollView>
     </View>
   );
@@ -264,8 +271,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
     width: '90%',
-    alignSelf:'center',
-    justifyContent:'center'
+    alignSelf: 'center',
+    justifyContent: 'center'
   },
   lastText: {
     alignSelf: 'center',

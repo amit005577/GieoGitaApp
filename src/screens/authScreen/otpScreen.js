@@ -1,32 +1,28 @@
+import React, { useRef, useState } from 'react';
 import {
+  Image,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
-  Image,
-  Clipboard,
+  View
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import logo from '../../../assets/images/Logo.png';
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query';
 import OTPTextView from 'react-native-otp-textinput';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { navigationRef } from '../../../App';
+import logo from '../../../assets/images/Logo.png';
+import { getPhoneOtpVerify } from '../../redux/actions';
 import {
   phoneOtp,
   requestedOtpData,
 } from '../../redux/reducers/selectors/userSelector';
-import {getPhoneOtpVerify} from '../../redux/actions';
-import {navigationRef} from '../../../App';
+import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 const OtpScreen = () => {
   const otpInput = useRef(null);
   const [otp, setOtp] = useState(null);
   const data = useSelector(phoneOtp);
+  const { Translation, isLoading } = useTranslation()
 
   const dispatch = useDispatch();
   const previousRequestedOtpData = useSelector(requestedOtpData);
@@ -57,15 +53,13 @@ const OtpScreen = () => {
     }
   };
 
-  const handleRequestNewOtp = () => {
-    if (previousRequestedOtpData.length > 0) {
-      dispatch(getPhoneOtp(previousRequestedOtpData));
-    }
-  };
 
   return (
-    <View>
-      <View style={{alignItems: 'center', marginTop: 10}}>
+    <View style={{ flex: 1 }} >
+      {isLoading ?
+        <Loader /> : null
+      }
+      <View style={{ alignItems: 'center', marginTop: 10 }}>
         <Image
           style={{
             width: 176,
@@ -88,13 +82,13 @@ const OtpScreen = () => {
           ओ.टी.पी
         </Text>
       </View>
-      <View style={{justifyContent: 'center', alignSelf: 'center'}}>
+      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
         <OTPTextView
           handleTextChange={value => setOtp(value)}
           inputCount={6}
           keyboardType="numeric"
         />
-        <Text style={{textAlign: 'right', marginRight: '4%', color: '#808080'}}>
+        <Text style={{ textAlign: 'right', marginRight: '4%', color: '#808080' }}>
           ओटीपी भेजा गया {counter}
         </Text>
       </View>
@@ -109,7 +103,7 @@ const OtpScreen = () => {
           marginTop: '5%',
           height: 40,
         }}>
-        <Text style={{textAlign: 'center', color: '#fff', fontSize: 18}}>
+        <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18 }}>
           सत्यापित करना
         </Text>
       </TouchableOpacity>

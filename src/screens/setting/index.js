@@ -20,6 +20,7 @@ import {
   languageList
 } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 
 const SettingScreen = ({ navigation }) => {
@@ -28,7 +29,7 @@ const SettingScreen = ({ navigation }) => {
   const langList = useSelector(state => state.AppReducers.languageList);
 
   const [languageListData, setlanguageList] = useState([])
-  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage ,Translation} = useTranslation()
+  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage, isLoading, Translation } = useTranslation()
 
 
   const handleOnpressLanguage = data => {
@@ -67,6 +68,9 @@ const SettingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
 
       <View style={styles.rowContainer}>

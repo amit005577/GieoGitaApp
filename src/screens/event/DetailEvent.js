@@ -1,31 +1,35 @@
 import moment from 'moment';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Clipboard,
+  Image,
+  Modal,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Modal,
-  Pressable,
-  Image,
 } from 'react-native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Share from 'react-native-share';
-import FA5 from 'react-native-vector-icons/FontAwesome5';
+import { ms } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconW from 'react-native-vector-icons/FontAwesome';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 import IconIonic from 'react-native-vector-icons/Ionicons';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomeToast from '../../Components/CustomeToast';
 import HeaderPage from '../../Components/header';
-import {colors} from '../../helper/colors';
-import {eventConfirmation, subscribeEvent} from '../../redux/actions';
-import {ms} from 'react-native-size-matters';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { colors } from '../../helper/colors';
+import { eventConfirmation, subscribeEvent } from '../../redux/actions';
+import Loader from '../../Components/Loader';
+import { useTranslation } from '../../utills.js/translation-hook';
 
-const DetailEvent = ({route}) => {
+const DetailEvent = ({ route }) => {
+  const { Translation, isLoading } = useTranslation()
+
   const item = route.params.data;
   const isCurrentUser = route.params.isCurrentUser
   console.log('show details item', item);
@@ -163,9 +167,12 @@ const DetailEvent = ({route}) => {
   };
   return (
     <View style={styles.contaier}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
       {isCopied ? <CustomeToast /> : null}
-      <View style={{paddingHorizontal: 10}}>
+      <View style={{ paddingHorizontal: 10 }}>
         <Text style={styles.idstyle}>Event ID:{item?.id}</Text>
         <View style={styles.singleItem}>
           <IconV color="gray" name="globe" size={24} />
@@ -175,13 +182,13 @@ const DetailEvent = ({route}) => {
         <View style={styles.locationstyle}>
           <View style={styles.oneItem}>
             <Icon name="calendar" color="gray" size={25} />
-            <Text style={{...styles.textstyle, fontSize: 14}}>
+            <Text style={{ ...styles.textstyle, fontSize: 14 }}>
               {moment(item?.create_at).format('ddd-mm-yy')}
             </Text>
           </View>
           <View style={styles.oneItem}>
             <IconE name="location" size={25} color={colors.black} />
-            <Text style={{...styles.textstyle, fontSize: 14}}>{item?.city}</Text>
+            <Text style={{ ...styles.textstyle, fontSize: 14 }}>{item?.city}</Text>
           </View>
         </View>
         <Text
@@ -203,13 +210,13 @@ const DetailEvent = ({route}) => {
           }}>
           {item?.instraction}
         </Text>
-        <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
+        <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
           Subscrptions:{item?.subscriptions}
         </Text>
         <View style={styles.addresStyle}>
-          <View style={{width: '50%', alignSelf: 'flex-end'}}>
-            <Text style={{fontSize: 18, color: 'black'}}>
-              Address: <Text style={{fontSize: 14}}>{item?.address}</Text>{' '}
+          <View style={{ width: '50%', alignSelf: 'flex-end' }}>
+            <Text style={{ fontSize: 18, color: 'black' }}>
+              Address: <Text style={{ fontSize: 14 }}>{item?.address}</Text>{' '}
             </Text>
             <Text
               style={{
@@ -253,7 +260,7 @@ const DetailEvent = ({route}) => {
           justifyContent: 'space-between',
           paddingHorizontal: 10,
         }}>
-        <Text style={{fontSize: 18, color: 'black'}}>share:</Text>
+        <Text style={{ fontSize: 18, color: 'black' }}>share:</Text>
         <IconW
           onPress={() => {
             onPressWhatsApp();
@@ -289,7 +296,7 @@ const DetailEvent = ({route}) => {
         <TouchableOpacity
           style={styles.subscribecontainer}
           onPress={() => handleSubscrible(item?.id)}>
-          <Text style={{color: 'white'}}>
+          <Text style={{ color: 'white' }}>
             {subscription == '1' ? 'Subscribed' : 'Subscribe'}
           </Text>
         </TouchableOpacity>
@@ -301,7 +308,7 @@ const DetailEvent = ({route}) => {
           onPress={() => handleImagePick()}>
           <Text style={styles.confirmbtn}>Event Confirmation</Text>
         </TouchableOpacity>
-       ) : null}
+      ) : null}
 
       <TouchableOpacity
         style={{
@@ -309,12 +316,12 @@ const DetailEvent = ({route}) => {
           alignContent: 'center',
           alignItems: 'center',
         }}>
-        <Image source={{uri: camerPhoto}} style={styles.bigImagecontainer} />
+        <Image source={{ uri: camerPhoto }} style={styles.bigImagecontainer} />
       </TouchableOpacity>
 
       {camerPhoto && (
         <TouchableOpacity
-          style={{...styles.confimationContianer, alignSelf: 'center'}}
+          style={{ ...styles.confimationContianer, alignSelf: 'center' }}
           onPress={handleConfirmationEvent}>
           <Text style={styles.confirmbtn}>Submit Image </Text>
         </TouchableOpacity>
@@ -333,7 +340,7 @@ const DetailEvent = ({route}) => {
             <Pressable onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>───── </Text>
             </Pressable>
-            <View style={{paddingHorizontal: 20}}>
+            <View style={{ paddingHorizontal: 20 }}>
               <TouchableOpacity
                 onPress={() => handleCamera()}
                 style={styles.cameracontainer}>
@@ -343,7 +350,7 @@ const DetailEvent = ({route}) => {
 
               <TouchableOpacity
                 onPress={() => handleGallery()}
-                style={{...styles.cameracontainer, marginTop: ms(15)}}>
+                style={{ ...styles.cameracontainer, marginTop: ms(15) }}>
                 <FA5 name="images" size={30} style={styles.iconStyle} />
                 <Text style={styles.titleText}>Add pictures from gallery</Text>
               </TouchableOpacity>

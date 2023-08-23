@@ -1,18 +1,25 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import HeaderPage from '../../Components/header';
+import Loader from '../../Components/Loader';
+import { useTranslation } from '../../utills.js/translation-hook';
 
 const HelpScreen = () => {
+  const { Translation, isLoading } = useTranslation()
+
   return (
     <View style={styles.container}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
       <Text style={styles.title}>सहायता</Text>
-      <Text style={{...styles.title, fontSize: 16}}>संस्करण जानकारी</Text>
+      <Text style={{ ...styles.title, fontSize: 16 }}>संस्करण जानकारी</Text>
       <View>
         <View
-          style={{...styles.graph1line, marginTop: 20, borderBottomWidth: 0}}>
+          style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={{...styles.graphText, fontWeight: 'bold'}}>
+            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
               मेज़बान
             </Text>
           </View>
@@ -20,17 +27,17 @@ const HelpScreen = () => {
             <Text style={styles.graphText}>मेज़बान</Text>
           </View>
         </View>
-        <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={{...styles.graphText, fontWeight: 'bold'}}>ओएस</Text>
+            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>ओएस</Text>
           </View>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>एंड्रॉयड</Text>
           </View>
         </View>
-        <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={{...styles.graphText, fontWeight: 'bold'}}>
+            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
               ओएस संस्करण
             </Text>
           </View>
@@ -38,9 +45,9 @@ const HelpScreen = () => {
             <Text style={styles.graphText}>22</Text>
           </View>
         </View>
-        <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={{...styles.graphText, fontWeight: 'bold'}}>
+            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
               एप्लिकेशन वेरीज़न
             </Text>
           </View>
@@ -48,9 +55,9 @@ const HelpScreen = () => {
             <Text style={styles.graphText}>1.2220.120</Text>
           </View>
         </View>
-        <View style={{...styles.graph1line, borderBottomWidth: 0}}>
+        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={{...styles.graphText, fontWeight: 'bold'}}>
+            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
               सेटिंग संस्करण
             </Text>
           </View>
@@ -60,7 +67,7 @@ const HelpScreen = () => {
         </View>
         <View style={styles.graph1line}>
           <View style={styles.graphinside}>
-            <Text style={{...styles.graphText, fontWeight: 'bold'}}>
+            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
               पृष्ठ संस्करण
             </Text>
           </View>
@@ -79,7 +86,7 @@ const HelpScreen = () => {
           marginTop: 40,
           borderRadius: 10,
         }}>
-        <Text style={{color: 'white', fontSize: 20, alignSelf: 'center'}}>
+        <Text style={{ color: 'white', fontSize: 20, alignSelf: 'center' }}>
           मुद्दों/प्रतिक्रिया की रिपोर्ट करें
         </Text>
       </TouchableOpacity>
