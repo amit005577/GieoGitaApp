@@ -15,7 +15,8 @@ const initialState = {
   countryNamelistData: '',
   countryStateListData: "",
   translationData: "",
-  previousChent:null
+  previousChent:null,
+  isLoading:false
 };
 
 const AppReducers = (state = initialState, action) => {
@@ -110,6 +111,12 @@ const AppReducers = (state = initialState, action) => {
         ...state,
         previousChent: action.payload,
       };
+      case actions.SET_IS_LOADING:
+        // console.log('SET_IS_LOADING reducer',action.payload);
+        return {
+          ...state,
+          isLoading: action.payload,
+        };
     default: {
       return state;
     }

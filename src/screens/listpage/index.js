@@ -14,8 +14,11 @@ import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
 import { chantHistory, setPreviousChant } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
+import { useIsFocused } from '@react-navigation/native';
 
 const ListPageScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
+  const { Translation } = useTranslation()
 
   const dispatch = useDispatch();
   const historydata = useSelector(state => state.AppReducers.chantHistory);
@@ -24,9 +27,10 @@ const ListPageScreen = ({ navigation }) => {
   );
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   useEffect(() => {
-    dispatch(chantHistory());
-  }, []);
-  const { Translation} = useTranslation()
+    if (isFocused) {
+      dispatch(chantHistory());
+    }
+  }, [isFocused]);
 
   const handleChantCountEdit = (val) => {
     dispatch(setPreviousChant(val))
@@ -83,9 +87,7 @@ const ListPageScreen = ({ navigation }) => {
             style={{
               color: colors.black,
               fontSize: 18,
-              marginTop: 10,
-              left: 3,
-              with: '50%',
+              left: 0,
             }}
             onPress={() => handleChantCountEdit(item)}
           />
@@ -96,7 +98,7 @@ const ListPageScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <HeaderPage />
-     
+
       <TouchableOpacity
         style={styles.userNameContainer}
         onPress={() => navigation.navigate('register')}>
@@ -144,9 +146,9 @@ const ListPageScreen = ({ navigation }) => {
           <Text style={styles.currentText}>कुल</Text>
         </View>
       </View>
-      <View style={{ paddingHorizontal: 30,borderRadius:10, marginBottom: 100 }}>
+      <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
         <FlatList
-          data={historydata.reverse()}
+          data={historydata}
           keyExtractor={item => item.id}
           renderItem={renderItem}
           contentContainerStyle={{
@@ -164,7 +166,7 @@ const ListPageScreen = ({ navigation }) => {
                 }}>
                 <View
                   style={{
-                    borderTopLeftRadius:10,
+                    borderTopLeftRadius: 10,
                     borderWidth: 1,
                     width: '40%',
                     height: 46,
@@ -190,7 +192,7 @@ const ListPageScreen = ({ navigation }) => {
                     alignContent: 'center',
                     height: 46,
                     borderColor: '#F7941C',
-                    borderTopRightRadius:10,
+                    borderTopRightRadius: 10,
 
                   }}>
                   <Text
@@ -225,7 +227,7 @@ const ListPageScreen = ({ navigation }) => {
                     alignContent: 'center',
                     alignItems: 'center',
                     borderColor: '#F7941C',
-                    borderBottomLeftRadius:10
+                    borderBottomLeftRadius: 10
                   }}>
                   <Text
                     style={{
@@ -242,7 +244,7 @@ const ListPageScreen = ({ navigation }) => {
                     justifyContent: 'center',
                     alignContent: 'center',
                     height: 46,
-                    borderBottomRightRadius:10,
+                    borderBottomRightRadius: 10,
                     borderColor: '#F7941C',
                   }}>
                   <Text
@@ -291,8 +293,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignSelf: 'center',
     marginTop: 15,
-    padding:8,
-    minWidth:"50%"
+    padding: 8,
+    minWidth: "50%"
   },
 
   userText: {

@@ -1,15 +1,11 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LoginPage from '../screens/authScreen/loginScreen';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/homeScreen';
-import ChantPage from '../screens/chantCount';
+import { Image, StyleSheet, View } from 'react-native';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
+import EIcon from 'react-native-vector-icons/Octicons';
 import ReadChantPage from '../screens/ReadChants';
 import ChantCount from '../screens/chantCount';
-import EIcon from 'react-native-vector-icons/Octicons';
-import FA5 from 'react-native-vector-icons/FontAwesome5';
-import Sankh from '../../assets/images/Shankh.png'
+import HomeScreen from '../screens/homeScreen';
 
 const Tab = createBottomTabNavigator();
 

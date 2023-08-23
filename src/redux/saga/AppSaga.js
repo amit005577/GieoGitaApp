@@ -1,4 +1,4 @@
-import {call, put, select, takeEvery, takeLatest} from 'redux-saga/effects';
+import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as actions from '../actionTypes';
 import {
   GetRecord,
@@ -7,16 +7,16 @@ import {
   postApi,
   registerApi,
 } from '../axios';
-import {channelId, navigationRef} from '../../../App';
+import { channelId, navigationRef } from '../../../App';
 import {
   emailResponse,
   tokenDataAxios,
 } from '../reducers/selectors/userSelector';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import notifee, {AndroidImportance} from '@notifee/react-native';
-import {useNotificaiton} from '../../Notifications/AuthNotifications';
+import notifee, { AndroidImportance } from '@notifee/react-native';
+import { useNotificaiton } from '../../Notifications/AuthNotifications';
 import configureStore from '../store';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import Constants from '../../utills.js/Constants';
 
 const PledgeSagaFunction = function* (data) {
@@ -33,7 +33,7 @@ const PledgeSagaFunction = function* (data) {
     const res = yield call(postApi, requestUrl, postData);
     if (res.data.data != null) {
       // console.log('show runn inside');
-      yield put({type: actions.PLEDGE_DATA, payload: res.data.data});
+      yield put({ type: actions.PLEDGE_DATA, payload: res.data.data });
     }
     // console.log('show count res', res.data.data);
   } catch (error) {
@@ -42,18 +42,15 @@ const PledgeSagaFunction = function* (data) {
 };
 
 const UpdateChant = function* (data) {
-  // console.log('show data count single', data);
   try {
     let requestUrl =
       `${Constants.BASE_URL}user/reads-update`;
+
+    // console.log(':::::::::::::', data.payload);
     let postData = {
       count: data,
     };
-    // console.log('🚀 ~ file: AppSaga.js:24 ~ postData:', postData);
-    // console.log('🚀 ~ file: AppSaga.js:24 ~ requestUrl:', requestUrl);
-    // console.log('show post data nn count', data, token);
     const res = yield call(postApi, requestUrl, postData);
-    // console.log('show post count datasaga ddfsd', res);
     // if (res.data.data != null) {
     // console.log('show runn inside');
     //   yield put({type: actions.PLEDGE_DATA, payload: res.data.data});
@@ -65,14 +62,14 @@ const UpdateChant = function* (data) {
 };
 
 const getHomePageData = function* () {
-  // console.log('Home Page Data');
+  console.log('Home Page Data');
   try {
     let requestUrl =
       `${Constants.BASE_URL}pages/20`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     if (res.data != null) {
-      yield put({type: actions.HOME_DATA, payload: res.data});
+      yield put({ type: actions.HOME_DATA, payload: res.data });
     }
     // console.log('Home :::::::::::::::::::::::::', JSON.stringify(res.data));
   } catch (error) {
@@ -81,19 +78,15 @@ const getHomePageData = function* () {
 };
 
 const chantHistoryapi = function* () {
-  // console.log('chat history');
   try {
     let requestUrl =
       `${Constants.BASE_URL}user/reads-get/`;
-    //  console.log("show ruy=nning...............")
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null) {
-      yield put({type: actions.STORE_CHANT_HISTORY, payload: res.data.data});
+      const sortedData = res.data?.data?.reverse()
+      yield put({ type: actions.STORE_CHANT_HISTORY, payload: sortedData });
     }
-    // console.log(
-    //   '🚀 ~ file: chant history ~ res:=-=-=>',
-    //   JSON.stringify(res.data),
-    // );
+
   } catch (error) {
     // console.log('show chantHistoryapi error api', error);
   }
@@ -108,7 +101,7 @@ const getPdfSaga = function* () {
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response pdf saga', res);
     if (res.data != null) {
-      yield put({type: actions.PDF_DATA_SUCCESS, payload: res.data.data});
+      yield put({ type: actions.PDF_DATA_SUCCESS, payload: res.data.data });
     }
     // console.log(
     //   '🚀 ~ file: chant pdf data ~ res:=-=-=>',
@@ -128,7 +121,7 @@ const getVideoData = function* () {
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response video saga', res);
     if (res.data != null) {
-      yield put({type: actions.VIDEO_DATA_SUCCESS, payload: res.data.data});
+      yield put({ type: actions.VIDEO_DATA_SUCCESS, payload: res.data.data });
     }
     // console.log(
     //   '🚀 ~ file: chant video data ~ res:=-=-=>',
@@ -148,7 +141,7 @@ const getLanguageList = function* () {
     const res = yield call(fetchRecord, requestUrl);
     // console.log('show response list language data saga', res);
     if (res.data != null) {
-      yield put({type: actions.LANGUAGE_LIST_SUCCESS, payload: res.data.data});
+      yield put({ type: actions.LANGUAGE_LIST_SUCCESS, payload: res.data.data });
     }
     // console.log(
     // '🚀 ~ file: chant language list data ~ res:=-=-=>',
@@ -173,7 +166,7 @@ const getTargetPledgeData = function* () {
       });
     }
     // console.log(
-      // '🚀 ~ file: chant profole list data ~ res:=-=-=>',
+    // '🚀 ~ file: chant profole list data ~ res:=-=-=>',
     //   JSON.stringify(res.data.data),
     // );
   } catch (error) {
@@ -231,13 +224,13 @@ const reisterDetailSaga = function* (data) {
     gender: data.payload.selectedGender,
     state: data.payload.stateNameData,
     country: data.payload.countryNameData,
-    email:data.payload.email
+    email: data.payload.email
   };
   // console.log('show submitting saga data', _data);
   try {
     let requestUrl =
       `${Constants.BASE_URL}profile-update`;
-      console.log("show hit api before data ",_data,requestUrl)
+    console.log("show hit api before data ", _data, requestUrl)
     const res = yield call(registerApi, requestUrl, _data);
 
     // console.log(
@@ -248,14 +241,14 @@ const reisterDetailSaga = function* (data) {
       // if (res.data.data.message.email == 'The email has already been taken.') {
       //   Alert.alert('The email has already been taken.');
       // } else {
-        yield put({
-          type: actions.SAVE_PDF_DATA,
-          payload: res.data.data,
-        });
-        yield put({type: actions.TARGET_CHANT_DATA})
-        Alert.alert("profile updated successfully")
-        navigationRef.navigate("chant")
-      }
+      yield put({
+        type: actions.SAVE_PDF_DATA,
+        payload: res.data.data,
+      });
+      yield put({ type: actions.TARGET_CHANT_DATA })
+      Alert.alert("profile updated successfully")
+      navigationRef.navigate("chant")
+    }
     // }
   } catch (error) {
     Alert.alert("This email is already taken")
@@ -322,17 +315,17 @@ const getCountryStateSaga = function* (payload) {
     // console.log('show getCountryStateSaga error api', error);
   }
 };
-const getTranslationsSaga = function* ({payload}) {
-// console.log('>>>>>>>>>>>>>>>>>>>>',payload);
+const getTranslationsSaga = function* ({ payload }) {
+  // console.log('>>>>>>>>>>>>>>>>>>>>',payload);
   try {
     let requestUrl = `${Constants.BASE_URL}translation-get/${payload.langCode}`;
-    
+
     const res = yield call(fetchRecord, requestUrl);
     if (res.data != null) {
       var result = {};
       const translations = res?.data?.data
 
-      translations.map((item,index) => {
+      translations.map((item, index) => {
         result[translations[index].key] = translations[index].value;
       })
       // console.log('::::::::::::???????', result);

@@ -6,6 +6,7 @@ import LoginPage from '../screens/authScreen/loginScreen';
 import OtpScreen from '../screens/authScreen/otpScreen';
 import SplashScreen from '../screens/splash';
 import { useTranslation } from '../utills.js/translation-hook';
+import { useHomeHooks } from '../utills.js/hooke/home-hooks';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -19,7 +20,6 @@ function AuthStackNavigation() {
       const curLang = await handleDefaultLanguage()
       handleUpdateLanuage({ langCode: curLang.code })
       handleSelectedLanguage(curLang)
-
     }
 
     load()
@@ -30,25 +30,13 @@ function AuthStackNavigation() {
   }, []);
 
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator screenOptions={{ headerShown: false }} >
       {load ? (
-        <AuthStack.Screen
-          name="splash"
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
+        <AuthStack.Screen name="splash" component={SplashScreen} />
       ) : null}
 
-      <AuthStack.Screen
-        name="login"
-        component={LoginPage}
-        options={{ headerShown: false }}
-      />
-      <AuthStack.Screen
-        name="otp"
-        component={OtpScreen}
-        options={{ headerShown: false }}
-      />
+      <AuthStack.Screen name="login" component={LoginPage} />
+      <AuthStack.Screen name="otp" component={OtpScreen} />
     </AuthStack.Navigator>
   );
 }

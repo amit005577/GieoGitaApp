@@ -138,7 +138,6 @@ const LocationForm = ({route}) => {
     is_public_place: selectIconOne,
     country_id: country?.id,
     state_id: selectedState?.id,
-    address: address,
     city: cityName,
     address: address,
     id: currentEvent?.id,

@@ -275,3 +275,10 @@ export const setPreviousChant = payload=>{
     payload,
   }
 }
+
+export const setIsLoading = payload=>{
+  return{
+    type:ActionTypes.SET_IS_LOADING,
+    payload,
+  }
+}

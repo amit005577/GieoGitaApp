@@ -35,6 +35,7 @@ import { useTranslation } from '../../utills.js/translation-hook';
 
 const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
+  const { Translation } = useTranslation()
 
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -53,11 +54,11 @@ const ChantCount = ({ navigation }) => {
       const created_date = moment(previousChent?.create_at).format('DD MMM')
       setTodaysDate(created_date)
       setNumber(parseInt(previousChent.count))
-
     } else {
       setNumber(0)
       dispatch(setPreviousChant(null))
     }
+    console.log(":::::::::::::::::::", previousChent);
   }, [isFocused])
 
   useEffect(() => {
@@ -70,19 +71,26 @@ const ChantCount = ({ navigation }) => {
 
   const handleOnpress = () => {
     if (previousChent?.count) {
-      alert('Coming soon...') // need to remove once Update api is ready
+      // alert('Coming soon...') // need to remove once Update api is ready
 
-      const data = {
-        id: previousChent.id,
-        count: number
-      }
-      return // need to remove once Update api is ready
+      const FormData = require('form-data');
+      let data = new FormData();
+      data.append('count', number);
+      data.append('id', previousChent.id);
+      console.log('datadata::', data);
+      return
+      // const data = {
+      //   id: previousChent.id,
+      //   count: number
+      // }
+      // return // need to remove once Update api is ready
       dispatch(chantUpdatecount(data));
 
+    } else {
+      dispatch(chantUpdatecount(number));
     }
     setModalVisible(true);
     setDisable(true);
-    dispatch(chantUpdatecount(number));
     dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
   };
@@ -114,7 +122,6 @@ const ChantCount = ({ navigation }) => {
     setNumber(number + 1);
     setDisable(false);
   };
-  const { Translation } = useTranslation()
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -160,19 +167,19 @@ const ChantCount = ({ navigation }) => {
 
           <View style={styles.btncountcontaiiner}>
             <Text style={styles.normalStyle}>
-            {Translation.total_chants}:{monthlyData?.life_time_count}
+              {Translation.total_chants}:{monthlyData?.life_time_count}
             </Text>
           </View>
 
           <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
-            {Translation.current_week_progress}:{monthlyData?.weekly_count}
+              {Translation.current_week_progress}:{monthlyData?.weekly_count}
             </Text>
           </View>
 
           <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
-            {Translation.current_month_progress}:{monthlyData?.month_count}
+              {Translation.current_month_progress}:{monthlyData?.month_count}
             </Text>
           </View>
         </View>
@@ -223,7 +230,7 @@ const ChantCount = ({ navigation }) => {
           </TouchableOpacity>
 
           <View
-            style={{ height: 150, width: 150,marginVertical:10, marginHorizontal: 10, justifyContent: 'center', alignItems: 'center', borderWidth: 5, borderColor: colors.orange, borderRadius: 100 }}>
+            style={{ height: 150, width: 150, marginVertical: 10, marginHorizontal: 10, justifyContent: 'center', alignItems: 'center', borderWidth: 5, borderColor: colors.orange, borderRadius: 100 }}>
             <Text numberOfLines={1} style={{ ...styles.countTextNumber, alignSelf: 'center' }}>
               {number}
             </Text>
@@ -383,79 +390,51 @@ const styles = StyleSheet.create({
 
   numberText: {
     alignSelf: 'center',
-
     color: colors.black,
   },
 
   userNameContainer: {
     borderWidth: 1,
-
     borderColor: colors.black,
-
     alignContent: 'center',
-
     justifyContent: 'center',
-
     alignItems: 'center',
-
     flexDirection: 'row',
-
-    // width: '40%',
     padding: 10,
-
-    // height: 50,
-
     borderRadius: 30,
-
     alignSelf: 'center',
-
     marginTop: 15,
-    minWidth:"50%"
+    minWidth: "50%"
   },
 
   userText: {
     fontSize: 23,
-
     color: colors.black,
-
     fontWeight: '500',
   },
 
   textContainerstyle: {
     justifyContent: 'center',
-
     alignContent: 'center',
-
     alignItems: 'center',
   },
 
   YourChantStyle: {
     fontSize: 30,
-
     color: colors.black,
-
     fontWeight: '500',
-
     marginTop: 19,
   },
 
   normalStyle: {
-    // fontSize: 16,
-
     color: colors.black,
-
-    // marginTop: 5,
   },
 
   monthContainer: {
     flexDirection: 'row',
-
     justifyContent: 'center',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     height: 120,
   },
 
@@ -463,46 +442,26 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     fontWeight: 'bold',
     height: 60,
-    paddingHorizontal:10,
-    minWidth:"40%",
-
-    // width: 90,
-
+    paddingHorizontal: 10,
+    minWidth: "40%",
     justifyContent: 'center',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     borderRadius: 10,
-
-    // marginTop: 20,
-
     borderColor: 'orange',
-
     margin: 20,
   },
 
   iconStyle: {
     justifyContent: 'center',
-
     alignSelf: 'center',
-
     alignItems: 'center',
-
-    // marginTop: 20,
-
     color: '#BB6646',
   },
 
   countToday: {
     alignSelf: 'center',
     color: '#434343',
-    // fontSize: 18,
-
-    //
-
-    // fontWeight: 'bold',
   },
 
   countercontainer: {
@@ -515,39 +474,24 @@ const styles = StyleSheet.create({
 
   iconContainer: {
     height: 60,
-
     width: 60,
-
     justifyContent: 'center',
-
     alignSelf: 'center',
-
     alignItems: 'center',
-
     borderWidth: 5,
-
     borderColor: 'red',
-
     borderRadius: 100,
   },
 
   Bigcountercontainer: {
     height: 170,
-
     width: 170,
-
     justifyContent: 'center',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     borderWidth: 5,
-
     borderRadius: 100,
-
     margin: 20,
-
     borderColor: 'orange',
   },
 

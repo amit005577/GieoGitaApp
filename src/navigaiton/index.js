@@ -11,10 +11,9 @@ import AuthStackNavigation from './AuthStackNavigation';
 import HomeStackNavigation from './HomeStackNavigation';
 
 function InitialNavigation() {
-  const [signed, setSigned] = useState(false);
   const [token, setToken] = useState(null);
   const siginResponse = useSelector(sigingStatus);
-  
+
   useEffect(() => {
     asyncFunction();
   }, [!siginResponse]);

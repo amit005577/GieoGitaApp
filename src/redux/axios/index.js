@@ -1,13 +1,12 @@
 import axios from 'axios';
 import configureStore from '../store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const GetRecord = (url, data) => {
   // let store = configureStore();
   // let dataset = store.getState();
   // let res = dataset.AuthReducer.accessToken;
   // console.log('show tokenapi call saga', res);
-
+  
   return axios({
     method: 'POST',
     crossDomain: true,
@@ -107,7 +106,7 @@ export const postApi = async (url, data) => {
 
 
 
-  // console.log('🚀 ~ file: index.js:31 ~ postApi ~ data:', data.count.payload);
+  console.log('🚀???????', data.count.payload);
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
@@ -116,6 +115,7 @@ export const postApi = async (url, data) => {
   // console.log("🚀 ~ file: index.js:35 ~ postApi ~ _isToken:", token)
   // console.log('show tokenapi call ', token);
   // const headers = {};
+  // return
   if (token) {
     // headers.Authorization = `Bearer ${token}`;
     return axios({
