@@ -32,6 +32,7 @@ import {
 } from '../../redux/actions';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
+import Constants from '../../utills.js/Constants';
 
 const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -47,7 +48,10 @@ const ChantCount = ({ navigation }) => {
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
   const previousChent = useSelector(state => state.AppReducers.previousChent);
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
+  console.log(accessToken);
+  console.log(previousChent);
 
   useEffect(() => {
     if (isFocused && previousChent != null) {
@@ -71,20 +75,19 @@ const ChantCount = ({ navigation }) => {
 
   const handleOnpress = () => {
     if (previousChent?.count) {
-      // alert('Coming soon...') // need to remove once Update api is ready
 
-      const FormData = require('form-data');
-      let data = new FormData();
-      data.append('count', number);
-      data.append('id', previousChent.id);
-      console.log('datadata::', data);
-      return
-      // const data = {
-      //   id: previousChent.id,
-      //   count: number
-      // }
-      // return // need to remove once Update api is ready
-      dispatch(chantUpdatecount(data));
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + accessToken);
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`${Constants.BASE_URL}user/reads-update?id=${previousChent.id}&count=${number}`, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 
     } else {
       dispatch(chantUpdatecount(number));

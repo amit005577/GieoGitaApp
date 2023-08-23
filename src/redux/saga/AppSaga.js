@@ -49,18 +49,15 @@ const UpdateChant = function* (data) {
     let requestUrl =
       `${Constants.BASE_URL}user/reads-update`;
 
-    // console.log(':::::::::::::', data.payload);
+    console.log(':::::::::::::1', data);
     let postData = {
       count: data,
     };
     yield put(setIsLoading(true))
     const res = yield call(postApi, requestUrl, postData);
     yield put(setIsLoading(false))
-    // if (res.data.data != null) {
-    // console.log('show runn inside');
-    //   yield put({type: actions.PLEDGE_DATA, payload: res.data.data});
-    // }
-    // console.log('show count res', res.data.data);
+
+    console.log('???????????????????1', res.data);
   } catch (error) {
     // console.log('show UpdateChant error api', error);
   }
