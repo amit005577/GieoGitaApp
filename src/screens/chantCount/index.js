@@ -33,6 +33,7 @@ import {
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
+import Constants from '../../utills.js/Constants';
 
 const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -48,7 +49,10 @@ const ChantCount = ({ navigation }) => {
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
   const previousChent = useSelector(state => state.AppReducers.previousChent);
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
+  console.log(accessToken);
+  console.log(previousChent);
 
   useEffect(() => {
     if (isFocused && previousChent != null) {
@@ -72,7 +76,6 @@ const ChantCount = ({ navigation }) => {
 
   const handleOnpress = () => {
     if (previousChent?.count) {
-      // alert('Coming soon...') // need to remove once Update api is ready
 
       const FormData = require('form-data');
       let data = new FormData();

@@ -106,7 +106,7 @@ export const postApi = async (url, data) => {
 
 
 
-  console.log('🚀???????', data.count.payload);
+  // console.log('🚀???????', data.count.payload);
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
