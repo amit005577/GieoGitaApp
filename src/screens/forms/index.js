@@ -262,14 +262,14 @@ const EventForm = ({ route }) => {
       <HeaderPage />
       {laoder && <ActivityIndicator size={'large'} color={'red'} />}
       <ScrollView style={styles.mainContianer}>
-        <Text style={styles.goupText}>Add Group or Event</Text>
+        <Text style={styles.goupText}>{Translation.add_group_or_event}</Text>
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(100) }}>
-            <Text style={styles.haderStyle}>Event Name</Text>
+            <Text style={styles.haderStyle}>{Translation.event_name}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
-              placeholder="Please Enter Name"
+              placeholder={Translation.please_enter_name}
               onChangeText={setName}
               value={name}
               style={styles.textINput}
@@ -279,11 +279,11 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && name == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(156) }}>
-            <Text style={styles.haderStyle}>List as public event</Text>
+            <Text style={styles.haderStyle}>{Translation.list_as_public_event}</Text>
           </View>
           <View style={styles.secondList}>
             <TouchableOpacity
@@ -297,7 +297,7 @@ const EventForm = ({ route }) => {
                 color={selectIconOne == '1' ? 'blue' : 'gray'}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
-                Yes
+                {Translation.yes}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -311,17 +311,17 @@ const EventForm = ({ route }) => {
                 color={selectIcontwo == '1' ? 'blue' : 'gray'}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
-                No
+                {Translation.no}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
         {check && selectIconOne == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={styles.textHeader}>
-            <Text style={styles.haderStyle}>Event Type</Text>
+            <Text style={styles.haderStyle}>{Translation.event_type}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <CustomPicker
@@ -333,13 +333,13 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && selectedValue == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         {
           selectedValue == 7 && (
             <View style={{ marginTop: 20 }}>
               <View style={styles.textHeader}>
-                <Text style={styles.haderStyle}>Platform</Text>
+                <Text style={styles.haderStyle}>{Translation.platform}</Text>
               </View>
               <View style={styles.firstTextinput}>
                 <CustomPicker
@@ -356,11 +356,11 @@ const EventForm = ({ route }) => {
           selectedValue == 7 && (
             <View style={{ marginTop: 20 }}>
               <View style={{ ...styles.textHeader, width: ms(100) }}>
-                <Text style={styles.haderStyle}>Joining link</Text>
+                <Text style={styles.haderStyle}>{Translation.joining_link}</Text>
               </View>
               <View style={styles.firstTextinput}>
                 <TextInput
-                  placeholder="Please Enter Name"
+                  placeholder={Translation.please_enter_name}
                   onChangeText={setJoiningLink}
                   value={joiningLink}
                   style={styles.textINput}
@@ -375,7 +375,7 @@ const EventForm = ({ route }) => {
 
         <View style={{ marginTop: 20 }}>
           <View style={styles.textHeader}>
-            <Text style={styles.haderStyle}>Frequency</Text>
+            <Text style={styles.haderStyle}>{Translation.frequency}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <CustomPicker
@@ -387,7 +387,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && frequency == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         {/* Date picker */}
         <DateTimePickerModal
@@ -408,17 +408,17 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={showDatePicker}>
             <View style={{ ...styles.textHeader }}>
-              <Text style={styles.haderStyle}>Start Date</Text>
+              <Text style={styles.haderStyle}>{Translation.start_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
                 {startDate
                   ? moment(startDate).format('DD-MMM-YYYY')
-                  : 'Select start date'}
+                  : Translation.select_start_date }
               </Text>
             </View>
             {check && startDate == null && (
-              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
             )}
           </TouchableOpacity>
 
@@ -426,26 +426,26 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={() => setShowModal(true)}>
             <View style={{ ...styles.textHeader, width: ms(75) }}>
-              <Text style={styles.haderStyle}>End Date</Text>
+              <Text style={styles.haderStyle}>{Translation.end_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
                 {' '}
                 {endDate
                   ? moment(endDate).format('DD-MMM-YYYY')
-                  : 'Select end date'}
+                  : Translation.select_end_date}
               </Text>
             </View>
             {check && startDate == null && (
-              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
             )}
           </TouchableOpacity>
-          {/* { check&& endDate==null&& <Text style={{color:'red',left:10}}>field is required</Text>} */}
+          {/* { check&& endDate==null&& <Text style={{color:'red',left:10}}>{Translation.field_s_required}</Text>} */}
         </View>
 
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(135) }}>
-            <Text style={styles.haderStyle}>Event Description</Text>
+            <Text style={styles.haderStyle}>{Translation.event_description}</Text>
           </View>
           <View
             style={{
@@ -457,19 +457,19 @@ const EventForm = ({ route }) => {
               onChangeText={setDescription}
               value={description}
               multiline
-              placeholder='Enter description'
+              placeholder={Translation.event_description}
               placeholderTextColor={colors.black}
               style={{ color: colors.black }}
             />
           </View>
         </View>
         {check && description == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(220), left: 20 }}>
             <Text style={{ ...styles.haderStyle }}>
-              Expected participants per day
+             {Translation.expected_participants}
             </Text>
           </View>
           <View style={styles.firstTextinput}>
@@ -484,11 +484,11 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && participant == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(200), left: 20 }}>
-            <Text style={styles.haderStyle}>Chants per person per day </Text>
+            <Text style={styles.haderStyle}>{Translation.chants_per_person} </Text>
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
@@ -502,7 +502,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && personPerDay == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <CustomCountrySelector
           data={countryRespose}
@@ -513,11 +513,11 @@ const EventForm = ({ route }) => {
         />
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(120), left: 20 }}>
-            <Text style={styles.haderStyle}>Organizer Name</Text>
+            <Text style={styles.haderStyle}>{Translation.organizer_name}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
-              placeholder="Please Enter Name"
+              placeholder={Translation.please_enter_name}
               onChangeText={setOrganizer}
               value={organizer}
               placeholderTextColor={colors.black}
@@ -526,12 +526,12 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && organizer == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(125), left: 20 }}>
-            <Text style={styles.haderStyle}>Organizer Phone</Text>
+            <Text style={styles.haderStyle}>{Translation.organizer_phone}</Text>
           </View>
           <View
             style={{
@@ -570,7 +570,7 @@ const EventForm = ({ route }) => {
               </View>
             </TouchableOpacity>
             <TextInput
-              placeholder='Mobile'
+              placeholder={Translation.enter_no}
               onChangeText={setNumber}
               maxLength={10}
               value={number}
@@ -587,11 +587,11 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && number == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(210), left: 20 }}>
-            <Text style={styles.haderStyle}>Make Phone Number Public</Text>
+            <Text style={styles.haderStyle}>{Translation.make_phone_number_public}</Text>
           </View>
           <View style={styles.secondList}>
             <TouchableOpacity
@@ -603,7 +603,7 @@ const EventForm = ({ route }) => {
                 color={phonepublic == '1' ? 'blue' : colors.black}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
-                Yes
+                {Translation.yes}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -617,22 +617,22 @@ const EventForm = ({ route }) => {
                 color={checkboxSlect == '1' ? 'blue' : colors.black}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
-                No
+                {Translation.no}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
         {check && phonepublic == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(120), left: 20 }}>
-            <Text style={styles.haderStyle}>Organizer Email</Text>
+            <Text style={styles.haderStyle}>{Translation.organizer_email}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
-              placeholder="Email"
+              placeholder={Translation.email}
               onChangeText={setEmail}
               value={email}
               style={styles.textINput}
@@ -641,10 +641,10 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && email == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
         <TouchableOpacity style={styles.btn} onPress={() => handleONsubmit()}>
-          <Text style={styles.saveText}>Save and Continue</Text>
+          <Text style={styles.saveText}>{Translation.save_continue}</Text>
         </TouchableOpacity>
         <View style={{ height: 200 }} />
       </ScrollView>

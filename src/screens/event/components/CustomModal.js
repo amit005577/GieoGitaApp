@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
+import { useTranslation } from '../../../utills.js/translation-hook';
 
 const CustomModal = ({
   handleSelectedItem,
@@ -20,6 +21,7 @@ const CustomModal = ({
   data,
 }) => {
   // console.log("show selected item",selectedItem)
+  const { Translation, isLoading } = useTranslation()
   return (
     <View>
       <Modal
@@ -34,7 +36,7 @@ const CustomModal = ({
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setShowModal(!showModal)}>
-              <Text style={styles.textStyle}>रद्द करना</Text>
+              <Text style={styles.textStyle}>{Translation.close}</Text>
             </Pressable>
             <View style={{marginTop: 20}}>
               <FlatList
@@ -54,7 +56,7 @@ const CustomModal = ({
                         // width: '100%',
                       }}>
                       <View style={{width:"90%",alignSelf:'flex-start'}}>
-                        <Text style={styles.modalText}>{item.name}</Text>
+                        <Text style={styles.modalText}>{item.value}</Text>
                       </View>
                       <View style={{width:"10%"}}>
                       <FIcon

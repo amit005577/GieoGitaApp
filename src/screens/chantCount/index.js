@@ -32,10 +32,11 @@ import {
 } from '../../redux/actions';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const { Translation } = useTranslation()
+  const { Translation, isLoading } = useTranslation()
 
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -78,7 +79,7 @@ const ChantCount = ({ navigation }) => {
       data.append('count', number);
       data.append('id', previousChent.id);
       console.log('datadata::', data);
-      return
+      
       // const data = {
       //   id: previousChent.id,
       //   count: number
@@ -125,8 +126,11 @@ const ChantCount = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
+       {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
-
+     
       <ScrollView>
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}

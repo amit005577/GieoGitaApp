@@ -45,16 +45,18 @@ const PledgeSagaFunction = function* (data) {
 };
 
 const UpdateChant = function* (data) {
+  
   try {
     let requestUrl =
       `${Constants.BASE_URL}user/reads-update`;
 
-    // console.log(':::::::::::::', data.payload);
+    console.log(':::::::::::::', data.payload);
     let postData = {
       count: data,
     };
     yield put(setIsLoading(true))
     const res = yield call(postApi, requestUrl, postData);
+    console.log("show list page update:::::",res)
     yield put(setIsLoading(false))
     // if (res.data.data != null) {
     // console.log('show runn inside');

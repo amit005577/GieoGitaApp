@@ -140,15 +140,15 @@ const ListPageScreen = ({ navigation }) => {
         }}>
         <View style={{ ...styles.insideContainer, backgroundColor: '#C7E9C9' }}>
           <Text style={styles.numberText}>{monthlyData?.weekly_count}</Text>
-          <Text style={styles.currentText}>{Translation.Current_Week}</Text>
+          <Text style={styles.currentText}>{Translation.current_week}</Text>
         </View>
         <View style={{ ...styles.insideContainer, backgroundColor: '#E9E1C7' }}>
           <Text style={styles.numberText}>{monthlyData?.month_count}</Text>
-          <Text style={styles.currentText}>{monthlyData?.current_month}</Text>
+          <Text style={styles.currentText}>{Translation?.current_month}</Text>
         </View>
         <View style={{ ...styles.insideContainer, backgroundColor: '#C7DBE9' }}>
           <Text style={styles.numberText}>{monthlyData?.life_time_count}</Text>
-          <Text style={styles.currentText}>{monthlyData?.total}</Text>
+          <Text style={styles.currentText}>{Translation?.total}</Text>
         </View>
       </View>
       <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
@@ -239,7 +239,7 @@ const ListPageScreen = ({ navigation }) => {
                       fontSize: 18,
                       color: colors.black,
                     }}>
-                    पुरानी संख्या
+                   {Translation.old_counts}
                   </Text>
                 </View>
                 <View

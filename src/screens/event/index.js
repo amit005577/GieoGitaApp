@@ -33,8 +33,8 @@ import Loader from '../../Components/Loader';
 
 const windowWidth = Dimensions.get('window').width;
 const data = [
-  { name: 'All Event', value: 'item1', id: 1 },
-  { name: 'My Event', value: 'item2', id: 2 },
+  { name: 'All Event', value: 'All Event', id: 1 },
+  { name: 'My Event', value: 'My Event', id: 2 },
 ];
 
 const EventPage = ({ navigation }) => {
@@ -254,11 +254,11 @@ const EventPage = ({ navigation }) => {
       {editLoder && <ActivityIndicator size={'large'} />}
       <View style={styles.container}>
         <View style={styles.firstRowStyle}>
-          <Text style={styles.eventText}>Events</Text>
+          <Text style={styles.eventText}>{Translation.events}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('form')}
             style={styles.addGroupBtn}>
-            <Text style={styles.addText}>Add Group or Event</Text>
+            <Text style={styles.addText}>{Translation.add_group_or_event}</Text>
           </TouchableOpacity>
         </View>
 
@@ -268,7 +268,7 @@ const EventPage = ({ navigation }) => {
             style={styles.eventBtn}
             onPress={() => handleModalVisible()}>
             <Text numberOfLines={1} style={styles.btnTextall}>
-              {selectedItem ? selectedItem : 'All Event'}
+              {selectedItem ? selectedItem : Translation.all_event}
             </Text>
             <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
@@ -277,7 +277,7 @@ const EventPage = ({ navigation }) => {
             onPress={() => setShowModalEventTyope(true)}>
             <Text maxLength={2} numberOfLines={1} style={styles.btnTextall}>
               {' '}
-              {eventType ? eventType : 'Event type'}
+              {eventType ? eventType : Translation.event_type}
             </Text>
             <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
@@ -286,7 +286,7 @@ const EventPage = ({ navigation }) => {
             onPress={() => setshowModalPlaceType(true)}>
             <Text numberOfLines={1} style={styles.btnTextall}>
               {' '}
-              {placeType ? placeType : 'Place type'}
+              {placeType ? placeType : Translation.place_type}
             </Text>
             <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
@@ -318,12 +318,12 @@ const EventPage = ({ navigation }) => {
         />
         <View style={styles.textContainer}>
           <TextInput
-            placeholder="Find Event"
+            placeholder={Translation.find_event}
             onChangeText={handleFilter}
             autoCapitalize="none"
             clearButtonMode="always"
             autoCorrect={false}
-            placeholderTextColor={'gray'}
+            placeholderTextColor={'black'}
             style={{ color: '#111211', flex: 1 }}
           >
           </TextInput>
@@ -331,7 +331,7 @@ const EventPage = ({ navigation }) => {
         </View>
 
         <Text style={styles.textShowingHeadingData}>
-          {"Shwoing 0 out of 0 events or groups"}
+          {`Shwoing 0 out of 0 events or groups`}
         </Text>
         <View style={styles.flatlistContaner}>
           {EventLoading ? (
