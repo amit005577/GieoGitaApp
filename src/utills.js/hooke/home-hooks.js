@@ -17,10 +17,11 @@ export const useHomeHooks = () => {
 
 
 
+
     return {
         handleGetHomeData,
         homePageData,
         Translation,
-        isLoading
+        isLoading,
     }
 }

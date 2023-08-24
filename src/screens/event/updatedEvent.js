@@ -37,6 +37,7 @@ const UpdatedEvent = () => {
 
       <TouchableOpacity
         style={styles.iconContianer}
+        onPress={() => handleOnpress()}
       >
         <View style={{ width: '90%' }}>
           <View style={styles.singleItem}>
@@ -68,7 +69,7 @@ const UpdatedEvent = () => {
         </View>
 
         <View>
-          <Icon name="right" size={25} />
+          <Icon name="right" color={colors.black} size={25} />
         </View>
       </TouchableOpacity>
     </View>

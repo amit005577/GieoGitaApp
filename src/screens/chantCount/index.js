@@ -32,12 +32,12 @@ import {
 } from '../../redux/actions';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
-import Loader from '../../Components/Loader';
 import Constants from '../../utills.js/Constants';
+import Loader from '../../Components/Loader';
 
 const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const { Translation, isLoading } = useTranslation()
+  const { Translation, handleLoader, isLoading } = useTranslation()
 
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -50,9 +50,7 @@ const ChantCount = ({ navigation }) => {
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
   const previousChent = useSelector(state => state.AppReducers.previousChent);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
-
-  console.log(accessToken);
-  console.log(previousChent);
+console.log(accessToken);
 
   useEffect(() => {
     if (isFocused && previousChent != null) {
@@ -63,7 +61,6 @@ const ChantCount = ({ navigation }) => {
       setNumber(0)
       dispatch(setPreviousChant(null))
     }
-    console.log(":::::::::::::::::::", previousChent);
   }, [isFocused])
 
   useEffect(() => {
@@ -77,25 +74,34 @@ const ChantCount = ({ navigation }) => {
   const handleOnpress = () => {
     if (previousChent?.count) {
 
-      const FormData = require('form-data');
-      let data = new FormData();
-      data.append('count', number);
-      data.append('id', previousChent.id);
-      console.log('datadata::', data);
-      
-      // const data = {
-      //   id: previousChent.id,
-      //   count: number
-      // }
-      // return // need to remove once Update api is ready
-      dispatch(chantUpdatecount(data));
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + accessToken);
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      handleLoader(true)
+      fetch(`${Constants.BASE_URL}user/reads-update?id=${previousChent.id}&count=${number}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          handleLoader(false)
+
+          setModalVisible(true);
+
+        })
+        .catch(error => {
+          handleLoader(false)
+          // console.log('error', error)
+        });
 
     } else {
       dispatch(chantUpdatecount(number));
+      setModalVisible(true);
+
     }
-    setModalVisible(true);
     setDisable(true);
-    dispatch(chantHistory());
+    // dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
   };
 
@@ -129,11 +135,11 @@ const ChantCount = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-       {isLoading ?
+      {isLoading ?
         <Loader /> : null
       }
       <HeaderPage />
-     
+
       <ScrollView>
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}

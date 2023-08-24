@@ -1,25 +1,23 @@
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
   StyleSheet,
   Text,
-  View,
-  Dimensions,
-  useWindowDimensions,
-  TouchableOpacity,
   TextInput,
-  FlatList,
-  ActivityIndicator,
-  Modal,
-  Pressable,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import HeaderPage from '../../Components/header';
-import { colors } from '../../helper/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
-import CustomModal from './components/CustomModal';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconF from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../Components/Loader';
+import HeaderPage from '../../Components/header';
+import { colors } from '../../helper/colors';
 import {
   getAllEvent,
   getEventPlace,
@@ -27,9 +25,8 @@ import {
   getMyEvent,
   targetChantData,
 } from '../../redux/actions';
-import moment from 'moment';
 import { useTranslation } from '../../utills.js/translation-hook';
-import Loader from '../../Components/Loader';
+import CustomModal from './components/CustomModal';
 
 const windowWidth = Dimensions.get('window').width;
 const data = [
@@ -49,7 +46,6 @@ const EventPage = ({ navigation }) => {
   // console.log('show allEventData type', allEventData);
   // console.log('show eventPlaceData', eventPlaceData);
   const [EventData, setEventData] = useState(null);
-  // console.log('show ditagdjfsldjf', EventData);
 
   const [selectedItem, setselectedItem] = useState(data[0]?.name);
   const [showModal, setShowModal] = useState(false);
@@ -121,10 +117,6 @@ const EventPage = ({ navigation }) => {
     navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
   };
 
-  // const handleDetailsPage = item => {
-  //   setModalVisible(false);
-  //   navigation.navigate('details', item);
-  // };
 
   useEffect(() => {
     setEditLoder(true)
@@ -178,14 +170,6 @@ const EventPage = ({ navigation }) => {
     }
   }
 
-  // const validateUser = () => {
-  //   if (profileDetail && profileDetail?.length > 0 && selectedItemFromList?.phone != null && selectedItemFromList?.phone != undefined) {
-  //     return profileDetail[0]?.phone?.includes(selectedItemFromList?.phone)
-  //   } else {
-  //     return false
-  //   }
-  // }
-  console.log(profileDetail);
 
   const validateCurrentUser = (phone, email) => {
     if (profileDetail && profileDetail?.length > 0) {
@@ -251,7 +235,7 @@ const EventPage = ({ navigation }) => {
         <Loader /> : null
       }
       <HeaderPage />
-      {editLoder && <ActivityIndicator size={'large'} />}
+      {editLoder ? <ActivityIndicator size={'large'} /> : null}
       <View style={styles.container}>
         <View style={styles.firstRowStyle}>
           <Text style={styles.eventText}>{Translation.events}</Text>
@@ -348,77 +332,7 @@ const EventPage = ({ navigation }) => {
           />
         </View>
       </View>
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
 
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Close</Text>
-            </Pressable>
-            <View style={styles.fistRow}>
-              <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
-              {validateUser() ? (
-                <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
-                  <IconV name="pencil" color='#149103' size={20} />
-                </TouchableOpacity>
-              ) : null}
-
-            </View>
-            <Text style={styles.txtItem}>
-              {selectedItemFromList?.event_type}
-            </Text>
-            <View>
-              <Text style={styles.itemHeading}>Address:</Text>
-              <View style={{ width: '60%' }}>
-                <Text style={styles.textDetails}>
-                  {selectedItemFromList?.address}
-                </Text>
-                <Text style={styles.textDetails}>{selectedItemFromList?.country_id}</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: 20,
-              }}>
-              <TouchableOpacity
-                onPress={() => handleDetailsPage(selectedItemFromList)}
-                style={{ ...styles.btn, width: 100 }}>
-                <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                  Details
-                </Text>
-              </TouchableOpacity>
-              <View>
-                <Text style={{ ...styles.itemHeading, alignSelf: 'flex-end' }}>
-                  Organizer
-                </Text>
-                <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                  <IconV name="old-phone" size={20} color='gray' style={{ marginRight: 5 }} />
-                  <Text style={styles.textDetails}>
-                    {selectedItemFromList?.organizer}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('listpage')}
-              style={{ ...styles.btn, width: 130, marginTop: 20 }}>
-              <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                Submission List
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal> */}
     </View>
   );
 };

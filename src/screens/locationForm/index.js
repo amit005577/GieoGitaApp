@@ -21,8 +21,6 @@ import FIcon from 'react-native-vector-icons/FontAwesome5';
 import Icont from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderPage from '../../Components/header';
-// import {useDispatch, useSelector} from 'react-redux';
-// import {getAllEvent, getEventPlace, getEventType} from '../../redux/actions';
 import moment from 'moment';
 import { ms } from 'react-native-size-matters';
 import CustomPicker from '../../Components/CustomPicker';
@@ -37,22 +35,7 @@ import {
 import { useTranslation } from '../../utills.js/translation-hook';
 
 const windowWidth = Dimensions.get('window').width;
-const dataFrequency = [
-  { name: '--Selectt--', value: 'item1', id: 1 },
-  { name: 'india', value: 'item2', id: 2 },
-  { name: 'usa', value: 'item1', id: 3 },
-  { name: 'australia', value: 'item2', id: 4 },
-  { name: 'england', value: 'item2', id: 5 },
-  { name: 'newYork', value: 'item2', id: 6 },
-];
-const stateData = [
-  { name: '--Selectt--', value: 'item1', id: 1 },
-  { name: 'delhi', value: 'item2', id: 2 },
-  { name: 'punjab', value: 'item1', id: 3 },
-  { name: 'bihar', value: 'item2', id: 4 },
-  { name: 'up', value: 'item2', id: 5 },
-  { name: 'mohali', value: 'item2', id: 6 },
-];
+
 
 const LocationForm = ({ route }) => {
   const eventPlacetype = useSelector(
@@ -62,23 +45,18 @@ const LocationForm = ({ route }) => {
   const [name, setName] = useState('');
   const [pin, setpin] = useState(null);
   const [address, setAddress] = useState('');
-  const [CountryState, setCountryState] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectIconOne, setSelectIconOne] = useState(null);
   const [selectIcontwo, setSelectIcontwo] = useState(null);
   const [countryModal, setCountryModal] = useState(false);
   const [selectedState, setselectedState] = useState(null);
   const [stateModata, setstateModata] = useState(false);
-  const [placeType, setplaceType] = useState('');
   const [country, setCountry] = useState(null);
   const [cityName, setcityName] = useState('');
   const dispatch = useDispatch();
-  // console.log("show country id",country)
-  // console.log("show selected state id",selectedState)
 
   const [check, setCheck] = useState(false);
   const currentEvent = useSelector(state => state.EventReducer.currentEvent);
-  console.log('show current reducer', currentEvent);
   const countryRespose = useSelector(
     state => state.AppReducers.countryNamelistData,
   );
@@ -157,7 +135,6 @@ const LocationForm = ({ route }) => {
     // id: item?.ID,
   };
 
-  // name, pin, address, selectedValue, selectIconOne, selectedState,country,cityName
   const handleONsubmit = () => {
     setCheck(true);
 
@@ -192,11 +169,7 @@ const LocationForm = ({ route }) => {
 
   const [searchText, setSearchText] = useState('');
   const [searchStateText, setSearchStateText] = useState('');
-  // const handleFilter = item => {
-  //   setcountrylistData(item);
-  //   setSearchText('');
-  //   setModalVisible(false);
-  // };
+
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -407,11 +380,6 @@ const LocationForm = ({ route }) => {
               <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
                 {selectedState ? selectedState.name : '--Select State--'}
               </Text>
-              {/* <CustomPicker
-                data={stateData}
-                selectedValue={CountryState}
-                setSelectedValue={setCountryState}
-              /> */}
             </View>
             {check && selectedState == null && (
               <Text style={{ color: 'red', left: 10 }}>field is required</Text>
@@ -757,7 +725,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     zIndex: 100,
-    // elevation:5,
     width: 100,
     left: 20,
   },
@@ -779,7 +746,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: 'lightgrey',
     height: 60,
-    // justifyContent:'center',
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -814,16 +780,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 20,
+    marginBottom: 50
   },
   saveText: {
     color: 'white',
   },
   modalView: {
-    // margin: 20,
-    // marginHorizontal:20,
     width: '100%',
     backgroundColor: 'white',
-    // borderRadius: 20,
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',

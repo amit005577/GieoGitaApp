@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTranslations, saveLangCode } from "../redux/actions";
+import { getTranslations, saveLangCode, setIsLoading } from "../redux/actions";
 
 const { useSelector, useDispatch } = require("react-redux");
 
@@ -23,13 +23,16 @@ export const useTranslation = () => {
         const lang = await AsyncStorage.getItem('currentLang')
         return lang ? JSON.parse(lang) : selectedLang
     }
-
+    const handleLoader = (isTrue) => {
+        dispatch(setIsLoading())
+    }
     return {
         Translation,
         handleUpdateLanuage,
         selectedLang,
         handleSelectedLanguage,
         handleDefaultLanguage,
-        isLoading
+        isLoading,
+        handleLoader
     }
 }

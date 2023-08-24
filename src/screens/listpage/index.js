@@ -28,6 +28,7 @@ const ListPageScreen = ({ navigation }) => {
     state => state.AppReducers.getCurrentCountData,
   );
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
+  
   useEffect(() => {
     if (isFocused) {
       dispatch(chantHistory());

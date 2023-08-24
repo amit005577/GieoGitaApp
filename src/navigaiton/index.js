@@ -38,7 +38,7 @@ function InitialNavigation() {
         dispatch(Logout(true));
       }
     } catch (error) {
-      console.log('show error from app file', error);
+      // console.log('show error from app file', error);
     }
   };
 

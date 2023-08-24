@@ -50,23 +50,21 @@ const UpdateChant = function* (data) {
     let requestUrl =
       `${Constants.BASE_URL}user/reads-update`;
 
-    console.log(':::::::::::::1', data);
     let postData = {
       count: data,
     };
     yield put(setIsLoading(true))
     const res = yield call(postApi, requestUrl, postData);
-    console.log("show list page update:::::",res)
+    // console.log("show list page update:::::",res)
     yield put(setIsLoading(false))
 
-    console.log('???????????????????1', res.data);
   } catch (error) {
     // console.log('show UpdateChant error api', error);
   }
 };
 
 const getHomePageData = function* () {
-  console.log('Home Page Data');
+  // console.log('Home Page Data');
   try {
     let requestUrl =
       `${Constants.BASE_URL}pages/20`;
@@ -118,7 +116,7 @@ const getPdfSaga = function* () {
     //   JSON.stringify(res.data),
     // );
   } catch (error) {
-    console.log('show getPdfSaga error api', error);
+    // console.log('show getPdfSaga error api', error);
   }
 };
 
@@ -250,7 +248,7 @@ const reisterDetailSaga = function* (data) {
   try {
     let requestUrl =
       `${Constants.BASE_URL}profile-update`;
-    console.log("show hit api before data ", _data, requestUrl)
+    // console.log("show hit api before data ", _data, requestUrl)
     yield put(setIsLoading(true))
     const res = yield call(registerApi, requestUrl, _data);
     yield put(setIsLoading(false))

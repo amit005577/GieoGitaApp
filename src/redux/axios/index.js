@@ -110,7 +110,7 @@ export const postApi = async (url, data) => {
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
-  console.log("show bearere token",token)
+  // console.log("show bearere token",token)
   // const _isToken = await AsyncStorage.getItem('token')
   // let token = JSON.parse(_isToken)
   // console.log("🚀 ~ file: index.js:35 ~ postApi ~ _isToken:", token)
@@ -137,7 +137,7 @@ export const registerApi = async (url, data) => {
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
-  console.log("show token data",token)
+  // console.log("show token data",token)
   if (token) {
     return axios({
       method: 'POST',

@@ -32,8 +32,8 @@ const DetailEvent = ({ route }) => {
 
   const item = route.params.data;
   const isCurrentUser = route.params.isCurrentUser
-  console.log('show details item', item);
-  console.log('show props data', route.params);
+  // console.log('show details item', item);
+  // console.log('show props data', route.params);
   const url = item?.thumbnail;
   const message = item?.short_content;
   const title = 'Shared by ' + item?.organizer;
@@ -41,7 +41,7 @@ const DetailEvent = ({ route }) => {
   const [isCopied, setisCopied] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [camerPhoto, setCamerPhoto] = useState(null);
-  console.log('show cameraphoto', camerPhoto);
+  // console.log('show cameraphoto', camerPhoto);
   const [galleryPhoto, setGalleryPhoto] = useState(null);
   const handleImagePick = val => {
     setModalVisible(true);
@@ -125,12 +125,12 @@ const DetailEvent = ({ route }) => {
   const handleCamera = async () => {
     try {
       let result = await launchCamera(options);
-      console.log('show result hhjhjh', result);
+      // console.log('show result hhjhjh', result);
       let newData = result?.assets[0].uri;
       setCamerPhoto(newData);
       setModalVisible(false);
     } catch (error) {
-      console.log('show error', error);
+      // console.log('show error', error);
     }
 
     // setCameraPhoto(cameraPhoto);
@@ -144,7 +144,7 @@ const DetailEvent = ({ route }) => {
       setCamerPhoto(newData);
       setModalVisible(false);
     } catch (error) {
-      console.log('show error', error);
+      // console.log('show error', error);
     }
   };
   const handleConfirmationEvent = () => {
@@ -158,7 +158,7 @@ const DetailEvent = ({ route }) => {
 
     if (data.params.image != null && data.params.id != null) {
       const res = dispatch(eventConfirmation(data));
-      console.log('show res;;;;;;;;;;', res);
+      // console.log('show res;;;;;;;;;;', res);
     }
   };
   const handleClearData = () => {

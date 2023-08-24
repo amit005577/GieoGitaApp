@@ -17,12 +17,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomCountrySelector from '../../Components/CustomCountrySelector';
 import CustomPicker from '../../Components/CustomPicker';
+import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
-import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
 import { colors } from '../../helper/colors';
+import { createEvent, getCountryName, getEventType, getStateName, updateMyEvent } from '../../redux/actions';
 import Constants from '../../utills.js/Constants';
 import { useTranslation } from '../../utills.js/translation-hook';
-import Loader from '../../Components/Loader';
 const dataFrequency = [
   { id: 1, name: '--Select--' },
   { id: 2, name: 'One Time' },
@@ -65,7 +65,7 @@ const EventForm = ({ route }) => {
     const item = eventtypeData.find((item) => item.name == routeData?.data.event_type)
     return item?.id
   }
-
+console.log('????????',routeData?.data);
   useEffect(() => {
     setName(routeData?.data.name);
     setSelectIconOne(routeData?.data.public_event);
@@ -128,15 +128,14 @@ const EventForm = ({ route }) => {
   const handleConfirm = date => {
     setstartDate(date);
     hideDatePicker();
+
   };
+
   const handleConfirmEnd = date => {
     setEndDate(date);
     setShowModal(false);
   };
-  const data = [
-    { name: 'All Event', value: 'item1', id: 1 },
-    { name: 'My Event', value: 'item2', id: 2 },
-  ];
+
 
   const platformData = [
     { id: 1, name: '--Select--' },
@@ -199,15 +198,16 @@ const EventForm = ({ route }) => {
     } else {
       setLaoder(false);
 
+
       let formDataEdit = {
         name: name,
         event_type: selectedValue,
         frequency: frequency,
-        start: startDate,
+        start: moment(startDate).format('DD-MM-YYYY h:mm'),
         participants: participant,
         phone_visible: phonepublic,
         personPerDay: personPerDay,
-        end: endDate,
+        end: moment(endDate).format('DD-MM-YYYY h:mm'),
         phone: number,
         email: email,
         organizer: organizer,
@@ -226,11 +226,11 @@ const EventForm = ({ route }) => {
         name: name,
         event_type: selectedValue,
         frequency: frequency,
-        start: startDate,
+        start: moment(startDate).format('DD-MM-YYYY h:mm'),
         participants: participant,
         phone_visible: phonepublic,
         personPerDay: personPerDay,
-        end: endDate,
+        end: moment(endDate).format('DD-MM-YYYY h:mm'),
         phone: number,
         email: email,
         organizer: organizer,
@@ -414,7 +414,7 @@ const EventForm = ({ route }) => {
               <Text style={{ color: colors.black }}>
                 {startDate
                   ? moment(startDate).format('DD-MMM-YYYY')
-                  : Translation.select_start_date }
+                  : Translation.select_start_date}
               </Text>
             </View>
             {check && startDate == null && (
@@ -469,7 +469,7 @@ const EventForm = ({ route }) => {
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(220), left: 20 }}>
             <Text style={{ ...styles.haderStyle }}>
-             {Translation.expected_participants}
+              {Translation.expected_participants}
             </Text>
           </View>
           <View style={styles.firstTextinput}>
