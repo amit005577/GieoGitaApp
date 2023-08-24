@@ -1,3 +1,5 @@
+import moment from 'moment';
+import React from 'react';
 import {
   Dimensions,
   FlatList,
@@ -6,29 +8,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { colors } from '../../helper/colors';
-import React, { useEffect, useState } from 'react';
-import HeaderPage from '../../Components/header';
-import Icont from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconF from 'react-native-vector-icons/Feather';
-import { useDispatch, useSelector } from 'react-redux';
-import FIcon from 'react-native-vector-icons/FontAwesome5';
-import moment from 'moment';
-import { navigationRef } from '../../../App';
-import { useTranslation } from '../../utills.js/translation-hook';
+import { useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
+import HeaderPage from '../../Components/header';
+import { colors } from '../../helper/colors';
+import { useTranslation } from '../../utills.js/translation-hook';
 const windowWidth = Dimensions.get('window').width;
 const MyEvent = ({ navigation }) => {
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   const { Translation, isLoading } = useTranslation()
 
-  // console.log('show my list item', myEventData);
   const handleOnpress = (item) => {
     navigation.navigate('details', { data: item, isCurrentUser: true });
   }
+
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -78,7 +75,7 @@ const MyEvent = ({ navigation }) => {
       <HeaderPage />
       <View style={{ paddingHorizontal: 10 }}>
         <View>
-          <Text> My Events</Text>
+          <Text>{Translation.my_events} </Text>
         </View>
         <FlatList
           data={myEventData}

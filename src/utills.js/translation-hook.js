@@ -26,6 +26,15 @@ export const useTranslation = () => {
     const handleLoader = (isTrue) => {
         dispatch(setIsLoading())
     }
+
+    const getFormatedString = (template, data) => {
+        if (template) {
+            Object.entries(data).forEach(([key, value]) => {
+                template = template.replace(`{${key}}`, value);
+            });
+        } return template;
+    };
+
     return {
         Translation,
         handleUpdateLanuage,
@@ -33,6 +42,7 @@ export const useTranslation = () => {
         handleSelectedLanguage,
         handleDefaultLanguage,
         isLoading,
-        handleLoader
+        handleLoader,
+        getFormatedString
     }
 }

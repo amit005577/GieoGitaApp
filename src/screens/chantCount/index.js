@@ -50,7 +50,6 @@ const ChantCount = ({ navigation }) => {
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
   const previousChent = useSelector(state => state.AppReducers.previousChent);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
-console.log(accessToken);
 
   useEffect(() => {
     if (isFocused && previousChent != null) {
@@ -164,7 +163,7 @@ console.log(accessToken);
           onPress={() => navigation.navigate('register')}>
           <Text style={styles.userText}>
             {datapledge[0]?.name == null || datapledge[0]?.name == ''
-              ? 'नाम'
+              ? Translation.name
               : datapledge[0]?.name}
           </Text>
 

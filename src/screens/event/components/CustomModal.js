@@ -1,14 +1,14 @@
+import React from 'react';
 import {
+  ActivityIndicator,
+  FlatList,
   Modal,
+  Pressable,
   StyleSheet,
   Text,
-  View,
-  Pressable,
-  FlatList,
-  ActivityIndicator,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import React from 'react';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { useTranslation } from '../../../utills.js/translation-hook';
 
@@ -20,8 +20,7 @@ const CustomModal = ({
   setShowModal,
   data,
 }) => {
-  // console.log("show selected item",selectedItem)
-  const { Translation, isLoading } = useTranslation()
+  const { Translation } = useTranslation()
   return (
     <View>
       <Modal
@@ -53,7 +52,6 @@ const CustomModal = ({
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        // width: '100%',
                       }}>
                       <View style={{width:"90%",alignSelf:'flex-start'}}>
                         <Text style={styles.modalText}>{item.value}</Text>
@@ -87,11 +85,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
-    // margin: 20,
-    // marginHorizontal:20,
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 20,

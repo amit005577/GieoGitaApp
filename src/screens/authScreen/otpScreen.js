@@ -79,7 +79,7 @@ const OtpScreen = () => {
             textAlign: 'center',
             marginTop: 15,
           }}>
-          ओ.टी.पी
+          {Translation.otp}
         </Text>
       </View>
       <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
@@ -89,7 +89,7 @@ const OtpScreen = () => {
           keyboardType="numeric"
         />
         <Text style={{ textAlign: 'right', marginRight: '4%', color: '#808080' }}>
-          ओटीपी भेजा गया {counter}
+          {Translation.otp_sent} {counter}
         </Text>
       </View>
       <TouchableOpacity
@@ -104,7 +104,7 @@ const OtpScreen = () => {
           height: 40,
         }}>
         <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18 }}>
-          सत्यापित करना
+         {Translation.verify}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -120,7 +120,7 @@ const OtpScreen = () => {
             color: 'blue',
             textDecorationLine: 'underline',
           }}>
-          वापस जाओ
+          {Translation.go_back}
         </Text>
       </TouchableOpacity>
     </View>

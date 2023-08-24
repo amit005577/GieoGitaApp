@@ -1,31 +1,24 @@
 
-import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
+import { Alert } from 'react-native';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { navigationRef } from '../../../App';
 import * as actions from '../actionTypes';
+import { setIsLoading } from '../actions';
 import {
-  GetRecord,
   fetchRecord,
   fetchRecordWithoutToken,
-  postApi,
-  registerApi,
+  registerApi
 } from '../axios';
-import { Alert } from 'react-native';
-import { navigationRef } from '../../../App';
-import { setIsLoading } from '../actions';
 
 
 const AllEventSaga = function* () {
   yield put(setIsLoading(true))
   yield put({ type: actions.LODER, payload: true })
-  // console.log('list event ');
   try {
     let requestUrl =
       `${Constants.BASE_URL}events`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
-    console.log(
-      'show  event data res data saga',
-      JSON.stringify(res),
-    );
     if (res.data != null) {
       yield put({
         type: actions.GET_ALL_EVENT_SUCCESS,
@@ -34,7 +27,6 @@ const AllEventSaga = function* () {
     }
     yield put(setIsLoading(false))
   } catch (error) {
-    // console.log('show error api', error);
     yield put(setIsLoading(false))
   }
 };
@@ -42,7 +34,6 @@ const AllEventSaga = function* () {
 const GetEventTypeSaga = function* () {
 
   yield put(setIsLoading(true))
-  // console.log('list GetEventTypeSaga saga 0-0----');
   try {
     let requestUrl =
       `${Constants.BASE_URL}event-types`;
@@ -60,23 +51,17 @@ const GetEventTypeSaga = function* () {
   } catch (error) {
     yield put(setIsLoading(false))
 
-    // console.log('show error api', error);
   }
 };
 
 const GetEventPlaceSaga = function* () {
   yield put(setIsLoading(true))
 
-  // console.log('list GetEventPlaceSaga ');
   try {
     let requestUrl =
       `${Constants.BASE_URL}event-place-types`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
-    // console.log(
-    //   'show  GetEventPlaceSaga saga',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data != null) {
       yield put({
         type: actions.GET_EVENT_PLACE_SUCCESS,
@@ -88,7 +73,6 @@ const GetEventPlaceSaga = function* () {
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api', error);
     yield put(setIsLoading(false))
 
   }
@@ -97,16 +81,11 @@ const GetEventPlaceSaga = function* () {
 const SearchEventSaga = function* () {
   yield put(setIsLoading(true))
 
-  // console.log('list GetEventPlaceSaga ');
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-search`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
-    // console.log(
-    //   'show  GetEventPlaceSaga saga',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data != null) {
       yield put({
         type: actions.GET_EVENT_PLACE_SUCCESS,
@@ -116,7 +95,6 @@ const SearchEventSaga = function* () {
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api', error);
   }
 };
 
@@ -124,7 +102,6 @@ const SearchEventSaga = function* () {
 const CreateEventSaga = function* (data) {
   yield put(setIsLoading(true))
 
-  // console.log('list CreateEventSaga count', data);
   let _data = {
     name: data.payload.name,
     instraction: data.payload.instraction,
@@ -147,16 +124,11 @@ const CreateEventSaga = function* (data) {
     plateform: data.payload.plateform,
     content: data.payload.content
   }
-  // console.log("show crteate event list",_data)
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-store`;
 
     const res = yield call(registerApi, requestUrl, _data);
-    // console.log(
-    //   'show  CreateEventSaga=-=-=-= saga',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data != null) {
 
       yield put({
@@ -169,26 +141,19 @@ const CreateEventSaga = function* (data) {
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api', error);
   }
 };
 
 
 
 const MyEventSaga = function* () {
-  // console.log('list MyEventSaga count');
   yield put(setIsLoading(true))
 
-  // console.log("show updated list",_data)
   try {
     let requestUrl =
       `${Constants.BASE_URL}my-events`;
 
     const res = yield call(fetchRecord, requestUrl);
-    // console.log(
-    //   'show  MyEventSaga=-=-=',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data != null) {
       yield put({
         type: actions.GET_MY_EVENT_SUCCESS,
@@ -198,13 +163,11 @@ const MyEventSaga = function* () {
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api', error);
   }
 };
 
 
 const UpdateMyEventSaga = function* (data) {
-  // console.log('list update event run', data);
   yield put(setIsLoading(true))
 
   let _data = {
@@ -230,16 +193,11 @@ const UpdateMyEventSaga = function* (data) {
     plateform: data.payload.plateform,
     content: data.payload.content
   }
-  // console.log("show updated list-==-=-=-=-=",_data)
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-update`;
 
     const res = yield call(registerApi, requestUrl, _data);
-    // console.log(
-    //   'show  UpdateMYEcewnt=-=-=-= saga',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data != null) {
 
       yield put({
@@ -248,22 +206,17 @@ const UpdateMyEventSaga = function* (data) {
       });
       Alert.alert("Event is updated")
       navigationRef.navigate("formPlace")
-      // yield put({
-      //   type: actions.GET_MY_EVENT,
 
-      // });
     }
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api update Event', error);
   }
 };
 
 
 
 const UpdateMyLocation = function* (data) {
-  // console.log('list update event run', data);
   yield put(setIsLoading(true))
 
   let _data = {
@@ -281,16 +234,11 @@ const UpdateMyLocation = function* (data) {
     status: "true"
   }
 
-  // console.log("show  update my lodacton list",_data)
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-store-location`;
 
     const res = yield call(registerApi, requestUrl, _data);
-    // console.log(
-    //   'show  updated location from saga=-=-=-= saga',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res?.data != null) {
 
       yield put({
@@ -303,12 +251,10 @@ const UpdateMyLocation = function* (data) {
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api update Event', error);
   }
 };
 
 const SubscribeEventSaga = function* (data) {
-  // console.log("show id payload",data)
   yield put(setIsLoading(true))
 
   try {
@@ -316,10 +262,6 @@ const SubscribeEventSaga = function* (data) {
       `${Constants.BASE_URL}events-subscriptions/${data.payload}`;
 
     const res = yield call(fetchRecord, requestUrl);
-    // console.log(
-    //   'show   subscribe event-------=-=-=',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data != null) {
 
       yield put({
@@ -331,12 +273,10 @@ const SubscribeEventSaga = function* (data) {
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api', error);
   }
 };
 
 const confirmationEventSaga = function* (data) {
-  // console.log("show id payload",data)
   yield put(setIsLoading(true))
 
   let _data = {
@@ -348,23 +288,14 @@ const confirmationEventSaga = function* (data) {
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-store-banner`;
-    // console.log("show resposne api previos;;;;;;;", requestUrl, _data)
     const res = yield call(registerApi, requestUrl, _data);
-    // console.log(
-    //   'show   subscribe event-------=-=-=',
-    //   JSON.stringify(res.data.data),
-    // );
     if (res.data.data != null) {
       data.payload.callback()
-      //  return res.data.data
 
-      // Alert.alert("Event Confirmed Successfully")
-      // navigationRef.navigate("home")
     }
     yield put(setIsLoading(false))
   } catch (error) {
     yield put(setIsLoading(false))
-    // console.log('show error api', error);
   }
 };
 const EventSaga = [

@@ -21,10 +21,10 @@ import FA5 from 'react-native-vector-icons/FontAwesome5';
 import IconIonic from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomeToast from '../../Components/CustomeToast';
+import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
 import { eventConfirmation, subscribeEvent } from '../../redux/actions';
-import Loader from '../../Components/Loader';
 import { useTranslation } from '../../utills.js/translation-hook';
 
 const DetailEvent = ({ route }) => {
@@ -32,21 +32,16 @@ const DetailEvent = ({ route }) => {
 
   const item = route.params.data;
   const isCurrentUser = route.params.isCurrentUser
-  // console.log('show details item', item);
-  // console.log('show props data', route.params);
   const url = item?.thumbnail;
   const message = item?.short_content;
-  const title = 'Shared by ' + item?.organizer;
+  const title = Translation.shared_by + ' ' + item?.organizer;
   const dispatch = useDispatch();
   const [isCopied, setisCopied] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [camerPhoto, setCamerPhoto] = useState(null);
-  // console.log('show cameraphoto', camerPhoto);
-  const [galleryPhoto, setGalleryPhoto] = useState(null);
+  const [localImage, setLocalImage] = useState(null);
+
   const handleImagePick = val => {
     setModalVisible(true);
-    // setImageId(val);
-    // console.log('show val', val);
   };
 
   const subscribeResponse = useSelector(
@@ -107,7 +102,6 @@ const DetailEvent = ({ route }) => {
   };
 
   const handleSubscrible = val => {
-    // alert(val)
     dispatch(subscribeEvent(val));
   };
 
@@ -125,32 +119,29 @@ const DetailEvent = ({ route }) => {
   const handleCamera = async () => {
     try {
       let result = await launchCamera(options);
-      // console.log('show result hhjhjh', result);
       let newData = result?.assets[0].uri;
-      setCamerPhoto(newData);
+      setLocalImage(newData);
       setModalVisible(false);
     } catch (error) {
       // console.log('show error', error);
     }
-
-    // setCameraPhoto(cameraPhoto);
   };
 
   const handleGallery = async () => {
     try {
       const result = await launchImageLibrary(options);
-      // console.log('show result hhjhjh', result);
       let newData = result?.assets[0].uri;
-      setCamerPhoto(newData);
+      setLocalImage(newData);
       setModalVisible(false);
     } catch (error) {
       // console.log('show error', error);
     }
   };
+
   const handleConfirmationEvent = () => {
     let data = {
       params: {
-        image: camerPhoto,
+        image: localImage,
         id: item?.id,
       },
       callback: () => handleClearData(),
@@ -158,13 +149,14 @@ const DetailEvent = ({ route }) => {
 
     if (data.params.image != null && data.params.id != null) {
       const res = dispatch(eventConfirmation(data));
-      // console.log('show res;;;;;;;;;;', res);
     }
   };
+
   const handleClearData = () => {
     alert('Event confirmed successfully');
-    setCamerPhoto(null);
+    setLocalImage(null);
   };
+
   return (
     <View style={styles.contaier}>
       {isLoading ?
@@ -173,7 +165,7 @@ const DetailEvent = ({ route }) => {
       <HeaderPage />
       {isCopied ? <CustomeToast /> : null}
       <View style={{ paddingHorizontal: 10 }}>
-        <Text style={styles.idstyle}>Event ID:{item?.id}</Text>
+        <Text style={styles.idstyle}>{Translation.event_id + ':'}{item?.id}</Text>
         <View style={styles.singleItem}>
           <IconV color="gray" name="globe" size={24} />
           <Text style={styles.textstyle}>{item?.event_type}</Text>
@@ -211,12 +203,12 @@ const DetailEvent = ({ route }) => {
           {item?.instraction}
         </Text>
         <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-          Subscrptions:{item?.subscriptions}
+          {Translation.subscrptions + ":"}{item?.subscriptions}
         </Text>
         <View style={styles.addresStyle}>
           <View style={{ width: '50%', alignSelf: 'flex-end' }}>
             <Text style={{ fontSize: 18, color: 'black' }}>
-              Address: <Text style={{ fontSize: 14 }}>{item?.address}</Text>{' '}
+              {Translation.Address + ':'} <Text style={{ fontSize: 14 }}>{item?.address}</Text>{' '}
             </Text>
             <Text
               style={{
@@ -237,7 +229,7 @@ const DetailEvent = ({ route }) => {
                 fontSize: 18,
                 color: 'black',
               }}>
-              Organizer:
+              {Translation.organizer + ':'}
             </Text>
             <Text
               style={{
@@ -260,7 +252,7 @@ const DetailEvent = ({ route }) => {
           justifyContent: 'space-between',
           paddingHorizontal: 10,
         }}>
-        <Text style={{ fontSize: 18, color: 'black' }}>share:</Text>
+        <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share+':'}</Text>
         <IconW
           onPress={() => {
             onPressWhatsApp();
@@ -297,16 +289,15 @@ const DetailEvent = ({ route }) => {
           style={styles.subscribecontainer}
           onPress={() => handleSubscrible(item?.id)}>
           <Text style={{ color: 'white' }}>
-            {subscription == '1' ? 'Subscribed' : 'Subscribe'}
+            {subscription == '1' ? Translation.subscribed : Translation.subscribe}
           </Text>
         </TouchableOpacity>
       </View>
-      {/* </View> */}
       {isCurrentUser ? (
         <TouchableOpacity
           style={styles.confimationContianer}
           onPress={() => handleImagePick()}>
-          <Text style={styles.confirmbtn}>Event Confirmation</Text>
+          <Text style={styles.confirmbtn}>{Translation.event_confirmation}</Text>
         </TouchableOpacity>
       ) : null}
 
@@ -316,14 +307,14 @@ const DetailEvent = ({ route }) => {
           alignContent: 'center',
           alignItems: 'center',
         }}>
-        <Image source={{ uri: camerPhoto }} style={styles.bigImagecontainer} />
+        <Image source={{ uri: localImage }} style={styles.bigImagecontainer} />
       </TouchableOpacity>
 
-      {camerPhoto && (
+      {localImage && (
         <TouchableOpacity
           style={{ ...styles.confimationContianer, alignSelf: 'center' }}
           onPress={handleConfirmationEvent}>
-          <Text style={styles.confirmbtn}>Submit Image </Text>
+          <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
         </TouchableOpacity>
       )}
 
@@ -345,14 +336,14 @@ const DetailEvent = ({ route }) => {
                 onPress={() => handleCamera()}
                 style={styles.cameracontainer}>
                 <Icon name="camera" size={30} style={styles.iconStyle} />
-                <Text style={styles.titleText}>Add pictures from camera</Text>
+                <Text style={styles.titleText}>{Translation.add_pictures_from_camera}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={() => handleGallery()}
                 style={{ ...styles.cameracontainer, marginTop: ms(15) }}>
                 <FA5 name="images" size={30} style={styles.iconStyle} />
-                <Text style={styles.titleText}>Add pictures from gallery</Text>
+                <Text style={styles.titleText}>{Translation.add_pictures_from_gallery}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -367,7 +358,6 @@ export default DetailEvent;
 const styles = StyleSheet.create({
   contaier: {
     flex: 1,
-    // paddingHorizontal:20
   },
   idstyle: {
     color: colors.black,
@@ -386,12 +376,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   oneItem: {
-    // width:windowWidth/3-25,
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'red',
-    // justifyContent:'space-around'
     paddingHorizontal: 10,
   },
   locationstyle: {
@@ -400,8 +387,6 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: 'lightgrey',
     marginTop: 10,
-
-    //
   },
   addresStyle: {
     flexDirection: 'row',
@@ -450,18 +435,11 @@ const styles = StyleSheet.create({
     width: '95%',
     overflow: 'hidden', // Make sure the content within the container respects the border radius
     borderColor: colors.white,
-    // justifyContent: 'center',
-    // alignContent: 'center',
-    // alignItems: 'center',
     marginTop: 10,
-    // backgroundColor: colors.lavender,
   },
   smallImagecontainer: {
     borderRadius: ms(10),
-    // borderWidth: 1,
-    // borderColor: colors.white,
     height: ms(72),
-    // width: ms(75),
     overflow: 'hidden', // Make sure the content within the container respects the border radius
     borderColor: colors.white,
     justifyContent: 'center',
@@ -469,11 +447,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.lavender,
     margin: 2,
-    // paddingLeft:5
-    // marginLeft:3
   },
   arrowContainer: {
-    // flex:1,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',

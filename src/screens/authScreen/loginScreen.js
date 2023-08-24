@@ -43,7 +43,7 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{flex:1}} >
+    <SafeAreaView style={{ flex: 1 }} >
       {isLoading ?
         <Loader /> : null
       }
@@ -60,7 +60,7 @@ const LoginPage = ({ navigation }) => {
           />
         </View>
 
-        <Text style={styles.loginText}>अपने अकाउंट में लॉग इन करें</Text>
+        <Text style={styles.loginText}>{Translation.login_to_your_account}</Text>
         {loding ? <ActivityIndicator size={'large'} color={'red'} /> : null}
 
         <View style={{ alignItems: 'center' }}>
@@ -71,7 +71,7 @@ const LoginPage = ({ navigation }) => {
             value={text}
             inputMode="numeric"
             maxLength={10}
-            placeholder={'फोन नंबर दर्ज'}
+            placeholder={Translation.enter_phone_number}
           />
         </View>
 
@@ -79,7 +79,7 @@ const LoginPage = ({ navigation }) => {
           onPress={() => handleRequestOtp()}
           style={styles.touchableStyle}>
           <Text style={{ textAlign: 'center', color: '#fff', fontSize: 28 }}>
-            जमा करना
+            {Translation.login_submit}
           </Text>
         </TouchableOpacity>
 
@@ -91,10 +91,10 @@ const LoginPage = ({ navigation }) => {
             fontWeight: '400',
             color: '#6D6D6D',
           }}>
-          ओर
+          {Translation.side}
         </Text>
         <Text style={{ alignSelf: 'center', fontSize: 16, color: '#808080' }}>
-          साथ प्रवेश करना
+          {Translation.login_with}
         </Text>
 
         <TouchableOpacity
@@ -112,9 +112,9 @@ const LoginPage = ({ navigation }) => {
           />
         </TouchableOpacity>
         <Text style={{ alignSelf: 'center', marginTop: 10, color: '#808080' }}>
-          कोई खाता नहीं है{' '}
+          {Translation.do_not_have_an_account}{' '}
           <Text style={{ color: '#F7941C', textDecorationLine: 'underline' }}>
-            यहां रजिस्टर करें
+            {Translation.register_here}
           </Text>
         </Text>
       </View>

@@ -16,13 +16,13 @@ const windowWidth = Dimensions.get('window').width;
 const UpdatedEvent = () => {
   const dispatch = useDispatch()
   const currentEvent = useSelector(state => state.EventReducer.locationUpdated);
-  // console.log("show cureendt event",currentEvent)
   const { Translation, isLoading } = useTranslation()
 
   const handleOnpress = () => {
     dispatch(getMyEvent())
     navigationRef.navigate("myEvent")
   }
+
   return (
     <View style={{ flex: 1 }} >
       {isLoading ?
@@ -31,7 +31,7 @@ const UpdatedEvent = () => {
       <HeaderPage />
 
       <TouchableOpacity onPress={() => handleOnpress()} style={{ justifyContent: 'center:', alignContent: 'center', alignSelf: 'center', marginTop: 20 }}>
-        <Text style={{ color: 'red', textDecorationLine: 'underline', }}>My Events</Text>
+        <Text style={{ color: 'red', textDecorationLine: 'underline', }}>{Translation.my_events}</Text>
       </TouchableOpacity>
 
 
@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   iconContianer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignContent: 'center',
     alignItems: 'center',
     height: 80,
     backgroundColor: 'lightgrey',
@@ -106,8 +105,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'red',
-    // justifyContent:'space-around'
   },
   locatoionText: {
     fontSize: 25,
@@ -122,7 +119,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     zIndex: 100,
-    // elevation:5,
     width: 100,
     left: 20,
   },
@@ -143,19 +139,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: 'lightgrey',
     height: 60,
-    // justifyContent:'center',
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    // paddingHorizontal:10
   },
   haderStyle: {
-    // color: 'black',
     fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
     backgroundColor: '#fff',
-    // elevation:2
   },
   firstBlock: {
     flexDirection: 'row',
@@ -183,8 +175,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   modalView: {
-    // margin: 20,
-    // marginHorizontal:20,
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 20,

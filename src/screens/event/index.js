@@ -38,32 +38,23 @@ const EventPage = ({ navigation }) => {
   const dispatch = useDispatch();
   const allEventData = useSelector(state => state.EventReducer.allEventData);
   const eventtypeData = useSelector(state => state.EventReducer.eventTypeData);
-  const EventLoading = useSelector(state => state.EventReducer.eventLoading);
-  // console.log('show Event Loading', EventLoading);
+
   const eventPlaceData = useSelector(
     state => state.EventReducer.eventPlaceData,
   );
-  // console.log('show allEventData type', allEventData);
-  // console.log('show eventPlaceData', eventPlaceData);
-  const [EventData, setEventData] = useState(null);
+  const [EventData, setEventData] = useState([]);
 
   const [selectedItem, setselectedItem] = useState(data[0]?.name);
   const [showModal, setShowModal] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [eventType, seteventType] = useState(eventtypeData[0]?.name);
   const [showModalEventTyope, setShowModalEventTyope] = useState(false);
-  const [editMode, setEditMode] = useState(false);
 
   const [placeType, setplaceType] = useState(eventPlaceData[0]?.name);
   const [showModalPlaceType, setshowModalPlaceType] = useState(false);
-  // const [text, setText] = useState('');
-  const [selectedItemFromList, setSelectedItemFromList] = useState(null);
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   const [editLoder, setEditLoder] = useState(false)
-  const { Translation, isLoading } = useTranslation()
+  const { Translation, isLoading, getFormatedString } = useTranslation()
 
-
-  // console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -85,7 +76,6 @@ const EventPage = ({ navigation }) => {
 
   const filterEvent = item => {
     let newData = allEventData?.filter(val => item === val.event_type);
-    // console.log('show new Data', newData);
     setEventData(newData);
   };
 
@@ -94,7 +84,6 @@ const EventPage = ({ navigation }) => {
     if (item.name == 'All Event') {
       setEventData(allEventData);
     } else if ((item.name = 'My Event')) {
-      // alert("my event")
       setEventData(myEventData);
     }
     setShowModal(false);
@@ -147,11 +136,6 @@ const EventPage = ({ navigation }) => {
     }, []);
 
     setEventData(mergedArray);
-  };
-
-  const handleOnlongPress = item => {
-    setModalVisible(true);
-    setSelectedItemFromList(item);
   };
 
   const handleFilter = (input) => {
@@ -226,7 +210,6 @@ const EventPage = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
-
 
 
   return (
@@ -315,12 +298,13 @@ const EventPage = ({ navigation }) => {
         </View>
 
         <Text style={styles.textShowingHeadingData}>
-          {`Shwoing 0 out of 0 events or groups`}
+          {getFormatedString(Translation.shwoing_out_of_events, {
+            eventCount: EventData.length,
+            allEvent:  EventData.length
+          })}
         </Text>
         <View style={styles.flatlistContaner}>
-          {EventLoading ? (
-            <ActivityIndicator size={'small'} color={'orange'} />
-          ) : null}
+
           <FlatList
             data={EventData}
             showsVerticalScrollIndicator={false}
