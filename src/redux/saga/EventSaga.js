@@ -15,24 +15,30 @@ import { setIsLoading } from '../actions';
 
 const AllEventSaga = function* () {
   yield put(setIsLoading(true))
-
+  yield put({ type: actions.LODER, payload: true })
+  // console.log('list event ');
   try {
     let requestUrl =
       `${Constants.BASE_URL}events`;
 
+    const res = yield call(fetchRecordWithoutToken, requestUrl);
+    console.log(
+      'show  event data res data saga',
+      JSON.stringify(res),
+    );
     if (res.data != null) {
-
       yield put({
         type: actions.GET_ALL_EVENT_SUCCESS,
         payload: res.data.data,
       });
-      yield put(setIsLoading(false))
     }
-  } catch (error) {
     yield put(setIsLoading(false))
-
+  } catch (error) {
+    // console.log('show error api', error);
+    yield put(setIsLoading(false))
   }
 };
+
 const GetEventTypeSaga = function* () {
 
   yield put(setIsLoading(true))

@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment/moment';
 import React, { useEffect } from 'react';
 import {
@@ -10,13 +11,11 @@ import {
 import AIcon from 'react-native-vector-icons/AntDesign';
 import EIcon from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
 import { chantHistory, setPreviousChant } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
-import { useIsFocused } from '@react-navigation/native';
-import Loader from '../../Components/Loader';
-import { useHomeHooks } from '../../utills.js/hooke/home-hooks';
 
 const ListPageScreen = ({ navigation }) => {
   const isFocused = useIsFocused();

@@ -65,7 +65,7 @@ const EventForm = ({ route }) => {
     const item = eventtypeData.find((item) => item.name == routeData?.data.event_type)
     return item?.id
   }
-console.log('????????',routeData?.data);
+  console.log('????????', routeData?.data);
   useEffect(() => {
     setName(routeData?.data.name);
     setSelectIconOne(routeData?.data.public_event);
@@ -126,6 +126,7 @@ console.log('????????',routeData?.data);
   };
 
   const handleConfirm = date => {
+    console.log('date', date);
     setstartDate(date);
     hideDatePicker();
 
@@ -203,11 +204,11 @@ console.log('????????',routeData?.data);
         name: name,
         event_type: selectedValue,
         frequency: frequency,
-        start: moment(startDate).format('DD-MM-YYYY h:mm'),
+        start: startDate,
         participants: participant,
         phone_visible: phonepublic,
         personPerDay: personPerDay,
-        end: moment(endDate).format('DD-MM-YYYY h:mm'),
+        end: endDate,
         phone: number,
         email: email,
         organizer: organizer,
@@ -226,11 +227,11 @@ console.log('????????',routeData?.data);
         name: name,
         event_type: selectedValue,
         frequency: frequency,
-        start: moment(startDate).format('DD-MM-YYYY h:mm'),
+        start: startDate,
         participants: participant,
         phone_visible: phonepublic,
         personPerDay: personPerDay,
-        end: moment(endDate).format('DD-MM-YYYY h:mm'),
+        end: endDate,
         phone: number,
         email: email,
         organizer: organizer,
