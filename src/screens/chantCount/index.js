@@ -30,8 +30,9 @@ import {
   setPreviousChant,
   targetChantData,
 } from '../../redux/actions';
-import { colors } from '../../helper/colors';
-import { useTranslation } from '../../utills.js/translation-hook';
+import {colors} from '../../helper/colors';
+import {useTranslation} from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 import Constants from '../../utills.js/Constants';
 import Loader from '../../Components/Loader';
 
@@ -354,15 +355,10 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-
     justifyContent: 'space-between',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     height: 70,
-
     backgroundColor: 'orange',
   },
 
@@ -372,52 +368,34 @@ const styles = StyleSheet.create({
 
   textStyle: {
     alignSelf: 'center',
-
     color: 'white',
   },
 
   titleStyle: {
     alignSelf: 'center',
-
     marginTop: 18,
-
     fontSize: 22,
-
     color: 'white',
   },
 
   chantsTitle: {
     marginTop: 15,
-
     alignSelf: 'center',
-
     fontSize: 22,
-
     color: colors.black,
     fontWeight: 'bold',
   },
 
   contContainer: {
-    // borderWidth: 1,
-
     backgroundColor: '#cccccc',
-
     opacity: 0.5,
-
     width: '80%',
-
     alignContent: 'center',
-
     marginTop: 10,
-
     borderRadius: 25,
-
     height: 39,
-
     justifyContent: 'center',
-
     alignContent: 'center',
-
     alignSelf: 'center',
   },
 
@@ -499,9 +477,7 @@ const styles = StyleSheet.create({
 
   countercontainer: {
     flexDirection: 'row',
-
     justifyContent: 'center',
-
     marginTop: 20,
   },
 
@@ -530,7 +506,6 @@ const styles = StyleSheet.create({
 
   iconstyle: {
     fontWeight: 'bold',
-
     color: colors.black,
   },
 
@@ -542,28 +517,19 @@ const styles = StyleSheet.create({
 
   btnContainer: {
     backgroundColor: 'lightgrey',
-
     alignSelf: 'center',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     height: 50,
-
     borderRadius: 30,
-
     justifyContent: 'center',
   },
 
   textSubmit: {
     fontWeight: 'bold',
-
     fontSize: 16,
-
     color: 'white',
   },
-  //
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -574,7 +540,6 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: '#ffffffff',
     borderRadius: 20,
-    // padding: 35,
     height: 250,
     width: '90%',
     alignItems: 'center',
@@ -607,7 +572,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   modalText: {
-    // marginTop: 20,
     marginBottom: 15,
     textAlign: 'center',
     fontSize: 22,
