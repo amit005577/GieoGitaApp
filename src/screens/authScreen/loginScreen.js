@@ -5,11 +5,13 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+
 
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../../assets/images/Logo.png';
@@ -22,6 +24,7 @@ import {
 } from '../../redux/actions';
 import { loder } from '../../redux/reducers/selectors/userSelector';
 import { useTranslation } from '../../utills.js/translation-hook';
+import { GoogleSignin ,statusCodes} from '@react-native-google-signin/google-signin';
 
 const LoginPage = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
@@ -29,9 +32,57 @@ const LoginPage = ({ navigation }) => {
   const [text, onChangeText] = React.useState('');
   const dispatch = useDispatch();
   const loding = useSelector(loder);
+
+  useEffect(() => {
+     GoogleSignin.configure({
+        webClientId: '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      });
+  })
+
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const userInfo = await GoogleSignin.signIn();
+      console.log({ userInfo });
+      alert(
+        +"\n" + userInfo.user.givenName
+        + "\n" + userInfo.user.familyName
+        + "\n" + userInfo.user.email
+        + "\n" + userInfo.user.name
+        + "\n" + userInfo.user.photo
+
+      )
+    } catch (error) {
+      alert(':::: '+JSON.stringify(error))
+      console.log(error );
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      ToastAndroid.show("Signed out", ToastAndroid.SHORT, ToastAndroid.CENTER)
+      console.log('signed out');
+      //   this.setState({ user: null }); // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   const handleRequestOtp = () => {
     let data = `+91${text}`;
-    // console.log('show phone number with code', data.length);
     if (data.length <= 3) {
       alert('Please enter phone number');
     } else if (data.length < 13) {
@@ -97,20 +148,27 @@ const LoginPage = ({ navigation }) => {
           {Translation.login_with}
         </Text>
 
-        <TouchableOpacity
-          style={{
-            borderRadius: 2,
-            alignItems: 'center',
-            flexDirection: 'row',
-            marginTop: 20,
-            justifyContent: 'center',
-          }}>
-          <Image source={Google} style={{ height: 50, width: 50 }} />
-          <Image
-            source={facebook}
-            style={{ height: 50, width: 50, marginLeft: 10 }}
-          />
-        </TouchableOpacity>
+        <View style={{
+          flexDirection: 'row',
+          marginTop: 20,
+          alignSelf: 'center'
+        }} >
+
+          <TouchableOpacity onPress={signIn} >
+            <Image source={Google} style={{ height: 50, width: 50 }} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+          >
+            <Image
+              source={facebook}
+              style={{ height: 50, width: 50, marginLeft: 10 }}
+            />
+          </TouchableOpacity>
+
+        </View>
+
+
         <Text style={{ alignSelf: 'center', marginTop: 10, color: '#808080' }}>
           {Translation.do_not_have_an_account}{' '}
           <Text style={{ color: '#F7941C', textDecorationLine: 'underline' }}>
@@ -118,6 +176,7 @@ const LoginPage = ({ navigation }) => {
           </Text>
         </Text>
       </View>
+
     </SafeAreaView>
 
   );

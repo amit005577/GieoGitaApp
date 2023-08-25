@@ -1,3 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
+import React, { useEffect, useRef } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,15 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useRef } from 'react';
-import HeaderPage from '../../Components/header';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPledge, setcoditionalStatus } from '../../redux/actions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { navigationRef } from '../../../App';
-import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
+import HeaderPage from '../../Components/header';
+import { setPledge, setcoditionalStatus } from '../../redux/actions';
+import { useTranslation } from '../../utills.js/translation-hook';
 
 const SankalpScreen = () => {
   const { Translation, isLoading } = useTranslation()
@@ -22,6 +21,7 @@ const SankalpScreen = () => {
   const [count, setCount] = React.useState('');
   const dispatch = useDispatch();
   const inputRef = useRef();
+  
   const handleOnsubmit = async () => {
     inputRef.current.clear();
     dispatch(setcoditionalStatus(true));
@@ -29,7 +29,9 @@ const SankalpScreen = () => {
     await AsyncStorage.setItem('pledge', JSON.stringify(count));
     setCount(0);
   };
+
   const pledgeDataStore = useSelector(state => state.AppReducers.pledgeData);
+
   useEffect(() => {
     if (pledgeDataStore != null) {
       setCount(pledgeDataStore.target_count);
@@ -37,15 +39,16 @@ const SankalpScreen = () => {
       setCount(0);
     }
   }, []);
+
   const handleOnPress = async () => {
     await AsyncStorage.setItem('pledge', JSON.stringify(5265));
     dispatch(setcoditionalStatus(true));
   }
+
   let currentDateData = moment(new Date(), 'DD-MM-YYYY');
   let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
   let noOfDays = targetDate.diff(currentDateData, 'days');
 
-  //  console.log("Number of days:", noOfDays);
   let dailyCount = count / noOfDays
   let monthCountNumber = dailyCount * 30
   let weekCountNummber = dailyCount * 7
@@ -65,7 +68,6 @@ const SankalpScreen = () => {
             गीता पाठ कर रहे हैं, वह संख्या भी इस गीता जीवन गीत में मान्य है। आप
             उसको भी ऐप में अंकित कर सकते है
           </Text>
-          {/* <Text style={{...styles.desctext, marginTop: 0}}>that number</Text> */}
         </View>
         <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
           <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
