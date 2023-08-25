@@ -213,15 +213,15 @@ const LocationForm = ({ route }) => {
           </View>
         </TouchableOpacity>
         <View>
-          <Text style={styles.locatoionText}>Location</Text>
+          <Text style={styles.locatoionText}>{Translation.location}</Text>
         </View>
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(93) }}>
-            <Text style={styles.haderStyle}>Place Name</Text>
+            <Text style={styles.haderStyle}>{Translation.place_name}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
-              placeholder="Please Enter Name"
+              placeholder={Translation.please_enter_name}
               onChangeText={setName}
               value={name}
               placeholderTextColor={'black'}
@@ -230,12 +230,12 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && name == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(87) }}>
-            <Text style={styles.haderStyle}>Place Type</Text>
+          <View style={{ ...styles.textHeader, width: ms(100) }}>
+            <Text style={styles.haderStyle}>{Translation.place_type}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <CustomPicker
@@ -247,12 +247,12 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && selectedValue == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(148) }}>
-            <Text style={styles.haderStyle}>List as public event</Text>
+            <Text style={styles.haderStyle}>{Translation.list_as_public_event}</Text>
           </View>
           <View style={styles.secondList}>
             <TouchableOpacity
@@ -266,7 +266,7 @@ const LocationForm = ({ route }) => {
                 color={selectIconOne == '1' ? 'blue' : 'black'}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
-                Yes
+              {Translation.yes}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -280,13 +280,13 @@ const LocationForm = ({ route }) => {
                 color={selectIcontwo == '1' ? 'blue' : 'black'}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
-                No
+                {Translation.no}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
         {check && selectIconOne == null && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
 
         <View style={styles.calenderContainer}>
@@ -295,15 +295,15 @@ const LocationForm = ({ route }) => {
             // onPress={showDatePicker}
             onPress={() => setCountryModal(true)}>
             <View style={{ ...styles.textHeader, width: ms(64) }}>
-              <Text style={styles.haderStyle}>Country</Text>
+              <Text style={styles.haderStyle}>{Translation.country}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
-                {country ? country.name : '--Select Country--'}
+                {country ? country.name : Translation.select_country}
               </Text>
             </View>
             {check && country == null && (
-              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
             )}
           </TouchableOpacity>
 
@@ -312,11 +312,11 @@ const LocationForm = ({ route }) => {
           //   onPress={()=>setShowModal(true)}
           >
             <View style={{ ...styles.textHeader, width: ms(73) }}>
-              <Text style={styles.haderStyle}>Pin Code</Text>
+              <Text style={styles.haderStyle}>{Translation.pin_code}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <TextInput
-                placeholder="Please Enter Pin"
+                placeholder={Translation.please_enter_pin}
                 placeholderTextColor={'black'}
                 onChangeText={setpin}
                 value={pin}
@@ -326,17 +326,17 @@ const LocationForm = ({ route }) => {
               />
             </View>
             {check && pin == null && (
-              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
             )}
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(68) }}>
-            <Text style={styles.haderStyle}>Address</Text>
+            <Text style={styles.haderStyle}>{Translation.address}</Text>
           </View>
           <View style={styles.firstTextinput}>
             <TextInput
-              placeholder="Please Enter Address"
+              placeholder={Translation.please_enter_address}
               onChangeText={setAddress}
               value={address}
               placeholderTextColor={'black'}
@@ -345,7 +345,7 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && address == '' && (
-          <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
         )}
 
         <View style={styles.calenderContainer}>
@@ -354,11 +354,11 @@ const LocationForm = ({ route }) => {
           // onPress={showDatePicker}
           >
             <View style={{ ...styles.textHeader, width: ms(37) }}>
-              <Text style={styles.haderStyle}>City</Text>
+              <Text style={styles.haderStyle}>{Translation.city}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <TextInput
-                placeholder="Please Enter city"
+                placeholder={Translation.please_enter_city}
                 onChangeText={setcityName}
                 value={cityName}
                 placeholderTextColor={'black'}
@@ -366,7 +366,7 @@ const LocationForm = ({ route }) => {
               />
             </View>
             {check && cityName == '' && (
-              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
             )}
           </TouchableOpacity>
 
@@ -374,20 +374,20 @@ const LocationForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={() => handlestateFuction()}>
             <View style={{ ...styles.textHeader, width: ms(47) }}>
-              <Text style={styles.haderStyle}>State</Text>
+              <Text style={styles.haderStyle}>{Translation.state}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
-                {selectedState ? selectedState.name : '--Select State--'}
+                {selectedState ? selectedState.name : Translation.select_state}
               </Text>
             </View>
             {check && selectedState == null && (
-              <Text style={{ color: 'red', left: 10 }}>field is required</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
             )}
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.btn} onPress={() => handleONsubmit()}>
-          <Text style={styles.saveText}>Save and Continue</Text>
+          <Text style={styles.saveText}>{Translation.save_and_continue}</Text>
         </TouchableOpacity>
         <Modal
           animationType="slide"
@@ -402,12 +402,12 @@ const LocationForm = ({ route }) => {
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setCountryModal(!countryModal)}>
-                <Text style={styles.textStyle}>रद्द करना</Text>
+                <Text style={styles.textStyle}>{Translation.close}</Text>
               </Pressable>
 
               <View style={styles.searchStyle}>
                 <TextInput
-                  placeholder="Find Event"
+                  placeholder={Translation.search_text}
                   onChangeText={value => setSearchText(value)}
                   autoCapitalize="none"
                   clearButtonMode="always"
@@ -497,11 +497,11 @@ const LocationForm = ({ route }) => {
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setstateModata(!stateModata)}>
-                <Text style={styles.textStyle}>रद्द करना</Text>
+                <Text style={styles.textStyle}>{Translation.close}</Text>
               </Pressable>
               <View style={styles.searchStyle}>
                 <TextInput
-                  placeholder="Find Event"
+                  placeholder={Translation.search_text}
                   onChangeText={value => setSearchStateText(value)}
                   autoCapitalize="none"
                   clearButtonMode="always"
