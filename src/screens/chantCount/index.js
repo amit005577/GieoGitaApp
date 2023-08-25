@@ -10,17 +10,17 @@ import {
   View,
 } from 'react-native';
 
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import FIcon from 'react-native-vector-icons/Feather';
 
 import EIcon from 'react-native-vector-icons/Entypo';
 
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
-import { navigationRef } from '../../../App';
+import {useDispatch, useSelector} from 'react-redux';
+import {navigationRef} from '../../../App';
 import HeaderPage from '../../Components/header';
 import {
   chantHistory,
@@ -30,22 +30,24 @@ import {
   setPreviousChant,
   targetChantData,
 } from '../../redux/actions';
-import { colors } from '../../helper/colors';
-import { useTranslation } from '../../utills.js/translation-hook';
+import {colors} from '../../helper/colors';
+import {useTranslation} from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
 import Constants from '../../utills.js/Constants';
 
-const ChantCount = ({ navigation }) => {
+const ChantCount = ({navigation}) => {
   const isFocused = useIsFocused();
-  const { Translation, isLoading } = useTranslation()
+  const {Translation, isLoading} = useTranslation();
 
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [todaysDate, setTodaysDate] = React.useState(moment().format("DD MMM"));
+  const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
   const [number, setNumber] = React.useState(0);
   const [disable, setDisable] = React.useState(true);
 
-  const monthlyData = useSelector(state => state.AppReducers.getCurrentCountData);
+  const monthlyData = useSelector(
+    state => state.AppReducers.getCurrentCountData,
+  );
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
   const liveChantsData = useSelector(state => state.AppReducers.liveDataChants);
   const previousChent = useSelector(state => state.AppReducers.previousChent);
@@ -56,15 +58,15 @@ const ChantCount = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused && previousChent != null) {
-      const created_date = moment(previousChent?.create_at).format('DD MMM')
-      setTodaysDate(created_date)
-      setNumber(parseInt(previousChent.count))
+      const created_date = moment(previousChent?.create_at).format('DD MMM');
+      setTodaysDate(created_date);
+      setNumber(parseInt(previousChent.count));
     } else {
-      setNumber(0)
-      dispatch(setPreviousChant(null))
+      setNumber(0);
+      dispatch(setPreviousChant(null));
     }
-    console.log(":::::::::::::::::::", previousChent);
-  }, [isFocused])
+    console.log(':::::::::::::::::::', previousChent);
+  }, [isFocused]);
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -73,23 +75,20 @@ const ChantCount = ({ navigation }) => {
     dispatch(liveChants());
   }, []);
 
-
   const handleOnpress = () => {
     if (previousChent?.count) {
-
       const FormData = require('form-data');
       let data = new FormData();
       data.append('count', number);
       data.append('id', previousChent.id);
       console.log('datadata::', data);
-      
+
       // const data = {
       //   id: previousChent.id,
       //   count: number
       // }
       // return // need to remove once Update api is ready
       dispatch(chantUpdatecount(data));
-
     } else {
       dispatch(chantUpdatecount(number));
     }
@@ -104,8 +103,8 @@ const ChantCount = ({ navigation }) => {
       .add(1, 'day')
       .format('DD MMMM');
     setTodaysDate(_newDate);
-    setNumber(0)
-    dispatch(setPreviousChant(null))
+    setNumber(0);
+    dispatch(setPreviousChant(null));
   };
 
   const dateDecrement = () => {
@@ -113,8 +112,8 @@ const ChantCount = ({ navigation }) => {
       .subtract(1, 'day')
       .format('DD MMMM');
     setTodaysDate(_newDate);
-    setNumber(0)
-    dispatch(setPreviousChant(null))
+    setNumber(0);
+    dispatch(setPreviousChant(null));
   };
 
   const NumberDecreament = () => {
@@ -128,17 +127,17 @@ const ChantCount = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-       {isLoading ?
-        <Loader /> : null
-      }
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      {isLoading ? <Loader /> : null}
       <HeaderPage />
-     
+
       <ScrollView>
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}
           style={styles.eventstyle}>
-          <Text style={{ color: 'white', fontSize: 21 }}>{Translation.events_and_groups}</Text>
+          <Text style={{color: 'white', fontSize: 21}}>
+            {Translation.events_and_groups}
+          </Text>
         </TouchableOpacity>
         <Text style={styles.chantsTitle}>{Translation.total_chants}</Text>
 
@@ -165,7 +164,7 @@ const ChantCount = ({ navigation }) => {
           <Icon
             name={'caretdown'}
             size={10}
-            style={{ marginLeft: 10, color: colors.black }}
+            style={{marginLeft: 10, color: colors.black}}
           />
         </TouchableOpacity>
 
@@ -178,13 +177,13 @@ const ChantCount = ({ navigation }) => {
             </Text>
           </View>
 
-          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
+          <View style={{...styles.btncountcontaiiner, marginTop: 10}}>
             <Text style={styles.normalStyle}>
               {Translation.current_week_progress}:{monthlyData?.weekly_count}
             </Text>
           </View>
 
-          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
+          <View style={{...styles.btncountcontaiiner, marginTop: 10}}>
             <Text style={styles.normalStyle}>
               {Translation.current_month_progress}:{monthlyData?.month_count}
             </Text>
@@ -196,12 +195,14 @@ const ChantCount = ({ navigation }) => {
             <FIcon
               name="arrow-left-circle"
               size={25}
-              style={{ ...styles.iconStyle }}
+              style={{...styles.iconStyle}}
             />
           </TouchableOpacity>
 
           <View style={styles.monthContentStyle}>
-            <Text numberOfLines={1} style={{ fontWeight: 'bold', color: '#434343' }}>
+            <Text
+              numberOfLines={1}
+              style={{fontWeight: 'bold', color: '#434343'}}>
               {todaysDate}
             </Text>
           </View>
@@ -211,7 +212,7 @@ const ChantCount = ({ navigation }) => {
               <FIcon
                 name="arrow-right-circle"
                 size={25}
-                style={{ ...styles.iconStyle }}
+                style={{...styles.iconStyle}}
               />
             </TouchableOpacity>
           </View>
@@ -223,7 +224,9 @@ const ChantCount = ({ navigation }) => {
             alignSelf: 'center',
             backgroundColor: '#EFEFEF',
           }}>
-          <Text style={styles.countToday}>{Translation.today}:{monthlyData?.today_count}</Text>
+          <Text style={styles.countToday}>
+            {Translation.today}:{monthlyData?.today_count}
+          </Text>
         </View>
 
         <View style={styles.countercontainer}>
@@ -237,14 +240,26 @@ const ChantCount = ({ navigation }) => {
           </TouchableOpacity>
 
           <View
-            style={{ height: 150, width: 150, marginVertical: 10, marginHorizontal: 10, justifyContent: 'center', alignItems: 'center', borderWidth: 5, borderColor: colors.orange, borderRadius: 100 }}>
-            <Text numberOfLines={1} style={{ ...styles.countTextNumber, alignSelf: 'center' }}>
+            style={{
+              height: 150,
+              width: 150,
+              marginVertical: 10,
+              marginHorizontal: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderWidth: 5,
+              borderColor: colors.orange,
+              borderRadius: 100,
+            }}>
+            <Text
+              numberOfLines={1}
+              style={{...styles.countTextNumber, alignSelf: 'center'}}>
               {number}
             </Text>
           </View>
 
           <TouchableOpacity
-            style={{ ...styles.iconContainer, borderColor: 'green' }}
+            style={{...styles.iconContainer, borderColor: 'green'}}
             onPress={() => {
               NumberIncreament();
             }}>
@@ -263,7 +278,9 @@ const ChantCount = ({ navigation }) => {
             borderWidth: 1,
             borderColor: '#E5CE004F',
           }}>
-          <Text style={[styles.textSubmit, { fontSize: 20 }]}>{Translation.submit}</Text>
+          <Text style={[styles.textSubmit, {fontSize: 20}]}>
+            {Translation.submit}
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -277,7 +294,7 @@ const ChantCount = ({ navigation }) => {
           <Text style={styles.textSubmit}>{Translation.submission_list}</Text>
         </TouchableOpacity>
 
-        <View style={{ height: 50 }} />
+        <View style={{height: 50}} />
       </ScrollView>
       <Modal
         animationType="slide"
@@ -289,7 +306,7 @@ const ChantCount = ({ navigation }) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{ marginTop: 20 }}>
+            <View style={{marginTop: 20}}>
               <Text style={styles.modalText}>{Translation.chant_count}</Text>
               <Text style={styles.modalText}>{Translation.update}</Text>
               <Text style={styles.modalText}>{Translation.successfully}</Text>
@@ -411,7 +428,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignSelf: 'center',
     marginTop: 15,
-    minWidth: "50%"
+    minWidth: '50%',
   },
 
   userText: {
@@ -450,7 +467,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     height: 60,
     paddingHorizontal: 10,
-    minWidth: "40%",
+    minWidth: '40%',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
