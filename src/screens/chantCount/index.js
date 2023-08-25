@@ -344,7 +344,6 @@ const styles = StyleSheet.create({
   btncountcontaiiner: {
     backgroundColor: 'darkorange',
     width: '80%',
-    marginTop: 10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -363,11 +362,6 @@ const styles = StyleSheet.create({
 
   textContainer: {
     display: 'flex',
-  },
-
-  textStyle: {
-    alignSelf: 'center',
-    color: 'white',
   },
 
   titleStyle: {
@@ -389,7 +383,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#cccccc',
     opacity: 0.5,
     width: '80%',
-    alignContent: 'center',
     marginTop: 10,
     borderRadius: 25,
     height: 39,

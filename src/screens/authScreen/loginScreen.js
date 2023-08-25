@@ -5,9 +5,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  ToastAndroid,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 import React, { useEffect } from 'react';
@@ -24,7 +23,7 @@ import {
 } from '../../redux/actions';
 import { loder } from '../../redux/reducers/selectors/userSelector';
 import { useTranslation } from '../../utills.js/translation-hook';
-import { GoogleSignin ,statusCodes} from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 const LoginPage = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
@@ -34,10 +33,10 @@ const LoginPage = ({ navigation }) => {
   const loding = useSelector(loder);
 
   useEffect(() => {
-     GoogleSignin.configure({
-        webClientId: '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-      });
-  })
+    GoogleSignin.configure({
+      webClientId: '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    });
+  },[])
 
 
   const signIn = async () => {
@@ -51,11 +50,11 @@ const LoginPage = ({ navigation }) => {
         + "\n" + userInfo.user.email
         + "\n" + userInfo.user.name
         + "\n" + userInfo.user.photo
-
       )
+      
     } catch (error) {
-      alert(':::: '+JSON.stringify(error))
-      console.log(error );
+      alert(':::: ' + JSON.stringify(error))
+      console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -72,9 +71,6 @@ const LoginPage = ({ navigation }) => {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
-      ToastAndroid.show("Signed out", ToastAndroid.SHORT, ToastAndroid.CENTER)
-      console.log('signed out');
-      //   this.setState({ user: null }); // Remember to remove the user from your app's state as well
     } catch (error) {
       console.error(error);
     }
@@ -154,7 +150,9 @@ const LoginPage = ({ navigation }) => {
           alignSelf: 'center'
         }} >
 
-          <TouchableOpacity onPress={signIn} >
+          <TouchableOpacity
+            onPress={() => signIn()}
+          >
             <Image source={Google} style={{ height: 50, width: 50 }} />
           </TouchableOpacity>
 

@@ -227,7 +227,6 @@ const UpdateMyLocation = function* (data) {
     is_public_place: data.payload.is_public_place,
     country_id: data.payload.country_id,
     state_id: data.payload.state_id,
-    address: data.payload.address,
     city: data.payload.city,
     address: data.payload.address,
     id: data.payload.id,

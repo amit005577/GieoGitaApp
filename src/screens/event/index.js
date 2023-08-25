@@ -123,10 +123,8 @@ const EventPage = ({ navigation }) => {
     let mergedArray = EventData?.reduce((acc, obj) => {
       let existingObj = acc.find(item => item.id === obj.id);
       if (existingObj) {
-        // Merge properties of the existing object with the new object
         Object.assign(existingObj, obj);
       } else {
-        // For elements from 'second' array, add 'editable' property
         if (myEventData?.some(item => item.id === obj.id)) {
           obj.editable = true;
         }
@@ -350,7 +348,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   eventBtn: {
-    // borderWidth: 1,
     width: windowWidth / 3.3,
     paddingHorizontal: 5,
     flexDirection: 'row',
@@ -415,10 +412,8 @@ const styles = StyleSheet.create({
   flatlistContaner: {
     marginTop: 10,
     height: '100%',
-    // marginBottom:500
   },
   itemcontainer: {
-    // borderWidth: 1,
     height: 80,
     backgroundColor: 'lightgrey',
     marginTop: 10,
@@ -443,22 +438,14 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-  textstyle: {
-    fontSize: 16,
-    color: colors.black,
-    marginLeft: 5,
-    fontWeight: 'bold',
-  },
+
   oneItem: {
     width: windowWidth / 4,
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'red',
-    // justifyContent:'space-around'
   },
 
-  // modal style
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -471,10 +458,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    // padding: 35,
     height: 380,
     width: '90%',
-    // alignItems: 'center',
     shadowColor: '#000',
     paddingHorizontal: 20,
     shadowOffset: {
@@ -526,7 +511,6 @@ const styles = StyleSheet.create({
   },
   textDetails: {
     fontSize: 12,
-    // fontWeight:'bold',
     color: 'black',
   },
   btn: {
@@ -542,18 +526,3 @@ const styles = StyleSheet.create({
   }
 });
 
-//   <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />
-//  <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />
-//  <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />

@@ -698,19 +698,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-  textstyle: {
-    fontSize: 16,
-    color: colors.black,
-    marginLeft: 5,
-    fontWeight: 'bold',
-  },
+
   oneItem: {
     width: windowWidth / 3,
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'red',
-    // justifyContent:'space-around'
   },
   locatoionText: {
     fontSize: 25,
@@ -833,19 +826,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
-//   <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />
-//  <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />
-//  <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />

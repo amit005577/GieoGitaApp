@@ -369,12 +369,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  textstyle: {
-    fontSize: 22,
-    color: colors.black,
-    marginLeft: 10,
-    fontWeight: 'bold',
-  },
+
   oneItem: {
     flexDirection: 'row',
     alignContent: 'center',
@@ -461,9 +456,7 @@ const styles = StyleSheet.create({
     marginTop: ms(200),
   },
   cameracontainer: {
-    // backgroundColor: colors.grey,
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     height: ms(40),
     borderRadius: ms(10),
     alignContent: 'center',
@@ -480,23 +473,16 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: 'white',
-    // borderTopRadius: 20,
-    // paddingHorizontal: 20,
 
     width: '100%',
     height: '30%',
-    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 5,
   },
   button: {
-    // borderRadius: 20,
     width: '100%',
     padding: 10,
     elevation: 2,
@@ -519,7 +505,5 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'flex-end',
-    // alignItems: 'center',
-    // marginTop: "%",
   },
 });

@@ -94,12 +94,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-  textstyle: {
-    fontSize: 16,
-    color: colors.black,
-    marginLeft: 5,
-    fontWeight: 'bold',
-  },
+
   oneItem: {
     width: windowWidth / 3,
     flexDirection: 'row',
