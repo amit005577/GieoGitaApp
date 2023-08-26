@@ -208,7 +208,7 @@ const DetailEvent = ({ route }) => {
         <View style={styles.addresStyle}>
           <View style={{ width: '50%', alignSelf: 'flex-end' }}>
             <Text style={{ fontSize: 18, color: 'black' }}>
-              {Translation.Address + ':'} <Text style={{ fontSize: 14 }}>{item?.address}</Text>{' '}
+              {Translation.address + ':'} <Text style={{ fontSize: 14 }}>{item?.address}</Text>{' '}
             </Text>
             <Text
               style={{
@@ -504,5 +504,16 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  textstyle: {
+
+    fontSize: 16,
+
+    color: colors.black,
+
+    marginLeft: 5,
+
+    fontWeight: 'bold',
+
   },
 });
