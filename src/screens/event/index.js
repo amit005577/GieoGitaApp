@@ -106,9 +106,6 @@ const EventPage = ({ navigation }) => {
     setshowModalPlaceType(false);
   };
 
-  const handleOnpress = item => {
-    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
-  };
 
 
   useEffect(() => {
@@ -165,25 +162,24 @@ const EventPage = ({ navigation }) => {
     }
   }
 
-  const handleOnlongPress = item => {
-
+  const onEventPress = item => {
     setModalVisible(true);
-
     setSelectedItemFromList(item);
-
   };
 
- const handleDetailsPage = item => {
+
+
+  const handleDetailsPage = item => {
     setModalVisible(false);
-    navigation.navigate('details', item);
+    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
   };
 
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         style={styles.iconContianer}
-        onPress={() => handleOnpress(item)}
-        onLongPress={() => { handleOnlongPress(item) }}
+        onPress={() => onEventPress(item)}
+        onLongPress={() => { handleOnlongPress(item) }} r
       >
         <View style={{ flex: 1 }}>
           <View style={styles.singleItem}>
@@ -419,23 +415,14 @@ const EventPage = ({ navigation }) => {
               }}>
 
               <TouchableOpacity
-
                 onPress={() => handleDetailsPage(selectedItemFromList)}
-
                 style={{ ...styles.btn, width: 100 }}>
-
                 <Text style={{ ...styles.textDetails, color: '#fff' }}>
-
                   Details
-
                 </Text>
-
               </TouchableOpacity>
-
               <View>
-
                 <Text style={{ ...styles.itemHeading, alignSelf: 'flex-end' }}>
-
                   Organizer
 
                 </Text>
