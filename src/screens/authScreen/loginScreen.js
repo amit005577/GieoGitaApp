@@ -19,11 +19,13 @@ import Google from '../../../assets/images/google.png';
 import Loader from '../../Components/Loader';
 import {
   getPhoneOtp,
+  handleSocialLoginAction,
   requestPhoneData
 } from '../../redux/actions';
 import { loder } from '../../redux/reducers/selectors/userSelector';
 import { useTranslation } from '../../utills.js/translation-hook';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
 const LoginPage = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
@@ -36,22 +38,22 @@ const LoginPage = ({ navigation }) => {
     GoogleSignin.configure({
       webClientId: '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
     });
-  },[])
+  }, [])
 
 
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       const userInfo = await GoogleSignin.signIn();
-      console.log({ userInfo });
-      alert(
-        +"\n" + userInfo.user.givenName
-        + "\n" + userInfo.user.familyName
-        + "\n" + userInfo.user.email
-        + "\n" + userInfo.user.name
-        + "\n" + userInfo.user.photo
-      )
-      
+      const data = {
+        name: userInfo.user.name,
+        email: userInfo.user.email,
+        phone: "",
+        profile: userInfo.user.photo,
+        loginType: "google"
+      }
+      dispatch(handleSocialLoginAction(data))
+
     } catch (error) {
       alert(':::: ' + JSON.stringify(error))
       console.log(error);
@@ -67,14 +69,40 @@ const LoginPage = ({ navigation }) => {
     }
   };
 
-  const signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-    } catch (error) {
-      console.error(error);
+  // const signOut = async () => {
+  //   try {
+  //     await GoogleSignin.revokeAccess();
+  //     await GoogleSignin.signOut();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+
+  const onSigniInFacebook = async () => {
+    // Attempt login with permissions
+    const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    console.log('result::::', result);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
     }
-  };
+
+    // Once signed in, get the users AccessToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    console.log('data::::', data);
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    // const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+    // // Sign-in the user with the credential
+    // return auth().signInWithCredential(facebookCredential);
+  }
+
 
 
   const handleRequestOtp = () => {
@@ -157,6 +185,7 @@ const LoginPage = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() => onSigniInFacebook()}
           >
             <Image
               source={facebook}
