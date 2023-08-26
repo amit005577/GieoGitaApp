@@ -167,7 +167,7 @@ const EventPage = ({ navigation }) => {
       <TouchableOpacity
         style={styles.iconContianer}
         onPress={() => handleOnpress(item)}
-        onLongPress={() => handleOnlongPress(item)}>
+        >
         <View style={{ flex: 1 }}>
           <View style={styles.singleItem}>
             <IconV name="globe" color='#4d4c4a' size={18} />
