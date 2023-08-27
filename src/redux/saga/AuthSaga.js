@@ -128,9 +128,7 @@ const handleSocialLogin = function* (data) {
       `${Constants.BASE_URL}auth/social-login`;
 
     let res = yield call(SocialLogin, requestUrl, postData);
-    console.log(':::::::::::::::', res.data);
     if (res?.data != null) {
-      // let otpdata = res.data.data.otp;
       yield put({
         type: actions.GET_PHONE_OTP_SUCCESS,
         payload: res?.data?.data,
@@ -141,8 +139,7 @@ const handleSocialLogin = function* (data) {
       yield put({ type: actions.PHONE_OTP_VERIFY_SUCCESS, payload: true });
 
     } else {
-
-      // alert('Something went wrong Please try again');
+      alert('Something went wrong Please try again');
     }
     yield put(setIsLoading(false))
   } catch (error) {

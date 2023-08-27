@@ -20,7 +20,6 @@ const PledgeSagaFunction = function* (data) {
     };
     yield put(setIsLoading(true))
     const res = yield call(postApi, requestUrl, postData);
-    console.log('<<<<<<<<<<<<<<<<<<<<',res,data);
     yield put(setIsLoading(false))
     if (res.data.data != null) {
       yield put({ type: actions.PLEDGE_DATA, payload: res.data.data });

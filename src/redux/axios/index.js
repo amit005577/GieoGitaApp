@@ -12,26 +12,14 @@ export const GetRecord = (url, data) => {
 };
 
 export const SocialLogin = (url, data) => {
-  let data1 = {
-    "name": "dipan",
-    "email": "fb56@gmail.com",
-    "phone": "64234343244",
-    "profile": "https//:www.dummy.com",
-    "loginType": "google"
-  }
-  console.log('MMMMMMMMMM', data, typeof data) 
-
-  console.log('\nMMMMMMMMMM1', data1, typeof data1);
-
   let config = {
     method: 'post',
     url: url,
     headers: {
       'Content-Type': 'application/json'
     },
-    data: data1
+    data: data
   };
-
   return axios.request(config)
 };
 
