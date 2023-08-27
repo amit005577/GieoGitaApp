@@ -31,10 +31,7 @@ import { useTranslation } from '../../utills.js/translation-hook';
 import CustomModal from './components/CustomModal';
 
 const windowWidth = Dimensions.get('window').width;
-const data = [
-  { name: 'All Event', value: 'All Event', id: 1 },
-  { name: 'My Event', value: 'My Event', id: 2 },
-];
+
 
 const EventPage = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -46,7 +43,7 @@ const EventPage = ({ navigation }) => {
   );
   const [EventData, setEventData] = useState([]);
 
-  const [selectedItem, setselectedItem] = useState(data[0]?.name);
+  const [selectedItem, setselectedItem] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [eventType, seteventType] = useState(eventtypeData[0]?.name);
   const [showModalEventTyope, setShowModalEventTyope] = useState(false);
@@ -57,18 +54,24 @@ const EventPage = ({ navigation }) => {
   const [editLoder, setEditLoder] = useState(false)
   const { Translation, isLoading, getFormatedString } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false);
-
   const [selectedItemFromList, setSelectedItemFromList] = useState(null);
 
-  useEffect(() => {
-    dispatch(targetChantData());
+  const [data, setData] = useState([
+    { name: Translation.all_event, id: 1 },
+    { name: Translation.my_events, id: 2 },
+  ])
+  const profileDetail = useSelector(state => state.AppReducers.getTargetpledge);
 
+  useEffect(() => {
+    setselectedItem(data[0].name)
+
+    dispatch(targetChantData());
     dispatch(getAllEvent());
     dispatch(getEventType());
     dispatch(getEventPlace());
     dispatch(getMyEvent());
   }, []);
-  const profileDetail = useSelector(state => state.AppReducers.getTargetpledge);
+
 
   useEffect(() => {
     setEventData(allEventData);
@@ -85,9 +88,9 @@ const EventPage = ({ navigation }) => {
 
   const handleSelectedItem = item => {
     setselectedItem(item.name);
-    if (item.name == 'All Event') {
+    if (item.id == 1) {
       setEventData(allEventData);
-    } else if ((item.name = 'My Event')) {
+    } else if ((item.id = 2)) {
       setEventData(myEventData);
     }
     setShowModal(false);
@@ -98,6 +101,7 @@ const EventPage = ({ navigation }) => {
     filterEvent(item.name);
     setShowModalEventTyope(false);
   };
+
   const handlePlacetypeFunction = item => {
     setplaceType(item.name);
     filterEvent(item.name);
@@ -329,138 +333,73 @@ const EventPage = ({ navigation }) => {
       </View>
 
       <Modal
-
         animationType="slide"
-
         transparent={true}
-
         visible={modalVisible}
-
         onRequestClose={() => {
-
           setModalVisible(!modalVisible);
-
         }}>
-
-
-
-
         <View style={styles.centeredView}>
-
           <View style={styles.modalView}>
-
             <Pressable
-
               style={[styles.button, styles.buttonClose]}
-
               onPress={() => setModalVisible(!modalVisible)}>
-
-              <Text style={styles.textStyle}>Close</Text>
-
+              <Text style={styles.textStyle}>{Translation.close} </Text>
             </Pressable>
-
             <View style={styles.fistRow}>
-
-              <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
-
+              <Text style={styles.itemHeading}>{Translation.event_id}:{selectedItemFromList?.id}</Text>
               {validateCurrentUser() ? (
-
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
-
                   <IconV name="pencil" color='#149103' size={20} />
-
                 </TouchableOpacity>
-
               ) : null}
-
-
-
-
             </View>
-
             <Text style={styles.txtItem}>
-
               {selectedItemFromList?.event_type}
-
             </Text>
-
             <View>
-
-              <Text style={styles.itemHeading}>Address:</Text>
-
+              <Text style={styles.itemHeading}>{Translation.address}:</Text>
               <View style={{ width: '60%' }}>
-
                 <Text style={styles.textDetails}>
-
                   {selectedItemFromList?.address}
-
                 </Text>
-
                 <Text style={styles.textDetails}>{selectedItemFromList?.country_id}</Text>
-
               </View>
-
             </View>
-
             <View
-
               style={{
-
                 flexDirection: 'row',
-
                 justifyContent: 'space-between',
-
                 marginTop: 20,
-
               }}>
-
               <TouchableOpacity
                 onPress={() => handleDetailsPage(selectedItemFromList)}
                 style={{ ...styles.btn, width: 100 }}>
                 <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                  Details
+                  {Translation.details}
                 </Text>
               </TouchableOpacity>
               <View>
                 <Text style={{ ...styles.itemHeading, alignSelf: 'flex-end' }}>
-                  Organizer
-
+                  {Translation.organizer}
                 </Text>
-
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-
                   <IconV name="old-phone" size={20} color='gray' style={{ marginRight: 5 }} />
-
                   <Text style={styles.textDetails}>
-
                     {selectedItemFromList?.organizer}
-
                   </Text>
-
                 </View>
-
               </View>
-
             </View>
-
             <TouchableOpacity
-
               onPress={() => navigation.navigate('listpage')}
-
               style={{ ...styles.btn, width: 130, marginTop: 20 }}>
-
               <Text style={{ ...styles.textDetails, color: '#fff' }}>
-
-                Submission List
-
+                {Translation.submission_list}
               </Text>
-
             </TouchableOpacity>
-
           </View>
-
         </View>
-
       </Modal>
 
     </View>

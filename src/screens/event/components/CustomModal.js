@@ -54,7 +54,7 @@ const CustomModal = ({
                         justifyContent: 'space-between',
                       }}>
                       <View style={{width:"90%",alignSelf:'flex-start'}}>
-                        <Text style={styles.modalText}>{item.value}</Text>
+                        <Text style={styles.modalText}>{item.name}</Text>
                       </View>
                       <View style={{width:"10%"}}>
                       <FIcon

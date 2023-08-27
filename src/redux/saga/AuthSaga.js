@@ -73,7 +73,6 @@ const GetPhoneOtp = function* (data) {
     let requestUrl =
       `${Constants.BASE_URL}auth/signup-phone-send-otp`;
     let res = yield call(GetRecord, requestUrl, postData);
-    console.log('>>>>>>>>>1', res.data);
     if (res?.data != null) {
       let otpdata = res.data.data.otp;
       yield put({
@@ -103,8 +102,6 @@ const getPhoneNumberVerify = function* (data) {
       id: data.payload.id,
     };
     const res = yield call(GetRecord, requestUrl, postData);
-    console.log('>>>>>>>>>2', res.data);
-
     if (res !== null && res.status == 200) {
       let tokenData = res?.data?.data?.access_token;
       AsyncStorage.setItem('token', JSON.stringify(tokenData));

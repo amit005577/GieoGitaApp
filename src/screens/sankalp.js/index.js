@@ -16,12 +16,12 @@ import { setPledge, setcoditionalStatus } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
 
 const SankalpScreen = () => {
-  const { Translation, isLoading } = useTranslation()
+  const { Translation, isLoading, getFormatedString } = useTranslation()
 
   const [count, setCount] = React.useState('');
   const dispatch = useDispatch();
   const inputRef = useRef();
-  
+
   const handleOnsubmit = async () => {
     inputRef.current.clear();
     dispatch(setcoditionalStatus(true));
@@ -61,24 +61,23 @@ const SankalpScreen = () => {
       }
       <HeaderPage />
       <ScrollView>
-        <Text style={styles.myPledge}>मेरी प्रतिज्ञा</Text>
+        <Text style={styles.myPledge}>{Translation.my_pledge} </Text>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.desctext}>
-            यदि आप पूर्व में किसी संकल्प से या अन्य प्रकार से अष्टादश श्लोकी
-            गीता पाठ कर रहे हैं, वह संख्या भी इस गीता जीवन गीत में मान्य है। आप
-            उसको भी ऐप में अंकित कर सकते है
+          <Text style={[styles.desctext,{textAlign:'justify'}]}>
+            {Translation.my_pledge_description}
           </Text>
         </View>
-        <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
-          <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
-            मैं गीता जयन्ती 23 दिसम्बर 2023 तक
+          <Text style={{ ...styles.desctext, fontWeight: 'bold', }}>
+            {getFormatedString(Translation.by_geeta_jayanti, {
+              date: '25 December',
+              year: '2024'
+            })}
           </Text>
-        </Text>
         <Text style={{ ...styles.desctext, fontWeight: 'bold', color: '#F7941C' }}>
-          अष्टादश श्लोकी गीता पाठ
+          {Translation.ashtadash_shloki_geeta_path}
         </Text>
         <Text style={{ ...styles.desctext, fontWeight: 'bold' }}>
-          करने का संकल्प लेता/लेती हूं
+          {Translation.resolve_to}
         </Text>
         <View style={styles.textInputStyleContainer}>
           <TextInput
@@ -92,14 +91,14 @@ const SankalpScreen = () => {
           />
         </View>
         <Text style={styles.chalisaText}>
-          संकल्पित संख्या
+          {Translation.fixed_number}
         </Text>
 
 
         <View
           style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>दैनिक</Text>
+            <Text style={styles.graphText}>{Translation.daily}</Text>
           </View>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>
@@ -109,7 +108,7 @@ const SankalpScreen = () => {
         </View>
         <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>साप्ताहिक</Text>
+            <Text style={styles.graphText}>{Translation.weekly} </Text>
           </View>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>
@@ -119,7 +118,7 @@ const SankalpScreen = () => {
         </View>
         <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>महीने के</Text>
+            <Text style={styles.graphText}>{Translation.monthly} </Text>
           </View>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>
@@ -130,7 +129,7 @@ const SankalpScreen = () => {
         </View>
         <View style={styles.graph1line}>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>कुल</Text>
+            <Text style={styles.graphText}>{Translation.total} </Text>
           </View>
           <View style={styles.graphinside}>
             <Text style={styles.graphText}>{count}</Text>
@@ -141,13 +140,13 @@ const SankalpScreen = () => {
             onPress={() => handleOnsubmit()}
             style={styles.submitContainer}>
             <Text style={styles.submittext}>
-              {'अर्पण करें'}
+              {Translation.surrender}
             </Text>
           </TouchableOpacity>
           <View style={styles.withoutPledge}>
-            <Text style={{ fontSize: 10, color: 'black', alignSelf: 'center' }}>नोट:</Text>
+            <Text style={{ fontSize: 10, color: 'black', alignSelf: 'center' }}>{Translation.note}:</Text>
             <Text style={{ fontSize: 10, color: 'black' }}>
-              आप बिना संकल्प भी ऐप में पाठ सांख्य अर्पण कर सकते हैं
+              {Translation.note_description}
             </Text>
           </View>
           <TouchableOpacity onPress={() => handleOnPress()}>
@@ -160,7 +159,7 @@ const SankalpScreen = () => {
                 textDecorationLine: 'underline',
                 textDecorationColor: 'orange'
               }}>
-              बिना संकल्प के प्रवेश करे
+              {Translation.enter_without_resolution}
             </Text>
 
           </TouchableOpacity>
