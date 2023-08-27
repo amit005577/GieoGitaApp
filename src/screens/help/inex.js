@@ -3,9 +3,11 @@ import React from 'react';
 import HeaderPage from '../../Components/header';
 import Loader from '../../Components/Loader';
 import { useTranslation } from '../../utills.js/translation-hook';
+import DeviceInfo from 'react-native-device-info';
 
 const HelpScreen = () => {
   const { Translation, isLoading } = useTranslation()
+
 
   return (
     <View style={styles.container}>
@@ -24,7 +26,7 @@ const HelpScreen = () => {
             </Text>
           </View>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{Translation.host}</Text>
+            <Text style={styles.graphText}>{Translation.host_value}</Text>
           </View>
         </View>
         <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
@@ -32,7 +34,7 @@ const HelpScreen = () => {
             <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>{Translation.os} </Text>
           </View>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{Platform.OS == 'android' ? Translation.android : Translation.ios} </Text>
+            <Text style={styles.graphText}>{Platform.OS} </Text>
           </View>
         </View>
         <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
@@ -42,7 +44,7 @@ const HelpScreen = () => {
             </Text>
           </View>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{"22"}</Text>
+            <Text style={styles.graphText}>{DeviceInfo.getVersion()}</Text>
           </View>
         </View>
         <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
@@ -52,7 +54,7 @@ const HelpScreen = () => {
             </Text>
           </View>
           <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{'1.2220.120'}</Text>
+            <Text style={styles.graphText}>{DeviceInfo.getReadableVersion()}</Text>
           </View>
         </View>
         <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
