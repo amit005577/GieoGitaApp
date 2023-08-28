@@ -173,7 +173,7 @@ const EventForm = ({ route }) => {
       Alert.alert('please list as prublic event or not');
     } else if (selectedValue == null) {
       setLaoder(false);
-      Alert.alert('please envent type');
+      Alert.alert('please select event type');
     } else if (frequency == null) {
       setLaoder(false);
       Alert.alert('please Enter frequency fileds');
@@ -278,8 +278,8 @@ const EventForm = ({ route }) => {
             />
           </View>
         </View>
-        {check && name == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+        {true && (
+          <Text style={{ color: 'red', left: 10,fontSize:15 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(156) }}>
@@ -317,7 +317,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && selectIconOne == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={styles.textHeader}>
@@ -333,7 +333,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && selectedValue == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         {
           selectedValue == 7 && (
@@ -387,7 +387,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && frequency == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         {/* Date picker */}
         <DateTimePickerModal
@@ -418,7 +418,7 @@ const EventForm = ({ route }) => {
               </Text>
             </View>
             {check && startDate == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
 
@@ -437,10 +437,10 @@ const EventForm = ({ route }) => {
               </Text>
             </View>
             {check && startDate == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
-          {/* { check&& endDate==null&& <Text style={{color:'red',left:10}}>{Translation.field_s_required}</Text>} */}
+          {/* { check&& endDate==null&& <Text style={{color:'red',left:10}}>{Translation.field__s_required}</Text>} */}
         </View>
 
         <View style={{ marginTop: 20 }}>
@@ -464,7 +464,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && description == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(220), left: 20 }}>
@@ -484,7 +484,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && participant == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(200), left: 20 }}>
@@ -502,7 +502,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && personPerDay == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <CustomCountrySelector
           data={countryRespose}
@@ -526,7 +526,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && organizer == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
@@ -587,7 +587,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && number == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(210), left: 20 }}>
@@ -623,7 +623,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && phonepublic == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
@@ -641,7 +641,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {check && email == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <TouchableOpacity style={styles.btn} onPress={() => handleONsubmit()}>
           <Text style={styles.saveText}>{Translation.save_continue}</Text>

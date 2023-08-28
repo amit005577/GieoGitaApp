@@ -230,7 +230,7 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && name == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
@@ -247,7 +247,7 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && selectedValue == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
 
         <View style={{ marginTop: 20 }}>
@@ -286,7 +286,7 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && selectIconOne == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
 
         <View style={styles.calenderContainer}>
@@ -303,7 +303,7 @@ const LocationForm = ({ route }) => {
               </Text>
             </View>
             {check && country == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
 
@@ -326,7 +326,7 @@ const LocationForm = ({ route }) => {
               />
             </View>
             {check && pin == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -345,7 +345,7 @@ const LocationForm = ({ route }) => {
           </View>
         </View>
         {check && address == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
 
         <View style={styles.calenderContainer}>
@@ -366,7 +366,7 @@ const LocationForm = ({ route }) => {
               />
             </View>
             {check && cityName == '' && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
 
@@ -382,7 +382,7 @@ const LocationForm = ({ route }) => {
               </Text>
             </View>
             {check && selectedState == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field_s_required}</Text>
+              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
         </View>
