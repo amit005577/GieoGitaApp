@@ -282,3 +282,11 @@ export const setIsLoading = payload=>{
     payload,
   }
 }
+
+
+export const handleSocialLoginAction = payload => {
+  return {
+    type: ActionTypes.SOCIAL_LOGIN,
+    payload,
+  };
+};

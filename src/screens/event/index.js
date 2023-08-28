@@ -1,25 +1,25 @@
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  useWindowDimensions,
-  TouchableOpacity,
-  TextInput,
-  FlatList,
   ActivityIndicator,
+  Dimensions,
+  FlatList,
   Modal,
   Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import HeaderPage from '../../Components/header';
-import { colors } from '../../helper/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
-import CustomModal from './components/CustomModal';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconF from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../Components/Loader';
+import HeaderPage from '../../Components/header';
+import { colors } from '../../helper/colors';
 import {
   getAllEvent,
   getEventPlace,
@@ -27,57 +27,51 @@ import {
   getMyEvent,
   targetChantData,
 } from '../../redux/actions';
-import moment from 'moment';
 import { useTranslation } from '../../utills.js/translation-hook';
-import Loader from '../../Components/Loader';
+import CustomModal from './components/CustomModal';
 
 const windowWidth = Dimensions.get('window').width;
-const data = [
-  { name: 'All Event', value: 'All Event', id: 1 },
-  { name: 'My Event', value: 'My Event', id: 2 },
-];
+
 
 const EventPage = ({ navigation }) => {
   const dispatch = useDispatch();
   const allEventData = useSelector(state => state.EventReducer.allEventData);
   const eventtypeData = useSelector(state => state.EventReducer.eventTypeData);
-  const EventLoading = useSelector(state => state.EventReducer.eventLoading);
-  // console.log('show Event Loading', EventLoading);
+
   const eventPlaceData = useSelector(
     state => state.EventReducer.eventPlaceData,
   );
-  // console.log('show allEventData type', allEventData);
-  // console.log('show eventPlaceData', eventPlaceData);
-  const [EventData, setEventData] = useState(null);
-  // console.log('show ditagdjfsldjf', EventData);
+  const [EventData, setEventData] = useState([]);
 
-  const [selectedItem, setselectedItem] = useState(data[0]?.name);
+  const [selectedItem, setselectedItem] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [eventType, seteventType] = useState(eventtypeData[0]?.name);
   const [showModalEventTyope, setShowModalEventTyope] = useState(false);
-  const [editMode, setEditMode] = useState(false);
 
   const [placeType, setplaceType] = useState(eventPlaceData[0]?.name);
   const [showModalPlaceType, setshowModalPlaceType] = useState(false);
-  // const [text, setText] = useState('');
-  const [selectedItemFromList, setSelectedItemFromList] = useState(null);
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   const [editLoder, setEditLoder] = useState(false)
-  const { Translation, isLoading } = useTranslation()
+  const { Translation, isLoading, getFormatedString } = useTranslation()
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItemFromList, setSelectedItemFromList] = useState(null);
 
-
-  // console.log("show selected item from list obhecjdkfj=-===", selectedItemFromList)
+  const [data, setData] = useState([
+    { name: Translation.all_event, id: 1 },
+    { name: Translation.my_events, id: 2 },
+  ])
+  const profileDetail = useSelector(state => state.AppReducers.getTargetpledge);
 
   useEffect(() => {
-    dispatch(targetChantData());
+    setselectedItem(data[0].name)
 
+    dispatch(targetChantData());
     dispatch(getAllEvent());
     dispatch(getEventType());
     dispatch(getEventPlace());
     dispatch(getMyEvent());
   }, []);
-  const profileDetail = useSelector(state => state.AppReducers.getTargetpledge);
+
 
   useEffect(() => {
     setEventData(allEventData);
@@ -89,16 +83,14 @@ const EventPage = ({ navigation }) => {
 
   const filterEvent = item => {
     let newData = allEventData?.filter(val => item === val.event_type);
-    // console.log('show new Data', newData);
     setEventData(newData);
   };
 
   const handleSelectedItem = item => {
     setselectedItem(item.name);
-    if (item.name == 'All Event') {
+    if (item.id == 1) {
       setEventData(allEventData);
-    } else if ((item.name = 'My Event')) {
-      // alert("my event")
+    } else if ((item.id = 2)) {
       setEventData(myEventData);
     }
     setShowModal(false);
@@ -109,6 +101,7 @@ const EventPage = ({ navigation }) => {
     filterEvent(item.name);
     setShowModalEventTyope(false);
   };
+
   const handlePlacetypeFunction = item => {
     setplaceType(item.name);
     filterEvent(item.name);
@@ -117,14 +110,7 @@ const EventPage = ({ navigation }) => {
     setshowModalPlaceType(false);
   };
 
-  const handleOnpress = item => {
-    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
-  };
 
-  // const handleDetailsPage = item => {
-  //   setModalVisible(false);
-  //   navigation.navigate('details', item);
-  // };
 
   useEffect(() => {
     setEditLoder(true)
@@ -142,10 +128,8 @@ const EventPage = ({ navigation }) => {
     let mergedArray = EventData?.reduce((acc, obj) => {
       let existingObj = acc.find(item => item.id === obj.id);
       if (existingObj) {
-        // Merge properties of the existing object with the new object
         Object.assign(existingObj, obj);
       } else {
-        // For elements from 'second' array, add 'editable' property
         if (myEventData?.some(item => item.id === obj.id)) {
           obj.editable = true;
         }
@@ -155,11 +139,6 @@ const EventPage = ({ navigation }) => {
     }, []);
 
     setEventData(mergedArray);
-  };
-
-  const handleOnlongPress = item => {
-    setModalVisible(true);
-    setSelectedItemFromList(item);
   };
 
   const handleFilter = (input) => {
@@ -178,14 +157,6 @@ const EventPage = ({ navigation }) => {
     }
   }
 
-  // const validateUser = () => {
-  //   if (profileDetail && profileDetail?.length > 0 && selectedItemFromList?.phone != null && selectedItemFromList?.phone != undefined) {
-  //     return profileDetail[0]?.phone?.includes(selectedItemFromList?.phone)
-  //   } else {
-  //     return false
-  //   }
-  // }
-  console.log(profileDetail);
 
   const validateCurrentUser = (phone, email) => {
     if (profileDetail && profileDetail?.length > 0) {
@@ -195,13 +166,25 @@ const EventPage = ({ navigation }) => {
     }
   }
 
+  const onEventPress = item => {
+    setModalVisible(true);
+    setSelectedItemFromList(item);
+  };
+
+
+
+  const handleDetailsPage = item => {
+    setModalVisible(false);
+    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
+  };
 
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         style={styles.iconContianer}
-        onPress={() => handleOnpress(item)}
-        onLongPress={() => handleOnlongPress(item)}>
+        onPress={() => onEventPress(item)}
+        onLongPress={() => { handleOnlongPress(item) }} r
+      >
         <View style={{ flex: 1 }}>
           <View style={styles.singleItem}>
             <IconV name="globe" color='#4d4c4a' size={18} />
@@ -244,14 +227,13 @@ const EventPage = ({ navigation }) => {
   };
 
 
-
   return (
     <View style={{ flex: 1 }}>
       {isLoading ?
         <Loader /> : null
       }
       <HeaderPage />
-      {editLoder && <ActivityIndicator size={'large'} />}
+      {editLoder ? <ActivityIndicator size={'large'} /> : null}
       <View style={styles.container}>
         <View style={styles.firstRowStyle}>
           <Text style={styles.eventText}>{Translation.events}</Text>
@@ -331,12 +313,13 @@ const EventPage = ({ navigation }) => {
         </View>
 
         <Text style={styles.textShowingHeadingData}>
-          {`Shwoing 0 out of 0 events or groups`}
+          {getFormatedString(Translation.shwoing_out_of_events, {
+            eventCount: EventData.length,
+            allEvent: EventData.length
+          })}
         </Text>
         <View style={styles.flatlistContaner}>
-          {EventLoading ? (
-            <ActivityIndicator size={'small'} color={'orange'} />
-          ) : null}
+
           <FlatList
             data={EventData}
             showsVerticalScrollIndicator={false}
@@ -348,35 +331,34 @@ const EventPage = ({ navigation }) => {
           />
         </View>
       </View>
-      {/* <Modal
+
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Close</Text>
+              <Text style={styles.textStyle}>{Translation.close} </Text>
             </Pressable>
             <View style={styles.fistRow}>
-              <Text style={styles.itemHeading}>Event ID:{selectedItemFromList?.id}</Text>
-              {validateUser() ? (
+              <Text style={styles.itemHeading}>{Translation.event_id}:{selectedItemFromList?.id}</Text>
+              {validateCurrentUser() ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
                   <IconV name="pencil" color='#149103' size={20} />
                 </TouchableOpacity>
               ) : null}
-
             </View>
             <Text style={styles.txtItem}>
               {selectedItemFromList?.event_type}
             </Text>
             <View>
-              <Text style={styles.itemHeading}>Address:</Text>
+              <Text style={styles.itemHeading}>{Translation.address}:</Text>
               <View style={{ width: '60%' }}>
                 <Text style={styles.textDetails}>
                   {selectedItemFromList?.address}
@@ -394,12 +376,12 @@ const EventPage = ({ navigation }) => {
                 onPress={() => handleDetailsPage(selectedItemFromList)}
                 style={{ ...styles.btn, width: 100 }}>
                 <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                  Details
+                  {Translation.details}
                 </Text>
               </TouchableOpacity>
               <View>
                 <Text style={{ ...styles.itemHeading, alignSelf: 'flex-end' }}>
-                  Organizer
+                  {Translation.organizer}
                 </Text>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <IconV name="old-phone" size={20} color='gray' style={{ marginRight: 5 }} />
@@ -413,12 +395,13 @@ const EventPage = ({ navigation }) => {
               onPress={() => navigation.navigate('listpage')}
               style={{ ...styles.btn, width: 130, marginTop: 20 }}>
               <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                Submission List
+                {Translation.submission_list}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal> */}
+      </Modal>
+
     </View>
   );
 };
@@ -429,6 +412,9 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     height: '100%',
+  },
+  textstyle: {
+    color: colors.black
   },
   firstRowStyle: {
     flexDirection: 'row',
@@ -452,7 +438,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   eventBtn: {
-    // borderWidth: 1,
     width: windowWidth / 3.3,
     paddingHorizontal: 5,
     flexDirection: 'row',
@@ -517,10 +502,8 @@ const styles = StyleSheet.create({
   flatlistContaner: {
     marginTop: 10,
     height: '100%',
-    // marginBottom:500
   },
   itemcontainer: {
-    // borderWidth: 1,
     height: 80,
     backgroundColor: 'lightgrey',
     marginTop: 10,
@@ -545,22 +528,14 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-  textstyle: {
-    fontSize: 16,
-    color: colors.black,
-    marginLeft: 5,
-    fontWeight: 'bold',
-  },
+
   oneItem: {
     width: windowWidth / 4,
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'red',
-    // justifyContent:'space-around'
   },
 
-  // modal style
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -573,10 +548,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    // padding: 35,
     height: 380,
     width: '90%',
-    // alignItems: 'center',
     shadowColor: '#000',
     paddingHorizontal: 20,
     shadowOffset: {
@@ -628,7 +601,6 @@ const styles = StyleSheet.create({
   },
   textDetails: {
     fontSize: 12,
-    // fontWeight:'bold',
     color: 'black',
   },
   btn: {
@@ -644,18 +616,3 @@ const styles = StyleSheet.create({
   }
 });
 
-//   <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />
-//  <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />
-//  <CustomPicker
-//   data={data}
-//   selectedItem={selectedItem}
-//   setSelectedItem={setSelectedItem}
-// />

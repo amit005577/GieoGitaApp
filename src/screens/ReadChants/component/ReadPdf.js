@@ -120,7 +120,7 @@ const ReadPdfScreen = () => {
             page={currentPage}
             onPageChanged={(page, numberOfPages) => {
               setCurrentPage(page);
-              console.log(`Current page: ${page}`);
+              // console.log(`Current page: ${page}`);
             }}
             fitPolicy={Dimensions.get('window').width}
             scale={zoom}

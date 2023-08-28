@@ -6,10 +6,13 @@ import EIcon from 'react-native-vector-icons/Octicons';
 import ReadChantPage from '../screens/ReadChants';
 import ChantCount from '../screens/chantCount';
 import HomeScreen from '../screens/homeScreen';
+import { useTranslation } from '../utills.js/translation-hook';
 
 const Tab = createBottomTabNavigator();
 
 function BottomTabnavigator() {
+const {Translation}=useTranslation()
+
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -17,7 +20,7 @@ function BottomTabnavigator() {
         component={HomeScreen}
         options={{
           headerShown: false,
-          title: 'घर',
+          title: Translation.home,
           tabBarIcon: ({color, size, focused}) => (
             <View
               style={{
@@ -34,7 +37,7 @@ function BottomTabnavigator() {
         component={ChantCount}
         options={{
           headerShown: false,
-          title: 'मंत्र',
+          title: Translation.mantra,
           tabBarIcon: ({color, size, focused}) => (
             <View
               style={{
@@ -51,7 +54,7 @@ function BottomTabnavigator() {
         component={ReadChantPage}
         options={{
           headerShown: false,
-          title: 'पढ़ना',
+          title: Translation.reading,
           tabBarIcon: ({color, size, focused}) => (
             <View
               style={{

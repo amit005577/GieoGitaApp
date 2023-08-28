@@ -6,10 +6,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+
 
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../../assets/images/Logo.png';
@@ -18,10 +19,13 @@ import Google from '../../../assets/images/google.png';
 import Loader from '../../Components/Loader';
 import {
   getPhoneOtp,
+  handleSocialLoginAction,
   requestPhoneData
 } from '../../redux/actions';
 import { loder } from '../../redux/reducers/selectors/userSelector';
 import { useTranslation } from '../../utills.js/translation-hook';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
 const LoginPage = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
@@ -29,9 +33,80 @@ const LoginPage = ({ navigation }) => {
   const [text, onChangeText] = React.useState('');
   const dispatch = useDispatch();
   const loding = useSelector(loder);
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    });
+  }, [])
+
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const userInfo = await GoogleSignin.signIn();
+      const data = {
+        name: userInfo.user.name,
+        email: userInfo.user.email,
+        phone: "",
+        profile: userInfo.user.photo,
+        loginType: "google"
+      }
+      dispatch(handleSocialLoginAction(data))
+
+    } catch (error) {
+      alert(':::: ' + JSON.stringify(error))
+      console.log(error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  // const signOut = async () => {
+  //   try {
+  //     await GoogleSignin.revokeAccess();
+  //     await GoogleSignin.signOut();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+
+  const onSigniInFacebook = async () => {
+    // Attempt login with permissions
+    const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    console.log('result::::', result);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccessToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    console.log('data::::', data);
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    // const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+    // // Sign-in the user with the credential
+    // return auth().signInWithCredential(facebookCredential);
+  }
+
+
+
   const handleRequestOtp = () => {
     let data = `+91${text}`;
-    // console.log('show phone number with code', data.length);
     if (data.length <= 3) {
       alert('Please enter phone number');
     } else if (data.length < 13) {
@@ -43,7 +118,7 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{flex:1}} >
+    <SafeAreaView style={{ flex: 1 }} >
       {isLoading ?
         <Loader /> : null
       }
@@ -60,7 +135,7 @@ const LoginPage = ({ navigation }) => {
           />
         </View>
 
-        <Text style={styles.loginText}>अपने अकाउंट में लॉग इन करें</Text>
+        <Text style={styles.loginText}>{Translation.login_to_your_account}</Text>
         {loding ? <ActivityIndicator size={'large'} color={'red'} /> : null}
 
         <View style={{ alignItems: 'center' }}>
@@ -71,7 +146,7 @@ const LoginPage = ({ navigation }) => {
             value={text}
             inputMode="numeric"
             maxLength={10}
-            placeholder={'फोन नंबर दर्ज'}
+            placeholder={Translation.enter_phone_number}
           />
         </View>
 
@@ -79,7 +154,7 @@ const LoginPage = ({ navigation }) => {
           onPress={() => handleRequestOtp()}
           style={styles.touchableStyle}>
           <Text style={{ textAlign: 'center', color: '#fff', fontSize: 28 }}>
-            जमा करना
+            {Translation.login_submit}
           </Text>
         </TouchableOpacity>
 
@@ -91,33 +166,44 @@ const LoginPage = ({ navigation }) => {
             fontWeight: '400',
             color: '#6D6D6D',
           }}>
-          ओर
+          {Translation.side}
         </Text>
         <Text style={{ alignSelf: 'center', fontSize: 16, color: '#808080' }}>
-          साथ प्रवेश करना
+          {Translation.login_with}
         </Text>
 
-        <TouchableOpacity
-          style={{
-            borderRadius: 2,
-            alignItems: 'center',
-            flexDirection: 'row',
-            marginTop: 20,
-            justifyContent: 'center',
-          }}>
-          <Image source={Google} style={{ height: 50, width: 50 }} />
-          <Image
-            source={facebook}
-            style={{ height: 50, width: 50, marginLeft: 10 }}
-          />
-        </TouchableOpacity>
+        <View style={{
+          flexDirection: 'row',
+          marginTop: 20,
+          alignSelf: 'center'
+        }} >
+
+          <TouchableOpacity
+            onPress={() => signIn()}
+          >
+            <Image source={Google} style={{ height: 50, width: 50 }} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => onSigniInFacebook()}
+          >
+            <Image
+              source={facebook}
+              style={{ height: 50, width: 50, marginLeft: 10 }}
+            />
+          </TouchableOpacity>
+
+        </View>
+
+
         <Text style={{ alignSelf: 'center', marginTop: 10, color: '#808080' }}>
-          कोई खाता नहीं है{' '}
+          {Translation.do_not_have_an_account}{' '}
           <Text style={{ color: '#F7941C', textDecorationLine: 'underline' }}>
-            यहां रजिस्टर करें
+            {Translation.register_here}
           </Text>
         </Text>
       </View>
+
     </SafeAreaView>
 
   );

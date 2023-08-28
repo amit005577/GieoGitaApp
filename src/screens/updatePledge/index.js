@@ -38,9 +38,7 @@ const UpdatePledge = () => {
   //   const [pledgeDataaa, setPledgeDataaa] = useState(null);
 
   useEffect(() => {
-    // if (targetCountDAta != null) {
     setCount(targetCountDAta);
-    // }
   }, [datapledge]);
 
   useEffect(() => {
@@ -86,7 +84,6 @@ const UpdatePledge = () => {
             <TextInput
               placeholder={'00000'}
               onChangeText={setCount}
-              // ref={inputRef}
               value={String(count)}
               style={styles.textInputStyle}
               inputMode="numeric"
@@ -220,13 +217,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F7941C',
     borderRightWidth: 0,
-    // width: '100%',
     //
   },
   graphinside: {
     width: 140,
     borderRightWidth: 1,
-    // borderWidth: 2,
     borderColor: 'orange',
     height: 30,
     justifyContent: 'center',
@@ -239,7 +234,6 @@ const styles = StyleSheet.create({
   },
   submitContainer: {
     width: '100%',
-    // paddingHorizontal: 20,
     height: 45,
     backgroundColor: '#F7941C',
     alignSelf: 'center',

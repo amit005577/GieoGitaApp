@@ -37,7 +37,7 @@ import Constants from '../../utills.js/Constants';
 
 const ChantCount = ({navigation}) => {
   const isFocused = useIsFocused();
-  const {Translation, isLoading} = useTranslation();
+  const { Translation, handleLoader, isLoading } = useTranslation()
 
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -53,9 +53,6 @@ const ChantCount = ({navigation}) => {
   const previousChent = useSelector(state => state.AppReducers.previousChent);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
-  console.log(accessToken);
-  console.log(previousChent);
-
   useEffect(() => {
     if (isFocused && previousChent != null) {
       const created_date = moment(previousChent?.create_at).format('DD MMM');
@@ -65,8 +62,7 @@ const ChantCount = ({navigation}) => {
       setNumber(0);
       dispatch(setPreviousChant(null));
     }
-    console.log(':::::::::::::::::::', previousChent);
-  }, [isFocused]);
+  }, [isFocused])
 
   useEffect(() => {
     dispatch(targetChantData());
@@ -77,24 +73,35 @@ const ChantCount = ({navigation}) => {
 
   const handleOnpress = () => {
     if (previousChent?.count) {
-      const FormData = require('form-data');
-      let data = new FormData();
-      data.append('count', number);
-      data.append('id', previousChent.id);
-      console.log('datadata::', data);
 
-      // const data = {
-      //   id: previousChent.id,
-      //   count: number
-      // }
-      // return // need to remove once Update api is ready
-      dispatch(chantUpdatecount(data));
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + accessToken);
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      handleLoader(true)
+      fetch(`${Constants.BASE_URL}user/reads-update?id=${previousChent.id}&count=${number}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          handleLoader(false)
+
+          setModalVisible(true);
+
+        })
+        .catch(error => {
+          handleLoader(false)
+          // console.log('error', error)
+        });
+
     } else {
       dispatch(chantUpdatecount(number));
+      setModalVisible(true);
+
     }
-    setModalVisible(true);
     setDisable(true);
-    dispatch(chantHistory());
+    // dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
   };
 
@@ -127,8 +134,10 @@ const ChantCount = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      {isLoading ? <Loader /> : null}
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      {isLoading ?
+        <Loader /> : null
+      }
       <HeaderPage />
 
       <ScrollView>
@@ -157,7 +166,7 @@ const ChantCount = ({navigation}) => {
           onPress={() => navigation.navigate('register')}>
           <Text style={styles.userText}>
             {datapledge[0]?.name == null || datapledge[0]?.name == ''
-              ? 'नाम'
+              ? Translation.name
               : datapledge[0]?.name}
           </Text>
 
@@ -335,7 +344,6 @@ const styles = StyleSheet.create({
   btncountcontaiiner: {
     backgroundColor: 'darkorange',
     width: '80%',
-    marginTop: 10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -345,15 +353,10 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-
     justifyContent: 'space-between',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     height: 70,
-
     backgroundColor: 'orange',
   },
 
@@ -361,54 +364,30 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
 
-  textStyle: {
-    alignSelf: 'center',
-
-    color: 'white',
-  },
-
   titleStyle: {
     alignSelf: 'center',
-
     marginTop: 18,
-
     fontSize: 22,
-
     color: 'white',
   },
 
   chantsTitle: {
     marginTop: 15,
-
     alignSelf: 'center',
-
     fontSize: 22,
-
     color: colors.black,
     fontWeight: 'bold',
   },
 
   contContainer: {
-    // borderWidth: 1,
-
     backgroundColor: '#cccccc',
-
     opacity: 0.5,
-
     width: '80%',
-
-    alignContent: 'center',
-
     marginTop: 10,
-
     borderRadius: 25,
-
     height: 39,
-
     justifyContent: 'center',
-
     alignContent: 'center',
-
     alignSelf: 'center',
   },
 
@@ -490,9 +469,7 @@ const styles = StyleSheet.create({
 
   countercontainer: {
     flexDirection: 'row',
-
     justifyContent: 'center',
-
     marginTop: 20,
   },
 
@@ -521,7 +498,6 @@ const styles = StyleSheet.create({
 
   iconstyle: {
     fontWeight: 'bold',
-
     color: colors.black,
   },
 
@@ -533,28 +509,19 @@ const styles = StyleSheet.create({
 
   btnContainer: {
     backgroundColor: 'lightgrey',
-
     alignSelf: 'center',
-
     alignContent: 'center',
-
     alignItems: 'center',
-
     height: 50,
-
     borderRadius: 30,
-
     justifyContent: 'center',
   },
 
   textSubmit: {
     fontWeight: 'bold',
-
     fontSize: 16,
-
     color: 'white',
   },
-  //
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -565,7 +532,6 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: '#ffffffff',
     borderRadius: 20,
-    // padding: 35,
     height: 250,
     width: '90%',
     alignItems: 'center',
@@ -598,7 +564,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   modalText: {
-    // marginTop: 20,
     marginBottom: 15,
     textAlign: 'center',
     fontSize: 22,
