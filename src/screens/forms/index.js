@@ -53,7 +53,6 @@ const EventForm = ({ route }) => {
   const [laoder, setLaoder] = useState(false);
   const [joiningLink, setJoiningLink] = useState('');
   const { Translation, isLoading } = useTranslation()
-  console.log("show translations",Translation)
 
 
   let routeData = route?.params;
