@@ -129,6 +129,7 @@ const getTargetPledgeData = function* () {
     const res = yield call(fetchRecord, requestUrl);
     yield put(setIsLoading(false))
     if (res.data != null) {
+
       yield put({
         type: actions.TARGET_CHANT_DATA_SUCCESS,
         payload: res.data.data,

@@ -271,9 +271,8 @@ const ChantCount = ({ navigation }) => {
             <TextInput
               onChangeText={updateChents}
               keyboardType='number-pad'
-              value={number}
-              placeholder='Chents'
-              style={{ color: colors.black, fontWeight: '600', fontSize: 20 }}
+              placeholder={Translation.mantra+'...'}
+              style={{ color: colors.black, fontWeight: '600', fontSize: 20,alignSelf:'center' }}
               placeholderTextColor={colors.placeholder}
               maxLength={12}
             />

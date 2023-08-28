@@ -15,7 +15,6 @@ const HeaderPage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
-  // console.log("datapledge:::::::::::::",datapledge)
   useEffect(() => {
     dispatch(targetChantData());
   }, []);

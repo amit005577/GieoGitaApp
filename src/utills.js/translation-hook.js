@@ -23,6 +23,7 @@ export const useTranslation = () => {
         const lang = await AsyncStorage.getItem('currentLang')
         return lang ? JSON.parse(lang) : selectedLang
     }
+    
     const handleLoader = (isTrue) => {
         dispatch(setIsLoading())
     }

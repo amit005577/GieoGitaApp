@@ -29,38 +29,49 @@ const SettingScreen = ({ navigation }) => {
   const langList = useSelector(state => state.AppReducers.languageList);
 
   const [languageListData, setlanguageList] = useState([])
-  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage, isLoading, Translation } = useTranslation()
+  const { handleUpdateLanuage, selectedLang, handleSelectedLanguage, isLoading, Translation, handleDefaultLanguage } = useTranslation()
 
 
   const handleOnpressLanguage = data => {
-    let newData = []
     handleUpdateLanuage({ langCode: data.code })
-
-    languageListData.map((item) => {
-      if (item.id == data.id) {
-        newData.push({ ...item, isSelected: true })
-      } else {
-        newData.push({ ...item, isSelected: false })
-      }
-      setlanguageList(newData)
-    })
+    filterLanguageSelection(languageListData, data)
     setModalVisible(false);
     handleSelectedLanguage(data)
-
   };
+
+  const filterLanguageSelection = (lngList, data) => {
+    let newData = []
+    if (langList.length > 0) {
+      lngList.map((item) => {
+        if (item.id == data.id) {
+          newData.push({ ...item, isSelected: true })
+        } else {
+          newData.push({ ...item, isSelected: false })
+        }
+        setlanguageList(newData)
+      })
+    }
+  }
 
   const handleLogout = async () => {
     try {
       await AsyncStorage.clear();
       dispatch(Logout(false));
     } catch (error) {
-      // console.log('show error async', error);
     }
   };
 
+  const landleLastSelection = async (langList) => {
+    const lang = await AsyncStorage.getItem('currentLang')
+    const lastSelection = JSON.parse(lang)
+    filterLanguageSelection(langList, lastSelection)
+  }
+
   useEffect(() => {
     setlanguageList(langList)
+    landleLastSelection(langList)
   }, [langList])
+
 
   useEffect(() => {
     dispatch(languageList());
@@ -73,12 +84,6 @@ const SettingScreen = ({ navigation }) => {
       }
       <HeaderPage />
 
-      <View style={styles.rowContainer}>
-        <View style={styles.imageConatier}>{/* <Text>image</Text> */}</View>
-        <View>
-
-        </View>
-      </View>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('update');
@@ -152,17 +157,17 @@ const SettingScreen = ({ navigation }) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
+            {/* Close button */}
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={[styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>रद्द करना</Text>
+              <Text style={styles.textStyle}>{Translation.cancel} </Text>
             </Pressable>
+
             <View style={{ marginTop: 20 }}>
               <FlatList
                 data={languageListData}
@@ -220,14 +225,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // borderBottomWidth: 1,
   },
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
     paddingVertical: 15,
-    // height: 40,
   },
   texttitle: {
     fontSize: 18,
@@ -239,8 +242,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderTopWidth: 0.5,
     height: 40,
-    // marginTop: 10,
-    // justifyContent: 'center',
   },
   textCotaier: {
     width: '90%',
@@ -258,23 +259,16 @@ const styles = StyleSheet.create({
   texstyle: {
     fontSize: 18,
     color: 'black',
-    // borderWidth: 1,
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
-    // margin: 20,
-    // marginTop: 300,
     backgroundColor: '#ffffffff',
-    // borderRadius: 20,
-    // padding: 35,
     height: '100%',
     width: '100%',
-    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -283,22 +277,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    // bottom: 0,
   },
-  button: {
-    // borderRadius: 20,
-    padding: 10,
-    // elevation: 2,
-  },
+
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: 'white',
-    // borderWidth: 2,
-    // borderColor: 'orange',
+    backgroundColor: 'orange',
     alignSelf: 'center',
     right: 10,
+    position: 'absolute',
+    bottom: 60,
+    right: 20,
+    borderRadius: 30,
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    elevation: 5,
+    zIndex: 10
   },
   textStyle: {
     color: 'red',
@@ -307,9 +302,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   modalText: {
-    // marginTop: 20,
     marginBottom: 20,
-    // textAlign: 'center',
     fontSize: 22,
     color: '#434343',
   },

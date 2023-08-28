@@ -6,7 +6,6 @@ import LoginPage from '../screens/authScreen/loginScreen';
 import OtpScreen from '../screens/authScreen/otpScreen';
 import SplashScreen from '../screens/splash';
 import { useTranslation } from '../utills.js/translation-hook';
-import { useHomeHooks } from '../utills.js/hooke/home-hooks';
 
 const AuthStack = createNativeStackNavigator();
 

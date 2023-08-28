@@ -1,41 +1,30 @@
 // In App.js in a new project
 
-import * as React from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from '../screens/homeScreen';
-import BottomTabnavigator from './BottomStackNavigation';
-import SankalpScreen from '../screens/sankalp.js/index.js';
-import ListPageScreen from '../screens/listpage';
-import SettingScreen from '../screens/setting';
-import HelpScreen from '../screens/help/inex';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  pledgeConditionalStatus,
-  sigingStatus,
-  statusOfPledge,
-} from '../redux/reducers/selectors/userSelector';
-import {useSelector} from 'react-redux';
-import UpdatePledge from '../screens/updatePledge';
-import Register from '../screens/resisterpage';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 import EventPage from '../screens/event';
 import DetailEvent from '../screens/event/DetailEvent';
-import EventForm from '../screens/forms';
-import LocationForm from '../screens/locationForm';
 import MyEvent from '../screens/event/MyEvent';
 import UpdatedEvent from '../screens/event/updatedEvent';
+import EventForm from '../screens/forms';
+import HelpScreen from '../screens/help/inex';
+import ListPageScreen from '../screens/listpage';
+import LocationForm from '../screens/locationForm';
+import Register from '../screens/resisterpage';
+import SankalpScreen from '../screens/sankalp.js/index.js';
+import SettingScreen from '../screens/setting';
+import UpdatePledge from '../screens/updatePledge';
+import BottomTabnavigator from './BottomStackNavigation';
 
 const HomeStack = createNativeStackNavigator();
 
 function HomeStackNavigation() {
   const [pledgeStatus, setpledgeStatus] = React.useState(true);
-  // console.log('show pledge status', pledgeStatus);
-  // const data = useSelector(pledgeConditionalStatus);
-  // console.log('show data pledge status', data);
-  // let resStatus = useSelector(statusOfPledge);
+  
   let resss = useSelector(state => state.AuthReducer);
-  // console.log(resss, 'Use Selector Value');
+
   React.useEffect(() => {
     asyncFunction();
   }, [resss]);
@@ -43,9 +32,9 @@ function HomeStackNavigation() {
   const asyncFunction = async () => {
     const data = await AsyncStorage.getItem('pledge');
     let res = await JSON.parse(data);
-    // console.log('show data parsse', res);
     setpledgeStatus(res);
   };
+
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       {pledgeStatus == null || pledgeStatus == '' ? (

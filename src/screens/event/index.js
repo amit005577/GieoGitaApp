@@ -165,7 +165,6 @@ const EventPage = ({ navigation }) => {
       return false
     }
   }
-  console.log('profileDetail:::::  ', profileDetail);
 
   const onEventPress = item => {
     setModalVisible(true);
