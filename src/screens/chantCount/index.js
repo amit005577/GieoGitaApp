@@ -6,21 +6,22 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import FIcon from 'react-native-vector-icons/Feather';
 
 import EIcon from 'react-native-vector-icons/Entypo';
 
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
-import {navigationRef} from '../../../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { navigationRef } from '../../../App';
 import HeaderPage from '../../Components/header';
 import {
   chantHistory,
@@ -30,12 +31,12 @@ import {
   setPreviousChant,
   targetChantData,
 } from '../../redux/actions';
-import {colors} from '../../helper/colors';
-import {useTranslation} from '../../utills.js/translation-hook';
+import { colors } from '../../helper/colors';
+import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
 import Constants from '../../utills.js/Constants';
 
-const ChantCount = ({navigation}) => {
+const ChantCount = ({ navigation }) => {
   const isFocused = useIsFocused();
   const { Translation, handleLoader, isLoading } = useTranslation()
 
@@ -133,6 +134,12 @@ const ChantCount = ({navigation}) => {
     setDisable(false);
   };
 
+  const updateChents = (chents) => {
+    const chent = parseInt(chents)
+    setNumber(chent > 0 ? chent : 0);
+    setDisable(false);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       {isLoading ?
@@ -144,7 +151,7 @@ const ChantCount = ({navigation}) => {
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}
           style={styles.eventstyle}>
-          <Text style={{color: 'white', fontSize: 21}}>
+          <Text style={{ color: 'white', fontSize: 21 }}>
             {Translation.events_and_groups}
           </Text>
         </TouchableOpacity>
@@ -173,7 +180,7 @@ const ChantCount = ({navigation}) => {
           <Icon
             name={'caretdown'}
             size={10}
-            style={{marginLeft: 10, color: colors.black}}
+            style={{ marginLeft: 10, color: colors.black }}
           />
         </TouchableOpacity>
 
@@ -186,13 +193,13 @@ const ChantCount = ({navigation}) => {
             </Text>
           </View>
 
-          <View style={{...styles.btncountcontaiiner, marginTop: 10}}>
+          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
               {Translation.current_week_progress}:{monthlyData?.weekly_count}
             </Text>
           </View>
 
-          <View style={{...styles.btncountcontaiiner, marginTop: 10}}>
+          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
             <Text style={styles.normalStyle}>
               {Translation.current_month_progress}:{monthlyData?.month_count}
             </Text>
@@ -204,14 +211,14 @@ const ChantCount = ({navigation}) => {
             <FIcon
               name="arrow-left-circle"
               size={25}
-              style={{...styles.iconStyle}}
+              style={{ ...styles.iconStyle }}
             />
           </TouchableOpacity>
 
           <View style={styles.monthContentStyle}>
             <Text
               numberOfLines={1}
-              style={{fontWeight: 'bold', color: '#434343'}}>
+              style={{ fontWeight: 'bold', color: '#434343' }}>
               {todaysDate}
             </Text>
           </View>
@@ -221,7 +228,7 @@ const ChantCount = ({navigation}) => {
               <FIcon
                 name="arrow-right-circle"
                 size={25}
-                style={{...styles.iconStyle}}
+                style={{ ...styles.iconStyle }}
               />
             </TouchableOpacity>
           </View>
@@ -260,15 +267,20 @@ const ChantCount = ({navigation}) => {
               borderColor: colors.orange,
               borderRadius: 100,
             }}>
-            <Text
-              numberOfLines={1}
-              style={{...styles.countTextNumber, alignSelf: 'center'}}>
-              {number}
-            </Text>
+
+            <TextInput
+              onChangeText={updateChents}
+              keyboardType='number-pad'
+              value={number}
+              placeholder='Chents'
+              style={{ color: colors.black, fontWeight: '600', fontSize: 20 }}
+              placeholderTextColor={colors.placeholder}
+              maxLength={12}
+            />
           </View>
 
           <TouchableOpacity
-            style={{...styles.iconContainer, borderColor: 'green'}}
+            style={{ ...styles.iconContainer, borderColor: 'green' }}
             onPress={() => {
               NumberIncreament();
             }}>
@@ -287,7 +299,7 @@ const ChantCount = ({navigation}) => {
             borderWidth: 1,
             borderColor: '#E5CE004F',
           }}>
-          <Text style={[styles.textSubmit, {fontSize: 20}]}>
+          <Text style={[styles.textSubmit, { fontSize: 20 }]}>
             {Translation.submit}
           </Text>
         </TouchableOpacity>
@@ -303,7 +315,7 @@ const ChantCount = ({navigation}) => {
           <Text style={styles.textSubmit}>{Translation.submission_list}</Text>
         </TouchableOpacity>
 
-        <View style={{height: 50}} />
+        <View style={{ height: 50 }} />
       </ScrollView>
       <Modal
         animationType="slide"
@@ -315,7 +327,7 @@ const ChantCount = ({navigation}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <Text style={styles.modalText}>{Translation.chant_count}</Text>
               <Text style={styles.modalText}>{Translation.update}</Text>
               <Text style={styles.modalText}>{Translation.successfully}</Text>

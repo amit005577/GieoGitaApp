@@ -165,6 +165,7 @@ const EventPage = ({ navigation }) => {
       return false
     }
   }
+  console.log('profileDetail:::::  ', profileDetail);
 
   const onEventPress = item => {
     setModalVisible(true);
@@ -344,11 +345,11 @@ const EventPage = ({ navigation }) => {
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>{Translation.close} </Text>
+              <IconV name="cross" color='brown' size={25} />
             </Pressable>
             <View style={styles.fistRow}>
               <Text style={styles.itemHeading}>{Translation.event_id}:{selectedItemFromList?.id}</Text>
-              {validateCurrentUser() ? (
+              {validateCurrentUser(selectedItemFromList.phone, selectedItemFromList.email) ? (
                 <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
                   <IconV name="pencil" color='#149103' size={20} />
                 </TouchableOpacity>
@@ -391,13 +392,15 @@ const EventPage = ({ navigation }) => {
                 </View>
               </View>
             </View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('listpage')}
-              style={{ ...styles.btn, width: 130, marginTop: 20 }}>
-              <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                {Translation.submission_list}
-              </Text>
-            </TouchableOpacity>
+            {validateCurrentUser(selectedItemFromList.phone, selectedItemFromList.email) ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('listpage')}
+                style={{ ...styles.btn, width: 130, marginTop: 20 }}>
+                <Text style={{ ...styles.textDetails, color: '#fff' }}>
+                  {Translation.submission_list}
+                </Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
       </Modal>
@@ -543,9 +546,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
-    padding: 10,
-    paddingTop: 20,
+    paddingTop: 50,
     backgroundColor: 'white',
     borderRadius: 20,
     height: 380,
@@ -562,16 +563,18 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 20,
-    padding: 10,
+    padding: 5,
     elevation: 2,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
-    width: 100,
-    alignSelf: 'center',
+    backgroundColor: '#f4f4f4',
+    alignSelf: 'flex-end',
+    position:'absolute',
+    right:10,
+    top:10
   },
   textStyle: {
     color: 'white',
@@ -585,7 +588,6 @@ const styles = StyleSheet.create({
   fistRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
   },
   txtItem: {
     alignSelf: 'center',
