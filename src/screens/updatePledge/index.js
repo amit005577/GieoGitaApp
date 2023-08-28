@@ -20,7 +20,7 @@ import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
 
 const UpdatePledge = () => {
-  const { Translation, isLoading } = useTranslation()
+  const { Translation, isLoading ,getFormatedString} = useTranslation()
 
   const [count, setCount] = React.useState('');
   // console.log('show cout number-=-->', count);
@@ -62,23 +62,24 @@ const UpdatePledge = () => {
       <HeaderPage />
       {datapledge ? (
         <ScrollView>
-          <Text style={styles.myPledge}>मेरी प्रतिज्ञा</Text>
+          <Text style={styles.myPledge}>{Translation.my_pledge} </Text>
           <View style={styles.descriptionContainer}>
             <Text style={styles.desctext}>
-              यदि आप पूर्व में किसी संकल्प से या अन्य प्रकार से अष्टादश श्लोकी
-              गीता पाठ कर रहे हैं, वह संख्या भी इस गीता जीवन गीत में मान्य है।
-              आप उसको भी ऐप में अंकित कर सकते है
+            {Translation.my_pledge_description}
             </Text>
             {/* <Text style={{...styles.desctext, marginTop: 0}}></Text> */}
           </View>
           <Text style={{ ...styles.desctext, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
-            मैं गीता जयन्ती 23 दिसम्बर 2023 तक
+          {getFormatedString(Translation.by_geeta_jayanti, {
+              date: '25 December',
+              year: '2024'
+            })}
           </Text>
           <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 22, color: '#F7941C' }}>
-            अष्टादश श्लोकी गीता पाठ
+          {Translation.ashtadash_shloki_geeta_path}
           </Text>
           <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 18 }}>
-            करने का संकल्प लेता/लेती हूं
+          {Translation.resolve_to}
           </Text>
           <View style={styles.textInputStyleContainer}>
             <TextInput
@@ -92,14 +93,14 @@ const UpdatePledge = () => {
             />
           </View>
           <Text style={styles.chalisaText}>
-            संकल्पित संख्या
+          {Translation.fixed_number}
           </Text>
 
 
           <View
             style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
             <View style={styles.graphinside}>
-              <Text style={styles.graphText}>दैनिक</Text>
+              <Text style={styles.graphText}>{Translation.daily}</Text>
             </View>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>
@@ -109,7 +110,7 @@ const UpdatePledge = () => {
           </View>
           <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
             <View style={styles.graphinside}>
-              <Text style={styles.graphText}>साप्ताहिक</Text>
+              <Text style={styles.graphText}>{Translation.weekly} </Text>
             </View>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>
@@ -119,7 +120,7 @@ const UpdatePledge = () => {
           </View>
           <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
             <View style={styles.graphinside}>
-              <Text style={styles.graphText}>महीने के</Text>
+              <Text style={styles.graphText}>{Translation.monthly}</Text>
             </View>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>
@@ -130,7 +131,7 @@ const UpdatePledge = () => {
           </View>
           <View style={styles.graph1line}>
             <View style={styles.graphinside}>
-              <Text style={styles.graphText}>कुल</Text>
+              <Text style={styles.graphText}>{Translation.total}</Text>
             </View>
             <View style={styles.graphinside}>
               <Text style={styles.graphText}>{count ? count : '0000'}</Text>
@@ -140,12 +141,12 @@ const UpdatePledge = () => {
             <TouchableOpacity
               onPress={() => handleOnsubmit()}
               style={styles.submitContainer}>
-              <Text style={styles.submittext}>अर्पण करे</Text>
+              <Text style={styles.submittext}> {Translation.surrender}</Text>
             </TouchableOpacity>
             <View style={styles.withoutPledge}>
-              <Text style={{ fontSize: 12, color: 'black' }}>नोट:</Text>
+              <Text style={{ fontSize: 12, color: 'black' }}>{Translation.note}:</Text>
               <Text style={{ fontSize: 12, color: 'black' }}>
-                आप बिना संकल्प भी ऐप में पाठ सांख्य अर्पण कर सकते हैं
+              {Translation.note_description}
               </Text>
             </View>
           </View>
