@@ -54,7 +54,7 @@ const EventPage = ({ navigation }) => {
   const [editLoder, setEditLoder] = useState(false)
   const { Translation, isLoading, getFormatedString } = useTranslation()
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItemFromList, setSelectedItemFromList] = useState(null);
+  const [selectedItemFromList, setSelectedItemFromList] = useState({});
 
   const [data, setData] = useState([
     { name: Translation.all_event, id: 1 },
@@ -175,9 +175,14 @@ const EventPage = ({ navigation }) => {
 
   const handleDetailsPage = item => {
     setModalVisible(false);
-    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) });
+    navigation.navigate('details', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) });
   };
 
+  const onPencilClick = () => {
+    setModalVisible(!modalVisible)
+    navigation.navigate('form', { data: selectedItemFromList })
+  }
+  
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -186,37 +191,37 @@ const EventPage = ({ navigation }) => {
         onLongPress={() => { handleOnlongPress(item) }} r
       >
         <View style={{ flex: 1 }}>
-          <View style={styles.singleItem}>
+          <View style={[styles.oneItem,]}>
             <IconV name="globe" color='#4d4c4a' size={18} />
-            <Text numberOfLines={2} style={styles.textstyle}>
+            <Text numberOfLines={2} style={[styles.textstyle, { marginLeft: 5 }]}>
               {item.event_type}
             </Text>
           </View>
           <View style={styles.itemlistcontainer}>
-            <View style={styles.oneItem}>
+            <View style={[styles.oneItem, {}]}>
               <Icon name="calendar" color='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textstyle, fontSize: 14, marginLeft: 5 }}>
                 {moment(item?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
-            <View style={styles.oneItem}>
+            <View style={[styles.oneItem, {}]}>
               <IconE name="location" color='#4d4c4a' size={15} />
               <Text style={{ ...styles.textstyle, fontSize: 14 }}>
                 {item.place_type}
               </Text>
             </View>
-            <View style={{ ...styles.oneItem }}>
+            <View style={{ ...styles.oneItem, marginRight: 10, marginLeft: 5 }}>
               <IconF name="users" color='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textstyle, fontSize: 14, marginLeft: 5 }}>
                 {item.participants}
               </Text>
             </View>
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item.phone, item.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
+        <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
           {
-            validateCurrentUser(item.phone, item.email) ?
+            validateCurrentUser(item?.phone, item?.email) ?
               <IconF name="edit" color='orange' size={25} />
               : null
           }
@@ -318,45 +323,45 @@ const EventPage = ({ navigation }) => {
             allEvent: EventData.length
           })}
         </Text>
-        <View style={styles.flatlistContaner}>
 
-          <FlatList
-            data={EventData}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={item => item?.id}
-            renderItem={renderItem}
-            ListFooterComponent={() => {
-              return <View style={{ height: 330 }} />;
-            }}
-          />
-        </View>
       </View>
+      <FlatList
+        data={EventData}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={item => item?.id}
+        renderItem={renderItem}
+        ListFooterComponent={() => {
+          return <View style={{ height: 330 }} />;
+        }}
+      />
 
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
               <IconV name="cross" color='brown' size={25} />
             </Pressable>
+
+            <Text style={[styles.txtItem, { marginBottom: 25 }]}>
+              {selectedItemFromList?.event_type}
+            </Text>
+
             <View style={styles.fistRow}>
               <Text style={styles.itemHeading}>{Translation.event_id}:{selectedItemFromList?.id}</Text>
-              {validateCurrentUser(selectedItemFromList.phone, selectedItemFromList.email) ? (
-                <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('form', { data: selectedItemFromList })}>
+              {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
+                <TouchableOpacity style={styles.editIcon} onPress={() => onPencilClick()}>
                   <IconV name="pencil" color='#149103' size={20} />
                 </TouchableOpacity>
               ) : null}
             </View>
-            <Text style={styles.txtItem}>
-              {selectedItemFromList?.event_type}
-            </Text>
+
             <View>
               <Text style={styles.itemHeading}>{Translation.address}:</Text>
               <View style={{ width: '60%' }}>
@@ -391,7 +396,7 @@ const EventPage = ({ navigation }) => {
                 </View>
               </View>
             </View>
-            {validateCurrentUser(selectedItemFromList.phone, selectedItemFromList.email) ? (
+            {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
               <TouchableOpacity
                 onPress={() => navigation.navigate('listpage')}
                 style={{ ...styles.btn, width: 130, marginTop: 20 }}>
@@ -413,7 +418,6 @@ export default EventPage;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    height: '100%',
   },
   textstyle: {
     color: colors.black
@@ -500,6 +504,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: colors.black,
     fontSize: 16,
+    textAlign: 'center'
   },
   flatlistContaner: {
     marginTop: 10,
@@ -512,27 +517,30 @@ const styles = StyleSheet.create({
   },
   itemlistcontainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginTop: 10,
   },
   iconContianer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#e0e0de',
+    backgroundColor: '#faf6f0',
     marginTop: 10,
     paddingHorizontal: 10,
     padding: 10,
-    borderRadius: 5
-  },
-  singleItem: {
-    flexDirection: 'row',
-    alignContent: 'center',
-    alignItems: 'center',
+    borderRadius: 5,
+    marginHorizontal: 15,
+
+    shadowColor: "#526cff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 4,
   },
 
   oneItem: {
-    width: windowWidth / 4,
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
@@ -545,7 +553,6 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    paddingTop: 50,
     backgroundColor: 'white',
     borderRadius: 20,
     height: 380,
@@ -571,9 +578,9 @@ const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: '#f4f4f4',
     alignSelf: 'flex-end',
-    position:'absolute',
-    right:10,
-    top:10
+    position: 'absolute',
+    right: 10,
+    top: 10
   },
   textStyle: {
     color: 'white',

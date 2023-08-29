@@ -81,7 +81,7 @@ const ListPageScreen = ({ navigation }) => {
 
           }}>
           <Text
-            style={{ fontSize: 18, marginTop: 10, color: colors.black, width: '50%' }}>
+            style={{ fontSize: 18, marginTop: 10, color: colors.black, flex:1,textAlign:'center' }}>
             {item.count}
           </Text>
           <EIcon
@@ -310,7 +310,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   insideContainer: {
-    // borderWidth: 1,
     height: 70,
     width: 100,
     alignContent: 'center',

@@ -39,7 +39,6 @@ const GetEventTypeSaga = function* () {
       `${Constants.BASE_URL}event-types`;
 
     const res = yield call(fetchRecordWithoutToken, requestUrl);
-console.log(res.data);
     if (res.data != null) {
       yield put({
         type: actions.GET_EVENT_TYPE_SUCCESS,

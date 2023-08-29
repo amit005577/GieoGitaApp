@@ -125,7 +125,6 @@ const EventForm = ({ route }) => {
   };
 
   const handleConfirm = date => {
-    console.log('date', date);
     setstartDate(date);
     hideDatePicker();
 

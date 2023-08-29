@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
   Modal,
   Pressable,
   ScrollView,
@@ -87,22 +88,17 @@ const ChantCount = ({ navigation }) => {
         .then(response => response.text())
         .then(result => {
           handleLoader(false)
-
           setModalVisible(true);
-
         })
         .catch(error => {
           handleLoader(false)
           // console.log('error', error)
         });
-
     } else {
       dispatch(chantUpdatecount(number));
       setModalVisible(true);
-
     }
     setDisable(true);
-    // dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
   };
 
@@ -140,6 +136,7 @@ const ChantCount = ({ navigation }) => {
     setDisable(false);
   };
 
+
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       {isLoading ?
@@ -157,13 +154,12 @@ const ChantCount = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.chantsTitle}>{Translation.total_chants}</Text>
 
-        <View>
-          <View style={styles.contContainer}>
-            <Text style={styles.numberText}>
-              {liveChantsData.total_app_count}
-            </Text>
-          </View>
+        <View style={styles.contContainer}>
+          <Text style={styles.numberText}>
+            {liveChantsData.total_app_count}
+          </Text>
         </View>
+
         {!datapledge ? (
           <ActivityIndicator size={'small'} color={'orange'} />
         ) : null}
@@ -185,7 +181,7 @@ const ChantCount = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={styles.textContainerstyle}>
-          <Text style={styles.YourChantStyle}>{Translation.total_chants}:</Text>
+          <Text style={styles.YourChantStyle}>{Translation.total_chants}:{liveChantsData.total_app_count}</Text>
 
           <View style={styles.btncountcontaiiner}>
             <Text style={styles.normalStyle}>
@@ -257,8 +253,8 @@ const ChantCount = ({ navigation }) => {
 
           <View
             style={{
-              height: 150,
-              width: 150,
+              height: 170,
+              width: 170,
               marginVertical: 10,
               marginHorizontal: 10,
               justifyContent: 'center',
@@ -267,14 +263,15 @@ const ChantCount = ({ navigation }) => {
               borderColor: colors.orange,
               borderRadius: 100,
             }}>
-
             <TextInput
               onChangeText={updateChents}
               keyboardType='number-pad'
-              placeholder={Translation.mantra+'...'}
-              style={{ color: colors.black, fontWeight: '600', fontSize: 20,alignSelf:'center' }}
+              placeholder={Translation.mantra}
+              style={{ color: colors.black, fontWeight: '600', fontSize: 26, alignSelf: 'center', flex: 1 }}
               placeholderTextColor={colors.placeholder}
-              maxLength={12}
+              maxLength={10}
+              value={number ? number.toString() : ''}
+              numberOfLines={1}
             />
           </View>
 
@@ -438,6 +435,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: '500',
     marginTop: 19,
+    marginBottom: 10
   },
 
   normalStyle: {
@@ -485,8 +483,8 @@ const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
