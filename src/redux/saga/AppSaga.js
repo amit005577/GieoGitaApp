@@ -53,7 +53,7 @@ const getHomePageData = function* () {
     const res = yield call(fetchRecordWithoutToken, requestUrl);
     yield put(setIsLoading(false))
     if (res.data != null) {
-      yield put({ type: actions.HOME_DATA, payload: res.data });
+      yield put({ type: actions.HOME_DATA, payload: res.data.data });
     }
   } catch (error) {
   }

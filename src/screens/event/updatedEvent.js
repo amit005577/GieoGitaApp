@@ -42,26 +42,26 @@ const UpdatedEvent = () => {
         <View style={{ width: '90%' }}>
           <View style={styles.singleItem}>
             <IconV name="globe" size={18} color={"black"} />
-            <Text numberOfLines={2} style={styles.textstyle}>
+            <Text numberOfLines={2} style={styles.textStyle}>
               {currentEvent.event_type}
             </Text>
           </View>
           <View style={styles.itemlistcontainer}>
             <View style={styles.oneItem}>
               <Icon name="calendar" size={15} color={"black"} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                 {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
             <View style={styles.oneItem}>
               <IconE name="location" size={15} color={"black"} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                 {currentEvent.place_type}
               </Text>
             </View>
             <View style={{ ...styles.oneItem }}>
               <IconF name="users" size={15} color={"black"} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                 {currentEvent.participants}
               </Text>
             </View>
@@ -83,11 +83,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 80,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#faebd4',
     marginTop: 10,
     paddingHorizontal: 10,
     padding: 10,
+    borderRadius: 5,
+    shadowColor: "#526cff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 4,
   },
   singleItem: {
     flexDirection: 'row',
@@ -196,9 +204,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: 'white',
+    color: colors.black,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginLeft:5
   },
   modalText: {
     marginBottom: 15,

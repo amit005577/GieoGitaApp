@@ -278,7 +278,7 @@ const EventForm = ({ route }) => {
           </View>
         </View>
         {true && (
-          <Text style={{ color: 'red', left: 10,fontSize:15 }}>{Translation.field__s_required}</Text>
+          <Text style={{ color: 'red', left: 10, fontSize: 15 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(156) }}>
@@ -390,14 +390,14 @@ const EventForm = ({ route }) => {
         )}
         {/* Date picker */}
         <DateTimePickerModal
-          isVisible={isDatePickerVisible}
+          isVisible={routeData ? false : isDatePickerVisible}
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
-
+          
         />
         <DateTimePickerModal
-          isVisible={showModal}
+          isVisible={routeData ? false : showModal}
           mode="date"
           onConfirm={handleConfirmEnd}
           onCancel={hideDatePickerEnd}
@@ -407,7 +407,7 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={showDatePicker}>
             <View style={{ ...styles.textHeader }}>
-              <Text style={styles.haderStyle}>{Translation.start_date}</Text>
+              <Text style={[styles.haderStyle,{color:routeData?'lightgray':colors.black}]}>{Translation.start_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
@@ -425,7 +425,7 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={() => setShowModal(true)}>
             <View style={{ ...styles.textHeader, width: ms(75) }}>
-              <Text style={styles.haderStyle}>{Translation.end_date}</Text>
+              <Text style={[styles.haderStyle,{color:routeData?'lightgray':colors.black}]}>{Translation.end_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>

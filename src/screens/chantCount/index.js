@@ -73,7 +73,50 @@ const ChantCount = ({ navigation }) => {
     dispatch(liveChants());
   }, []);
 
+  const updateMyChants = () => {
+    if (previousChent?.count) {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", "Bearer " + accessToken);
+
+      var raw = JSON.stringify({
+        "id": previousChent?.id,
+        "count": number
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      handleLoader(true)
+      console.log(requestOptions);
+      fetch(`${Constants.BASE_URL}events-history/update`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          const res = JSON.parse(result)
+          console.log('>>>>>>>>>>>>>>>>>>', res.data)
+          handleLoader(false)
+          navigation.navigate('MyChantsHistory')
+        })
+        .catch(error => {
+          handleLoader(false)
+          console.log('error', error)
+        });
+      return
+
+
+    }
+    setDisable(true);
+    // dispatch(getcurrentcountStatus());
+  };
+
   const handleOnpress = () => {
+    if (previousChent) {
+      updateMyChants()
+      return
+    }
     if (previousChent?.count) {
 
       var myHeaders = new Headers();
@@ -181,7 +224,7 @@ const ChantCount = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={styles.textContainerstyle}>
-          <Text style={styles.YourChantStyle}>{Translation.total_chants}:{liveChantsData.total_app_count}</Text>
+          <Text style={styles.YourChantStyle}>{Translation.your_chants}:</Text>
 
           <View style={styles.btncountcontaiiner}>
             <Text style={styles.normalStyle}>

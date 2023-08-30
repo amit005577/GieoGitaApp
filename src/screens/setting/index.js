@@ -162,17 +162,13 @@ const SettingScreen = ({ navigation }) => {
           <View style={styles.modalView}>
             <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
             {/* Close button */}
-            <Pressable
-              style={[styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>{Translation.cancel} </Text>
-            </Pressable>
 
-            <View style={{ marginTop: 20 }}>
+
+            <View style={{flex:1}}>
               <FlatList
                 data={languageListData}
+                contentContainerStyle={{ paddingBottom: 100 }}
                 keyExtractor={item => item.id}
-                ListFooterComponent={() => <View style={{ height: 200 }} />}
                 ListEmptyComponent={() => {
                   return (
                     <ActivityIndicator size={'small'} color={'blue'} />
@@ -205,6 +201,11 @@ const SettingScreen = ({ navigation }) => {
                 }}
               />
             </View>
+            <Pressable
+              style={[styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>{Translation.close} </Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -266,9 +267,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    backgroundColor: '#ffffffff',
-    height: '100%',
-    width: '100%',
+    width: '93%',
+    height: '80%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingTop: 20,
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -287,10 +291,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     right: 10,
     position: 'absolute',
-    bottom: 60,
+    bottom: 20,
     right: 20,
     borderRadius: 30,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     paddingVertical: 7,
     elevation: 5,
     zIndex: 10

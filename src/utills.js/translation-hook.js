@@ -21,11 +21,12 @@ export const useTranslation = () => {
 
     const handleDefaultLanguage = async () => {
         const lang = await AsyncStorage.getItem('currentLang')
-        return lang ? JSON.parse(lang) : selectedLang
+        const prevLang = JSON.parse(lang)
+        return prevLang ? prevLang : selectedLang
     }
-    
+
     const handleLoader = (isTrue) => {
-        dispatch(setIsLoading())
+        dispatch(setIsLoading(isTrue))
     }
 
     const getFormatedString = (template, data) => {

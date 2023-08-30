@@ -1,6 +1,6 @@
 import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment/moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -14,25 +14,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
-import { chantHistory, setPreviousChant } from '../../redux/actions';
+import { chantHistory, setMyChantsList, setPreviousChant } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
+import Constants from '../../utills.js/Constants';
 
-const ListPageScreen = ({ navigation, route }) => {
+const MyChantsHistory = ({ navigation, route }) => {
   const isFocused = useIsFocused();
   const { Translation, isLoading } = useTranslation()
 
   const dispatch = useDispatch();
-  const historydata = useSelector(state => state.AppReducers.chantHistory);
   const monthlyData = useSelector(
     state => state.AppReducers.getCurrentCountData,
   );
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const mySelectedEvent = useSelector(state => state.AppReducers.mySelectedEvent);
+  const chantsHistoryList = useSelector(state => state.AppReducers.myChantsList);
 
 
   useEffect(() => {
     if (isFocused) {
-
-      dispatch(chantHistory());
+      if (mySelectedEvent) {
+        handleMyChantHistory()
+      }
     }
   }, [isFocused]);
 
@@ -41,6 +45,22 @@ const ListPageScreen = ({ navigation, route }) => {
     navigation.navigate("chant")
   }
 
+  const handleMyChantHistory = async () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+    };
+
+    fetch(`${Constants.BASE_URL}events-history/${mySelectedEvent?.id}`, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        const res = JSON.parse(result)
+        dispatch(setMyChantsList(res?.data))
+      })
+      .catch(error => console.log('error', error));
+  }
 
   const renderItem = ({ item }) => {
     return (
@@ -135,34 +155,15 @@ const ListPageScreen = ({ navigation, route }) => {
         {Translation.submissions_list}
       </Text>
 
-      <View
-        style={{
-          paddingHorizontal: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginTop: 20,
-        }}>
-        <View style={{ ...styles.insideContainer, backgroundColor: '#C7E9C9' }}>
-          <Text style={styles.numberText}>{monthlyData?.weekly_count}</Text>
-          <Text style={styles.currentText}>{Translation.current_week}</Text>
-        </View>
-        <View style={{ ...styles.insideContainer, backgroundColor: '#E9E1C7' }}>
-          <Text style={styles.numberText}>{monthlyData?.month_count}</Text>
-          <Text style={styles.currentText}>{Translation?.current_month}</Text>
-        </View>
-        <View style={{ ...styles.insideContainer, backgroundColor: '#C7DBE9' }}>
-          <Text style={styles.numberText}>{monthlyData?.life_time_count}</Text>
-          <Text style={styles.currentText}>{Translation?.total}</Text>
-        </View>
-      </View>
       <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
         <FlatList
-          data={historydata}
+          data={chantsHistoryList}
           keyExtractor={item => item.id}
           renderItem={renderItem}
           contentContainerStyle={{
             paddingBottom: 100,
             marginBottom: 100
+
           }}
           style={{ paddingHorizontal: 0, marginTop: 20, borderWidth: 0 }}
           ListHeaderComponent={() => {
@@ -277,7 +278,7 @@ const ListPageScreen = ({ navigation, route }) => {
   );
 };
 
-export default ListPageScreen;
+export default MyChantsHistory;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -17,24 +17,58 @@ import logo3 from '../../../assets/images/logo3.jpg';
 import logo4 from '../../../assets/images/logo4.jpg';
 import logo5 from '../../../assets/images/logo5.jpg';
 import HeaderPage from '../../Components/header';
-import {useHomeHooks} from '../../utills.js/hooke/home-hooks';
+import { useHomeHooks } from '../../utills.js/hooke/home-hooks';
 import Loader from '../../Components/Loader';
+import WebView from 'react-native-webview';
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
-  const {Translation, isLoading, handleGetHomeData, homePageData} =
+  const { Translation, isLoading, handleGetHomeData, homePageData } =
     useHomeHooks();
+  const [sourceHtml, setSourceHtml] = useState('')
+
+  // console.log('homePageData:::', homePageData);
 
   useEffect(() => {
     handleGetHomeData();
   }, []);
 
+  // useEffect(() => {
+  //   const updateHtmlContent = async () => {
+  //     const curLang = await handleDefaultLanguage()
+  //     console.log('>>>>>>>>>>>', curLang);
+  //     if (homePageData.length > 0) {
+  //       const currentUrl = homePageData[0]?.translations.find((item) => item.lang == curLang.code)
+  //       console.log('>>>>>>>>>>>', currentUrl);
+  //       setSourceHtml(currentUrl?.content)
+  //     } else {
+
+  //     }
+  //   }
+  //   updateHtmlContent()
+
+  // }, [homePageData])
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {isLoading ? <Loader /> : null}
+      <HeaderPage />
+
+      {/* <WebView
+        // style={{width: 320, maxHeight: 400}}
+        source={{ html:sourceHtml }}
+
+        style={{ flex: 1 }}
+        javaScriptEnabled={true}
+        mediaPlaybackRequiresUserAction={true}
+        androidLayerType='hardware'
+        mixedContentMode='always'
+
+        domStorageEnabled={true}
+        androidHardwareAccelerationDisabled={false}
+      /> */}
 
       <ScrollView style={styles.container}>
-        <HeaderPage />
 
         <ScrollView contentContainerStyle={{}}>
           <ImageBackground
@@ -105,7 +139,6 @@ const HomeScreen = () => {
                     flexWrap: 'wrap',
                     fontWeight: 'bold',
                   }}>
-                  {/* {Translation.long_live_shri_krishna_description} */}
                   {'                    '}
                   {Translation.home_worship_book_description}
                 </Text>
@@ -283,7 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 30,
   },
-  imagestyle: {height: 100, width: windowWidth / 3, resizeMode: 'stretch'},
+  imagestyle: { height: 100, width: windowWidth / 3, resizeMode: 'stretch' },
   listItem: {
     color: '#2A2A2A',
     fontSize: 12,

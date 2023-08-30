@@ -182,26 +182,26 @@ const LocationForm = ({ route }) => {
           <View style={{ width: '90%' }}>
             <View style={styles.singleItem}>
               <IconV name="globe" size={18} color={'black'} />
-              <Text numberOfLines={2} style={styles.textstyle}>
+              <Text numberOfLines={2} style={[styles.textStyle, { marginLeft: 5 }]}>
                 {currentEvent.event_type}
               </Text>
             </View>
             <View style={styles.itemlistcontainer}>
               <View style={styles.oneItem}>
                 <Icon name="calendar" size={15} color={'black'} />
-                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
                   {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
                 </Text>
               </View>
               <View style={styles.oneItem}>
                 <IconE name="location" size={15} color={'black'} />
-                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
                   {currentEvent.place_type}
                 </Text>
               </View>
               <View style={{ ...styles.oneItem }}>
                 <IconF name="users" size={15} color={'black'} />
-                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                   {currentEvent.participants}
                 </Text>
               </View>
@@ -209,7 +209,7 @@ const LocationForm = ({ route }) => {
           </View>
 
           <View>
-            <Icon name="right" size={25} />
+            <Icon name="right" color={colors.black} size={25} />
           </View>
         </TouchableOpacity>
         <View>
@@ -266,7 +266,7 @@ const LocationForm = ({ route }) => {
                 color={selectIconOne == '1' ? 'blue' : 'black'}
               />
               <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
-              {Translation.yes}
+                {Translation.yes}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -397,13 +397,15 @@ const LocationForm = ({ route }) => {
             Alert.alert('Modal has been closed.');
             setCountryModal(!countryModal);
           }}>
+          <Pressable
+            style={[styles.buttonClose]}
+            onPress={() => setCountryModal(!countryModal)}>
+            <Text style={[styles.textStyle, { color: colors.white, fontWeight: '600', fontSize: 18 }]}>{Translation.close} </Text>
+          </Pressable>
+
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setCountryModal(!countryModal)}>
-                <Text style={styles.textStyle}>{Translation.close}</Text>
-              </Pressable>
+              <Text style={[styles.textStyle, { fontWeight: '600', fontSize: 18 }]}>{Translation.select_country} </Text>
 
               <View style={styles.searchStyle}>
                 <TextInput
@@ -492,8 +494,16 @@ const LocationForm = ({ route }) => {
             Alert.alert('Modal has been closed.');
             setstateModata(!stateModata);
           }}>
+          <Pressable
+            style={[styles.buttonClose]}
+            onPress={() => setstateModata(!stateModata)}>
+            <Text style={[styles.textStyle, { color: colors.white, fontWeight: '600', fontSize: 18 }]}>{Translation.close} </Text>
+          </Pressable>
+
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+            <Text style={[styles.textStyle, { fontWeight: '600', fontSize: 18 }]}>{Translation.select_state} </Text>
+
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setstateModata(!stateModata)}>
@@ -677,6 +687,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     marginTop: 10,
   },
+  textStyle: {
+    color: colors.black,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   itemlistcontainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -685,13 +700,20 @@ const styles = StyleSheet.create({
   iconContianer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignContent: 'center',
     alignItems: 'center',
-    height: 80,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#faebd4',
     marginTop: 10,
     paddingHorizontal: 10,
     padding: 10,
+    borderRadius: 5,
+    shadowColor: "#526cff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 4,
   },
   singleItem: {
     flexDirection: 'row',
@@ -801,13 +823,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: 'orange',
+    alignSelf: 'center',
+    right: 10,
+    position: 'absolute',
+    bottom: 60,
+    right: 20,
+    borderRadius: 30,
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    elevation: 5,
+    zIndex: 10
   },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+
   modalText: {
     marginBottom: 15,
     textAlign: 'center',

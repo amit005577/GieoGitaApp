@@ -35,26 +35,26 @@ const MyEvent = ({ navigation }) => {
         <View style={{ width: '90%' }}>
           <View style={styles.singleItem}>
             <IconV name="globe" size={18} color={colors.black} />
-            <Text numberOfLines={2} style={styles.textstyle}>
+            <Text numberOfLines={2} style={styles.textStyle}>
               {item.event_type}
             </Text>
           </View>
           <View style={styles.itemlistcontainer}>
             <View style={styles.oneItem} color={colors.black} >
               <Icon name="calendar" size={15} color={colors.black} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                 {moment(item?.create_at).format('DD-MMM-YYYY')}
               </Text>
             </View>
             <View style={styles.oneItem}>
               <IconE name="location" size={15} color={colors.black} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                 {item.place_type}
               </Text>
             </View>
             <View style={{ ...styles.oneItem }}>
               <IconF name="users" size={15} color={colors.black} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+              <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                 {item.participants}
               </Text>
             </View>
@@ -73,14 +73,15 @@ const MyEvent = ({ navigation }) => {
         <Loader /> : null
       }
       <HeaderPage />
-      <View style={{ paddingHorizontal: 10 }}>
+      <View style={{ flex:1 }}>
         <View>
-          <Text>{Translation.my_events} </Text>
+          <Text style={styles.textStyle} >{Translation.my_events} </Text>
         </View>
         <FlatList
           data={myEventData}
           keyExtractor={item => item.id}
           renderItem={renderItem}
+          contentContainerStyle={{paddingBottom:50}}
         />
       </View>
     </View>
@@ -115,7 +116,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   eventBtn: {
-    // borderWidth: 1,
     width: windowWidth / 3.3,
     paddingHorizontal: 5,
     flexDirection: 'row',
@@ -175,10 +175,8 @@ const styles = StyleSheet.create({
   flatlistContaner: {
     marginTop: 10,
     height: '100%',
-    // marginBottom:500
   },
   itemcontainer: {
-    // borderWidth: 1,
     height: 80,
     backgroundColor: 'lightgrey',
     marginTop: 10,
@@ -191,13 +189,22 @@ const styles = StyleSheet.create({
   iconContianer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignContent: 'center',
     alignItems: 'center',
-    height: 80,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#faf6f0',
     marginTop: 10,
     paddingHorizontal: 10,
     padding: 10,
+    borderRadius: 5,
+    marginHorizontal: 10,
+
+    shadowColor: "#526cff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 4,
   },
   singleItem: {
     flexDirection: 'row',
@@ -210,8 +217,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'red',
-    // justifyContent:'space-around'
   },
   locatoionText: {
     fontSize: 25,
@@ -314,9 +319,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: 'white',
+    color: colors.black,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginLeft:5
   },
   modalText: {
     marginBottom: 15,

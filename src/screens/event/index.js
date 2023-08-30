@@ -25,6 +25,7 @@ import {
   getEventPlace,
   getEventType,
   getMyEvent,
+  setMySelectedEvent,
   targetChantData,
 } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
@@ -37,7 +38,8 @@ const EventPage = ({ navigation }) => {
   const dispatch = useDispatch();
   const allEventData = useSelector(state => state.EventReducer.allEventData);
   const eventtypeData = useSelector(state => state.EventReducer.eventTypeData);
-
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  // console.log('accessToken:::',accessToken);
   const eventPlaceData = useSelector(
     state => state.EventReducer.eventPlaceData,
   );
@@ -169,6 +171,7 @@ const EventPage = ({ navigation }) => {
   const onEventPress = item => {
     setModalVisible(true);
     setSelectedItemFromList(item);
+    dispatch(setMySelectedEvent(item)) // using data in MyChantsHistory
   };
 
 
@@ -182,19 +185,18 @@ const EventPage = ({ navigation }) => {
     setModalVisible(!modalVisible)
     navigation.navigate('form', { data: selectedItemFromList })
   }
-  
+
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         style={styles.iconContianer}
         onPress={() => onEventPress(item)}
-        onLongPress={() => { handleOnlongPress(item) }} r
       >
         <View style={{ flex: 1 }}>
           <View style={[styles.oneItem,]}>
             <IconV name="globe" color='#4d4c4a' size={18} />
             <Text numberOfLines={2} style={[styles.textstyle, { marginLeft: 5 }]}>
-              {item.event_type}
+              {item.name}
             </Text>
           </View>
           <View style={styles.itemlistcontainer}>
@@ -259,6 +261,7 @@ const EventPage = ({ navigation }) => {
             </Text>
             <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.eventBtn}
             onPress={() => setShowModalEventTyope(true)}>
@@ -268,6 +271,7 @@ const EventPage = ({ navigation }) => {
             </Text>
             <Icon name="down" color='#4d4c4a' size={10} />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.eventBtn}
             onPress={() => setshowModalPlaceType(true)}>
@@ -302,6 +306,7 @@ const EventPage = ({ navigation }) => {
           showModal={showModalPlaceType}
           setShowModal={setshowModalPlaceType}
           handleSelectedItem={handlePlacetypeFunction}
+          title={Translation.select_place_type}
         />
         <View style={styles.textContainer}>
           <TextInput
@@ -398,7 +403,7 @@ const EventPage = ({ navigation }) => {
             </View>
             {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
               <TouchableOpacity
-                onPress={() => navigation.navigate('listpage')}
+                onPress={() => navigation.navigate('MyChantsHistory')}
                 style={{ ...styles.btn, width: 130, marginTop: 20 }}>
                 <Text style={{ ...styles.textDetails, color: '#fff' }}>
                   {Translation.submission_list}
@@ -418,6 +423,7 @@ export default EventPage;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    backgroundColor:'#fffdfa'
   },
   textstyle: {
     color: colors.black
@@ -446,18 +452,21 @@ const styles = StyleSheet.create({
   eventBtn: {
     width: windowWidth / 3.3,
     paddingHorizontal: 5,
+    paddingVertical:7,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 38,
     borderRadius: 20,
     marginTop: 20,
-    shadowColor: 'rgba(0,0,0, .4)', // IOS
-    shadowOffset: { height: 1, width: 1 }, // IOS
-    shadowOpacity: 1, // IOS
-    shadowRadius: 1, //IOS
-    backgroundColor: '#fff',
-    elevation: 2, // Android
+    backgroundColor: '#faf6f0',
+    shadowColor: "#526cff",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 4,
   },
   btnContainersss: {
     flexDirection: 'row',
@@ -555,8 +564,9 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: 'white',
     borderRadius: 20,
-    height: 380,
-    width: '90%',
+    paddingTop: 10,
+    paddingBottom: 15,
+    width: '92%',
     shadowColor: '#000',
     paddingHorizontal: 20,
     shadowOffset: {

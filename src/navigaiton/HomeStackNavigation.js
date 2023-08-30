@@ -17,6 +17,7 @@ import SankalpScreen from '../screens/sankalp.js/index.js';
 import SettingScreen from '../screens/setting';
 import UpdatePledge from '../screens/updatePledge';
 import BottomTabnavigator from './BottomStackNavigation';
+import MyChantsHistory from '../screens/listpage/MyChantsHistory';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -53,6 +54,8 @@ function HomeStackNavigation() {
           <HomeStack.Screen name="formPlace" component={LocationForm} />,
           <HomeStack.Screen name="myEvent" component={MyEvent} />,
           <HomeStack.Screen name="updatedEvent" component={UpdatedEvent} />,
+          <HomeStack.Screen name="MyChantsHistory" component={MyChantsHistory} />,
+
         ]
       )}
     </HomeStack.Navigator>

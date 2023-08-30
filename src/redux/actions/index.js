@@ -290,3 +290,18 @@ export const handleSocialLoginAction = payload => {
     payload,
   };
 };
+
+
+export const setMySelectedEvent = payload=>{
+  return{
+    type:ActionTypes.SET_MY_SELECTED_EVENT,
+    payload,
+  }
+}
+
+export const setMyChantsList = payload=>{
+  return{
+    type:ActionTypes.SET_MY_CHANTS_LIST,
+    payload,
+  }
+}

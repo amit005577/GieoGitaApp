@@ -15,8 +15,10 @@ const initialState = {
   countryNamelistData: '',
   countryStateListData: "",
   translationData: "",
-  previousChent:null,
-  isLoading:false
+  previousChent: null,
+  isLoading: false,
+  mySelectedEvent: {},
+  myChantsList:[]
 };
 
 const AppReducers = (state = initialState, action) => {
@@ -111,12 +113,24 @@ const AppReducers = (state = initialState, action) => {
         ...state,
         previousChent: action.payload,
       };
-      case actions.SET_IS_LOADING:
-        // console.log('SET_IS_LOADING reducer',action.payload);
-        return {
-          ...state,
-          isLoading: action.payload,
-        };
+    case actions.SET_IS_LOADING:
+      // console.log('SET_IS_LOADING reducer',action.payload);
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+    case actions.SET_MY_SELECTED_EVENT:
+      // console.log('SET_IS_LOADING reducer',action.payload);
+      return {
+        ...state,
+        mySelectedEvent: action.payload,
+      };
+    case actions.SET_MY_CHANTS_LIST:
+      // console.log('SET_IS_LOADING reducer',action.payload);
+      return {
+        ...state,
+        myChantsList: action.payload,
+      };
     default: {
       return state;
     }

@@ -43,10 +43,11 @@ const SankalpScreen = () => {
     dispatch(targetChantData());
   }, []);
 
+
   useEffect(() => {
     if (pledgeDataStore != null && pledgeDataStore.length > 0) {
       const default_count = pledgeDataStore[0].default_count
-      const target_count = 0
+      const target_count = pledgeDataStore[0].target_count
       const count = target_count ? target_count : default_count
       const target_date = pledgeDataStore[0].target_date
       setCount(count);
@@ -78,10 +79,7 @@ const SankalpScreen = () => {
     setSailyCount(dailyCount)
     setWeekCountNummber(weekCountNummber)
     setMonthCountNumber(monthCountNumber)
-
   }
-
-
 
   return (
     <SafeAreaView style={styles.container} >
