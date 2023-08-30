@@ -23,7 +23,7 @@ const HomeStack = createNativeStackNavigator();
 
 function HomeStackNavigation() {
   const [pledgeStatus, setpledgeStatus] = React.useState(true);
-  
+
   let resss = useSelector(state => state.AuthReducer);
 
   React.useEffect(() => {
@@ -37,26 +37,26 @@ function HomeStackNavigation() {
   };
 
   return (
-    <HomeStack.Navigator screenOptions={{headerShown: false}}>
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       {pledgeStatus == null || pledgeStatus == '' ? (
         <HomeStack.Screen name="sankalp" component={SankalpScreen} />
       ) : (
-        [
-          <HomeStack.Screen name="HomeStack" component={BottomTabnavigator} />,
-          <HomeStack.Screen name="listpage" component={ListPageScreen} />,
-          <HomeStack.Screen name="setting" component={SettingScreen} />,
-          <HomeStack.Screen name="help" component={HelpScreen} />,
-          <HomeStack.Screen name="update" component={UpdatePledge} />,
-          <HomeStack.Screen name="register" component={Register} />,
-          <HomeStack.Screen name="event" component={EventPage} />,
-          <HomeStack.Screen name="details" component={DetailEvent} />,
-          <HomeStack.Screen name="form" component={EventForm} />,
-          <HomeStack.Screen name="formPlace" component={LocationForm} />,
-          <HomeStack.Screen name="myEvent" component={MyEvent} />,
-          <HomeStack.Screen name="updatedEvent" component={UpdatedEvent} />,
-          <HomeStack.Screen name="MyChantsHistory" component={MyChantsHistory} />,
+        <>
+          <HomeStack.Screen name="HomeStack" component={BottomTabnavigator} />
+          <HomeStack.Screen name="listpage" component={ListPageScreen} />
+          <HomeStack.Screen name="setting" component={SettingScreen} />
+          <HomeStack.Screen name="help" component={HelpScreen} />
+          <HomeStack.Screen name="update" component={UpdatePledge} />
+          <HomeStack.Screen name="register" component={Register} />
+          <HomeStack.Screen name="event" component={EventPage} />
+          <HomeStack.Screen name="details" component={DetailEvent} />
+          <HomeStack.Screen name="form" component={EventForm} />
+          <HomeStack.Screen name="formPlace" component={LocationForm} />
+          <HomeStack.Screen name="myEvent" component={MyEvent} />
+          <HomeStack.Screen name="updatedEvent" component={UpdatedEvent} />
+          <HomeStack.Screen name="MyChantsHistory" component={MyChantsHistory} />
 
-        ]
+        </>
       )}
     </HomeStack.Navigator>
   );

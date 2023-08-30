@@ -17,7 +17,6 @@ export const useHomeHooks = () => {
 
 
 
-
     return {
         handleGetHomeData,
         homePageData,
