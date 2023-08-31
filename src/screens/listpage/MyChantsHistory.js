@@ -42,7 +42,7 @@ const MyChantsHistory = ({ navigation, route }) => {
 
   const handleChantCountEdit = (val) => {
     dispatch(setPreviousChant(val))
-    navigation.navigate("chant")
+    navigation.navigate("chant", { chantType: 'my' })
   }
 
   const handleMyChantHistory = async () => {

@@ -274,7 +274,7 @@ const EventForm = ({ route }) => {
             />
           </View>
         </View>
-        {true && (
+        {check && (
           <Text style={{ color: 'red', left: 10, fontSize: 15 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>

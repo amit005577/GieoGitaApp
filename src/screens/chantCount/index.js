@@ -37,7 +37,7 @@ import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
 import Constants from '../../utills.js/Constants';
 
-const ChantCount = ({ navigation }) => {
+const ChantCount = ({ navigation, route }) => {
   const isFocused = useIsFocused();
   const { Translation, handleLoader, isLoading } = useTranslation()
 
@@ -64,14 +64,19 @@ const ChantCount = ({ navigation }) => {
       setNumber(0);
       dispatch(setPreviousChant(null));
     }
+
   }, [isFocused])
 
   useEffect(() => {
+    handleUpdateChants()
+  }, []);
+
+  const handleUpdateChants = () => {
     dispatch(targetChantData());
     dispatch(chantHistory());
     dispatch(getcurrentcountStatus());
     dispatch(liveChants());
-  }, []);
+  }
 
   const updateMyChants = () => {
     if (previousChent?.count) {
@@ -95,8 +100,8 @@ const ChantCount = ({ navigation }) => {
       fetch(`${Constants.BASE_URL}events-history/update`, requestOptions)
         .then(response => response.text())
         .then(result => {
-          const res = JSON.parse(result)
           handleLoader(false)
+          dispatch(setPreviousChant(null))
           navigation.navigate('MyChantsHistory')
         })
         .catch(error => {
@@ -108,7 +113,7 @@ const ChantCount = ({ navigation }) => {
   };
 
   const handleOnpress = () => {
-    if (previousChent) {
+    if (route?.params?.chantType == 'my') {
       updateMyChants()
       return
     }
@@ -127,6 +132,8 @@ const ChantCount = ({ navigation }) => {
         .then(result => {
           handleLoader(false)
           setModalVisible(true);
+          handleUpdateChants()
+          dispatch(setPreviousChant(null))
         })
         .catch(error => {
           handleLoader(false)
@@ -182,7 +189,7 @@ const ChantCount = ({ navigation }) => {
       }
       <HeaderPage />
 
-      <ScrollView>
+      <ScrollView >
         <TouchableOpacity
           onPress={() => navigationRef.navigate('event')}
           style={styles.eventstyle}>
@@ -305,7 +312,7 @@ const ChantCount = ({ navigation }) => {
               onChangeText={updateChents}
               keyboardType='number-pad'
               placeholder={Translation.mantra}
-              style={{ color: colors.black, fontWeight: '600', fontSize: 26, alignSelf: 'center', flex: 1 }}
+              style={{ color: colors.black, fontWeight: '600', fontSize: 22, textAlign: 'center', alignSelf: 'center', minWidth: 10 }}
               placeholderTextColor={colors.placeholder}
               maxLength={10}
               value={number ? number.toString() : ''}
@@ -369,7 +376,9 @@ const ChantCount = ({ navigation }) => {
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
-                  setModalVisible(!modalVisible), setNumber(0);
+                  setModalVisible(!modalVisible)
+                  setNumber(0);
+                  navigation.navigate('listpage')
                 }}>
                 <Text style={styles.textStyle}>{Translation.ok}</Text>
               </Pressable>

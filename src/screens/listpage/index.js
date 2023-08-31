@@ -31,7 +31,6 @@ const ListPageScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (isFocused) {
-
       dispatch(chantHistory());
     }
   }, [isFocused]);
