@@ -23,11 +23,9 @@ const UpdatePledge = () => {
   const { Translation, isLoading ,getFormatedString} = useTranslation()
 
   const [count, setCount] = React.useState('');
-  // console.log('show cout number-=-->', count);
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
-  // console.log('show datapledge data page jfsdkjfkl', datapledge[0].targetChant);
   const targetCountDAta = datapledge[0]?.target_count;
-  // console.log('show targetcountData', targetCountDAta);
+  const target_date = datapledge[0].target_date
 
   const dispatch = useDispatch();
   const handleOnsubmit = () => {
@@ -35,10 +33,16 @@ const UpdatePledge = () => {
     navigationRef.navigate('setting');
   };
 
-  //   const [pledgeDataaa, setPledgeDataaa] = useState(null);
-
   useEffect(() => {
     setCount(targetCountDAta);
+    if (datapledge != null && datapledge.length > 0) {
+      const default_count = datapledge[0].default_count
+      const target_count = datapledge[0].target_count
+      const count = target_count ? target_count : default_count
+      setCount(count);
+    } else {
+      setCount(0);
+    }
   }, [datapledge]);
 
   useEffect(() => {
@@ -46,10 +50,9 @@ const UpdatePledge = () => {
   }, []);
 
   let currentDateData = moment(new Date(), 'DD-MM-YYYY');
-  let targetDate = moment('23-12-2023', 'DD-MM-YYYY');
+  let targetDate = moment(target_date, 'DD-MM-YYYY');
   let noOfDays = targetDate.diff(currentDateData, 'days');
 
-  // console.log("Number of days:", noOfDays);
   let dailyCount = count / noOfDays
   let monthCountNumber = dailyCount * 30
   let weekCountNummber = dailyCount * 7
@@ -67,12 +70,10 @@ const UpdatePledge = () => {
             <Text style={styles.desctext}>
             {Translation.my_pledge_description}
             </Text>
-            {/* <Text style={{...styles.desctext, marginTop: 0}}></Text> */}
           </View>
           <Text style={{ ...styles.desctext, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
           {getFormatedString(Translation.by_geeta_jayanti, {
-              date: '25 December',
-              year: '2024'
+              target_date:target_date
             })}
           </Text>
           <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 22, color: '#F7941C' }}>
@@ -90,6 +91,7 @@ const UpdatePledge = () => {
               inputMode="numeric"
               maxLength={5}
               placeholderTextColor={'#808080'}
+            
             />
           </View>
           <Text style={styles.chalisaText}>
@@ -197,6 +199,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     fontSize: 19,
     color: 'black',
+    textAlign:'center'
   },
   chalisaText: {
     fontSize: 30,

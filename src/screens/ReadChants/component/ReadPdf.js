@@ -142,7 +142,7 @@ const ReadPdfScreen = () => {
           scale={zoom}
           renderActivityIndicator={renderActivityIndicator}
           onLoadProgress={percentage => {
-            console.log(`PDF Loading::: :${percentage}`)
+            // console.log(`PDF Loading::: :${percentage}`)
             setDownloadProgress(percentage)
           }}
           onLoadComplete={numberOfPages => {
