@@ -268,7 +268,7 @@ const Register = ({ navigation }) => {
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setCountryModal(!countryModal)}>
-                <Text style={styles.textStyle}>रद्द करना</Text>
+                <Text style={styles.textStyle}>{Translation.cancel}</Text>
               </Pressable>
               <View style={{ marginTop: 20 }}>
                 <FlatList
@@ -310,7 +310,6 @@ const Register = ({ navigation }) => {
           transparent={true}
           visible={stateModata}
           onRequestClose={() => {
-            // Alert.alert('Modal has been closed.');
             setstateModata(!stateModata);
           }}>
           <View style={styles.centeredView}>
@@ -374,7 +373,6 @@ const styles = StyleSheet.create({
   TextInputStyle: {
     height: 69,
     width: '100%',
-    // margin: 12,
     marginTop: 15,
     borderWidth: 1,
     padding: 10,
@@ -386,7 +384,6 @@ const styles = StyleSheet.create({
   touchableStyle: {
     height: 69,
     width: '100%',
-    // margin: 12,
     marginTop: 15,
     borderWidth: 1,
     padding: 10,
@@ -402,11 +399,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
-    // margin: 20,
-    // marginHorizontal:20,
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 20,

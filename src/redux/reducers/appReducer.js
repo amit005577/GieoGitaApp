@@ -18,7 +18,8 @@ const initialState = {
   previousChent: null,
   isLoading: false,
   mySelectedEvent: {},
-  myChantsList:[]
+  myChantsList: [],
+  homePageHtmlUrl: ''
 };
 
 const AppReducers = (state = initialState, action) => {
@@ -130,6 +131,12 @@ const AppReducers = (state = initialState, action) => {
       return {
         ...state,
         myChantsList: action.payload,
+      };
+    case actions.HOME_PAGE_HTML_URL:
+      // console.log('SET_IS_LOADING reducer',action.payload);
+      return {
+        ...state,
+        homePageHtmlUrl: action.payload,
       };
     default: {
       return state;

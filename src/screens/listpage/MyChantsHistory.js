@@ -134,7 +134,7 @@ const MyChantsHistory = ({ navigation, route }) => {
         <Text style={styles.userText}>
           {' '}
           {datapledge[0]?.name == null || datapledge[0]?.name == ''
-            ? 'नाम'
+            ? Translation.name
             : datapledge[0]?.name}
         </Text>
 

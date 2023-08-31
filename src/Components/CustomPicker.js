@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {View, Text} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
+import React from 'react';
+import { View } from 'react-native';
 
 const CustomPicker = ({data, selectedValue, setSelectedValue}) => {
   return (

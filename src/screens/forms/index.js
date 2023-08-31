@@ -243,8 +243,6 @@ const EventForm = ({ route }) => {
       };
 
       if (routeData != null) {
-
-        // console.log("show forem edit data",formDataEdit)
         dispatch(updateMyEvent(formDataEdit));
       } else {
 
@@ -273,7 +271,6 @@ const EventForm = ({ route }) => {
               value={name}
               style={styles.textINput}
               placeholderTextColor={colors.black}
-            // style={{color:colors.black}}
             />
           </View>
         </View>
@@ -324,7 +321,7 @@ const EventForm = ({ route }) => {
           </View>
           <View style={styles.firstTextinput}>
             <CustomPicker
-              ref={pickerRef}
+              // ref={pickerRef}
               data={eventtypeData ? eventtypeData : []}
               selectedValue={selectedValue}
               setSelectedValue={setSelectedValue}
@@ -342,7 +339,7 @@ const EventForm = ({ route }) => {
               </View>
               <View style={styles.firstTextinput}>
                 <CustomPicker
-                  ref={pickerRef}
+                  // ref={pickerRef}
                   data={platformData}
                   selectedValue={platform}
                   setSelectedValue={setPlatform}
@@ -378,7 +375,7 @@ const EventForm = ({ route }) => {
           </View>
           <View style={styles.firstTextinput}>
             <CustomPicker
-              ref={pickerRef}
+              // ref={pickerRef}
               data={dataFrequency}
               selectedValue={frequency}
               setSelectedValue={setFrequency}
@@ -394,7 +391,7 @@ const EventForm = ({ route }) => {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
-          
+
         />
         <DateTimePickerModal
           isVisible={routeData ? false : showModal}
@@ -407,7 +404,7 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={showDatePicker}>
             <View style={{ ...styles.textHeader }}>
-              <Text style={[styles.haderStyle,{color:routeData?'lightgray':colors.black}]}>{Translation.start_date}</Text>
+              <Text style={[styles.haderStyle, { color: routeData ? 'lightgray' : colors.black }]}>{Translation.start_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
@@ -425,7 +422,7 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={() => setShowModal(true)}>
             <View style={{ ...styles.textHeader, width: ms(75) }}>
-              <Text style={[styles.haderStyle,{color:routeData?'lightgray':colors.black}]}>{Translation.end_date}</Text>
+              <Text style={[styles.haderStyle, { color: routeData ? 'lightgray' : colors.black }]}>{Translation.end_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
@@ -439,7 +436,6 @@ const EventForm = ({ route }) => {
               <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
             )}
           </TouchableOpacity>
-          {/* { check&& endDate==null&& <Text style={{color:'red',left:10}}>{Translation.field__s_required}</Text>} */}
         </View>
 
         <View style={{ marginTop: 20 }}>
@@ -509,6 +505,7 @@ const EventForm = ({ route }) => {
           modalVisible={modalVisible}
           setSelectedItem={setCountryCode}
           selectedItem={countryCode}
+          title={Translation.country_name}
         />
         <View style={{ marginTop: 20 }}>
           <View style={{ ...styles.textHeader, width: ms(120), left: 20 }}>
@@ -557,15 +554,12 @@ const EventForm = ({ route }) => {
                   source={{
                     uri: countryCode.icon,
                   }}
-                  // tintColor={"red"}
-
                   height={20}
                   width={20}
                 />
                 <Text style={{ color: colors.black }}>+{countryCode.phone_code}</Text>
                 <Text style={{ color: colors.black }}>{countryCode.code}</Text>
 
-                {/* <Text>Select country Code </Text> */}
               </View>
             </TouchableOpacity>
             <TextInput
@@ -636,6 +630,7 @@ const EventForm = ({ route }) => {
               value={email}
               style={styles.textINput}
               placeholderTextColor={colors.placeholder}
+              keyboardType='email-address'
             />
           </View>
         </View>

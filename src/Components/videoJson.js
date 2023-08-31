@@ -178,12 +178,4 @@
     'qMQyATYli98',
   
   },
-  // {
-  //   id: '20',
-  //   title: 'The first Blender Open Movie from 2006',
-  //   thumbnailUrl: img2,
-  //   videoUrl:
-  //   'qMQyATYli98',
-  
-  // },
 ];

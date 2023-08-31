@@ -105,9 +105,6 @@ const LocationForm = ({ route }) => {
       alert('please select country');
     }
   };
-  // console.log('show data rout', route.params);
-  let item = route.params;
-  // console.log('show item data inrout', item);
 
   let data = {
     place_name: name,
@@ -181,26 +178,26 @@ const LocationForm = ({ route }) => {
         <TouchableOpacity style={styles.iconContianer}>
           <View style={{ width: '90%' }}>
             <View style={styles.singleItem}>
-              <IconV name="globe" size={18} color={'black'} />
+              <IconV name="globe" size={18} color={colors.black} />
               <Text numberOfLines={2} style={[styles.textStyle, { marginLeft: 5 }]}>
                 {currentEvent.event_type}
               </Text>
             </View>
             <View style={styles.itemlistcontainer}>
               <View style={styles.oneItem}>
-                <Icon name="calendar" size={15} color={'black'} />
+                <Icon name="calendar" size={15} color={colors.black} />
                 <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
                   {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
                 </Text>
               </View>
               <View style={styles.oneItem}>
-                <IconE name="location" size={15} color={'black'} />
+                <IconE name="location" size={15} color={colors.black} />
                 <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
                   {currentEvent.place_type}
                 </Text>
               </View>
               <View style={{ ...styles.oneItem }}>
-                <IconF name="users" size={15} color={'black'} />
+                <IconF name="users" size={15} color={colors.black} />
                 <Text style={{ ...styles.textStyle, fontSize: 14 }}>
                   {currentEvent.participants}
                 </Text>
@@ -224,7 +221,7 @@ const LocationForm = ({ route }) => {
               placeholder={Translation.please_enter_name}
               onChangeText={setName}
               value={name}
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
               style={styles.textINput}
             />
           </View>
@@ -263,9 +260,9 @@ const LocationForm = ({ route }) => {
                   selectIconOne == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={selectIconOne == '1' ? 'blue' : 'black'}
+                color={selectIconOne == '1' ? 'blue' : colors.black}
               />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
                 {Translation.yes}
               </Text>
             </TouchableOpacity>
@@ -277,9 +274,9 @@ const LocationForm = ({ route }) => {
                   selectIcontwo == '1' ? 'circle-slice-8' : 'circle-outline'
                 }
                 size={24}
-                color={selectIcontwo == '1' ? 'blue' : 'black'}
+                color={selectIcontwo == '1' ? 'blue' : colors.black}
               />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: 'black' }}>
+              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
                 {Translation.no}
               </Text>
             </TouchableOpacity>
@@ -292,13 +289,12 @@ const LocationForm = ({ route }) => {
         <View style={styles.calenderContainer}>
           <TouchableOpacity
             style={styles.calenderStyle}
-            // onPress={showDatePicker}
             onPress={() => setCountryModal(true)}>
             <View style={{ ...styles.textHeader, width: ms(64) }}>
               <Text style={styles.haderStyle}>{Translation.country}</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
+              <Text style={{ alignSelf: 'center', fontSize: 16, color: colors.black }}>
                 {country ? country.name : Translation.select_country}
               </Text>
             </View>
@@ -317,7 +313,7 @@ const LocationForm = ({ route }) => {
             <View style={styles.firstTextinput}>
               <TextInput
                 placeholder={Translation.please_enter_pin}
-                placeholderTextColor={'black'}
+                placeholderTextColor={colors.black}
                 onChangeText={setpin}
                 value={pin}
                 keyboardType="numeric"
@@ -339,7 +335,7 @@ const LocationForm = ({ route }) => {
               placeholder={Translation.please_enter_address}
               onChangeText={setAddress}
               value={address}
-              placeholderTextColor={'black'}
+              placeholderTextColor={colors.black}
               style={styles.textINput}
             />
           </View>
@@ -351,7 +347,6 @@ const LocationForm = ({ route }) => {
         <View style={styles.calenderContainer}>
           <TouchableOpacity
             style={styles.calenderStyle}
-          // onPress={showDatePicker}
           >
             <View style={{ ...styles.textHeader, width: ms(37) }}>
               <Text style={styles.haderStyle}>{Translation.city}</Text>
@@ -361,7 +356,7 @@ const LocationForm = ({ route }) => {
                 placeholder={Translation.please_enter_city}
                 onChangeText={setcityName}
                 value={cityName}
-                placeholderTextColor={'black'}
+                placeholderTextColor={colors.black}
                 style={styles.textINput}
               />
             </View>
@@ -377,7 +372,7 @@ const LocationForm = ({ route }) => {
               <Text style={styles.haderStyle}>{Translation.state}</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{ alignSelf: 'center', fontSize: 16, color: 'black' }}>
+              <Text style={{ alignSelf: 'center', fontSize: 16, color: colors.black }}>
                 {selectedState ? selectedState.name : Translation.select_state}
               </Text>
             </View>
@@ -731,7 +726,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     justifyContent: 'center',
     alignSelf: 'center',
-    color: 'black',
+    color: colors.black,
     fontWeight: 'bold',
   },
 
@@ -767,9 +762,9 @@ const styles = StyleSheet.create({
     // paddingHorizontal:10
   },
   haderStyle: {
-    // color: 'black',
+    // color: colors.black,
     fontSize: 16,
-    color: 'black',
+    color: colors.black,
     fontWeight: 'bold',
     backgroundColor: '#fff',
     // elevation:2
@@ -839,7 +834,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    color: 'black',
+    color: colors.black,
   },
   searchStyle: {
     borderWidth: 1,

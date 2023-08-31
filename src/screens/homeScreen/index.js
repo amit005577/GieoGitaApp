@@ -14,11 +14,11 @@ import { useTranslation } from '../../utills.js/translation-hook';
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
-  const { Translation, isLoading, handleGetHomeData, homePageData } =
+  const { Translation, isLoading, handleGetHomeData, homePageData, saveHtmlUrlAction } =
     useHomeHooks();
   const { handleDefaultLanguage } = useTranslation()
-  const [sourceHtml, setSourceHtml] = useState('')
   const selectedLang = useSelector(state => state.AppReducers.selectedLangCode);
+  const sourceHtml = useSelector(state => state.AppReducers.homePageHtmlUrl);
 
   useEffect(() => {
     handleGetHomeData();
@@ -30,13 +30,13 @@ const HomeScreen = () => {
       const curLang = await handleDefaultLanguage()
       if (homePageData?.data?.length > 0) {
         const currentUrl = homePageData?.data[0]?.translations.find((item) => item.lang == curLang.code)
-        setSourceHtml(currentUrl?.content)
+        saveHtmlUrlAction(currentUrl?.content) 
       }
     }
     updateHtmlContent()
   }, [homePageData, selectedLang])
 
-  const IndicatorLoadingView=()=> {
+  const IndicatorLoadingView = () => {
     return (
       <ActivityIndicator
         color="#3235fd"
@@ -47,10 +47,9 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       {isLoading ? <Loader /> : null}
       <HeaderPage />
-
       <WebView
         originWhitelist={['*']}
         source={{ html: sourceHtml }}
@@ -65,7 +64,6 @@ const HomeScreen = () => {
         renderLoading={IndicatorLoadingView}
         startInLoadingState={true}
       />
-
     </SafeAreaView>
   );
 };
@@ -83,41 +81,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    bottom: 0
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    alignItems: 'center',
-    height: 70,
-    backgroundColor: 'orange',
-  },
-  textContainer: {
-    display: 'flex',
-  },
-  textStyle: {
-    alignSelf: 'center',
-  },
-  titleStyle: {
-    alignSelf: 'center',
-    marginTop: 18,
-    fontSize: 22,
-    color: '#F7941C',
-  },
-  rowImage: {
-    flexDirection: 'row',
-    marginH: 20,
-    justifyContent: 'space-around',
-    marginTop: 30,
-  },
-  imagestyle: { height: 100, width: windowWidth / 3, resizeMode: 'stretch' },
-  listItem: {
-    color: '#2A2A2A',
-    fontSize: 12,
-    marginTop: 10,
+    bottom: 0,
 
-    fontWeight: 'bold',
-    textAlign: 'justify',
   },
 });

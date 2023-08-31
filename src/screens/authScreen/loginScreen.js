@@ -29,6 +29,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
 const LoginPage = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
+  const selectedLang = useSelector(state => state.AppReducers.selectedLangCode);
 
   const [text, onChangeText] = React.useState('');
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const LoginPage = ({ navigation }) => {
   const onSigniInFacebook = async () => {
     // Attempt login with permissions
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-    console.log('result::::', result);
+    console.log('facebook::::', result);
 
     if (result.isCancelled) {
       throw 'User cancelled the login process';
@@ -91,7 +92,7 @@ const LoginPage = ({ navigation }) => {
     // Once signed in, get the users AccessToken
     const data = await AccessToken.getCurrentAccessToken();
 
-    console.log('data::::', data);
+    console.log('facebook:::::', data);
     if (!data) {
       throw 'Something went wrong obtaining access token';
     }

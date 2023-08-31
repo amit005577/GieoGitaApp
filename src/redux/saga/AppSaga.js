@@ -267,6 +267,7 @@ const getTranslationsSaga = function* ({ payload }) {
     yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
     yield put(setIsLoading(false))
+    // console.log('??????????',res?.data);
     if (res.data != null) {
       var result = {};
       const translations = res?.data?.data
@@ -281,6 +282,8 @@ const getTranslationsSaga = function* ({ payload }) {
       });
     }
   } catch (error) {
+    console.log('ERROR: ', error);
+    yield put(setIsLoading(false))
   }
 };
 

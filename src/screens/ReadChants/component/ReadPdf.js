@@ -120,21 +120,17 @@ const ReadPdfScreen = () => {
             page={currentPage}
             onPageChanged={(page, numberOfPages) => {
               setCurrentPage(page);
-              // console.log(`Current page: ${page}`);
             }}
             fitPolicy={Dimensions.get('window').width}
             scale={zoom}
             renderActivityIndicator={() => (
               <ActivityIndicator color="black" size="large" />
             )}
-            // onScaleChanged={.1}
-            // enablePaging={true}
-            onLoadProgress={percentage => console.log(`Loading :${percentage}`)}
+            onLoadProgress={percentage => console.log(`PDF Loading::: :${percentage}`)}
             onLoadComplete={numberOfPages => {
               setTotalPage(numberOfPages);
             }}
             onError={error => console.log('show error', error)}
-            // onPageSingleTap={page => alert(page)}
             onPressLink={link => Linking.openURL(link)}
             spacing={30}
             style={{
@@ -155,18 +151,19 @@ const ReadPdfScreen = () => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+          <Text style={[styles.textStyle,{fontSize:22}]}>{Translation.select_language}</Text>
+
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>cancel</Text>
+              <Text style={styles.textStyle}>{Translation.cancel}</Text>
             </Pressable>
-            <View style={{marginTop: 20}}>
+            <View style={{flex:1,paddingBottom:5}}>
               <FlatList
                 data={completeList}
                 keyExtractor={item => item.id}
                 ListFooterComponent={() => <View style={{height: 200}} />}
                 renderItem={({item}) => {
-                  // console.log('show item data ddkfdk', item);
                   return (
                     <TouchableOpacity
                       onPress={() => handleOnpressLanguage(item)}
@@ -183,9 +180,6 @@ const ReadPdfScreen = () => {
                         name="check-circle"
                         size={20}
                         color={
-                          // item.language == selected.language
-                          //   ? 'green'
-                          // :
                           'orange'
                         }
                       />
@@ -209,7 +203,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: 25,
-    // paddingHorizontal: 20,
   },
   pdf: {
     flex: 1,
@@ -222,7 +215,6 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     height: 100,
-    // left: -10,
   },
   iconStyle: {
     justifyContent: 'center',
@@ -236,18 +228,15 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     fontWeight: 'bold',
     height: 53,
-    // width: 90,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     borderColor: 'orange',
    
-    // margin: 20,
   },
   container: {
     flex: 1,
-    // paddingTop: StatusBar.currentHeight,
   },
   submitstyle: {
     marginTop: 20,
@@ -261,7 +250,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   insideContainer: {
-    // borderWidth: 1,
     height: 70,
     width: 100,
     alignContent: 'center',
@@ -281,17 +269,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
-    // margin: 20,
-    // marginTop: 300,
-    backgroundColor: '#ffffffff',
-    // borderRadius: 20,
-    // padding: 35,
-    height: '100%',
-    width: '100%',
-    // alignItems: 'center',
+    width: '93%',
+    height: '80%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingTop: 20,
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -300,22 +285,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    bottom: 0,
   },
   button: {
-    // borderRadius: 20,
     padding: 10,
-    // elevation: 2,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: 'white',
-    // borderWidth: 2,
-    // borderColor: 'orange',
+    backgroundColor: 'orange',
     alignSelf: 'center',
     right: 10,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 7,
+    elevation: 5,
+    zIndex: 10
   },
   textStyle: {
     color: 'red',
@@ -324,9 +312,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   modalText: {
-    // marginTop: 20,
     marginBottom: 20,
-    // textAlign: 'center',
     fontSize: 22,
     color: '#434343',
   },
@@ -346,54 +332,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     padding: 10,
     borderRadius: 100,
-    // right:10,
-    // top:90
   },
 });
-
-const languageData = [
-  {
-    id: 1,
-    language: 'Hindi',
-  },
-  {
-    id: 2,
-    language: 'Englist',
-  },
-  {
-    id: 3,
-    language: 'Marathi',
-  },
-  {
-    id: 4,
-    language: 'Gujrati',
-  },
-  {
-    id: 5,
-    language: 'Telgu',
-  },
-  {
-    id: 6,
-    language: 'Bangla',
-  },
-  {
-    id: 7,
-    language: 'Odia',
-  },
-  {
-    id: 8,
-    language: 'Tamil',
-  },
-  {
-    id: 9,
-    language: 'Bangla',
-  },
-  {
-    id: 10,
-    language: 'Odia',
-  },
-  {
-    id: 11,
-    language: 'Tamil',
-  },
-];

@@ -30,6 +30,7 @@ import {
 } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
 import CustomModal from './components/CustomModal';
+import { EventRowMemo } from './components/EventRow';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -188,51 +189,57 @@ const EventPage = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity
-        style={styles.iconContianer}
-        onPress={() => onEventPress(item)}
-      >
-        <View style={{ flex: 1 }}>
-          <View style={[styles.oneItem,]}>
-            <IconV name="globe" color='#4d4c4a' size={18} />
-            <Text numberOfLines={2} style={[styles.textstyle, { marginLeft: 5 }]}>
-              {item.name}
-            </Text>
-          </View>
-          <View style={styles.itemlistcontainer}>
-            <View style={[styles.oneItem, {}]}>
-              <Icon name="calendar" color='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14, marginLeft: 5 }}>
-                {moment(item?.create_at).format('DD-MMM-YYYY')}
-              </Text>
-            </View>
-            <View style={[styles.oneItem, {}]}>
-              <IconE name="location" color='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
-                {item.place_type}
-              </Text>
-            </View>
-            <View style={{ ...styles.oneItem, marginRight: 10, marginLeft: 5 }}>
-              <IconF name="users" color='#4d4c4a' size={15} />
-              <Text style={{ ...styles.textstyle, fontSize: 14, marginLeft: 5 }}>
-                {item.participants}
-              </Text>
-            </View>
-          </View>
-        </View>
+      <EventRowMemo
+        item={item}
+        index={index}
+        navigation={navigation}
+        onEventPress={onEventPress}
+        validateCurrentUser={validateCurrentUser}
+      />
+      // <TouchableOpacity
+      //   style={styles.iconContianer}
+      //   onPress={() => onEventPress(item)}
+      // >
+      //   <View style={{ flex: 1 }}>
+      //     <View style={[styles.oneItem,]}>
+      //       <IconV name="globe" color='#4d4c4a' size={18} />
+      //       <Text numberOfLines={2} style={[styles.textStyle, { marginLeft: 5 }]}>
+      //         {item.name}
+      //       </Text>
+      //     </View>
+      //     <View style={styles.itemlistcontainer}>
+      //       <View style={[styles.oneItem, {}]}>
+      //         <Icon name="calendar" color='#4d4c4a' size={15} />
+      //         <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
+      //           {moment(item?.create_at).format('DD-MMM-YYYY')}
+      //         </Text>
+      //       </View>
+      //       <View style={[styles.oneItem, {}]}>
+      //         <IconE name="location" color='#4d4c4a' size={15} />
+      //         <Text style={{ ...styles.textStyle, fontSize: 14 }}>
+      //           {item.place_type}
+      //         </Text>
+      //       </View>
+      //       <View style={{ ...styles.oneItem, marginRight: 10, marginLeft: 5 }}>
+      //         <IconF name="users" color='#4d4c4a' size={15} />
+      //         <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
+      //           {item.participants}
+      //         </Text>
+      //       </View>
+      //     </View>
+      //   </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
-          {
-            validateCurrentUser(item?.phone, item?.email) ?
-              <IconF name="edit" color='orange' size={25} />
-              : null
-          }
-          <Icon name="right" color='#4d4c4a' size={25} />
-        </TouchableOpacity>
-      </TouchableOpacity>
+      //   <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
+      //     {
+      //       validateCurrentUser(item?.phone, item?.email) ?
+      //         <IconF name="edit" color='orange' size={25} />
+      //         : null
+      //     }
+      //     <Icon name="right" color='#4d4c4a' size={25} />
+      //   </TouchableOpacity>
+      // </TouchableOpacity>
     );
   };
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -338,6 +345,9 @@ const EventPage = ({ navigation }) => {
         ListFooterComponent={() => {
           return <View style={{ height: 330 }} />;
         }}
+        removeClippedSubviews={true}
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
       />
 
       <Modal
@@ -423,11 +433,9 @@ export default EventPage;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    backgroundColor:'#fffdfa'
+    backgroundColor: '#fffdfa'
   },
-  textstyle: {
-    color: colors.black
-  },
+
   firstRowStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -452,7 +460,7 @@ const styles = StyleSheet.create({
   eventBtn: {
     width: windowWidth / 3.3,
     paddingHorizontal: 5,
-    paddingVertical:7,
+    paddingVertical: 7,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -593,7 +601,7 @@ const styles = StyleSheet.create({
     top: 10
   },
   textStyle: {
-    color: 'white',
+    color: colors.black,
     fontWeight: 'bold',
     textAlign: 'center',
   },

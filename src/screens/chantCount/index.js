@@ -91,12 +91,11 @@ const ChantCount = ({ navigation }) => {
         redirect: 'follow'
       };
       handleLoader(true)
-      console.log(requestOptions);
+      // console.log(requestOptions);
       fetch(`${Constants.BASE_URL}events-history/update`, requestOptions)
         .then(response => response.text())
         .then(result => {
           const res = JSON.parse(result)
-          console.log('>>>>>>>>>>>>>>>>>>', res.data)
           handleLoader(false)
           navigation.navigate('MyChantsHistory')
         })
@@ -104,12 +103,8 @@ const ChantCount = ({ navigation }) => {
           handleLoader(false)
           console.log('error', error)
         });
-      return
-
-
     }
     setDisable(true);
-    // dispatch(getcurrentcountStatus());
   };
 
   const handleOnpress = () => {

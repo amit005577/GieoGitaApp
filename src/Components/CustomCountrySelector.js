@@ -11,12 +11,9 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-// import {ms} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Entypo';
 import EvilIcon from 'react-native-vector-icons/Fontisto';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
-// import {Colors} from '../../../themes/colorHelper';
-// import {countryCodeNumber} from '../../../redux/reducers/selectors/userSelector';
 
 const CustomCountrySelector = ({
   data,
@@ -24,8 +21,9 @@ const CustomCountrySelector = ({
   modalVisible,
   setSelectedItem,
   selectedItem,
+  title
 }) => {
- 
+
   const [searchText, setSearchText] = useState('');
 
   const handleItemSelect = item => {
@@ -42,29 +40,24 @@ const CustomCountrySelector = ({
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
           <View
             style={{
               ...styles.centeredView,
-              marginTop:
-                //  isKeyboardVisible ? 0 :
-                320,
+              marginTop: 320,
             }}>
             <View
               style={{
                 ...styles.modalView,
-                height:
-                  // isKeyboardVisible ? null :
-                  390,
+                height: 390,
               }}>
               <TouchableOpacity
                 style={styles.lineStyle}
                 onPress={() => setModalVisible(false)}
               />
               <View style={styles.countryNameContener}>
-                <Text style={styles.countryNamestyles}>Country Name</Text>
+                <Text style={styles.countryNamestyles}>{title} </Text>
                 <Icon
                   name="cross"
                   size={20}
@@ -82,14 +75,14 @@ const CustomCountrySelector = ({
                   onChangeText={value => setSearchText(value)}
                   value={searchText}
                   style={styles.textInputStyle}
-                  // autoCapitalize={false}
+                // autoCapitalize={false}
                 />
               </View>
               {data && (
                 <FlatList
                   data={data}
                   keyExtractor={item => item.i}
-                  renderItem={({item}) => {
+                  renderItem={({ item }) => {
                     // alert('run');
                     if (searchText === '') {
                       return (

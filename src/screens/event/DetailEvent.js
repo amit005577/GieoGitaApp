@@ -163,7 +163,7 @@ const DetailEvent = ({ route }) => {
         <Loader /> : null
       }
       <HeaderPage />
-      {isCopied ? <CustomeToast /> : null}
+      {isCopied ? <CustomeToast msg={Translation.clipboard_to_copied} /> : null}
       <View style={{ paddingHorizontal: 10 }}>
         <Text style={styles.idstyle}>{Translation.event_id + ':'}{item?.id}</Text>
         <View style={styles.singleItem}>
@@ -252,7 +252,7 @@ const DetailEvent = ({ route }) => {
           justifyContent: 'space-between',
           paddingHorizontal: 10,
         }}>
-        <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share+':'}</Text>
+        <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share + ':'}</Text>
         <IconW
           onPress={() => {
             onPressWhatsApp();

@@ -7,17 +7,16 @@ import {
   Animated,
   StatusBar,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {SceneMap, TabView} from 'react-native-tab-view';
+import { SceneMap, TabView } from 'react-native-tab-view';
 import HeaderPage from '../../Components/header';
 import ReadPdfScreen from './component/ReadPdf';
 import VideoScreen from './component/Viedo';
-import {useDispatch} from 'react-redux';
-import {getAllpdfData, getVideoData} from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { getAllpdfData, getVideoData } from '../../redux/actions';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
-// import HeaderPage from '../../components/header';
 
 const ReadChantPage = () => {
   const { Translation } = useTranslation()
@@ -29,8 +28,8 @@ const ReadChantPage = () => {
   }, []);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: Translation.read},
-    {key: 'second', title: Translation.video},
+    { key: 'first', title: Translation.read },
+    { key: 'second', title: Translation.video },
   ]);
   const renderScene = SceneMap({
     first: ReadPdfScreen,
@@ -50,14 +49,11 @@ const ReadChantPage = () => {
 
           return (
             <TouchableOpacity
+              key={i.toString()}
               style={{
                 ...styles.tabItem,
-                backgroundColor: index == i ? '#EF4136' : 'white',
-                // borderRadius: 20,
-                borderTopLeftRadius: route.title == 'Read' ? 0 : 10,
-                borderTopRightRadius: route.title == 'Read' ? 0 : 10,
-                borderBottomLeftRadius: route.title == 'Read' ? 10 : 10,
-                borderBottomRightRadius: route.title == 'Read' ? 0 : 10,
+                backgroundColor: index == i ? '#EF4136' : colors.white,
+                borderRadius: 9,
               }}
               onPress={() => setIndex(i)}>
               <Animated.Text
@@ -78,14 +74,14 @@ const ReadChantPage = () => {
   return (
     <View style={styles.container}>
       <HeaderPage />
-      <View style={{flex: 1, marginTop: 10}}>
+      <View style={{ flex: 1, marginTop: 10 }}>
         <TabView
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           swipeEnabled={false}
-          navigationState={{index, routes}}
+          navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
+          initialLayout={{ width: layout.width }}
           renderTabBar={renderTabBar}
         />
       </View>
@@ -108,30 +104,22 @@ const styles = StyleSheet.create({
     width: '50%',
     alignSelf: 'center',
     borderRadius: 10,
-
-    // marginTop: 15,
+    backgroundColor: colors.white,
     borderWidth: 1,
     height: 55,
   },
   tabItem: {
-    // flex: 1,
-    // borderTopRadius: 20,
     alignItems: 'center',
     width: '50%',
     height: '100%',
-    // marginBottom: 20,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    // marginTop: 14,
-    // borderWidth: 1,
-
-    // backgroundColor: 'white',
   },
   customTabcontainer: {
     flexDirection: 'row',
   },
-  textHeading:{
-    color:colors.black
+  textHeading: {
+    color: colors.black
   }
 });

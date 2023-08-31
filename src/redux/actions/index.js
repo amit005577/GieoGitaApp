@@ -305,3 +305,10 @@ export const setMyChantsList = payload=>{
     payload,
   }
 }
+
+export const setHomePageHtmlUrl = payload=>{
+  return{
+    type:ActionTypes.HOME_PAGE_HTML_URL,
+    payload,
+  }
+}
