@@ -196,48 +196,6 @@ const EventPage = ({ navigation }) => {
         onEventPress={onEventPress}
         validateCurrentUser={validateCurrentUser}
       />
-      // <TouchableOpacity
-      //   style={styles.iconContianer}
-      //   onPress={() => onEventPress(item)}
-      // >
-      //   <View style={{ flex: 1 }}>
-      //     <View style={[styles.oneItem,]}>
-      //       <IconV name="globe" color='#4d4c4a' size={18} />
-      //       <Text numberOfLines={2} style={[styles.textStyle, { marginLeft: 5 }]}>
-      //         {item.name}
-      //       </Text>
-      //     </View>
-      //     <View style={styles.itemlistcontainer}>
-      //       <View style={[styles.oneItem, {}]}>
-      //         <Icon name="calendar" color='#4d4c4a' size={15} />
-      //         <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
-      //           {moment(item?.create_at).format('DD-MMM-YYYY')}
-      //         </Text>
-      //       </View>
-      //       <View style={[styles.oneItem, {}]}>
-      //         <IconE name="location" color='#4d4c4a' size={15} />
-      //         <Text style={{ ...styles.textStyle, fontSize: 14 }}>
-      //           {item.place_type}
-      //         </Text>
-      //       </View>
-      //       <View style={{ ...styles.oneItem, marginRight: 10, marginLeft: 5 }}>
-      //         <IconF name="users" color='#4d4c4a' size={15} />
-      //         <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
-      //           {item.participants}
-      //         </Text>
-      //       </View>
-      //     </View>
-      //   </View>
-
-      //   <TouchableOpacity onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) })} style={{ justifyContent: 'center', alignItems: 'center' }} >
-      //     {
-      //       validateCurrentUser(item?.phone, item?.email) ?
-      //         <IconF name="edit" color='orange' size={25} />
-      //         : null
-      //     }
-      //     <Icon name="right" color='#4d4c4a' size={25} />
-      //   </TouchableOpacity>
-      // </TouchableOpacity>
     );
   };
 
@@ -435,7 +393,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#fffdfa'
   },
-
   firstRowStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -485,13 +442,6 @@ const styles = StyleSheet.create({
     color: colors.black,
     width: 80,
   },
-  textInputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
   textContainer: {
     borderWidth: 1,
     width: '95%',
@@ -532,36 +482,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     marginTop: 10,
   },
-  itemlistcontainer: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
-  iconContianer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#faf6f0',
-    marginTop: 10,
-    paddingHorizontal: 10,
-    padding: 10,
-    borderRadius: 5,
-    marginHorizontal: 15,
-
-    shadowColor: "#526cff",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 4,
-  },
-
-  oneItem: {
-    flexDirection: 'row',
-    alignContent: 'center',
-    alignItems: 'center',
-  },
 
   centeredView: {
     flex: 1,
@@ -599,11 +519,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 10
-  },
-  textStyle: {
-    color: colors.black,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
