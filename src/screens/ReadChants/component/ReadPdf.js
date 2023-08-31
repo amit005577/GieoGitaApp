@@ -24,11 +24,11 @@ import Constants from '../../../utills.js/Constants';
 import { useTranslation } from '../../../utills.js/translation-hook';
 
 const ReadPdfScreen = () => {
-  const [todaysDate, setTodaysDate] = React.useState(moment().format('DD MMM'));
   const [modalVisible, setModalVisible] = React.useState(false);
-  const pdfRef = useRef(null);
   const [totalPage, setTotalPage] = React.useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+
   const { Translation } = useTranslation()
   const [selected, setSelected] = useState({
     id: 17,
@@ -44,6 +44,13 @@ const ReadPdfScreen = () => {
   // const pdflist = useSelector(state => state.AppReducers.pdfData);
   const pdfList = useSelector(state => state.AppReducers.pdfList);
   const completeList = useSelector(state => state.AppReducers.languageList);
+
+  const previousValue = useRef(null);
+
+  useEffect(() => {
+    previousValue.current = currentPage;
+  }, [currentPage]);
+
   useEffect(() => {
     dispatch(languageList());
   }, []);
@@ -73,72 +80,83 @@ const ReadPdfScreen = () => {
     setZoom(zoom - 0.1);
   };
 
+  const renderActivityIndicator = () => {
+    return (
+      <View>
+        <ActivityIndicator color="black" size="large" />
+      </View>
+    )
+  }
+  
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex:1}}>
-        <View style={styles.monthContainer}>
-          <TouchableOpacity onPress={zoomdecrease}>
-            <FIcon
-              name="minus-circle"
-              size={40}
-              style={{...styles.iconStyle}}
-            />
-          </TouchableOpacity>
-          <View>
-            <TouchableOpacity
-              style={styles.monthContentStyle}
-              onPress={() => handleOnpress()}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontWeight: 'bold',
-                  alignSelf: 'center',
-                }}>
-              {Translation.select_language}
-              </Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 12,
-                color: 'red',
-                alignSelf: 'center',
-                marginTop: 2,
-              }}>
-              {currentPage}/{totalPage}
-            </Text>
-          </View>
-          <TouchableOpacity onPress={zoomIncrease}>
-            <FIcon name="plus-circle" size={40} style={{...styles.iconStyle}} />
-          </TouchableOpacity>
-        </View>
+      <View style={{ flex: 1 }}>
+        {
+          previousValue.current >= currentPage ?
+            <View style={styles.monthContainer}>
+              <TouchableOpacity onPress={zoomdecrease}>
+                <FIcon
+                  name="minus-circle"
+                  size={40}
+                  style={{ ...styles.iconStyle }}
+                />
+              </TouchableOpacity>
+              <View>
+                <TouchableOpacity
+                  style={styles.monthContentStyle}
+                  onPress={() => handleOnpress()}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontWeight: 'bold',
+                      alignSelf: 'center',
+                    }}>
+                    {Translation.select_language}
+                  </Text>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: 'red',
+                    alignSelf: 'center',
+                    marginTop: 2,
+                  }}>
+                  {currentPage}/{totalPage}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={zoomIncrease}>
+                <FIcon name="plus-circle" size={40} style={{ ...styles.iconStyle }} />
+              </TouchableOpacity>
+            </View> : null}
 
-          <Pdf
-            trustAllCerts={false}
-            source={{
-              uri: selected?.file_short_content,
-            }}
-            page={currentPage}
-            onPageChanged={(page, numberOfPages) => {
-              setCurrentPage(page);
-            }}
-            fitPolicy={Dimensions.get('window').width}
-            scale={zoom}
-            renderActivityIndicator={() => (
-              <ActivityIndicator color="black" size="large" />
-            )}
-            onLoadProgress={percentage => console.log(`PDF Loading::: :${percentage}`)}
-            onLoadComplete={numberOfPages => {
-              setTotalPage(numberOfPages);
-            }}
-            onError={error => console.log('show error', error)}
-            onPressLink={link => Linking.openURL(link)}
-            spacing={30}
-            style={{
-              height: 590,
-              width: Dimensions.get('window').width,
-              marginBottom: 100,
-            }}
-          />
+        <Pdf
+          trustAllCerts={false}
+          source={{
+            uri: selected?.file_short_content,
+          }}
+          page={1}
+          onPageChanged={(page, numberOfPages) => {
+            setCurrentPage(page);
+          }}
+          fitPolicy={Dimensions.get('window').width}
+          scale={zoom}
+          renderActivityIndicator={renderActivityIndicator}
+          onLoadProgress={percentage => {
+            console.log(`PDF Loading::: :${percentage}`)
+            setDownloadProgress(percentage)
+          }}
+          onLoadComplete={numberOfPages => {
+            setTotalPage(numberOfPages);
+          }}
+          onError={error => console.log('show error', error)}
+          onPressLink={link => Linking.openURL(link)}
+          spacing={10}
+          style={{
+            height: Dimensions.get('window').height,
+            width: Dimensions.get('window').width,
+            marginBottom: 50,
+          }}
+        />
       </View>
 
       <Modal
@@ -151,19 +169,19 @@ const ReadPdfScreen = () => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <Text style={[styles.textStyle,{fontSize:22}]}>{Translation.select_language}</Text>
+            <Text style={[styles.textStyle, { fontSize: 22 }]}>{Translation.select_language}</Text>
 
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>{Translation.cancel}</Text>
             </Pressable>
-            <View style={{flex:1,paddingBottom:5}}>
+            <View style={{ flex: 1, paddingBottom: 5 }}>
               <FlatList
                 data={completeList}
                 keyExtractor={item => item.id}
-                ListFooterComponent={() => <View style={{height: 200}} />}
-                renderItem={({item}) => {
+                ListFooterComponent={() => <View style={{ height: 200 }} />}
+                renderItem={({ item }) => {
                   return (
                     <TouchableOpacity
                       onPress={() => handleOnpressLanguage(item)}
@@ -224,7 +242,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   monthContentStyle: {
-     minWidth:"40%",
+    minWidth: "40%",
     borderWidth: 2,
     fontWeight: 'bold',
     height: 53,
@@ -233,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     borderColor: 'orange',
-   
+
   },
   container: {
     flex: 1,
