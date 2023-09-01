@@ -627,13 +627,14 @@ const styles = StyleSheet.create({
   },
   eventstyle: {
     backgroundColor: '#434343',
-    width: 240,
-    height: 53,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: 10,
     marginTop: 10,
+    paddingHorizontal:20,
+    paddingVertical:10,
+    minWidth:'80%'
   },
 });

@@ -39,6 +39,7 @@ const HeaderPage = ({containerStyle}) => {
             fontSize: 12,
             color: 'black',
             fontWeight: 'bold',
+            flex:1
           }}>
           {Translation.eighteen_verse_gita_recitation_campaign}
         </Text>
@@ -89,10 +90,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
   },
   textContainer: {
-    display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
+    flex:1
   },
   textStyle: {
     alignSelf: 'center',

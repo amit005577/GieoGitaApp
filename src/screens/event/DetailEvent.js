@@ -157,6 +157,8 @@ const DetailEvent = ({ route }) => {
     setLocalImage(null);
   };
 
+  console.log(':::::::::', item);
+
   return (
     <View style={styles.contaier}>
       {isLoading ?
@@ -208,7 +210,7 @@ const DetailEvent = ({ route }) => {
         <View style={styles.addresStyle}>
           <View style={{ width: '50%', alignSelf: 'flex-end' }}>
             <Text style={{ fontSize: 18, color: 'black' }}>
-              {Translation.address + ':'} <Text style={{ fontSize: 14 }}>{item?.address}</Text>{' '}
+              {Translation.address + ':'}
             </Text>
             <Text
               style={{
@@ -218,7 +220,7 @@ const DetailEvent = ({ route }) => {
                 marginTop: 10,
                 fontWeight: '400',
               }}>
-              {item?.country_id}
+              {`${item?.address}, ${item?.country_id}, ${item?.phone_visible == 'Yes' ? item?.place_name : ''}, ${item?.pincode}`}
             </Text>
           </View>
           <View>
@@ -239,7 +241,7 @@ const DetailEvent = ({ route }) => {
                 marginTop: 10,
                 fontWeight: '400',
               }}>
-              {item?.organizer}
+              {item?.organizer}{'\n'}{item?.phone_visible == 'Yes' ? item?.phone : ''}
             </Text>
           </View>
         </View>
