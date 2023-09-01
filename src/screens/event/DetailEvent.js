@@ -38,7 +38,7 @@ const DetailEvent = ({ route }) => {
   const dispatch = useDispatch();
   const [isCopied, setisCopied] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [localImage, setLocalImage] = useState(null);
+  const [localImage, setLocalImage] = useState('');
 
   const handleImagePick = val => {
     setModalVisible(true);
@@ -300,23 +300,24 @@ const DetailEvent = ({ route }) => {
           <Text style={styles.confirmbtn}>{Translation.event_confirmation}</Text>
         </TouchableOpacity>
       ) : null}
+      {localImage ? (
+        <>
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image source={{ uri: localImage }} style={styles.bigImagecontainer} />
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Image source={{ uri: localImage }} style={styles.bigImagecontainer} />
-      </TouchableOpacity>
-
-      {localImage && (
-        <TouchableOpacity
-          style={{ ...styles.confimationContianer, alignSelf: 'center' }}
-          onPress={handleConfirmationEvent}>
-          <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
-        </TouchableOpacity>
-      )}
+          <TouchableOpacity
+            style={{ ...styles.confimationContianer, alignSelf: 'center' }}
+            onPress={handleConfirmationEvent}>
+            <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
+          </TouchableOpacity>
+        </>
+      ) : null}
 
       <Modal
         animationType="slide"

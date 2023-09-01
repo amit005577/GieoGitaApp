@@ -79,7 +79,7 @@ const LoginPage = ({ navigation }) => {
   //   }
   // };
 
-
+  // call once facebook developer account activated and live 
   const onSigniInFacebook = async () => {
     // Attempt login with permissions
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
@@ -173,29 +173,16 @@ const LoginPage = ({ navigation }) => {
           {Translation.login_with}
         </Text>
 
-        <View style={{
-          flexDirection: 'row',
-          marginTop: 20,
-          alignSelf: 'center'
-        }} >
 
-          <TouchableOpacity
-            onPress={() => signIn()}
-          >
-            <Image source={Google} style={{ height: 50, width: 50 }} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => onSigniInFacebook()}
-          >
-            <Image
-              source={facebook}
-              style={{ height: 50, width: 50, marginLeft: 10 }}
-            />
-          </TouchableOpacity>
-
-        </View>
-
+        <TouchableOpacity
+          onPress={() => signIn()}
+          style={[styles.touchableStyle, { flexDirection: 'row', alignSelf: 'center', backgroundColor: '#faf6f0' }]}
+        >
+          <Image source={Google} style={{ height: 30, width: 30 }} />
+          <Text style={{ alignSelf: 'center', fontSize: 16, marginLeft: 5, color: '#808080' }}>
+            {Translation.sign_in_with_google}
+          </Text>
+        </TouchableOpacity>
 
         <Text style={{ alignSelf: 'center', marginTop: 10, color: '#808080' }}>
           {Translation.do_not_have_an_account}{' '}
@@ -231,19 +218,23 @@ const styles = StyleSheet.create({
     borderColor: '#ECE1B8',
     color: 'black',
   },
+
   touchableStyle: {
-    height: 69,
-    width: '100%',
-    // margin: 12,
-    marginTop: 15,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    fontSize: 16,
-    borderColor: '#ECE1B8',
-    backgroundColor: '#F7941C',
-    justifyContent: 'center',
-    alignContent: 'center',
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 20,
+    backgroundColor: '#F7941C',
+    shadowColor: "#F7941C",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

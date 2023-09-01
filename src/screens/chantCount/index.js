@@ -147,23 +147,23 @@ const ChantCount = ({ navigation, route }) => {
     dispatch(getcurrentcountStatus());
   };
 
-  const dateIncrement = () => {
-    let _newDate = moment(todaysDate, 'DD MMMM')
-      .add(1, 'day')
-      .format('DD MMMM');
-    setTodaysDate(_newDate);
-    setNumber(0);
-    dispatch(setPreviousChant(null));
-  };
+  // const dateIncrement = () => {
+  //   let _newDate = moment(todaysDate, 'DD MMMM')
+  //     .add(1, 'day')
+  //     .format('DD MMMM');
+  //   setTodaysDate(_newDate);
+  //   setNumber(0);
+  //   dispatch(setPreviousChant(null));
+  // };
 
-  const dateDecrement = () => {
-    let _newDate = moment(todaysDate, 'DD MMMM')
-      .subtract(1, 'day')
-      .format('DD MMMM');
-    setTodaysDate(_newDate);
-    setNumber(0);
-    dispatch(setPreviousChant(null));
-  };
+  // const dateDecrement = () => {
+  //   let _newDate = moment(todaysDate, 'DD MMMM')
+  //     .subtract(1, 'day')
+  //     .format('DD MMMM');
+  //   setTodaysDate(_newDate);
+  //   setNumber(0);
+  //   dispatch(setPreviousChant(null));
+  // };
 
   const NumberDecreament = () => {
     setNumber(number - 1);
@@ -248,13 +248,13 @@ const ChantCount = ({ navigation, route }) => {
         </View>
 
         <View style={styles.monthContainer}>
-          <TouchableOpacity onPress={() => dateDecrement()}>
+          {/* <TouchableOpacity onPress={() => dateDecrement()}>
             <FIcon
               name="arrow-left-circle"
               size={25}
               style={{ ...styles.iconStyle }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={styles.monthContentStyle}>
             <Text
@@ -265,13 +265,13 @@ const ChantCount = ({ navigation, route }) => {
           </View>
 
           <View>
-            <TouchableOpacity onPress={() => dateIncrement()}>
+            {/* <TouchableOpacity onPress={() => dateIncrement()}>
               <FIcon
                 name="arrow-right-circle"
                 size={25}
                 style={{ ...styles.iconStyle }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
 
