@@ -97,6 +97,7 @@ const getVideoData = function* () {
 
     yield put(setIsLoading(true))
     const res = yield call(fetchRecord, requestUrl);
+    // console.log('Video::::::::::::::',res.data);
     yield put(setIsLoading(false))
     if (res.data != null) {
       yield put({ type: actions.VIDEO_DATA_SUCCESS, payload: res.data.data });

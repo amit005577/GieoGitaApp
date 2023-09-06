@@ -1,9 +1,12 @@
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Clipboard,
+  Dimensions,
+  FlatList,
   Image,
   Modal,
+  PixelRatio,
   Pressable,
   StyleSheet,
   Text,
@@ -26,6 +29,7 @@ import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
 import { eventConfirmation, subscribeEvent } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
+import Constants from '../../utills.js/Constants';
 
 const DetailEvent = ({ route }) => {
   const { Translation, isLoading } = useTranslation()
@@ -39,11 +43,11 @@ const DetailEvent = ({ route }) => {
   const [isCopied, setisCopied] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [localImage, setLocalImage] = useState('');
-
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const [galleryList, setGalleryList] = useState([])
   const handleImagePick = val => {
     setModalVisible(true);
   };
-
   const subscribeResponse = useSelector(
     state => state.EventReducer.subscribeEventResponse,
   );
@@ -157,7 +161,55 @@ const DetailEvent = ({ route }) => {
     setLocalImage(null);
   };
 
-  console.log(':::::::::', item);
+
+  useEffect(() => {
+    handleGalleryAPI()
+  }, [])
+
+  const handleGalleryAPI = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+    };
+
+    fetch(`${Constants.BASE_URL}events-gallery/${item?.id}`, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        const res = JSON.parse(result)
+        console.log('DetailsEvent:::::::::::::::::', res?.data)
+        setGalleryList(res?.data)
+      })
+      .catch(error => console.log('error', error));
+  }
+
+
+
+  const renderItemGallery = ({ item, index }) => {
+    return (
+      <TouchableOpacity activeOpacity={0.6} style={{ flex: 1, marginTop: 10, alignItems: "center" }} >
+        <Image source={{ uri: item.photo }} style={{
+          height: PixelRatio.getPixelSizeForLayoutSize(50),
+          width: PixelRatio.getPixelSizeForLayoutSize(100),
+          borderRadius: 10
+        }} />
+
+        <Text style={{
+          position: 'absolute',
+          bottom: 0,
+          backgroundColor: '#0007',
+          width: PixelRatio.getPixelSizeForLayoutSize(100),
+          borderBottomRightRadius: 9,
+          borderBottomLeftRadius: 9,
+          textAlign: 'center',
+          fontSize: 18,
+          fontWeight: '600'
+        }}>{Translation.event_date}{':'} {moment(item?.create_at).format('ddd-mm-yy')} </Text>
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <View style={styles.contaier}>
@@ -165,162 +217,172 @@ const DetailEvent = ({ route }) => {
         <Loader /> : null
       }
       <HeaderPage />
-      {isCopied ? <CustomeToast msg={Translation.clipboard_to_copied} /> : null}
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text style={styles.idstyle}>{Translation.event_id + ':'}{item?.id}</Text>
-        <View style={styles.singleItem}>
-          <IconV color="gray" name="globe" size={24} />
-          <Text style={styles.textstyle}>{item?.event_type}</Text>
-        </View>
 
-        <View style={styles.locationstyle}>
-          <View style={styles.oneItem}>
-            <Icon name="calendar" color="gray" size={25} />
-            <Text style={{ ...styles.textstyle, fontSize: 14 }}>
-              {moment(item?.create_at).format('ddd-mm-yy')}
-            </Text>
-          </View>
-          <View style={styles.oneItem}>
-            <IconE name="location" size={25} color={colors.black} />
-            <Text style={{ ...styles.textstyle, fontSize: 14 }}>{item?.city}</Text>
-          </View>
-        </View>
-        <Text
-          style={{
-            ...styles.textstyle,
-            fontSize: 17,
-            marginLeft: 0,
-            marginTop: 10,
-          }}>
-          {item?.content}
-        </Text>
-        <Text
-          style={{
-            ...styles.textstyle,
-            fontSize: 14,
-            marginLeft: 0,
-            marginTop: 10,
-            fontWeight: '400',
-          }}>
-          {item?.instraction}
-        </Text>
-        <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-          {Translation.subscrptions + ":"}{item?.subscriptions}
-        </Text>
-        <View style={styles.addresStyle}>
-          <View style={{ width: '50%', alignSelf: 'flex-end' }}>
-            <Text style={{ fontSize: 18, color: 'black' }}>
-              {Translation.address + ':'}
-            </Text>
-            <Text
-              style={{
-                ...styles.textstyle,
-                fontSize: 14,
-                marginLeft: 0,
-                marginTop: 10,
-                fontWeight: '400',
-              }}>
-              {`${item?.address}, ${item?.country_id}, ${item?.phone_visible == 'Yes' ? item?.place_name : ''}, ${item?.pincode}`}
-            </Text>
-          </View>
-          <View>
-            <Text
-              style={{
-                justifyContent: 'flex-end',
-                alignSelf: 'flex-end',
-                fontSize: 18,
-                color: 'black',
-              }}>
-              {Translation.organizer + ':'}
-            </Text>
-            <Text
-              style={{
-                ...styles.textstyle,
-                fontSize: 14,
-                marginLeft: 0,
-                marginTop: 10,
-                fontWeight: '400',
-              }}>
-              {item?.organizer}{'\n'}{item?.phone_visible == 'Yes' ? item?.phone : ''}
-            </Text>
-          </View>
-        </View>
-      </View>
 
-      <View
-        style={{
-          marginTop: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 10,
-        }}>
-        <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share + ':'}</Text>
-        <IconW
-          onPress={() => {
-            onPressWhatsApp();
-          }}
-          name="whatsapp"
-          color="#189633"
-          size={30}
-        />
-        <IconV
-          onPress={() => {
-            onPressFacebook();
-          }}
-          name="facebook"
-          color="#1b32a1"
-          size={30}
-        />
-        <Icon
-          onPress={() => {
-            onPressTwitter();
-          }}
-          name="twitter"
-          color="#119af5"
-          size={30}
-        />
-        <IconIonic
-          onPress={() => {
-            onPressCopy();
-          }}
-          name="copy-outline"
-          color="gray"
-          size={30}
-        />
-        <TouchableOpacity
-          style={styles.subscribecontainer}
-          onPress={() => handleSubscrible(item?.id)}>
-          <Text style={{ color: 'white' }}>
-            {subscription == '1' ? Translation.subscribed : Translation.subscribe}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {isCurrentUser ? (
-        <TouchableOpacity
-          style={styles.confimationContianer}
-          onPress={() => handleImagePick()}>
-          <Text style={styles.confirmbtn}>{Translation.event_confirmation}</Text>
-        </TouchableOpacity>
-      ) : null}
-      {localImage ? (
-        <>
-          <TouchableOpacity
+      <>
+        {isCopied ? <CustomeToast msg={Translation.clipboard_to_copied} /> : null}
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text style={styles.idstyle}>{Translation.event_id + ':'}{item?.id}</Text>
+          <View style={styles.singleItem}>
+            <IconV color="gray" name="globe" size={24} />
+            <Text style={styles.textstyle}>{item?.event_type}</Text>
+          </View>
+
+          <View style={styles.locationstyle}>
+            <View style={styles.oneItem}>
+              <Icon name="calendar" color="gray" size={25} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                {moment(item?.create_at).format('ddd-mm-yy')}
+              </Text>
+            </View>
+            <View style={styles.oneItem}>
+              <IconE name="location" size={25} color={colors.black} />
+              <Text style={{ ...styles.textstyle, fontSize: 14 }}>{item?.city}</Text>
+            </View>
+          </View>
+          <Text
             style={{
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'center',
+              ...styles.textstyle,
+              fontSize: 17,
+              marginLeft: 0,
+              marginTop: 10,
             }}>
-            <Image source={{ uri: localImage }} style={styles.bigImagecontainer} />
-          </TouchableOpacity>
+            {item?.content}
+          </Text>
+          <Text
+            style={{
+              ...styles.textstyle,
+              fontSize: 14,
+              marginLeft: 0,
+              marginTop: 10,
+              fontWeight: '400',
+            }}>
+            {item?.instraction}
+          </Text>
+          <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
+            {Translation.subscrptions + ":"}{item?.subscriptions}
+          </Text>
+          <View style={styles.addresStyle}>
+            <View style={{ width: '50%', alignSelf: 'flex-end' }}>
+              <Text style={{ fontSize: 18, color: 'black' }}>
+                {Translation.address + ':'}
+              </Text>
+              <Text
+                style={{
+                  ...styles.textstyle,
+                  fontSize: 14,
+                  marginLeft: 0,
+                  marginTop: 10,
+                  fontWeight: '400',
+                }}>
+                {`${item?.address}, ${item?.country_id}, ${item?.phone_visible == 'Yes' ? item?.place_name : ''}, ${item?.pincode}`}
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  justifyContent: 'flex-end',
+                  alignSelf: 'flex-end',
+                  fontSize: 18,
+                  color: 'black',
+                }}>
+                {Translation.organizer + ':'}
+              </Text>
+              <Text
+                style={{
+                  ...styles.textstyle,
+                  fontSize: 14,
+                  marginLeft: 0,
+                  marginTop: 10,
+                  fontWeight: '400',
+                }}>
+                {item?.organizer}{'\n'}{item?.phone_visible == 'Yes' ? item?.phone : ''}
+              </Text>
+            </View>
+          </View>
+        </View>
 
+        <View
+          style={{
+            marginTop: 20,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 10,
+          }}>
+          <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share + ':'}</Text>
+          <IconW
+            onPress={() => {
+              onPressWhatsApp();
+            }}
+            name="whatsapp"
+            color="#189633"
+            size={30}
+          />
+          <IconV
+            onPress={() => {
+              onPressFacebook();
+            }}
+            name="facebook"
+            color="#1b32a1"
+            size={30}
+          />
+          <Icon
+            onPress={() => {
+              onPressTwitter();
+            }}
+            name="twitter"
+            color="#119af5"
+            size={30}
+          />
+          <IconIonic
+            onPress={() => {
+              onPressCopy();
+            }}
+            name="copy-outline"
+            color="gray"
+            size={30}
+          />
           <TouchableOpacity
-            style={{ ...styles.confimationContianer, alignSelf: 'center' }}
-            onPress={handleConfirmationEvent}>
-            <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
+            style={styles.subscribecontainer}
+            onPress={() => handleSubscrible(item?.id)}>
+            <Text style={{ color: 'white' }}>
+              {subscription == '1' ? Translation.subscribed : Translation.subscribe}
+            </Text>
           </TouchableOpacity>
-        </>
-      ) : null}
+        </View>
+        {isCurrentUser ? (
+          <TouchableOpacity
+            style={styles.confimationContianer}
+            onPress={() => handleImagePick()}>
+            <Text style={styles.confirmbtn}>{Translation.event_confirmation}</Text>
+          </TouchableOpacity>
+        ) : null}
+        {localImage ? (
+          <>
+            <TouchableOpacity
+              style={{
+                justifyContent: 'center',
+                alignContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image source={{ uri: localImage }} style={styles.bigImagecontainer} />
+            </TouchableOpacity>
 
+            <TouchableOpacity
+              style={{ ...styles.confimationContianer, alignSelf: 'center' }}
+              onPress={handleConfirmationEvent}>
+              <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
+            </TouchableOpacity>
+          </>
+        ) : null}
+      </>
+      <View style={{ paddingTop: 5 }} />
+      <FlatList
+        data={galleryList}
+        renderItem={renderItemGallery}
+        keyExtractor={(item) => item.create_at}
+        contentContainerStyle={{ paddingBottom: 100, }}
+      />
       <Modal
         animationType="slide"
         transparent={true}

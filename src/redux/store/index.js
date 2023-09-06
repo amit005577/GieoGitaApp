@@ -25,7 +25,7 @@ import rootSaga from '../saga';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // blacklist: ['loadingReducer'],
+  blacklist: ['EventReducer','AuthReducer','AppReducers'],
 };
 
 const sagaMiddleware = createSagaMiddleware();

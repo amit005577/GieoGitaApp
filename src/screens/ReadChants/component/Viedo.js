@@ -10,6 +10,7 @@ import { WebView } from 'react-native-webview';
 import { useDispatch, useSelector } from 'react-redux';
 import { videoJson } from '../../../Components/videoJson';
 import { getVideoData } from '../../../redux/actions';
+import Constants from '../../../utills.js/Constants';
 
 const VideoScreen = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const VideoScreen = () => {
   const handleOnpressVideo = (el) => {
     setVideoId(el)
   }
+
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => handleOnpressVideo(item)} style={{
@@ -29,9 +31,8 @@ const VideoScreen = () => {
       }}>
         <ImageBackground
           resizeMode="cover"
-          source={item.thumbnailUrl}
+          source={{uri:`${Constants.YOUTUBE_THUMBNAIL_URL}${item.videoUrl}/0.jpg`}}
           style={styles.thumnailstyle}>
-
         </ImageBackground>
       </TouchableOpacity>
     );
