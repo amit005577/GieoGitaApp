@@ -30,7 +30,7 @@ const HeaderPage = ({containerStyle}) => {
       </TouchableOpacity>
 
       <View style={styles.textContainer}>
-        <Text style={{ ...styles.textStyle, fontSize: 24, color: 'white' }}>
+        <Text style={{ ...styles.textStyle, fontSize: 22,flex:1, color: 'white' }}>
           {Translation.geeta_jeevan_geet}
         </Text>
         <Text
@@ -39,6 +39,7 @@ const HeaderPage = ({containerStyle}) => {
             fontSize: 12,
             color: 'black',
             fontWeight: 'bold',
+            flex:1
           }}>
           {Translation.eighteen_verse_gita_recitation_campaign}
         </Text>
@@ -77,22 +78,20 @@ const HeaderPage = ({containerStyle}) => {
 export default HeaderPage;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignContent: 'center',
     alignItems: 'center',
-    height: 80,
     backgroundColor: 'orange',
+    paddingVertical:5
+
   },
   textContainer: {
-    display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
+    flex:1
   },
   textStyle: {
     alignSelf: 'center',

@@ -67,7 +67,6 @@ const EventPage = ({ navigation }) => {
 
   useEffect(() => {
     setselectedItem(data[0].name)
-
     dispatch(targetChantData());
     dispatch(getAllEvent());
     dispatch(getEventType());
@@ -119,7 +118,6 @@ const EventPage = ({ navigation }) => {
     setEditLoder(true)
     if (myEventData != null && EventData != null && EventData.length > 1) {
       setTimeout(() => {
-        checkEditableOrNot();
         setEditLoder(false)
       }, 1000)
 
@@ -127,22 +125,7 @@ const EventPage = ({ navigation }) => {
     setEditLoder(false)
   }, [myEventData, placeType, eventType]);
 
-  const checkEditableOrNot = () => {
-    let mergedArray = EventData?.reduce((acc, obj) => {
-      let existingObj = acc.find(item => item.id === obj.id);
-      if (existingObj) {
-        Object.assign(existingObj, obj);
-      } else {
-        if (myEventData?.some(item => item.id === obj.id)) {
-          obj.editable = true;
-        }
-        acc.push(obj);
-      }
-      return acc;
-    }, []);
 
-    setEventData(mergedArray);
-  };
 
   const handleFilter = (input) => {
     const text = input.toLowerCase()
@@ -303,7 +286,7 @@ const EventPage = ({ navigation }) => {
         ListFooterComponent={() => {
           return <View style={{ height: 330 }} />;
         }}
-        removeClippedSubviews={true}
+        // removeClippedSubviews={true}
         initialNumToRender={10}
         maxToRenderPerBatch={10}
       />
@@ -371,7 +354,10 @@ const EventPage = ({ navigation }) => {
             </View>
             {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
               <TouchableOpacity
-                onPress={() => navigation.navigate('MyChantsHistory')}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.navigate('MyChantsHistory')
+                }}
                 style={{ ...styles.btn, width: 130, marginTop: 20 }}>
                 <Text style={{ ...styles.textDetails, color: '#fff' }}>
                   {Translation.submission_list}

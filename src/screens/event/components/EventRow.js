@@ -41,17 +41,15 @@ const EventRow = ({ navigation, item, index, validateCurrentUser, onEventPress }
                     </View>
                 </View>
             </View>
-
-            <TouchableOpacity
-                onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) })}
-                style={{ justifyContent: 'center', alignItems: 'center' }} >
-                {
-                    validateCurrentUser(item?.phone, item?.email) ?
+            {
+                validateCurrentUser(item?.phone, item?.email) ?
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('form', { data: item, isCurrentUser: validateCurrentUser(item?.phone, item?.email) })}
+                        style={{ justifyContent: 'center', alignItems: 'center' }} >
                         <IconF name="edit" color='orange' size={25} />
-                        : null
-                }
-                <Icon name="right" color='#4d4c4a' size={25} />
-            </TouchableOpacity>
+
+                    </TouchableOpacity> : <Icon name="right" color='#4d4c4a' size={25} />
+            }
         </TouchableOpacity>
     )
 }

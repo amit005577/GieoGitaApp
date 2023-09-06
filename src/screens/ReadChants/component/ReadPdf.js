@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPdfData, languageList } from '../../../redux/actions';
 import Constants from '../../../utills.js/Constants';
 import { useTranslation } from '../../../utills.js/translation-hook';
+import { colors } from '../../../helper/colors';
 
 const ReadPdfScreen = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -41,11 +42,11 @@ const ReadPdfScreen = () => {
     create_at: '2023-07-18T12:47:47.000000Z',
     updated_at: '2023-07-20T09:22:33.000000Z',
   });
-  // const pdflist = useSelector(state => state.AppReducers.pdfData);
   const pdfList = useSelector(state => state.AppReducers.pdfList);
   const completeList = useSelector(state => state.AppReducers.languageList);
 
   const previousValue = useRef(null);
+  const [scaleByFinger, setscaleByFinger] = useState(0)
 
   useEffect(() => {
     previousValue.current = currentPage;
@@ -59,105 +60,130 @@ const ReadPdfScreen = () => {
   useEffect(() => {
     dispatch(getPdfData());
   }, []);
+
   const handleOnpressLanguage = _item => {
-    let _data = '';
-    pdfList[0].translations.map(item => {
-      item.lang == _item.code && (_data = item);
-    });
-    setSelected(_data);
-    setModalVisible(false);
+    let _data = {}
+    _data = pdfList[0].translations.find(item => item.lang == _item.code);
+    if (_data.file_short_content) {
+      setSelected(_data);
+      setModalVisible(false);
+    } else {
+      _data = pdfList[0].translations.find(item => item.lang == 'en');
+      setSelected(_data);
+      setModalVisible(false);
+    }
   };
+
   const handleOnpress = () => {
     setModalVisible(true);
   };
 
   const [zoom, setZoom] = useState(1);
   const zoomIncrease = () => {
-    setZoom(zoom + 0.1);
+    if (scaleByFinger > 0) {
+      setZoom(scaleByFinger + 0.1);
+      setscaleByFinger(0)
+    } else {
+      setZoom(zoom + 0.1);
+    }
   };
 
   const zoomdecrease = () => {
-    setZoom(zoom - 0.1);
+    if (scaleByFinger > 0) {
+      setZoom(scaleByFinger - 0.1);
+      setscaleByFinger(0)
+    } else {
+      setZoom(zoom - 0.1);
+    }
   };
 
   const renderActivityIndicator = () => {
     return (
-      <View>
-        <ActivityIndicator color="black" size="large" />
+      <View style={{ borderRadius: 100, backgroundColor: colors.white }} >
+        <Text
+          style={{
+            color: 'black',
+            fontWeight: 'bold',
+            alignSelf: 'center',
+            position: 'absolute',
+            top: 20
+          }}>
+          {Math.floor(downloadProgress * 100)}{'%'}
+        </Text>
+        <ActivityIndicator color={colors.orange} size={60} />
       </View>
     )
   }
-  
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1 }}>
-        {
-          previousValue.current >= currentPage ?
-            <View style={styles.monthContainer}>
-              <TouchableOpacity onPress={zoomdecrease}>
-                <FIcon
-                  name="minus-circle"
-                  size={40}
-                  style={{ ...styles.iconStyle }}
-                />
-              </TouchableOpacity>
-              <View>
-                <TouchableOpacity
-                  style={styles.monthContentStyle}
-                  onPress={() => handleOnpress()}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      alignSelf: 'center',
-                    }}>
-                    {Translation.select_language}
-                  </Text>
-                </TouchableOpacity>
+      {
+        previousValue.current >= currentPage ?
+          <View style={styles.monthContainer}>
+            <TouchableOpacity onPress={zoomdecrease}>
+              <FIcon
+                name="minus-circle"
+                size={40}
+                style={{ ...styles.iconStyle }}
+              />
+            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                style={styles.monthContentStyle}
+                onPress={() => handleOnpress()}>
                 <Text
                   style={{
-                    fontSize: 12,
-                    color: 'red',
+                    color: 'black',
+                    fontWeight: 'bold',
                     alignSelf: 'center',
-                    marginTop: 2,
                   }}>
-                  {currentPage}/{totalPage}
+                  {Translation.select_language}
                 </Text>
-              </View>
-              <TouchableOpacity onPress={zoomIncrease}>
-                <FIcon name="plus-circle" size={40} style={{ ...styles.iconStyle }} />
               </TouchableOpacity>
-            </View> : null}
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: 'red',
+                  alignSelf: 'center',
+                  marginTop: 2,
+                }}>
+                {currentPage}/{totalPage}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={zoomIncrease}>
+              <FIcon name="plus-circle" size={40} style={{ ...styles.iconStyle }} />
+            </TouchableOpacity>
+          </View> : null}
 
-        <Pdf
-          trustAllCerts={false}
-          source={{
-            uri: selected?.file_short_content,
-          }}
-          page={1}
-          onPageChanged={(page, numberOfPages) => {
-            setCurrentPage(page);
-          }}
-          fitPolicy={Dimensions.get('window').width}
-          scale={zoom}
-          renderActivityIndicator={renderActivityIndicator}
-          onLoadProgress={percentage => {
-            // console.log(`PDF Loading::: :${percentage}`)
-            setDownloadProgress(percentage)
-          }}
-          onLoadComplete={numberOfPages => {
-            setTotalPage(numberOfPages);
-          }}
-          onError={error => console.log('show error', error)}
-          onPressLink={link => Linking.openURL(link)}
-          spacing={10}
-          style={{
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-            marginBottom: 50,
-          }}
-        />
-      </View>
+      <Pdf
+        trustAllCerts={false}
+        source={{
+          uri: selected?.file_short_content,
+        }}
+        page={1}
+        onPageChanged={(page, numberOfPages) => {
+          setCurrentPage(page);
+        }}
+        fitPolicy={Dimensions.get('window').width}
+        scale={zoom}
+        renderActivityIndicator={renderActivityIndicator}
+        onLoadProgress={percentage => {
+          setDownloadProgress(percentage)
+        }}
+        onScaleChanged={(scale) => {
+          setscaleByFinger(scale)
+        }}
+        onLoadComplete={numberOfPages => {
+          setTotalPage(numberOfPages);
+        }}
+        onError={error => console.log('show error', error)}
+        onPressLink={link => Linking.openURL(link)}
+        spacing={10}
+        style={{
+          height: Dimensions.get('window').height - 190,
+          width: Dimensions.get('window').width,
+        }}
+      />
 
       <Modal
         animationType="slide"

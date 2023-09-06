@@ -9,6 +9,7 @@ import {
   fetchRecordWithoutToken,
   registerApi
 } from '../axios';
+import Constants from '../../utills.js/Constants';
 
 
 const AllEventSaga = function* () {

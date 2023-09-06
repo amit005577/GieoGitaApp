@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
+import moment, { isDate } from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   SafeAreaView,
@@ -63,11 +63,11 @@ const SankalpScreen = () => {
   }
 
   useEffect(() => {
-    handleTargetDate(targetDate)
-  }, [targetDate])
+    handleTargetDate(targetDate,count)
+  }, [targetDate,count])
 
 
-  const handleTargetDate = (target_date) => {
+  const handleTargetDate = (target_date,count) => {
     let currentDateData = moment(new Date(), 'DD-MM-YYYY');
     let targetDate = moment(target_date, 'DD-MM-YYYY');
     let noOfDays = targetDate.diff(currentDateData, 'days');
