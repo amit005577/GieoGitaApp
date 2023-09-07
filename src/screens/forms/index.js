@@ -252,6 +252,7 @@ const EventForm = ({ route }) => {
   };
 
   return (
+    <SafeAreaView style={{ flex: 1 }} >
     <View style={styles.contaier}>
       {isLoading ?
         <Loader /> : null
@@ -643,6 +644,7 @@ const EventForm = ({ route }) => {
         <View style={{ height: 200 }} />
       </ScrollView>
     </View>
+    </SafeAreaView>
   );
 };
 

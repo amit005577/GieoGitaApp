@@ -183,72 +183,74 @@ const ChantCount = ({ navigation, route }) => {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
+    <SafeAreaView style={{ flex: 1 }} >
 
-      <ScrollView >
-        <TouchableOpacity
-          onPress={() => navigationRef.navigate('event')}
-          style={styles.eventstyle}>
-          <Text style={{ color: 'white', fontSize: 21 }}>
-            {Translation.events_and_groups}
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.chantsTitle}>{Translation.total_chants}</Text>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
 
-        <View style={styles.contContainer}>
-          <Text style={styles.numberText}>
-            {liveChantsData.total_app_count}
-          </Text>
-        </View>
+        <ScrollView >
+          <TouchableOpacity
+            onPress={() => navigationRef.navigate('event')}
+            style={styles.eventstyle}>
+            <Text style={{ color: 'white', fontSize: 21 }}>
+              {Translation.events_and_groups}
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.chantsTitle}>{Translation.total_chants}</Text>
 
-        {!datapledge ? (
-          <ActivityIndicator size={'small'} color={'orange'} />
-        ) : null}
-
-        <TouchableOpacity
-          style={styles.userNameContainer}
-          onPress={() => navigation.navigate('register')}>
-          <Text style={styles.userText}>
-            {datapledge[0]?.name == null || datapledge[0]?.name == ''
-              ? Translation.name
-              : datapledge[0]?.name}
-          </Text>
-
-          <Icon
-            name={'caretdown'}
-            size={10}
-            style={{ marginLeft: 10, color: colors.black }}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.textContainerstyle}>
-          <Text style={styles.YourChantStyle}>{Translation.your_chants}:</Text>
-
-          <View style={styles.btncountcontaiiner}>
-            <Text style={styles.normalStyle}>
-              {Translation.total_chants}:{monthlyData?.life_time_count}
+          <View style={styles.contContainer}>
+            <Text style={styles.numberText}>
+              {liveChantsData.total_app_count}
             </Text>
           </View>
 
-          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
-            <Text style={styles.normalStyle}>
-              {Translation.current_week_progress}:{monthlyData?.weekly_count}
+          {!datapledge ? (
+            <ActivityIndicator size={'small'} color={'orange'} />
+          ) : null}
+
+          <TouchableOpacity
+            style={styles.userNameContainer}
+            onPress={() => navigation.navigate('register')}>
+            <Text style={styles.userText}>
+              {datapledge[0]?.name == null || datapledge[0]?.name == ''
+                ? Translation.name
+                : datapledge[0]?.name}
             </Text>
+
+            <Icon
+              name={'caretdown'}
+              size={10}
+              style={{ marginLeft: 10, color: colors.black }}
+            />
+          </TouchableOpacity>
+
+          <View style={styles.textContainerstyle}>
+            <Text style={styles.YourChantStyle}>{Translation.your_chants}:</Text>
+
+            <View style={styles.btncountcontaiiner}>
+              <Text style={styles.normalStyle}>
+                {Translation.total_chants}:{monthlyData?.life_time_count}
+              </Text>
+            </View>
+
+            <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
+              <Text style={styles.normalStyle}>
+                {Translation.current_week_progress}:{monthlyData?.weekly_count}
+              </Text>
+            </View>
+
+            <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
+              <Text style={styles.normalStyle}>
+                {Translation.current_month_progress}:{monthlyData?.month_count}
+              </Text>
+            </View>
           </View>
 
-          <View style={{ ...styles.btncountcontaiiner, marginTop: 10 }}>
-            <Text style={styles.normalStyle}>
-              {Translation.current_month_progress}:{monthlyData?.month_count}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.monthContainer}>
-          {/* <TouchableOpacity onPress={() => dateDecrement()}>
+          <View style={styles.monthContainer}>
+            {/* <TouchableOpacity onPress={() => dateDecrement()}>
             <FIcon
               name="arrow-left-circle"
               size={25}
@@ -256,137 +258,138 @@ const ChantCount = ({ navigation, route }) => {
             />
           </TouchableOpacity> */}
 
-          <View style={styles.monthContentStyle}>
-            <Text
-              numberOfLines={1}
-              style={{ fontWeight: 'bold', color: '#434343' }}>
-              {todaysDate}
-            </Text>
-          </View>
+            <View style={styles.monthContentStyle}>
+              <Text
+                numberOfLines={1}
+                style={{ fontWeight: 'bold', color: '#434343' }}>
+                {todaysDate}
+              </Text>
+            </View>
 
-          <View>
-            {/* <TouchableOpacity onPress={() => dateIncrement()}>
+            <View>
+              {/* <TouchableOpacity onPress={() => dateIncrement()}>
               <FIcon
                 name="arrow-right-circle"
                 size={25}
                 style={{ ...styles.iconStyle }}
               />
             </TouchableOpacity> */}
+            </View>
           </View>
-        </View>
-
-        <View
-          style={{
-            ...styles.btncountcontaiiner,
-            alignSelf: 'center',
-            backgroundColor: '#EFEFEF',
-          }}>
-          <Text style={styles.countToday}>
-            {Translation.today}:{monthlyData?.today_count}
-          </Text>
-        </View>
-
-        <View style={styles.countercontainer}>
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => {
-              NumberDecreament();
-            }}
-            disabled={number == 0}>
-            <EIcon name={'minus'} size={30} style={styles.iconstyle} />
-          </TouchableOpacity>
 
           <View
             style={{
-              height: 170,
-              width: 170,
-              marginVertical: 10,
-              marginHorizontal: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderWidth: 5,
-              borderColor: colors.orange,
-              borderRadius: 100,
+              ...styles.btncountcontaiiner,
+              alignSelf: 'center',
+              backgroundColor: '#EFEFEF',
             }}>
-            <TextInput
-              onChangeText={updateChents}
-              keyboardType='number-pad'
-              placeholder={Translation.mantra}
-              style={{ color: colors.black, fontWeight: '600', fontSize: 22, textAlign: 'center', alignSelf: 'center', minWidth: 10 }}
-              placeholderTextColor={colors.placeholder}
-              maxLength={10}
-              value={number ? number.toString() : ''}
-              numberOfLines={1}
-            />
+            <Text style={styles.countToday}>
+              {Translation.today}:{monthlyData?.today_count}
+            </Text>
+          </View>
+
+          <View style={styles.countercontainer}>
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={() => {
+                NumberDecreament();
+              }}
+              disabled={number == 0}>
+              <EIcon name={'minus'} size={30} style={styles.iconstyle} />
+            </TouchableOpacity>
+
+            <View
+              style={{
+                height: 170,
+                width: 170,
+                marginVertical: 10,
+                marginHorizontal: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 5,
+                borderColor: colors.orange,
+                borderRadius: 100,
+              }}>
+              <TextInput
+                onChangeText={updateChents}
+                keyboardType='number-pad'
+                placeholder={Translation.mantra}
+                style={{ color: colors.black, fontWeight: '600', fontSize: 22, textAlign: 'center', alignSelf: 'center', minWidth: 10 }}
+                placeholderTextColor={colors.placeholder}
+                maxLength={10}
+                value={number ? number.toString() : ''}
+                numberOfLines={1}
+              />
+            </View>
+
+            <TouchableOpacity
+              style={{ ...styles.iconContainer, borderColor: 'green' }}
+              onPress={() => {
+                NumberIncreament();
+              }}>
+              <EIcon name={'plus'} size={30} style={styles.iconstyle} />
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
-            style={{ ...styles.iconContainer, borderColor: 'green' }}
-            onPress={() => {
-              NumberIncreament();
+            disabled={disable}
+            onPress={() => handleOnpress()}
+            style={{
+              ...styles.btncountcontaiiner,
+              alignSelf: 'center',
+              borderRadius: 10,
+              height: 42,
+              borderWidth: 1,
+              borderColor: '#E5CE004F',
             }}>
-            <EIcon name={'plus'} size={30} style={styles.iconstyle} />
+            <Text style={[styles.textSubmit, { fontSize: 20 }]}>
+              {Translation.submit}
+            </Text>
           </TouchableOpacity>
-        </View>
 
-        <TouchableOpacity
-          disabled={disable}
-          onPress={() => handleOnpress()}
-          style={{
-            ...styles.btncountcontaiiner,
-            alignSelf: 'center',
-            borderRadius: 10,
-            height: 42,
-            borderWidth: 1,
-            borderColor: '#E5CE004F',
+          <TouchableOpacity
+            onPress={() => navigation.navigate('listpage')}
+            style={{
+              ...styles.btnContainer,
+              width: '50%',
+              marginTop: 20,
+              backgroundColor: colors.black,
+            }}>
+            <Text style={styles.textSubmit}>{Translation.submission_list}</Text>
+          </TouchableOpacity>
+
+          <View style={{ height: 50 }} />
+        </ScrollView>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
           }}>
-          <Text style={[styles.textSubmit, { fontSize: 20 }]}>
-            {Translation.submit}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate('listpage')}
-          style={{
-            ...styles.btnContainer,
-            width: '50%',
-            marginTop: 20,
-            backgroundColor: colors.black,
-          }}>
-          <Text style={styles.textSubmit}>{Translation.submission_list}</Text>
-        </TouchableOpacity>
-
-        <View style={{ height: 50 }} />
-      </ScrollView>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={{ marginTop: 20 }}>
-              <Text style={styles.modalText}>{Translation.chant_count}</Text>
-              <Text style={styles.modalText}>{Translation.update}</Text>
-              <Text style={styles.modalText}>{Translation.successfully}</Text>
-              <Text style={styles.modalText}>[{number}]</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setModalVisible(!modalVisible)
-                  setNumber(0);
-                  navigation.navigate('listpage')
-                }}>
-                <Text style={styles.textStyle}>{Translation.ok}</Text>
-              </Pressable>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View style={{ marginTop: 20 }}>
+                <Text style={styles.modalText}>{Translation.chant_count}</Text>
+                <Text style={styles.modalText}>{Translation.update}</Text>
+                <Text style={styles.modalText}>{Translation.successfully}</Text>
+                <Text style={styles.modalText}>[{number}]</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => {
+                    setModalVisible(!modalVisible)
+                    setNumber(0);
+                    navigation.navigate('listpage')
+                  }}>
+                  <Text style={styles.textStyle}>{Translation.ok}</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -633,8 +636,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     borderRadius: 10,
     marginTop: 10,
-    paddingHorizontal:20,
-    paddingVertical:10,
-    minWidth:'80%'
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    minWidth: '80%'
   },
 });

@@ -78,138 +78,140 @@ const SettingScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={styles.container}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
 
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('update');
-        }}
-        style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{Translation.my_pledge}</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('update');
+          }}
+          style={styles.onecontainer}>
+          <View style={styles.textCotaier}>
+            <Text style={styles.texstyle}>{Translation.my_pledge}</Text>
+          </View>
+          <View style={styles.iconStylecontainer}>
+            <Icon name={'right'} size={10} color={'orange'} />
+          </View>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => setModalVisible(true)}
-        style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{Translation.select_language} {selectedLang.name}</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigationRef.navigate('help')}
-        style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{Translation.help}</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </TouchableOpacity>
-
-
-      <TouchableOpacity onPress={() => navigationRef.navigate("event")} style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{Translation.event_and_group}</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.onecontainer}>
-        <View style={styles.textCotaier}>
-          <Text style={styles.texstyle}>{Translation.promotional_material}</Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </View>
-      <TouchableOpacity
-        onPress={() => handleLogout()}
-        style={{ ...styles.onecontainer, borderBottomWidth: 0.5 }}>
-        <View style={styles.textCotaier}>
-          <Text
-            style={{
-              ...styles.texstyle,
-              textDecorationLine: 'underline',
-              color: 'blue',
-            }}>
-            {Translation.log_out}
-          </Text>
-        </View>
-        <View style={styles.iconStylecontainer}>
-          <Icon name={'right'} size={10} color={'orange'} />
-        </View>
-      </TouchableOpacity>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
-            {/* Close button */}
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={styles.onecontainer}>
+          <View style={styles.textCotaier}>
+            <Text style={styles.texstyle}>{Translation.select_language} {selectedLang.name}</Text>
+          </View>
+          <View style={styles.iconStylecontainer}>
+            <Icon name={'right'} size={10} color={'orange'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigationRef.navigate('help')}
+          style={styles.onecontainer}>
+          <View style={styles.textCotaier}>
+            <Text style={styles.texstyle}>{Translation.help}</Text>
+          </View>
+          <View style={styles.iconStylecontainer}>
+            <Icon name={'right'} size={10} color={'orange'} />
+          </View>
+        </TouchableOpacity>
 
 
-            <View style={{flex:1}}>
-              <FlatList
-                data={languageListData}
-                contentContainerStyle={{ paddingBottom: 100 }}
-                keyExtractor={item => item.id}
-                ListEmptyComponent={() => {
-                  return (
-                    <ActivityIndicator size={'small'} color={'blue'} />
-                  )
-                }}
-                renderItem={({ item }) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() => handleOnpressLanguage(item)}
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        paddingHorizontal: 20,
-                      }}>
-                      <View>
-                        <Text style={styles.modalText}>{item.name}</Text>
-                      </View>
-                      <FIcon
-                        name="check-circle"
-                        size={20}
-                        color={
-                          item.isSelected
-                            ? 'green'
-                            : 'lightgray'
-                        }
-                      />
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
-            <Pressable
-              style={[styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>{Translation.close} </Text>
-            </Pressable>
+        <TouchableOpacity onPress={() => navigationRef.navigate("event")} style={styles.onecontainer}>
+          <View style={styles.textCotaier}>
+            <Text style={styles.texstyle}>{Translation.event_and_group}</Text>
+          </View>
+          <View style={styles.iconStylecontainer}>
+            <Icon name={'right'} size={10} color={'orange'} />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.onecontainer}>
+          <View style={styles.textCotaier}>
+            <Text style={styles.texstyle}>{Translation.promotional_material}</Text>
+          </View>
+          <View style={styles.iconStylecontainer}>
+            <Icon name={'right'} size={10} color={'orange'} />
           </View>
         </View>
-      </Modal>
-    </View>
+        <TouchableOpacity
+          onPress={() => handleLogout()}
+          style={{ ...styles.onecontainer, borderBottomWidth: 0.5 }}>
+          <View style={styles.textCotaier}>
+            <Text
+              style={{
+                ...styles.texstyle,
+                textDecorationLine: 'underline',
+                color: 'blue',
+              }}>
+              {Translation.log_out}
+            </Text>
+          </View>
+          <View style={styles.iconStylecontainer}>
+            <Icon name={'right'} size={10} color={'orange'} />
+          </View>
+        </TouchableOpacity>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
+              {/* Close button */}
+
+
+              <View style={{ flex: 1 }}>
+                <FlatList
+                  data={languageListData}
+                  contentContainerStyle={{ paddingBottom: 100 }}
+                  keyExtractor={item => item.id}
+                  ListEmptyComponent={() => {
+                    return (
+                      <ActivityIndicator size={'small'} color={'blue'} />
+                    )
+                  }}
+                  renderItem={({ item }) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() => handleOnpressLanguage(item)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                          paddingHorizontal: 20,
+                        }}>
+                        <View>
+                          <Text style={styles.modalText}>{item.name}</Text>
+                        </View>
+                        <FIcon
+                          name="check-circle"
+                          size={20}
+                          color={
+                            item.isSelected
+                              ? 'green'
+                              : 'lightgray'
+                          }
+                        />
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+              </View>
+              <Pressable
+                style={[styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>{Translation.close} </Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    </SafeAreaView>
   );
 };
 
