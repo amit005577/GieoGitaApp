@@ -55,75 +55,78 @@ const OtpScreen = () => {
 
 
   return (
-    <View style={{ flex: 1 }} >
-      {isLoading ?
-        <Loader /> : null
-      }
-      <View style={{ alignItems: 'center', marginTop: 10 }}>
-        <Image
+    <SafeAreaView style={{ flex: 1 }} >
+
+      <View style={{ flex: 1 }} >
+        {isLoading ?
+          <Loader /> : null
+        }
+        <View style={{ alignItems: 'center', marginTop: 10 }}>
+          <Image
+            style={{
+              width: 176,
+              height: 176,
+              borderRadius: 100,
+              resizeMode: 'contain',
+            }}
+            source={logo}
+          />
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: '600',
+              color: '#000',
+              textAlign: 'center',
+              marginTop: 15,
+            }}>
+            {Translation.otp}
+          </Text>
+        </View>
+        <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
+          <OTPTextView
+            handleTextChange={value => setOtp(value)}
+            inputCount={6}
+            keyboardType="numeric"
+          />
+          <Text style={{ textAlign: 'right', marginRight: '4%', color: '#808080' }}>
+            {Translation.otp_sent} {counter}
+          </Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => handleOnSubmit()}
           style={{
-            width: 176,
-            height: 176,
-            borderRadius: 100,
-            resizeMode: 'contain',
-          }}
-          source={logo}
-        />
-      </View>
-      <View>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: '600',
-            color: '#000',
-            textAlign: 'center',
-            marginTop: 15,
+            justifyContent: 'center',
+            borderRadius: 20,
+            alignItems: 'center',
+            backgroundColor: '#F86F03',
+            marginHorizontal: '20%',
+            marginTop: '5%',
+            height: 40,
           }}>
-          {Translation.otp}
-        </Text>
-      </View>
-      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
-        <OTPTextView
-          handleTextChange={value => setOtp(value)}
-          inputCount={6}
-          keyboardType="numeric"
-        />
-        <Text style={{ textAlign: 'right', marginRight: '4%', color: '#808080' }}>
-          {Translation.otp_sent} {counter}
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => handleOnSubmit()}
-        style={{
-          justifyContent: 'center',
-          borderRadius: 20,
-          alignItems: 'center',
-          backgroundColor: '#F86F03',
-          marginHorizontal: '20%',
-          marginTop: '5%',
-          height: 40,
-        }}>
-        <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18 }}>
-         {Translation.verify}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigationRef.navigate('login')}
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: '10%',
-        }}>
-        <Text
+          <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18 }}>
+            {Translation.verify}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigationRef.navigate('login')}
           style={{
-            fontWeight: 'bold',
-            color: 'blue',
-            textDecorationLine: 'underline',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '10%',
           }}>
-          {Translation.go_back}
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'blue',
+              textDecorationLine: 'underline',
+            }}>
+            {Translation.go_back}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 export default OtpScreen;

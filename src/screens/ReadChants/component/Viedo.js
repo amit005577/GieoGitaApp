@@ -31,7 +31,7 @@ const VideoScreen = () => {
       }}>
         <ImageBackground
           resizeMode="cover"
-          source={{uri:`${Constants.YOUTUBE_THUMBNAIL_URL}${item.videoUrl}/0.jpg`}}
+          source={{ uri: `${Constants.YOUTUBE_THUMBNAIL_URL}${item.videoUrl}/0.jpg` }}
           style={styles.thumnailstyle}>
         </ImageBackground>
       </TouchableOpacity>
@@ -39,29 +39,31 @@ const VideoScreen = () => {
   };
 
   return (
-    <View style={{ marginTop: 20, paddingHorizontal: 20, flex: 1 }}>
-      <View style={{ flex: .5 }}>
-        <WebView
-          style={{ flex: 1 }}
-          javaScriptEnabled={true}
-          mediaPlaybackRequiresUserAction={true}
-          androidLayerType='hardware'
-          mixedContentMode='always'
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={{ marginTop: 20, paddingHorizontal: 20, flex: 1 }}>
+        <View style={{ flex: .5 }}>
+          <WebView
+            style={{ flex: 1 }}
+            javaScriptEnabled={true}
+            mediaPlaybackRequiresUserAction={true}
+            androidLayerType='hardware'
+            mixedContentMode='always'
 
-          domStorageEnabled={true}
-          androidHardwareAccelerationDisabled={false}
-          source={{ uri: 'https://www.youtube.com/embed/' + `${videoId.videoUrl}` }}
-        />
+            domStorageEnabled={true}
+            androidHardwareAccelerationDisabled={false}
+            source={{ uri: 'https://www.youtube.com/embed/' + `${videoId.videoUrl}` }}
+          />
 
+        </View>
+        <View style={{ flex: 0.7, marginTop: 20 }}>
+          <FlatList
+            data={videoJson}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+          />
+        </View>
       </View>
-      <View style={{ flex: 0.7, marginTop: 20 }}>
-        <FlatList
-          data={videoJson}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-        />
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

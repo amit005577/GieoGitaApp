@@ -122,159 +122,161 @@ const MyChantsHistory = ({ navigation, route }) => {
     );
   };
   return (
-    <View style={styles.container}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={styles.container}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
 
-      <TouchableOpacity
-        style={styles.userNameContainer}
-        onPress={() => navigation.navigate('register')}>
-        <Text style={styles.userText}>
-          {' '}
-          {datapledge[0]?.name == null || datapledge[0]?.name == ''
-            ? Translation.name
-            : datapledge[0]?.name}
+        <TouchableOpacity
+          style={styles.userNameContainer}
+          onPress={() => navigation.navigate('register')}>
+          <Text style={styles.userText}>
+            {' '}
+            {datapledge[0]?.name == null || datapledge[0]?.name == ''
+              ? Translation.name
+              : datapledge[0]?.name}
+          </Text>
+
+          <AIcon
+            name={'caretdown'}
+            size={12}
+            style={{ marginLeft: 10, color: colors.black }}
+          />
+        </TouchableOpacity>
+        <Text
+          style={{
+            alignSelf: 'center',
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: colors.black,
+            marginTop: 20,
+          }}>
+          {Translation.submissions_list}
         </Text>
 
-        <AIcon
-          name={'caretdown'}
-          size={12}
-          style={{ marginLeft: 10, color: colors.black }}
-        />
-      </TouchableOpacity>
-      <Text
-        style={{
-          alignSelf: 'center',
-          fontWeight: 'bold',
-          fontSize: 18,
-          color: colors.black,
-          marginTop: 20,
-        }}>
-        {Translation.submissions_list}
-      </Text>
+        <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
+          <FlatList
+            data={chantsHistoryList}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+            contentContainerStyle={{
+              paddingBottom: 100,
+              marginBottom: 100
 
-      <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
-        <FlatList
-          data={chantsHistoryList}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          contentContainerStyle={{
-            paddingBottom: 100,
-            marginBottom: 100
-
-          }}
-          style={{ paddingHorizontal: 0, marginTop: 20, borderWidth: 0 }}
-          ListHeaderComponent={() => {
-            return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  borderBottomWidth: 0,
-                }}>
+            }}
+            style={{ paddingHorizontal: 0, marginTop: 20, borderWidth: 0 }}
+            ListHeaderComponent={() => {
+              return (
                 <View
                   style={{
-                    borderTopLeftRadius: 10,
-                    borderWidth: 1,
-                    borderRightWidth: 0,
-                    width: '40%',
-                    height: 46,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                    borderColor: '#F7941C',
+                    flexDirection: 'row',
+                    borderBottomWidth: 0,
                   }}>
-                  <Text
+                  <View
                     style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: colors.black,
+                      borderTopLeftRadius: 10,
+                      borderWidth: 1,
+                      borderRightWidth: 0,
+                      width: '40%',
+                      height: 46,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      borderColor: '#F7941C',
                     }}>
-                    {Translation.date}
-                  </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: colors.black,
+                      }}>
+                      {Translation.date}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      width: '60%',
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      height: 46,
+                      borderColor: '#F7941C',
+                      borderTopRightRadius: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: colors.black,
+                        marginLeft: 20,
+                      }}>
+                      {Translation.count}
+                    </Text>
+                  </View>
+
                 </View>
+              );
+            }}
+            ListFooterComponent={() => {
+              return (
                 <View
                   style={{
-                    borderWidth: 1,
-                    width: '60%',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    height: 46,
-                    borderColor: '#F7941C',
-                    borderTopRightRadius: 10,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: colors.black,
-                      marginLeft: 20,
-                    }}>
-                    {Translation.count}
-                  </Text>
-                </View>
+                    flexDirection: 'row',
+                    borderBottomWidth: 0,
+                    paddingBottom: 100,
+                    marginBottom: 50,
 
-              </View>
-            );
-          }}
-          ListFooterComponent={() => {
-            return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  borderBottomWidth: 0,
-                  paddingBottom: 100,
-                  marginBottom: 50,
-
-                }}>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: '40%',
-                    height: 46,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                    borderColor: '#F7941C',
-                    borderBottomLeftRadius: 10,
-                    borderRightWidth: 0,
                   }}>
-                  <Text
+                  <View
                     style={{
-                      fontSize: 18,
-                      color: colors.black,
+                      borderWidth: 1,
+                      width: '40%',
+                      height: 46,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      borderColor: '#F7941C',
+                      borderBottomLeftRadius: 10,
+                      borderRightWidth: 0,
                     }}>
-                    {Translation.old_counts}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: '60%',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    height: 46,
-                    borderBottomRightRadius: 10,
-                    borderColor: '#F7941C',
-                  }}>
-                  <Text
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: colors.black,
+                      }}>
+                      {Translation.old_counts}
+                    </Text>
+                  </View>
+                  <View
                     style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: colors.black,
-                      marginLeft: 20,
+                      borderWidth: 1,
+                      width: '60%',
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      height: 46,
+                      borderBottomRightRadius: 10,
+                      borderColor: '#F7941C',
                     }}>
-                    {monthlyData?.life_time_count}
-                  </Text>
-                </View>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: colors.black,
+                        marginLeft: 20,
+                      }}>
+                      {monthlyData?.life_time_count}
+                    </Text>
+                  </View>
 
-              </View>
-            );
-          }}
-        />
+                </View>
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

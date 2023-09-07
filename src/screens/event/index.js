@@ -183,192 +183,195 @@ const EventPage = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
-      {editLoder ? <ActivityIndicator size={'large'} /> : null}
-      <View style={styles.container}>
-        <View style={styles.firstRowStyle}>
-          <Text style={styles.eventText}>{Translation.events}</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('form')}
-            style={styles.addGroupBtn}>
-            <Text style={styles.addText}>{Translation.add_group_or_event}</Text>
-          </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1 }} >
+
+      <View style={{ flex: 1 }}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
+        {editLoder ? <ActivityIndicator size={'large'} /> : null}
+        <View style={styles.container}>
+          <View style={styles.firstRowStyle}>
+            <Text style={styles.eventText}>{Translation.events}</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('form')}
+              style={styles.addGroupBtn}>
+              <Text style={styles.addText}>{Translation.add_group_or_event}</Text>
+            </TouchableOpacity>
+          </View>
+
+
+          <View style={styles.btnContainersss}>
+            <TouchableOpacity
+              style={styles.eventBtn}
+              onPress={() => handleModalVisible()}>
+              <Text numberOfLines={1} style={styles.btnTextall}>
+                {selectedItem ? selectedItem : Translation.all_event}
+              </Text>
+              <Icon name="down" color='#4d4c4a' size={10} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.eventBtn}
+              onPress={() => setShowModalEventTyope(true)}>
+              <Text maxLength={2} numberOfLines={1} style={styles.btnTextall}>
+                {' '}
+                {eventType ? eventType : Translation.event_type}
+              </Text>
+              <Icon name="down" color='#4d4c4a' size={10} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.eventBtn}
+              onPress={() => setshowModalPlaceType(true)}>
+              <Text numberOfLines={1} style={styles.btnTextall}>
+                {' '}
+                {placeType ? placeType : Translation.place_type}
+              </Text>
+              <Icon name="down" color='#4d4c4a' size={10} />
+            </TouchableOpacity>
+          </View>
+
+          <CustomModal
+            data={data}
+            selectedItem={selectedItem}
+            setselectedItem={setselectedItem}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleSelectedItem={handleSelectedItem}
+          />
+          <CustomModal
+            data={eventtypeData}
+            selectedItem={eventType}
+            setselectedItem={seteventType}
+            showModal={showModalEventTyope}
+            setShowModal={setShowModalEventTyope}
+            handleSelectedItem={handleEventTypeFunction}
+          />
+          <CustomModal
+            data={eventPlaceData}
+            selectedItem={placeType}
+            setselectedItem={setplaceType}
+            showModal={showModalPlaceType}
+            setShowModal={setshowModalPlaceType}
+            handleSelectedItem={handlePlacetypeFunction}
+            title={Translation.select_place_type}
+          />
+          <View style={styles.textContainer}>
+            <TextInput
+              placeholder={Translation.find_event}
+              onChangeText={handleFilter}
+              autoCapitalize="none"
+              clearButtonMode="always"
+              autoCorrect={false}
+              placeholderTextColor={'black'}
+              style={{ color: '#111211', flex: 1 }}
+            >
+            </TextInput>
+            <IconF name="search" size={25} color='gray' />
+          </View>
+
+          <Text style={styles.textShowingHeadingData}>
+            {getFormatedString(Translation.shwoing_out_of_events, {
+              eventCount: EventData.length,
+              allEvent: EventData.length
+            })}
+          </Text>
+
         </View>
-
-
-        <View style={styles.btnContainersss}>
-          <TouchableOpacity
-            style={styles.eventBtn}
-            onPress={() => handleModalVisible()}>
-            <Text numberOfLines={1} style={styles.btnTextall}>
-              {selectedItem ? selectedItem : Translation.all_event}
-            </Text>
-            <Icon name="down" color='#4d4c4a' size={10} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.eventBtn}
-            onPress={() => setShowModalEventTyope(true)}>
-            <Text maxLength={2} numberOfLines={1} style={styles.btnTextall}>
-              {' '}
-              {eventType ? eventType : Translation.event_type}
-            </Text>
-            <Icon name="down" color='#4d4c4a' size={10} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.eventBtn}
-            onPress={() => setshowModalPlaceType(true)}>
-            <Text numberOfLines={1} style={styles.btnTextall}>
-              {' '}
-              {placeType ? placeType : Translation.place_type}
-            </Text>
-            <Icon name="down" color='#4d4c4a' size={10} />
-          </TouchableOpacity>
-        </View>
-
-        <CustomModal
-          data={data}
-          selectedItem={selectedItem}
-          setselectedItem={setselectedItem}
-          showModal={showModal}
-          setShowModal={setShowModal}
-          handleSelectedItem={handleSelectedItem}
+        <FlatList
+          data={EventData}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item?.id}
+          renderItem={renderItem}
+          ListFooterComponent={() => {
+            return <View style={{ height: 330 }} />;
+          }}
+          // removeClippedSubviews={true}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
         />
-        <CustomModal
-          data={eventtypeData}
-          selectedItem={eventType}
-          setselectedItem={seteventType}
-          showModal={showModalEventTyope}
-          setShowModal={setShowModalEventTyope}
-          handleSelectedItem={handleEventTypeFunction}
-        />
-        <CustomModal
-          data={eventPlaceData}
-          selectedItem={placeType}
-          setselectedItem={setplaceType}
-          showModal={showModalPlaceType}
-          setShowModal={setshowModalPlaceType}
-          handleSelectedItem={handlePlacetypeFunction}
-          title={Translation.select_place_type}
-        />
-        <View style={styles.textContainer}>
-          <TextInput
-            placeholder={Translation.find_event}
-            onChangeText={handleFilter}
-            autoCapitalize="none"
-            clearButtonMode="always"
-            autoCorrect={false}
-            placeholderTextColor={'black'}
-            style={{ color: '#111211', flex: 1 }}
-          >
-          </TextInput>
-          <IconF name="search" size={25} color='gray' />
-        </View>
 
-        <Text style={styles.textShowingHeadingData}>
-          {getFormatedString(Translation.shwoing_out_of_events, {
-            eventCount: EventData.length,
-            allEvent: EventData.length
-          })}
-        </Text>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
 
-      </View>
-      <FlatList
-        data={EventData}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => item?.id}
-        renderItem={renderItem}
-        ListFooterComponent={() => {
-          return <View style={{ height: 330 }} />;
-        }}
-        // removeClippedSubviews={true}
-        initialNumToRender={10}
-        maxToRenderPerBatch={10}
-      />
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <IconV name="cross" color='brown' size={25} />
+              </Pressable>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+              <Text style={[styles.txtItem, { marginBottom: 25 }]}>
+                {selectedItemFromList?.event_type}
+              </Text>
 
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <IconV name="cross" color='brown' size={25} />
-            </Pressable>
+              <View style={styles.fistRow}>
+                <Text style={styles.itemHeading}>{Translation.event_id}:{selectedItemFromList?.id}</Text>
+                {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
+                  <TouchableOpacity style={styles.editIcon} onPress={() => onPencilClick()}>
+                    <IconV name="pencil" color='#149103' size={20} />
+                  </TouchableOpacity>
+                ) : null}
+              </View>
 
-            <Text style={[styles.txtItem, { marginBottom: 25 }]}>
-              {selectedItemFromList?.event_type}
-            </Text>
-
-            <View style={styles.fistRow}>
-              <Text style={styles.itemHeading}>{Translation.event_id}:{selectedItemFromList?.id}</Text>
+              <View>
+                <Text style={styles.itemHeading}>{Translation.address}:</Text>
+                <View style={{ width: '60%' }}>
+                  <Text style={styles.textDetails}>
+                    {selectedItemFromList?.address}
+                  </Text>
+                  <Text style={styles.textDetails}>{selectedItemFromList?.country_id}</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 20,
+                }}>
+                <TouchableOpacity
+                  onPress={() => handleDetailsPage(selectedItemFromList)}
+                  style={{ ...styles.btn, width: 100 }}>
+                  <Text style={{ ...styles.textDetails, color: '#fff' }}>
+                    {Translation.details}
+                  </Text>
+                </TouchableOpacity>
+                <View>
+                  <Text style={{ ...styles.itemHeading, alignSelf: 'flex-end' }}>
+                    {Translation.organizer}
+                  </Text>
+                  <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <IconV name="old-phone" size={20} color='gray' style={{ marginRight: 5 }} />
+                    <Text style={styles.textDetails}>
+                      {selectedItemFromList?.organizer}
+                    </Text>
+                  </View>
+                </View>
+              </View>
               {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
-                <TouchableOpacity style={styles.editIcon} onPress={() => onPencilClick()}>
-                  <IconV name="pencil" color='#149103' size={20} />
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(false);
+                    navigation.navigate('MyChantsHistory')
+                  }}
+                  style={{ ...styles.btn, width: 130, marginTop: 20 }}>
+                  <Text style={{ ...styles.textDetails, color: '#fff' }}>
+                    {Translation.submission_list}
+                  </Text>
                 </TouchableOpacity>
               ) : null}
             </View>
-
-            <View>
-              <Text style={styles.itemHeading}>{Translation.address}:</Text>
-              <View style={{ width: '60%' }}>
-                <Text style={styles.textDetails}>
-                  {selectedItemFromList?.address}
-                </Text>
-                <Text style={styles.textDetails}>{selectedItemFromList?.country_id}</Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: 20,
-              }}>
-              <TouchableOpacity
-                onPress={() => handleDetailsPage(selectedItemFromList)}
-                style={{ ...styles.btn, width: 100 }}>
-                <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                  {Translation.details}
-                </Text>
-              </TouchableOpacity>
-              <View>
-                <Text style={{ ...styles.itemHeading, alignSelf: 'flex-end' }}>
-                  {Translation.organizer}
-                </Text>
-                <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                  <IconV name="old-phone" size={20} color='gray' style={{ marginRight: 5 }} />
-                  <Text style={styles.textDetails}>
-                    {selectedItemFromList?.organizer}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {validateCurrentUser(selectedItemFromList?.phone, selectedItemFromList?.email) ? (
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(false);
-                  navigation.navigate('MyChantsHistory')
-                }}
-                style={{ ...styles.btn, width: 130, marginTop: 20 }}>
-                <Text style={{ ...styles.textDetails, color: '#fff' }}>
-                  {Translation.submission_list}
-                </Text>
-              </TouchableOpacity>
-            ) : null}
           </View>
-        </View>
-      </Modal>
+        </Modal>
 
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 

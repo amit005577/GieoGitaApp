@@ -20,7 +20,7 @@ import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
 
 const UpdatePledge = () => {
-  const { Translation, isLoading ,getFormatedString} = useTranslation()
+  const { Translation, isLoading, getFormatedString } = useTranslation()
 
   const [count, setCount] = React.useState('');
   const datapledge = useSelector(state => state.AppReducers.getTargetpledge);
@@ -58,106 +58,108 @@ const UpdatePledge = () => {
   let weekCountNummber = dailyCount * 7
 
   return (
-    <View style={styles.container}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
-      {datapledge ? (
-        <ScrollView>
-          <Text style={styles.myPledge}>{Translation.my_pledge} </Text>
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.desctext}>
-            {Translation.my_pledge_description}
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={styles.container}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
+        {datapledge ? (
+          <ScrollView>
+            <Text style={styles.myPledge}>{Translation.my_pledge} </Text>
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.desctext}>
+                {Translation.my_pledge_description}
+              </Text>
+            </View>
+            <Text style={{ ...styles.desctext, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
+              {getFormatedString(Translation.by_geeta_jayanti, {
+                target_date: target_date
+              })}
             </Text>
-          </View>
-          <Text style={{ ...styles.desctext, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>
-          {getFormatedString(Translation.by_geeta_jayanti, {
-              target_date:target_date
-            })}
-          </Text>
-          <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 22, color: '#F7941C' }}>
-          {Translation.ashtadash_shloki_geeta_path}
-          </Text>
-          <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 18 }}>
-          {Translation.resolve_to}
-          </Text>
-          <View style={styles.textInputStyleContainer}>
-            <TextInput
-              placeholder={'00000'}
-              onChangeText={setCount}
-              value={String(count)}
-              style={styles.textInputStyle}
-              inputMode="numeric"
-              maxLength={5}
-              placeholderTextColor={'#808080'}
-            
-            />
-          </View>
-          <Text style={styles.chalisaText}>
-          {Translation.fixed_number}
-          </Text>
+            <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 22, color: '#F7941C' }}>
+              {Translation.ashtadash_shloki_geeta_path}
+            </Text>
+            <Text style={{ ...styles.desctext, marginTop: 10, fontWeight: 'bold', fontSize: 18 }}>
+              {Translation.resolve_to}
+            </Text>
+            <View style={styles.textInputStyleContainer}>
+              <TextInput
+                placeholder={'00000'}
+                onChangeText={setCount}
+                value={String(count)}
+                style={styles.textInputStyle}
+                inputMode="numeric"
+                maxLength={5}
+                placeholderTextColor={'#808080'}
+
+              />
+            </View>
+            <Text style={styles.chalisaText}>
+              {Translation.fixed_number}
+            </Text>
 
 
-          <View
-            style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>{Translation.daily}</Text>
+            <View
+              style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>{Translation.daily}</Text>
+              </View>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>
+                  {Math.round(dailyCount) < 1 ? 1 : Math.round(dailyCount)}
+                </Text>
+              </View>
             </View>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>
-                {Math.round(dailyCount) < 1 ? 1 : Math.round(dailyCount)}
-              </Text>
+            <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>{Translation.weekly} </Text>
+              </View>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>
+                  {Math.round(weekCountNummber)}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>{Translation.weekly} </Text>
+            <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>{Translation.monthly}</Text>
+              </View>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>
+                  {' '}
+                  {Math.round(monthCountNumber)}
+                </Text>
+              </View>
             </View>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>
-                {Math.round(weekCountNummber)}
-              </Text>
+            <View style={styles.graph1line}>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>{Translation.total}</Text>
+              </View>
+              <View style={styles.graphinside}>
+                <Text style={styles.graphText}>{count ? count : '0000'}</Text>
+              </View>
             </View>
-          </View>
-          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>{Translation.monthly}</Text>
+            <View style={{ paddingHorizontal: 30 }}>
+              <TouchableOpacity
+                onPress={() => handleOnsubmit()}
+                style={styles.submitContainer}>
+                <Text style={styles.submittext}> {Translation.surrender}</Text>
+              </TouchableOpacity>
+              <View style={styles.withoutPledge}>
+                <Text style={{ fontSize: 12, color: 'black' }}>{Translation.note}:</Text>
+                <Text style={{ fontSize: 12, color: 'black' }}>
+                  {Translation.note_description}
+                </Text>
+              </View>
             </View>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>
-                {' '}
-                {Math.round(monthCountNumber)}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.graph1line}>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>{Translation.total}</Text>
-            </View>
-            <View style={styles.graphinside}>
-              <Text style={styles.graphText}>{count ? count : '0000'}</Text>
-            </View>
-          </View>
-          <View style={{ paddingHorizontal: 30 }}>
-            <TouchableOpacity
-              onPress={() => handleOnsubmit()}
-              style={styles.submitContainer}>
-              <Text style={styles.submittext}> {Translation.surrender}</Text>
-            </TouchableOpacity>
-            <View style={styles.withoutPledge}>
-              <Text style={{ fontSize: 12, color: 'black' }}>{Translation.note}:</Text>
-              <Text style={{ fontSize: 12, color: 'black' }}>
-              {Translation.note_description}
-              </Text>
-            </View>
-          </View>
-          <View style={{ height: 60 }} />
-        </ScrollView>
-      ) : (
-        <ActivityIndicator size={'large'} color={'red'} />
-      )}
-    </View>
+            <View style={{ height: 60 }} />
+          </ScrollView>
+        ) : (
+          <ActivityIndicator size={'large'} color={'red'} />
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -199,7 +201,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     fontSize: 19,
     color: 'black',
-    textAlign:'center'
+    textAlign: 'center'
   },
   chalisaText: {
     fontSize: 30,

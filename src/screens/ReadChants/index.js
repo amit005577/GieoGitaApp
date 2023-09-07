@@ -72,20 +72,22 @@ const ReadChantPage = () => {
     );
   };
   return (
-    <View style={styles.container}>
-      <HeaderPage />
-      <View style={{ flex: 1, marginTop: 10 }}>
-        <TabView
-          style={{ flex: 1 }}
-          swipeEnabled={false}
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-          renderTabBar={renderTabBar}
-        />
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={styles.container}>
+        <HeaderPage />
+        <View style={{ flex: 1, marginTop: 10 }}>
+          <TabView
+            style={{ flex: 1 }}
+            swipeEnabled={false}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+            renderTabBar={renderTabBar}
+          />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

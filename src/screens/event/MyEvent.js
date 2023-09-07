@@ -68,6 +68,8 @@ const MyEvent = ({ navigation }) => {
   };
 
   return (
+    <SafeAreaView style={{ flex: 1 }} >
+
     <View style={{ flex: 1, }}>
       {isLoading ?
         <Loader /> : null
@@ -85,6 +87,7 @@ const MyEvent = ({ navigation }) => {
         />
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 

@@ -24,6 +24,7 @@ const UpdatedEvent = () => {
   }
 
   return (
+    <SafeAreaView style={{ flex: 1 }} >
     <View style={{ flex: 1 }} >
       {isLoading ?
         <Loader /> : null
@@ -73,6 +74,7 @@ const UpdatedEvent = () => {
         </View>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   )
 }
 

@@ -101,178 +101,180 @@ const ListPageScreen = ({ navigation, route }) => {
     );
   };
   return (
-    <View style={styles.container}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={styles.container}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
 
-      <TouchableOpacity
-        style={styles.userNameContainer}
-        onPress={() => navigation.navigate('register')}>
-        <Text style={styles.userText}>
-          {' '}
-          {datapledge[0]?.name == null || datapledge[0]?.name == ''
-            ? Translation.name
-            : datapledge[0]?.name}
+        <TouchableOpacity
+          style={styles.userNameContainer}
+          onPress={() => navigation.navigate('register')}>
+          <Text style={styles.userText}>
+            {' '}
+            {datapledge[0]?.name == null || datapledge[0]?.name == ''
+              ? Translation.name
+              : datapledge[0]?.name}
+          </Text>
+
+          <AIcon
+            name={'caretdown'}
+            size={12}
+            style={{ marginLeft: 10, color: colors.black }}
+          />
+        </TouchableOpacity>
+        <Text
+          style={{
+            alignSelf: 'center',
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: colors.black,
+            marginTop: 20,
+          }}>
+          {Translation.submissions_list}
         </Text>
 
-        <AIcon
-          name={'caretdown'}
-          size={12}
-          style={{ marginLeft: 10, color: colors.black }}
-        />
-      </TouchableOpacity>
-      <Text
-        style={{
-          alignSelf: 'center',
-          fontWeight: 'bold',
-          fontSize: 18,
-          color: colors.black,
-          marginTop: 20,
-        }}>
-        {Translation.submissions_list}
-      </Text>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: 20,
+          }}>
+          <View style={{ ...styles.insideContainer, backgroundColor: '#C7E9C9' }}>
+            <Text style={styles.numberText}>{monthlyData?.weekly_count}</Text>
+            <Text style={styles.currentText}>{Translation.current_week}</Text>
+          </View>
+          <View style={{ ...styles.insideContainer, backgroundColor: '#E9E1C7' }}>
+            <Text style={styles.numberText}>{monthlyData?.month_count}</Text>
+            <Text style={styles.currentText}>{Translation?.current_month}</Text>
+          </View>
+          <View style={{ ...styles.insideContainer, backgroundColor: '#C7DBE9' }}>
+            <Text style={styles.numberText}>{monthlyData?.life_time_count}</Text>
+            <Text style={styles.currentText}>{Translation?.total}</Text>
+          </View>
+        </View>
+        <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
+          <FlatList
+            data={historydata}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+            contentContainerStyle={{
+              paddingBottom: 100,
+              marginBottom: 100
+            }}
+            style={{ paddingHorizontal: 0, marginTop: 20, borderWidth: 0 }}
+            ListHeaderComponent={() => {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    borderBottomWidth: 0,
+                  }}>
+                  <View
+                    style={{
+                      borderTopLeftRadius: 10,
+                      borderWidth: 1,
+                      borderRightWidth: 0,
+                      width: '40%',
+                      height: 46,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      borderColor: '#F7941C',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: colors.black,
+                      }}>
+                      {Translation.date}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      width: '60%',
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      height: 46,
+                      borderColor: '#F7941C',
+                      borderTopRightRadius: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: colors.black,
+                        marginLeft: 20,
+                      }}>
+                      {Translation.count}
+                    </Text>
+                  </View>
 
-      <View
-        style={{
-          paddingHorizontal: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginTop: 20,
-        }}>
-        <View style={{ ...styles.insideContainer, backgroundColor: '#C7E9C9' }}>
-          <Text style={styles.numberText}>{monthlyData?.weekly_count}</Text>
-          <Text style={styles.currentText}>{Translation.current_week}</Text>
-        </View>
-        <View style={{ ...styles.insideContainer, backgroundColor: '#E9E1C7' }}>
-          <Text style={styles.numberText}>{monthlyData?.month_count}</Text>
-          <Text style={styles.currentText}>{Translation?.current_month}</Text>
-        </View>
-        <View style={{ ...styles.insideContainer, backgroundColor: '#C7DBE9' }}>
-          <Text style={styles.numberText}>{monthlyData?.life_time_count}</Text>
-          <Text style={styles.currentText}>{Translation?.total}</Text>
+                </View>
+              );
+            }}
+            ListFooterComponent={() => {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    borderBottomWidth: 0,
+                    paddingBottom: 100,
+                    marginBottom: 50,
+
+                  }}>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      width: '40%',
+                      height: 46,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      borderColor: '#F7941C',
+                      borderBottomLeftRadius: 10,
+                      borderRightWidth: 0,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: colors.black,
+                      }}>
+                      {Translation.old_counts}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      width: '60%',
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      height: 46,
+                      borderBottomRightRadius: 10,
+                      borderColor: '#F7941C',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: colors.black,
+                        marginLeft: 20,
+                      }}>
+                      {monthlyData?.life_time_count}
+                    </Text>
+                  </View>
+
+                </View>
+              );
+            }}
+          />
         </View>
       </View>
-      <View style={{ paddingHorizontal: 30, borderRadius: 10, marginBottom: 100 }}>
-        <FlatList
-          data={historydata}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          contentContainerStyle={{
-            paddingBottom: 100,
-            marginBottom: 100
-          }}
-          style={{ paddingHorizontal: 0, marginTop: 20, borderWidth: 0 }}
-          ListHeaderComponent={() => {
-            return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  borderBottomWidth: 0,
-                }}>
-                <View
-                  style={{
-                    borderTopLeftRadius: 10,
-                    borderWidth: 1,
-                    borderRightWidth: 0,
-                    width: '40%',
-                    height: 46,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                    borderColor: '#F7941C',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: colors.black,
-                    }}>
-                    {Translation.date}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: '60%',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    height: 46,
-                    borderColor: '#F7941C',
-                    borderTopRightRadius: 10,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: colors.black,
-                      marginLeft: 20,
-                    }}>
-                    {Translation.count}
-                  </Text>
-                </View>
-
-              </View>
-            );
-          }}
-          ListFooterComponent={() => {
-            return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  borderBottomWidth: 0,
-                  paddingBottom: 100,
-                  marginBottom: 50,
-
-                }}>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: '40%',
-                    height: 46,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                    borderColor: '#F7941C',
-                    borderBottomLeftRadius: 10,
-                    borderRightWidth: 0,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: colors.black,
-                    }}>
-                    {Translation.old_counts}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    width: '60%',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    height: 46,
-                    borderBottomRightRadius: 10,
-                    borderColor: '#F7941C',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: colors.black,
-                      marginLeft: 20,
-                    }}>
-                    {monthlyData?.life_time_count}
-                  </Text>
-                </View>
-
-              </View>
-            );
-          }}
-        />
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

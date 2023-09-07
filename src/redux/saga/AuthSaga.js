@@ -40,7 +40,7 @@ const GetEmailOtpVerify = function* (data) {
     const res = yield call(GetRecord, requestUrl, postData);
     if (res != null && res.status == 200) {
       let token = res?.data?.data;
-      AsyncStorage.setItem('token', JSON.stringify(token?.access_token));
+      yield AsyncStorage.setItem('token', JSON.stringify(token?.access_token));
       yield put({ type: actions.EMAIL_LOGIN_SUCCESS, payload: true });
     }
     yield put(setIsLoading(false))
@@ -104,7 +104,7 @@ const getPhoneNumberVerify = function* (data) {
     const res = yield call(GetRecord, requestUrl, postData);
     if (res !== null && res.status == 200) {
       let tokenData = res?.data?.data?.access_token;
-      AsyncStorage.setItem('token', JSON.stringify(tokenData));
+      yield AsyncStorage.setItem('token', JSON.stringify(tokenData));
       yield put({ type: actions.PHONE_OTP_VERIFY_SUCCESS, payload: true });
     } else if (res.status == 201 && res.data.status === 'error') {
       alert('Enter correct Otp');

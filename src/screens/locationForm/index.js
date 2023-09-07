@@ -169,420 +169,422 @@ const LocationForm = ({ route }) => {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
-      <ScrollView style={{ paddingHorizontal: 10 }}>
-        <TouchableOpacity style={styles.iconContianer}>
-          <View style={{ width: '90%' }}>
-            <View style={styles.singleItem}>
-              <IconV name="globe" size={18} color={colors.black} />
-              <Text numberOfLines={2} style={[styles.textStyle, { marginLeft: 5 }]}>
-                {currentEvent.event_type}
-              </Text>
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
+        <ScrollView style={{ paddingHorizontal: 10 }}>
+          <TouchableOpacity style={styles.iconContianer}>
+            <View style={{ width: '90%' }}>
+              <View style={styles.singleItem}>
+                <IconV name="globe" size={18} color={colors.black} />
+                <Text numberOfLines={2} style={[styles.textStyle, { marginLeft: 5 }]}>
+                  {currentEvent.event_type}
+                </Text>
+              </View>
+              <View style={styles.itemlistcontainer}>
+                <View style={styles.oneItem}>
+                  <Icon name="calendar" size={15} color={colors.black} />
+                  <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
+                    {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
+                  </Text>
+                </View>
+                <View style={styles.oneItem}>
+                  <IconE name="location" size={15} color={colors.black} />
+                  <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
+                    {currentEvent.place_type}
+                  </Text>
+                </View>
+                <View style={{ ...styles.oneItem }}>
+                  <IconF name="users" size={15} color={colors.black} />
+                  <Text style={{ ...styles.textStyle, fontSize: 14 }}>
+                    {currentEvent.participants}
+                  </Text>
+                </View>
+              </View>
             </View>
-            <View style={styles.itemlistcontainer}>
-              <View style={styles.oneItem}>
-                <Icon name="calendar" size={15} color={colors.black} />
-                <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
-                  {moment(currentEvent?.create_at).format('DD-MMM-YYYY')}
-                </Text>
-              </View>
-              <View style={styles.oneItem}>
-                <IconE name="location" size={15} color={colors.black} />
-                <Text style={{ ...styles.textStyle, fontSize: 14, marginLeft: 5 }}>
-                  {currentEvent.place_type}
-                </Text>
-              </View>
-              <View style={{ ...styles.oneItem }}>
-                <IconF name="users" size={15} color={colors.black} />
-                <Text style={{ ...styles.textStyle, fontSize: 14 }}>
-                  {currentEvent.participants}
-                </Text>
-              </View>
-            </View>
-          </View>
 
+            <View>
+              <Icon name="right" color={colors.black} size={25} />
+            </View>
+          </TouchableOpacity>
           <View>
-            <Icon name="right" color={colors.black} size={25} />
+            <Text style={styles.locatoionText}>{Translation.location}</Text>
           </View>
-        </TouchableOpacity>
-        <View>
-          <Text style={styles.locatoionText}>{Translation.location}</Text>
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(93) }}>
-            <Text style={styles.haderStyle}>{Translation.place_name}</Text>
-          </View>
-          <View style={styles.firstTextinput}>
-            <TextInput
-              placeholder={Translation.please_enter_name}
-              onChangeText={setName}
-              value={name}
-              placeholderTextColor={colors.black}
-              style={styles.textINput}
-            />
-          </View>
-        </View>
-        {check && name == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-        )}
-
-        <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(100) }}>
-            <Text style={styles.haderStyle}>{Translation.place_type}</Text>
-          </View>
-          <View style={styles.firstTextinput}>
-            <CustomPicker
-              label="select value"
-              data={eventPlacetype}
-              selectedValue={selectedValue}
-              setSelectedValue={setSelectedValue}
-            />
-          </View>
-        </View>
-        {check && selectedValue == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-        )}
-
-        <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(148) }}>
-            <Text style={styles.haderStyle}>{Translation.list_as_public_event}</Text>
-          </View>
-          <View style={styles.secondList}>
-            <TouchableOpacity
-              onPress={() => handlefirstCheckBox()}
-              style={styles.firstBlock}>
-              <Icont
-                name={
-                  selectIconOne == '1' ? 'circle-slice-8' : 'circle-outline'
-                }
-                size={24}
-                color={selectIconOne == '1' ? 'blue' : colors.black}
-              />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
-                {Translation.yes}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => handleSecondCheckBox()}
-              style={styles.firstBlock}>
-              <Icont
-                name={
-                  selectIcontwo == '1' ? 'circle-slice-8' : 'circle-outline'
-                }
-                size={24}
-                color={selectIcontwo == '1' ? 'blue' : colors.black}
-              />
-              <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
-                {Translation.no}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {check && selectIconOne == null && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-        )}
-
-        <View style={styles.calenderContainer}>
-          <TouchableOpacity
-            style={styles.calenderStyle}
-            onPress={() => setCountryModal(true)}>
-            <View style={{ ...styles.textHeader, width: ms(64) }}>
-              <Text style={styles.haderStyle}>{Translation.country}</Text>
-            </View>
-            <View style={styles.firstTextinput}>
-              <Text style={{ alignSelf: 'center', fontSize: 16, color: colors.black }}>
-                {country ? country.name : Translation.select_country}
-              </Text>
-            </View>
-            {check && country == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.calenderStyle}
-          //   onPress={()=>setShowModal(true)}
-          >
-            <View style={{ ...styles.textHeader, width: ms(73) }}>
-              <Text style={styles.haderStyle}>{Translation.pin_code}</Text>
+          <View style={{ marginTop: 20 }}>
+            <View style={{ ...styles.textHeader, width: ms(93) }}>
+              <Text style={styles.haderStyle}>{Translation.place_name}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <TextInput
-                placeholder={Translation.please_enter_pin}
-                placeholderTextColor={colors.black}
-                onChangeText={setpin}
-                value={pin}
-                keyboardType="numeric"
-                maxLength={6}
-                style={styles.textINput}
-              />
-            </View>
-            {check && pin == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(68) }}>
-            <Text style={styles.haderStyle}>{Translation.address}</Text>
-          </View>
-          <View style={styles.firstTextinput}>
-            <TextInput
-              placeholder={Translation.please_enter_address}
-              onChangeText={setAddress}
-              value={address}
-              placeholderTextColor={colors.black}
-              style={styles.textINput}
-            />
-          </View>
-        </View>
-        {check && address == '' && (
-          <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-        )}
-
-        <View style={styles.calenderContainer}>
-          <TouchableOpacity
-            style={styles.calenderStyle}
-          >
-            <View style={{ ...styles.textHeader, width: ms(37) }}>
-              <Text style={styles.haderStyle}>{Translation.city}</Text>
-            </View>
-            <View style={styles.firstTextinput}>
-              <TextInput
-                placeholder={Translation.please_enter_city}
-                onChangeText={setcityName}
-                value={cityName}
+                placeholder={Translation.please_enter_name}
+                onChangeText={setName}
+                value={name}
                 placeholderTextColor={colors.black}
                 style={styles.textINput}
               />
             </View>
-            {check && cityName == '' && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-            )}
-          </TouchableOpacity>
+          </View>
+          {check && name == '' && (
+            <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+          )}
 
-          <TouchableOpacity
-            style={styles.calenderStyle}
-            onPress={() => handlestateFuction()}>
-            <View style={{ ...styles.textHeader, width: ms(47) }}>
-              <Text style={styles.haderStyle}>{Translation.state}</Text>
+          <View style={{ marginTop: 20 }}>
+            <View style={{ ...styles.textHeader, width: ms(100) }}>
+              <Text style={styles.haderStyle}>{Translation.place_type}</Text>
             </View>
             <View style={styles.firstTextinput}>
-              <Text style={{ alignSelf: 'center', fontSize: 16, color: colors.black }}>
-                {selectedState ? selectedState.name : Translation.select_state}
-              </Text>
+              <CustomPicker
+                label="select value"
+                data={eventPlacetype}
+                selectedValue={selectedValue}
+                setSelectedValue={setSelectedValue}
+              />
             </View>
-            {check && selectedState == null && (
-              <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={styles.btn} onPress={() => handleONsubmit()}>
-          <Text style={styles.saveText}>{Translation.save_and_continue}</Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={countryModal}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setCountryModal(!countryModal);
-          }}>
-          <Pressable
-            style={[styles.buttonClose]}
-            onPress={() => setCountryModal(!countryModal)}>
-            <Text style={[styles.textStyle, { color: colors.white, fontWeight: '600', fontSize: 18 }]}>{Translation.close} </Text>
-          </Pressable>
+          </View>
+          {check && selectedValue == null && (
+            <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+          )}
 
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={[styles.textStyle, { fontWeight: '600', fontSize: 18 }]}>{Translation.select_country} </Text>
+          <View style={{ marginTop: 20 }}>
+            <View style={{ ...styles.textHeader, width: ms(148) }}>
+              <Text style={styles.haderStyle}>{Translation.list_as_public_event}</Text>
+            </View>
+            <View style={styles.secondList}>
+              <TouchableOpacity
+                onPress={() => handlefirstCheckBox()}
+                style={styles.firstBlock}>
+                <Icont
+                  name={
+                    selectIconOne == '1' ? 'circle-slice-8' : 'circle-outline'
+                  }
+                  size={24}
+                  color={selectIconOne == '1' ? 'blue' : colors.black}
+                />
+                <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
+                  {Translation.yes}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleSecondCheckBox()}
+                style={styles.firstBlock}>
+                <Icont
+                  name={
+                    selectIcontwo == '1' ? 'circle-slice-8' : 'circle-outline'
+                  }
+                  size={24}
+                  color={selectIcontwo == '1' ? 'blue' : colors.black}
+                />
+                <Text style={{ marginLeft: 5, fontSize: 18, color: colors.black }}>
+                  {Translation.no}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {check && selectIconOne == null && (
+            <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+          )}
 
-              <View style={styles.searchStyle}>
-                <TextInput
-                  placeholder={Translation.search_text}
-                  onChangeText={value => setSearchText(value)}
-                  autoCapitalize="none"
-                  clearButtonMode="always"
-                  autoCorrect={false}
-                  placeholderTextColor={'gray'}
-                  style={{ color: '#111211', flex: 1 }}></TextInput>
-                <IconF name="search" size={25} color="gray" />
+          <View style={styles.calenderContainer}>
+            <TouchableOpacity
+              style={styles.calenderStyle}
+              onPress={() => setCountryModal(true)}>
+              <View style={{ ...styles.textHeader, width: ms(64) }}>
+                <Text style={styles.haderStyle}>{Translation.country}</Text>
               </View>
-              <View style={{ marginTop: 20 }}>
-                <FlatList
-                  data={countrylistData}
-                  keyExtractor={item => item.id}
-                  ListFooterComponent={() => <View style={{ height: 200 }} />}
-                  ListEmptyComponent={() => {
-                    return <ActivityIndicator size={'small'} color={'blue'} />;
-                  }}
-                  renderItem={({ item }) => {
-                    if (searchText === '') {
-                      return (
-                        <View>
+              <View style={styles.firstTextinput}>
+                <Text style={{ alignSelf: 'center', fontSize: 16, color: colors.black }}>
+                  {country ? country.name : Translation.select_country}
+                </Text>
+              </View>
+              {check && country == null && (
+                <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.calenderStyle}
+            //   onPress={()=>setShowModal(true)}
+            >
+              <View style={{ ...styles.textHeader, width: ms(73) }}>
+                <Text style={styles.haderStyle}>{Translation.pin_code}</Text>
+              </View>
+              <View style={styles.firstTextinput}>
+                <TextInput
+                  placeholder={Translation.please_enter_pin}
+                  placeholderTextColor={colors.black}
+                  onChangeText={setpin}
+                  value={pin}
+                  keyboardType="numeric"
+                  maxLength={6}
+                  style={styles.textINput}
+                />
+              </View>
+              {check && pin == null && (
+                <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <View style={{ ...styles.textHeader, width: ms(68) }}>
+              <Text style={styles.haderStyle}>{Translation.address}</Text>
+            </View>
+            <View style={styles.firstTextinput}>
+              <TextInput
+                placeholder={Translation.please_enter_address}
+                onChangeText={setAddress}
+                value={address}
+                placeholderTextColor={colors.black}
+                style={styles.textINput}
+              />
+            </View>
+          </View>
+          {check && address == '' && (
+            <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+          )}
+
+          <View style={styles.calenderContainer}>
+            <TouchableOpacity
+              style={styles.calenderStyle}
+            >
+              <View style={{ ...styles.textHeader, width: ms(37) }}>
+                <Text style={styles.haderStyle}>{Translation.city}</Text>
+              </View>
+              <View style={styles.firstTextinput}>
+                <TextInput
+                  placeholder={Translation.please_enter_city}
+                  onChangeText={setcityName}
+                  value={cityName}
+                  placeholderTextColor={colors.black}
+                  style={styles.textINput}
+                />
+              </View>
+              {check && cityName == '' && (
+                <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.calenderStyle}
+              onPress={() => handlestateFuction()}>
+              <View style={{ ...styles.textHeader, width: ms(47) }}>
+                <Text style={styles.haderStyle}>{Translation.state}</Text>
+              </View>
+              <View style={styles.firstTextinput}>
+                <Text style={{ alignSelf: 'center', fontSize: 16, color: colors.black }}>
+                  {selectedState ? selectedState.name : Translation.select_state}
+                </Text>
+              </View>
+              {check && selectedState == null && (
+                <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.btn} onPress={() => handleONsubmit()}>
+            <Text style={styles.saveText}>{Translation.save_and_continue}</Text>
+          </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={countryModal}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setCountryModal(!countryModal);
+            }}>
+            <Pressable
+              style={[styles.buttonClose]}
+              onPress={() => setCountryModal(!countryModal)}>
+              <Text style={[styles.textStyle, { color: colors.white, fontWeight: '600', fontSize: 18 }]}>{Translation.close} </Text>
+            </Pressable>
+
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={[styles.textStyle, { fontWeight: '600', fontSize: 18 }]}>{Translation.select_country} </Text>
+
+                <View style={styles.searchStyle}>
+                  <TextInput
+                    placeholder={Translation.search_text}
+                    onChangeText={value => setSearchText(value)}
+                    autoCapitalize="none"
+                    clearButtonMode="always"
+                    autoCorrect={false}
+                    placeholderTextColor={'gray'}
+                    style={{ color: '#111211', flex: 1 }}></TextInput>
+                  <IconF name="search" size={25} color="gray" />
+                </View>
+                <View style={{ marginTop: 20 }}>
+                  <FlatList
+                    data={countrylistData}
+                    keyExtractor={item => item.id}
+                    ListFooterComponent={() => <View style={{ height: 200 }} />}
+                    ListEmptyComponent={() => {
+                      return <ActivityIndicator size={'small'} color={'blue'} />;
+                    }}
+                    renderItem={({ item }) => {
+                      if (searchText === '') {
+                        return (
+                          <View>
+                            <TouchableOpacity
+                              onPress={() => handleOnpressCountry(item)}
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                              }}>
+                              <View>
+                                <Text style={styles.modalText}>{item?.name}</Text>
+                              </View>
+                              <FIcon
+                                name="check-circle"
+                                size={20}
+                                color={
+                                  item.name == country?.name ? 'green' : 'orange'
+                                }
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      }
+                      if (
+                        item.name
+                          .toLocaleLowerCase()
+                          .includes(searchText.toLocaleLowerCase())
+                      ) {
+                        return (
+                          <View>
+                            <TouchableOpacity
+                              onPress={() => handleOnpressCountry(item)}
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                              }}>
+                              <View>
+                                <Text style={styles.modalText}>{item?.name}</Text>
+                              </View>
+                              <FIcon
+                                name="check-circle"
+                                size={20}
+                                color={
+                                  item.name == country?.name ? 'green' : 'orange'
+                                }
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      }
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+          </Modal>
+          {/* state modal */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={stateModata}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setstateModata(!stateModata);
+            }}>
+            <Pressable
+              style={[styles.buttonClose]}
+              onPress={() => setstateModata(!stateModata)}>
+              <Text style={[styles.textStyle, { color: colors.white, fontWeight: '600', fontSize: 18 }]}>{Translation.close} </Text>
+            </Pressable>
+
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={[styles.textStyle, { fontWeight: '600', fontSize: 18 }]}>{Translation.select_state} </Text>
+
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setstateModata(!stateModata)}>
+                  <Text style={styles.textStyle}>{Translation.close}</Text>
+                </Pressable>
+                <View style={styles.searchStyle}>
+                  <TextInput
+                    placeholder={Translation.search_text}
+                    onChangeText={value => setSearchStateText(value)}
+                    autoCapitalize="none"
+                    clearButtonMode="always"
+                    autoCorrect={false}
+                    placeholderTextColor={'gray'}
+                    style={{ color: '#111211', flex: 1 }}></TextInput>
+                  <IconF name="search" size={25} color="gray" />
+                </View>
+                <View style={{ marginTop: 20 }}>
+                  <FlatList
+                    data={countryStateLIstData}
+                    keyExtractor={item => item.id}
+                    ListFooterComponent={() => <View style={{ height: 200 }} />}
+                    ListEmptyComponent={() => {
+                      return <ActivityIndicator size={'small'} color={'blue'} />;
+                    }}
+                    renderItem={({ item }) => {
+                      if (searchStateText === '') {
+                        return (
                           <TouchableOpacity
-                            onPress={() => handleOnpressCountry(item)}
+                            onPress={() => handleselectState(item)}
                             style={{
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                               width: '100%',
                             }}>
                             <View>
-                              <Text style={styles.modalText}>{item?.name}</Text>
+                              <Text style={styles.modalText}>{item.name}</Text>
                             </View>
                             <FIcon
                               name="check-circle"
                               size={20}
                               color={
-                                item.name == country?.name ? 'green' : 'orange'
+                                item.name == selectedState?.name
+                                  ? 'green'
+                                  : 'orange'
                               }
                             />
                           </TouchableOpacity>
-                        </View>
-                      );
-                    }
-                    if (
-                      item.name
+                        );
+                      }
+                      if (item.name
                         .toLocaleLowerCase()
-                        .includes(searchText.toLocaleLowerCase())
-                    ) {
-                      return (
-                        <View>
+                        .includes(searchStateText.toLocaleLowerCase())) {
+                        return (
                           <TouchableOpacity
-                            onPress={() => handleOnpressCountry(item)}
+                            onPress={() => handleselectState(item)}
                             style={{
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                               width: '100%',
                             }}>
                             <View>
-                              <Text style={styles.modalText}>{item?.name}</Text>
+                              <Text style={styles.modalText}>{item.name}</Text>
                             </View>
                             <FIcon
                               name="check-circle"
                               size={20}
                               color={
-                                item.name == country?.name ? 'green' : 'orange'
+                                item.name == selectedState?.name
+                                  ? 'green'
+                                  : 'orange'
                               }
                             />
                           </TouchableOpacity>
-                        </View>
-                      );
-                    }
-                  }}
-                />
+                        );
+                      }
+
+                    }}
+                  />
+                </View>
               </View>
             </View>
-          </View>
-        </Modal>
-        {/* state modal */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={stateModata}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setstateModata(!stateModata);
-          }}>
-          <Pressable
-            style={[styles.buttonClose]}
-            onPress={() => setstateModata(!stateModata)}>
-            <Text style={[styles.textStyle, { color: colors.white, fontWeight: '600', fontSize: 18 }]}>{Translation.close} </Text>
-          </Pressable>
-
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-            <Text style={[styles.textStyle, { fontWeight: '600', fontSize: 18 }]}>{Translation.select_state} </Text>
-
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setstateModata(!stateModata)}>
-                <Text style={styles.textStyle}>{Translation.close}</Text>
-              </Pressable>
-              <View style={styles.searchStyle}>
-                <TextInput
-                  placeholder={Translation.search_text}
-                  onChangeText={value => setSearchStateText(value)}
-                  autoCapitalize="none"
-                  clearButtonMode="always"
-                  autoCorrect={false}
-                  placeholderTextColor={'gray'}
-                  style={{ color: '#111211', flex: 1 }}></TextInput>
-                <IconF name="search" size={25} color="gray" />
-              </View>
-              <View style={{ marginTop: 20 }}>
-                <FlatList
-                  data={countryStateLIstData}
-                  keyExtractor={item => item.id}
-                  ListFooterComponent={() => <View style={{ height: 200 }} />}
-                  ListEmptyComponent={() => {
-                    return <ActivityIndicator size={'small'} color={'blue'} />;
-                  }}
-                  renderItem={({ item }) => {
-                    if (searchStateText === '') {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => handleselectState(item)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            width: '100%',
-                          }}>
-                          <View>
-                            <Text style={styles.modalText}>{item.name}</Text>
-                          </View>
-                          <FIcon
-                            name="check-circle"
-                            size={20}
-                            color={
-                              item.name == selectedState?.name
-                                ? 'green'
-                                : 'orange'
-                            }
-                          />
-                        </TouchableOpacity>
-                      );
-                    }
-                    if (item.name
-                      .toLocaleLowerCase()
-                      .includes(searchStateText.toLocaleLowerCase())) {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => handleselectState(item)}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            width: '100%',
-                          }}>
-                          <View>
-                            <Text style={styles.modalText}>{item.name}</Text>
-                          </View>
-                          <FIcon
-                            name="check-circle"
-                            size={20}
-                            color={
-                              item.name == selectedState?.name
-                                ? 'green'
-                                : 'orange'
-                            }
-                          />
-                        </TouchableOpacity>
-                      );
-                    }
-
-                  }}
-                />
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </ScrollView>
-    </View>
+          </Modal>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 

@@ -10,89 +10,91 @@ const HelpScreen = () => {
 
 
   return (
-    <View style={styles.container}>
-      {isLoading ?
-        <Loader /> : null
-      }
-      <HeaderPage />
-      <Text style={styles.title}>{Translation.help} </Text>
-      <Text style={{ ...styles.title, fontSize: 16 }}>{Translation.version_information} </Text>
-      <View>
-        <View
-          style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
-          <View style={styles.graphinside}>
-            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
-              {Translation.host}
-            </Text>
+    <SafeAreaView style={{ flex: 1 }} >
+      <View style={styles.container}>
+        {isLoading ?
+          <Loader /> : null
+        }
+        <HeaderPage />
+        <Text style={styles.title}>{Translation.help} </Text>
+        <Text style={{ ...styles.title, fontSize: 16 }}>{Translation.version_information} </Text>
+        <View>
+          <View
+            style={{ ...styles.graph1line, marginTop: 20, borderBottomWidth: 0 }}>
+            <View style={styles.graphinside}>
+              <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
+                {Translation.host}
+              </Text>
+            </View>
+            <View style={styles.graphinside}>
+              <Text style={styles.graphText}>{Translation.host_value}</Text>
+            </View>
           </View>
-          <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{Translation.host_value}</Text>
+          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
+            <View style={styles.graphinside}>
+              <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>{Translation.os} </Text>
+            </View>
+            <View style={styles.graphinside}>
+              <Text style={styles.graphText}>{Platform.OS} </Text>
+            </View>
+          </View>
+          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
+            <View style={styles.graphinside}>
+              <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
+                {Translation.os_version}
+              </Text>
+            </View>
+            <View style={styles.graphinside}>
+              <Text style={styles.graphText}>{DeviceInfo.getVersion()}</Text>
+            </View>
+          </View>
+          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
+            <View style={styles.graphinside}>
+              <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
+                {Translation.app_version}
+              </Text>
+            </View>
+            <View style={styles.graphinside}>
+              <Text style={styles.graphText}>{DeviceInfo.getReadableVersion()}</Text>
+            </View>
+          </View>
+          <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
+            <View style={styles.graphinside}>
+              <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
+                {Translation.setting_version}
+              </Text>
+            </View>
+            <View style={styles.graphinside}>
+              <Text style={styles.graphText}>{'51.20.03'}</Text>
+            </View>
+          </View>
+          <View style={styles.graph1line}>
+            <View style={styles.graphinside}>
+              <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
+                {Translation.page_version}
+              </Text>
+            </View>
+            <View style={styles.graphinside}>
+              <Text style={styles.graphText}>{"5web/p.12.3.4.5"}</Text>
+            </View>
           </View>
         </View>
-        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
-          <View style={styles.graphinside}>
-            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>{Translation.os} </Text>
-          </View>
-          <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{Platform.OS} </Text>
-          </View>
-        </View>
-        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
-          <View style={styles.graphinside}>
-            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
-              {Translation.os_version}
-            </Text>
-          </View>
-          <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{DeviceInfo.getVersion()}</Text>
-          </View>
-        </View>
-        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
-          <View style={styles.graphinside}>
-            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
-              {Translation.app_version}
-            </Text>
-          </View>
-          <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{DeviceInfo.getReadableVersion()}</Text>
-          </View>
-        </View>
-        <View style={{ ...styles.graph1line, borderBottomWidth: 0 }}>
-          <View style={styles.graphinside}>
-            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
-              {Translation.setting_version}
-            </Text>
-          </View>
-          <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{'51.20.03'}</Text>
-          </View>
-        </View>
-        <View style={styles.graph1line}>
-          <View style={styles.graphinside}>
-            <Text style={{ ...styles.graphText, fontWeight: 'bold' }}>
-              {Translation.page_version}
-            </Text>
-          </View>
-          <View style={styles.graphinside}>
-            <Text style={styles.graphText}>{"5web/p.12.3.4.5"}</Text>
-          </View>
-        </View>
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: '#EF4136',
+            width: '80%',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            marginTop: 40,
+            borderRadius: 10,
+          }}>
+          <Text style={{ color: 'white', fontSize: 20, alignSelf: 'center' }}>
+            {Translation.report_issues_or_feedback}
+          </Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={{
-          padding: 10,
-          backgroundColor: '#EF4136',
-          width: '80%',
-          alignSelf: 'center',
-          justifyContent: 'center',
-          marginTop: 40,
-          borderRadius: 10,
-        }}>
-        <Text style={{ color: 'white', fontSize: 20, alignSelf: 'center' }}>
-          {Translation.report_issues_or_feedback}
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
