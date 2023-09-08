@@ -11,6 +11,7 @@ import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
 import { useHomeHooks } from '../../utills.js/hooke/home-hooks';
 import { useTranslation } from '../../utills.js/translation-hook';
+import { colors } from '../../helper/colors';
 
 const windowWidth = Dimensions.get('window').width - 70;
 const HomeScreen = () => {
@@ -73,6 +74,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:colors.orange
   },
   IndicatorStyle: {
     position: "absolute",

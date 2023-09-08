@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Dimensions,
   FlatList,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -69,7 +68,7 @@ const MyEvent = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
 
     <View style={{ flex: 1, }}>
       {isLoading ?

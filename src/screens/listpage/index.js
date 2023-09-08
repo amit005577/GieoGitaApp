@@ -3,7 +3,6 @@ import moment from 'moment/moment';
 import React, { useEffect } from 'react';
 import {
   FlatList,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -102,7 +101,7 @@ const ListPageScreen = ({ navigation, route }) => {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={styles.container}>
         {isLoading ?
           <Loader /> : null

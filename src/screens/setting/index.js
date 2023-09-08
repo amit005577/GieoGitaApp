@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,SafeAreaView
+  View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderPage from '../../Components/header';
@@ -22,6 +22,7 @@ import {
 } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
+import { colors } from '../../helper/colors';
 
 
 const SettingScreen = ({ navigation }) => {
@@ -79,7 +80,7 @@ const SettingScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={styles.container}>
         {isLoading ?
           <Loader /> : null
@@ -326,49 +327,3 @@ const styles = StyleSheet.create({
   },
 });
 
-const languageData = [
-  {
-    id: 1,
-    language: 'Hindi',
-  },
-  {
-    id: 2,
-    language: 'Englist',
-  },
-  {
-    id: 3,
-    language: 'Marathi',
-  },
-  {
-    id: 4,
-    language: 'Gujrati',
-  },
-  {
-    id: 5,
-    language: 'Telgu',
-  },
-  {
-    id: 6,
-    language: 'Bangla',
-  },
-  {
-    id: 7,
-    language: 'Odia',
-  },
-  {
-    id: 8,
-    language: 'Tamil',
-  },
-  {
-    id: 9,
-    language: 'Bangla',
-  },
-  {
-    id: 10,
-    language: 'Odia',
-  },
-  {
-    id: 11,
-    language: 'Tamil',
-  },
-];

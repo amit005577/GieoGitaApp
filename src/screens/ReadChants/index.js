@@ -74,7 +74,7 @@ const ReadChantPage = () => {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={styles.container}>
       {isLoading ?
           <Loader /> : null
@@ -100,7 +100,7 @@ export default ReadChantPage;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1,backgroundColor:colors.white 
   },
   tabBar: {
     flexDirection: 'row',

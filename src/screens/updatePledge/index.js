@@ -19,6 +19,7 @@ import {
 } from '../../redux/actions';
 import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
+import { colors } from '../../helper/colors';
 
 const UpdatePledge = () => {
   const { Translation, isLoading, getFormatedString } = useTranslation()
@@ -59,7 +60,7 @@ const UpdatePledge = () => {
   let weekCountNummber = dailyCount * 7
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={styles.container}>
         {isLoading ?
           <Loader /> : null

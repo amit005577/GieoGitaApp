@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -54,6 +53,7 @@ const EventForm = ({ route }) => {
   const [laoder, setLaoder] = useState(false);
   const [joiningLink, setJoiningLink] = useState('');
   const { Translation, isLoading } = useTranslation()
+  const [eventTypeModal, seteventTypeModal] = useState(false)
 
 
   let routeData = route?.params;
@@ -253,7 +253,7 @@ const EventForm = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
     <View style={styles.contaier}>
       {isLoading ?
         <Loader /> : null
@@ -322,11 +322,13 @@ const EventForm = ({ route }) => {
             <Text style={styles.haderStyle}>{Translation.event_type}</Text>
           </View>
           <View style={styles.firstTextinput}>
-            <CustomPicker
-              // ref={pickerRef}
+            <CustomPicker 
               data={eventtypeData ? eventtypeData : []}
               selectedValue={selectedValue}
               setSelectedValue={setSelectedValue}
+              modalVisible={eventTypeModal}
+              setModelVisiblity={(isTrue)=>seteventTypeModal(isTrue)}
+              onclose={alert("enter")}
             />
           </View>
         </View>

@@ -27,6 +27,7 @@ import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
+import HeaderPage from '../../Components/header';
 
 const Register = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
@@ -120,10 +121,11 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       {isLoading ?
         <Loader /> : null
       }
+      <HeaderPage/>
       <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
         <View style={{ alignItems: 'center', marginTop: 30 }}>
           <Image

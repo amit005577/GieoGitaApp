@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -19,6 +18,7 @@ import {
 } from '../../redux/reducers/selectors/userSelector';
 import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
+import { colors } from '../../helper/colors';
 
 const OtpScreen = () => {
   const otpInput = useRef(null);
@@ -57,7 +57,7 @@ const OtpScreen = () => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
 
       <View style={{ flex: 1 }} >
         {isLoading ?

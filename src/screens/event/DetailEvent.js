@@ -8,7 +8,6 @@ import {
   Modal,
   PixelRatio,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -213,7 +212,7 @@ const DetailEvent = ({ route }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
 
       <View style={styles.contaier}>
         {isLoading ?
@@ -426,6 +425,7 @@ export default DetailEvent;
 const styles = StyleSheet.create({
   contaier: {
     flex: 1,
+    backgroundColor:colors.white
   },
   idstyle: {
     color: colors.black,

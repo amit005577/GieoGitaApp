@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingView,
   Modal,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -193,7 +192,7 @@ const ChantCount = ({ navigation, route }) => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
 
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {isLoading ?

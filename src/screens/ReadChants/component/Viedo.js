@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   ImageBackground,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,SafeAreaView
@@ -12,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { videoJson } from '../../../Components/videoJson';
 import { getVideoData } from '../../../redux/actions';
 import Constants from '../../../utills.js/Constants';
+import { colors } from '../../../helper/colors';
 
 const VideoScreen = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const VideoScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,}} >  
       <View style={{ marginTop: 20, paddingHorizontal: 20, flex: 1 }}>
         <View style={{ flex: .5 }}>
           <WebView

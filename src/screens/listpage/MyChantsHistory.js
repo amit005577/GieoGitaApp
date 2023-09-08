@@ -3,7 +3,6 @@ import moment from 'moment/moment';
 import React, { useEffect, useState } from 'react';
 import {
   FlatList,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -123,7 +122,7 @@ const MyChantsHistory = ({ navigation, route }) => {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={styles.container}>
         {isLoading ?
           <Loader /> : null

@@ -4,13 +4,14 @@ import HeaderPage from '../../Components/header';
 import Loader from '../../Components/Loader';
 import { useTranslation } from '../../utills.js/translation-hook';
 import DeviceInfo from 'react-native-device-info';
+import { colors } from '../../helper/colors';
 
 const HelpScreen = () => {
   const { Translation, isLoading } = useTranslation()
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={styles.container}>
         {isLoading ?
           <Loader /> : null

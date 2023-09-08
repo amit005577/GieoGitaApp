@@ -26,6 +26,7 @@ import { loder } from '../../redux/reducers/selectors/userSelector';
 import { useTranslation } from '../../utills.js/translation-hook';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import { colors } from '../../helper/colors';
 
 const LoginPage = ({ navigation }) => {
   const { Translation, isLoading } = useTranslation()
@@ -119,7 +120,7 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       {isLoading ?
         <Loader /> : null
       }

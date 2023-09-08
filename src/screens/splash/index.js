@@ -2,10 +2,11 @@ import { StyleSheet, Text, View, Image, ImageBackground, SafeAreaView } from 're
 import React from 'react';
 import mask from '../../../assets/images/Mask.png';
 import logo from '../../../assets/images/Logo.png';
+import { colors } from '../../helper/colors';
 
 const SplashScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={{ flex: 1 }}>
         <ImageBackground
           resizeMode={'stretch'}

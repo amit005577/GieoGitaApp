@@ -6,7 +6,6 @@ import {
   FlatList,
   Modal,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -170,7 +169,7 @@ const LocationForm = ({ route }) => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {isLoading ?
           <Loader /> : null
