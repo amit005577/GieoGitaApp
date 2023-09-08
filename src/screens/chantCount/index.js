@@ -59,7 +59,7 @@ const ChantCount = ({ navigation, route }) => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
   useEffect(() => {
-    dispatch(handleLanguageListUpdate({ callback: handleCallback })); // 
+    dispatch(handleLanguageListUpdate({ callback: handleCallback })); // For me
 
     if (isFocused && previousChent != null) {
       const created_date = moment(previousChent?.create_at).format('DD MMM');
