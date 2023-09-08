@@ -3,6 +3,7 @@ import moment from 'moment/moment';
 import React, { useEffect, useState } from 'react';
 import {
   FlatList,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,

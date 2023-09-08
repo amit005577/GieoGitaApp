@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Modal,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -28,6 +29,7 @@ import {
   chantHistory,
   chantUpdatecount,
   getcurrentcountStatus,
+  handleLanguageListUpdate,
   liveChants,
   setPreviousChant,
   targetChantData,
@@ -36,6 +38,7 @@ import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
 import Loader from '../../Components/Loader';
 import Constants from '../../utills.js/Constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ChantCount = ({ navigation, route }) => {
   const isFocused = useIsFocused();
@@ -56,6 +59,8 @@ const ChantCount = ({ navigation, route }) => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
   useEffect(() => {
+    dispatch(handleLanguageListUpdate({ callback: handleCallback })); // For me
+
     if (isFocused && previousChent != null) {
       const created_date = moment(previousChent?.create_at).format('DD MMM');
       setTodaysDate(created_date);
@@ -64,8 +69,13 @@ const ChantCount = ({ navigation, route }) => {
       setNumber(0);
       dispatch(setPreviousChant(null));
     }
-
   }, [isFocused])
+
+  const handleCallback = async (data) => {
+    if (data?.status) {
+      await AsyncStorage.setItem(data?.name, JSON.stringify(''))
+    }
+  }
 
   useEffect(() => {
     handleUpdateChants()

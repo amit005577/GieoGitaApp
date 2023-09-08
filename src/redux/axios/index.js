@@ -27,17 +27,15 @@ export const fetchRecord = async url => {
   const store = configureStore();
   let dataset = store.getState();
   let token = await dataset.AuthReducer.accessToken;
-  if (token) {
-    return axios({
-      method: 'GET',
-      crossDomain: true,
-      url: url,
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${token}`,
-      },
-    });
-  }
+  return axios({
+    method: 'GET',
+    crossDomain: true,
+    url: url,
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`,
+    },
+  });
 };
 
 export const fetchRecordWithoutToken = async url => {

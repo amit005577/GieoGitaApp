@@ -5,7 +5,8 @@ import {
   View,
   useWindowDimensions,
   Animated,
-  StatusBar,SafeAreaView
+  StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
@@ -17,9 +18,10 @@ import { useDispatch } from 'react-redux';
 import { getAllpdfData, getVideoData } from '../../redux/actions';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
+import Loader from '../../Components/Loader';
 
 const ReadChantPage = () => {
-  const { Translation } = useTranslation()
+  const { Translation ,isLoading} = useTranslation()
   const layout = useWindowDimensions();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -74,6 +76,9 @@ const ReadChantPage = () => {
   return (
     <SafeAreaView style={{ flex: 1 }} >
       <View style={styles.container}>
+      {isLoading ?
+          <Loader /> : null
+        }
         <HeaderPage />
         <View style={{ flex: 1, marginTop: 10 }}>
           <TabView

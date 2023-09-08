@@ -23,6 +23,7 @@ import { getPdfData, languageList } from '../../../redux/actions';
 import Constants from '../../../utills.js/Constants';
 import { useTranslation } from '../../../utills.js/translation-hook';
 import { colors } from '../../../helper/colors';
+import Loader from '../../../Components/Loader';
 
 const ReadPdfScreen = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -30,7 +31,7 @@ const ReadPdfScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [downloadProgress, setDownloadProgress] = useState(0);
 
-  const { Translation } = useTranslation()
+  const { Translation,isLoading } = useTranslation()
   const [selected, setSelected] = useState({
     id: 17,
     title: 'App PDF Setting',
@@ -117,6 +118,7 @@ const ReadPdfScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+          
       {
         previousValue.current >= currentPage ?
           <View style={styles.monthContainer}>

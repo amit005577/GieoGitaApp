@@ -1,4 +1,4 @@
-import { getHomeData, setHomePageHtmlUrl, setIsLoading } from "../../redux/actions";
+import { getHomeData, setHomePageHtmlUrl } from "../../redux/actions";
 import { useTranslation } from "../translation-hook";
 
 const { useSelector, useDispatch } = require("react-redux");

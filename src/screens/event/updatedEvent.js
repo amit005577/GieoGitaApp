@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, TouchableOpacity,SafeAreaView } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '../../helper/colors';
