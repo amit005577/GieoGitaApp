@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Dimensions,
   FlatList,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,

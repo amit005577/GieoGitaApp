@@ -19,7 +19,7 @@ const initialState = {
   isLoading: false,
   mySelectedEvent: {},
   myChantsList: [],
-  homePageHtmlUrl: ''
+  homePageHtmlUrl: '',
 };
 
 const AppReducers = (state = initialState, action) => {
@@ -138,6 +138,7 @@ const AppReducers = (state = initialState, action) => {
         ...state,
         homePageHtmlUrl: action.payload,
       };
+
     default: {
       return state;
     }

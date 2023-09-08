@@ -312,3 +312,11 @@ export const setHomePageHtmlUrl = payload=>{
     payload,
   }
 }
+
+
+export const handleLanguageListUpdate = payload=>{
+  return{
+    type:ActionTypes.LANGUAGE_LIST_UPDATE,
+    payload,
+  }
+}

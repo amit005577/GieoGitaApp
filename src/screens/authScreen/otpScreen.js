@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import {
   Image,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,

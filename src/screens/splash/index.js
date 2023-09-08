@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, SafeAreaView } from 'react-native';
 import React from 'react';
 import mask from '../../../assets/images/Mask.png';
 import logo from '../../../assets/images/Logo.png';

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   ImageBackground,
+  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View

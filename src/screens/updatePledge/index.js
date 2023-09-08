@@ -2,6 +2,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,

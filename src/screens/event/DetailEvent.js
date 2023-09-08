@@ -8,6 +8,7 @@ import {
   Modal,
   PixelRatio,
   Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,

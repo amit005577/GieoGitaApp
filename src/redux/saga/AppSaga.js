@@ -3,13 +3,14 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { navigationRef } from '../../../App';
 import Constants from '../../utills.js/Constants';
 import * as actions from '../actionTypes';
-import { setIsLoading } from '../actions';
+import { setIsLoading, setLanguageListUpdate } from '../actions';
 import {
   fetchRecord,
   fetchRecordWithoutToken,
   postApi,
   registerApi
 } from '../axios';
+import axios from 'axios';
 
 const PledgeSagaFunction = function* (data) {
   try {
@@ -261,6 +262,7 @@ const getCountryStateSaga = function* (payload) {
   } catch (error) {
   }
 };
+
 const getTranslationsSaga = function* ({ payload }) {
   try {
     let requestUrl = `${Constants.BASE_URL}translation-get/${payload.langCode}`;
@@ -288,6 +290,22 @@ const getTranslationsSaga = function* ({ payload }) {
   }
 };
 
+const getUpdatedLanguage = function* ({payload}) {
+  try {
+    let config = {
+      method: 'get',
+      url: Constants.SCRIPT_URL,
+    };
+    
+    const res = yield axios.request(config)
+    if (res?.data?.data[0]?.status) {
+      yield put(setIsLoading(true))
+      payload.callback(res?.data?.data[0])
+    }
+  } catch (error) {
+  }
+};
+
 const AppSaga = [
   takeLatest(actions.TARGET_COUNT_PLEDGE, PledgeSagaFunction),
   takeLatest(actions.GET_HOME_PAGE_DATA, getHomePageData),
@@ -304,6 +322,8 @@ const AppSaga = [
   takeLatest(actions.COUTRY_NAME_LIST, getCountryNameSaga),
   takeLatest(actions.COUTRY_STATE_NAME, getCountryStateSaga),
   takeLatest(actions.GET_LANGUAGE_TRANSLATION, getTranslationsSaga),
+  takeLatest(actions.LANGUAGE_LIST_UPDATE, getUpdatedLanguage),
+
 ];
 
 export default AppSaga;

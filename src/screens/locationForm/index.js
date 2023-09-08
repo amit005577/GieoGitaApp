@@ -6,6 +6,7 @@ import {
   FlatList,
   Modal,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
