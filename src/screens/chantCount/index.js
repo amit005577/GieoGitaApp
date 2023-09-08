@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View,SafeAreaView
 } from 'react-native';
 
 import React, { useEffect } from 'react';

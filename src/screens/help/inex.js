@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, View,SafeAreaView } from 'react-native';
 import React from 'react';
 import HeaderPage from '../../Components/header';
 import Loader from '../../Components/Loader';

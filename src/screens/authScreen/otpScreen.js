@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  SafeAreaView
 } from 'react-native';
 import OTPTextView from 'react-native-otp-textinput';
 import { useDispatch, useSelector } from 'react-redux';

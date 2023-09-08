@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,SafeAreaView
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { ms } from 'react-native-size-matters';

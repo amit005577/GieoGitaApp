@@ -5,7 +5,7 @@ import {
   View,
   useWindowDimensions,
   Animated,
-  StatusBar,
+  StatusBar,SafeAreaView
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 

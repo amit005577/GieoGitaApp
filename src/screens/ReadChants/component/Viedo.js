@@ -4,7 +4,7 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,SafeAreaView
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useDispatch, useSelector } from 'react-redux';

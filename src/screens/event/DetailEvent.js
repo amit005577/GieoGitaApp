@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View,SafeAreaView
 } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Share from 'react-native-share';

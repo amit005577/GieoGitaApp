@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,SafeAreaView
 } from 'react-native';
 import AIcon from 'react-native-vector-icons/AntDesign';
 import EIcon from 'react-native-vector-icons/Entypo';

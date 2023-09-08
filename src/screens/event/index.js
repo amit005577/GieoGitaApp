@@ -10,7 +10,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,SafeAreaView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
