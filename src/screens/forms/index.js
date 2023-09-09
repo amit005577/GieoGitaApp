@@ -53,7 +53,9 @@ const EventForm = ({ route }) => {
   const [laoder, setLaoder] = useState(false);
   const [joiningLink, setJoiningLink] = useState('');
   const { Translation, isLoading } = useTranslation()
-  const [eventTypeModal, seteventTypeModal] = useState(false)
+  const [eventTypeModal, setEventTypeModal] = useState(false)
+  const [showFrequencyModel, setShowFrequencyModel] = useState(false)
+  const [showPlatform, setShowPlatform] = useState(false)
 
 
   let routeData = route?.params;
@@ -327,8 +329,8 @@ const EventForm = ({ route }) => {
               selectedValue={selectedValue}
               setSelectedValue={setSelectedValue}
               modalVisible={eventTypeModal}
-              setModelVisiblity={(isTrue)=>seteventTypeModal(isTrue)}
-              onclose={alert("enter")}
+              setModelVisibility={()=>setEventTypeModal(!eventTypeModal)}
+              onClose={()=>setEventTypeModal(!eventTypeModal)}
             />
           </View>
         </View>
@@ -343,10 +345,12 @@ const EventForm = ({ route }) => {
               </View>
               <View style={styles.firstTextinput}>
                 <CustomPicker
-                  // ref={pickerRef}
                   data={platformData}
                   selectedValue={platform}
                   setSelectedValue={setPlatform}
+                  modalVisible={showPlatform}
+                  setModelVisibility={()=>setShowPlatform(!showPlatform)}
+                  onClose={()=>setShowPlatform(!showPlatform)}
                 />
               </View>
             </View>
@@ -379,10 +383,12 @@ const EventForm = ({ route }) => {
           </View>
           <View style={styles.firstTextinput}>
             <CustomPicker
-              // ref={pickerRef}
               data={dataFrequency}
               selectedValue={frequency}
               setSelectedValue={setFrequency}
+              modalVisible={showFrequencyModel}
+              setModelVisibility={()=>setShowFrequencyModel(!showFrequencyModel)}
+              onClose={()=>setShowFrequencyModel(!showFrequencyModel)}
             />
           </View>
         </View>

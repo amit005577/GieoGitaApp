@@ -1,95 +1,78 @@
-import { Picker } from '@react-native-picker/picker';
 import React from 'react';
-import { View ,Text, TouchableOpacity, Modal, StyleSheet, FlatList, Pressable, ActivityIndicator} from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { useTranslation } from '../utills.js/translation-hook';
 
 
-const CustomPicker = ({data, selectedValue, setSelectedValue,modalVisible,setModelVisiblity,onclose}) => {
-   const { Translation,} =  useTranslation()
+const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibility, modalVisible, onClose }) => {
+  const { Translation, } = useTranslation()
   return (
-    <TouchableOpacity style={{backgroundColor:'white'}}>
+    <TouchableOpacity onPress={setModelVisibility}
+      style={{ flex: 1, borderRadius: 30, justifyContent: 'center' }}>
+      {
+        modalVisible ?
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
 
-      <Text>{selectedValue}</Text>
-      <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
-              {/* Close button */}
-
-
-              <View style={{ flex: 1 }}>
-                <FlatList
-                  data={data}
-                  contentContainerStyle={{ paddingBottom: 100 }}
-                  keyExtractor={item => item.id}
-                  ListEmptyComponent={() => {
-                    return (
-                      <ActivityIndicator size={'small'} color={'blue'} />
-                    )
-                  }}
-                  renderItem={({ item }) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => setSelectedValue(item)}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          width: '100%',
-                          paddingHorizontal: 20,
-                        }}>
-                        <View>
-                          <Text style={styles.modalText}>{item.name}</Text>
-                        </View>
-                        <FIcon
-                          name="check-circle"
-                          size={20}
-                          color={
-                            item.isSelected
-                              ? 'green'
-                              : 'lightgray'
-                          }
-                        />
-                      </TouchableOpacity>
-                    );
-                  }}
-                />
-              </View>
-              <TouchableOpacity
-                style={[styles.buttonClose]}
-                onPress={()=>onclose()}
-                // onPress={() => setModelVisiblity(!modalVisible)}
+                <View style={{ flex: 1 }}>
+                  <FlatList
+                    data={data}
+                    contentContainerStyle={{ paddingBottom: 100 }}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={() => {
+                      return (
+                        <ActivityIndicator size={'small'} color={'blue'} />
+                      )
+                    }}
+                    renderItem={({ item }) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            setSelectedValue(item?.name)
+                            onClose()
+                          }}
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            paddingHorizontal: 20,
+                          }}>
+                          <View>
+                            <Text style={styles.modalText}>{item.name}</Text>
+                          </View>
+                          <FIcon
+                            name="check-circle"
+                            size={20}
+                            color={
+                              item.isSelected
+                                ? 'green'
+                                : 'lightgray'
+                            }
+                          />
+                        </TouchableOpacity>
+                      );
+                    }}
+                  />
+                </View>
+                <TouchableOpacity
+                  style={[styles.buttonClose]}
+                  onPress={onClose}
                 >
-                <Text style={styles.textStyle}>{Translation.close} </Text>
-              </TouchableOpacity>
+                  <Text style={styles.textStyle}>{Translation.close} </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
+          :
+          <Text style={[styles.modalText, { fontSize: 16 ,marginTop:15}]}>{selectedValue}</Text>
 
-
-
-      {/* <Picker
-      // enabled={true}
-
-        placeholder='select value'
-        selectedValue={selectedValue}
-        selectionColor={"black"}
-        dropdownIconColor={"black"}
-        backgroundColor={'white'}
-        themeVariant={'light'}
-        style={{color:'black',backgroundColor:'white'}}
-        
-        itemStyle={{  color: "blue", fontFamily:"Ebrima", fontSize:17 }}
-        
-        onValueChange={itemValue => setSelectedValue(itemValue)}>
-        {data?.map(item => (
-          <Picker.Item  key={item.id} label={item.name} value={item.id}  />
-        ))}
-      </Picker> */}
+      }
     </TouchableOpacity>
   );
 };
