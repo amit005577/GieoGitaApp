@@ -170,6 +170,7 @@ export default UpdatePledge;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:colors.white
   },
   myPledge: {
     alignSelf: 'center',

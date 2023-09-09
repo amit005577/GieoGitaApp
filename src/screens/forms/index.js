@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,SafeAreaView
+  View,SafeAreaView, Platform
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { ms } from 'react-native-size-matters';
@@ -278,7 +278,7 @@ const EventForm = ({ route }) => {
             />
           </View>
         </View>
-        {check && (
+        {check && name==""&&(
           <Text style={{ color: 'red', left: 10, fontSize: 15 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
@@ -331,6 +331,7 @@ const EventForm = ({ route }) => {
               modalVisible={eventTypeModal}
               setModelVisibility={()=>setEventTypeModal(!eventTypeModal)}
               onClose={()=>setEventTypeModal(!eventTypeModal)}
+              heading={'Select Event Type'}
             />
           </View>
         </View>
@@ -351,6 +352,7 @@ const EventForm = ({ route }) => {
                   modalVisible={showPlatform}
                   setModelVisibility={()=>setShowPlatform(!showPlatform)}
                   onClose={()=>setShowPlatform(!showPlatform)}
+                  heading={'Select Platform'}
                 />
               </View>
             </View>
@@ -389,6 +391,7 @@ const EventForm = ({ route }) => {
               modalVisible={showFrequencyModel}
               setModelVisibility={()=>setShowFrequencyModel(!showFrequencyModel)}
               onClose={()=>setShowFrequencyModel(!showFrequencyModel)}
+              heading={'Select Frequency'}
             />
           </View>
         </View>
@@ -472,7 +475,7 @@ const EventForm = ({ route }) => {
           <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(220), left: 20 }}>
+          <View style={{ ...styles.textHeader, width:Platform.OS=="android" ?ms(220):ms(230), left: 20 }}>
             <Text style={{ ...styles.haderStyle }}>
               {Translation.expected_participants}
             </Text>
@@ -518,7 +521,7 @@ const EventForm = ({ route }) => {
           title={Translation.country_name}
         />
         <View style={{ marginTop: 20 }}>
-          <View style={{ ...styles.textHeader, width: ms(120), left: 20 }}>
+          <View style={{ ...styles.textHeader, width:Platform.OS=="android"? ms(120):ms(130), left: 20 }}>
             <Text style={styles.haderStyle}>{Translation.organizer_name}</Text>
           </View>
           <View style={styles.firstTextinput}>

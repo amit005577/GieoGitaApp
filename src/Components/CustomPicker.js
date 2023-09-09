@@ -4,7 +4,7 @@ import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { useTranslation } from '../utills.js/translation-hook';
 
 
-const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibility, modalVisible, onClose }) => {
+const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibility, modalVisible, onClose,heading }) => {
   const { Translation, } = useTranslation()
   return (
     <TouchableOpacity onPress={setModelVisibility}
@@ -18,7 +18,7 @@ const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibilit
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={[styles.textStyle, { fontSize: 26, }]}>{Translation.select_language} </Text>
+                <Text style={[styles.textStyle, { fontSize: 26, }]}>{heading} </Text>
 
                 <View style={{ flex: 1 }}>
                   <FlatList
@@ -70,7 +70,7 @@ const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibilit
             </View>
           </Modal>
           :
-          <Text style={[styles.modalText, { fontSize: 16 ,marginTop:15}]}>{selectedValue}</Text>
+          <Text style={[styles.modalText, { fontSize: 16 ,marginTop:15}]}>{selectedValue?selectedValue:'select'}</Text>
 
       }
     </TouchableOpacity>

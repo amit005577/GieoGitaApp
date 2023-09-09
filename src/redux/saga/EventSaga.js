@@ -100,6 +100,7 @@ const SearchEventSaga = function* () {
 
 
 const CreateEventSaga = function* (data) {
+  console.log("enter ",data)
   yield put(setIsLoading(true))
 
   let _data = {
@@ -127,8 +128,9 @@ const CreateEventSaga = function* (data) {
   try {
     let requestUrl =
       `${Constants.BASE_URL}events-store`;
-
+      console.log("show enter:")
     const res = yield call(registerApi, requestUrl, _data);
+    console.log("show resss::::",res)
     if (res.data != null) {
 
       yield put({
