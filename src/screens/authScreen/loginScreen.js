@@ -124,7 +124,7 @@ const LoginPage = ({ navigation }) => {
       {isLoading ?
         <Loader /> : null
       }
-      <View style={{ paddingHorizontal: 23 }}>
+      <View style={{ paddingHorizontal: 23,backgroundColor:colors.white,flex:1 }}>
         <View style={{ alignItems: 'center', marginTop: 30 }}>
           <Image
             style={{
