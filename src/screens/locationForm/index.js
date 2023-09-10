@@ -108,7 +108,7 @@ const LocationForm = ({ route }) => {
 
   let data = {
     place_name: name,
-    place_type: selectedValue,
+    place_type: selectedValue?.id,
     pincode: pin,
     CountryState: selectedState?.id,
     is_public_place: selectIconOne,
@@ -166,6 +166,7 @@ const LocationForm = ({ route }) => {
 
   const [searchText, setSearchText] = useState('');
   const [searchStateText, setSearchStateText] = useState('');
+  const [placeTypeModal, setPlaceTypeModal] = useState(false)
 
 
   return (
@@ -241,6 +242,11 @@ const LocationForm = ({ route }) => {
                 data={eventPlacetype}
                 selectedValue={selectedValue}
                 setSelectedValue={setSelectedValue}
+                modalVisible={placeTypeModal}
+                setModelVisibility={()=>setPlaceTypeModal(!placeTypeModal)}
+                onClose={()=>setPlaceTypeModal(!placeTypeModal)}
+              
+                heading ={Translation.select_place_type} 
               />
             </View>
           </View>

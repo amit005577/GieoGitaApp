@@ -84,7 +84,7 @@ const LoginPage = ({ navigation }) => {
   const onSigniInFacebook = async () => {
     // Attempt login with permissions
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-    console.log('facebook::::', result);
+    // console.log('facebook::::', result);
 
     if (result.isCancelled) {
       throw 'User cancelled the login process';
@@ -93,7 +93,7 @@ const LoginPage = ({ navigation }) => {
     // Once signed in, get the users AccessToken
     const data = await AccessToken.getCurrentAccessToken();
 
-    console.log('facebook:::::', data);
+    // console.log('facebook:::::', data);
     if (!data) {
       throw 'Something went wrong obtaining access token';
     }

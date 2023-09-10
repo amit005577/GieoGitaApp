@@ -25,7 +25,7 @@ const UpdatedEvent = () => {
 
   return (
      <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
-    <View style={{ flex: 1 }} >
+    <View style={{ flex: 1,backgroundColor:colors.white }} >
       {isLoading ?
         <Loader /> : null
       }

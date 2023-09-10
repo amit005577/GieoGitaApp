@@ -34,7 +34,7 @@ const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibilit
                       return (
                         <TouchableOpacity
                           onPress={() => {
-                            setSelectedValue(item?.name)
+                            setSelectedValue(item)
                             onClose()
                           }}
                           style={{
@@ -67,10 +67,10 @@ const CustomPicker = ({ data, selectedValue, setSelectedValue, setModelVisibilit
                   <Text style={styles.textStyle}>{Translation.close} </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> 
           </Modal>
           :
-          <Text style={[styles.modalText, { fontSize: 16 ,marginTop:15}]}>{selectedValue?selectedValue:'select'}</Text>
+          <Text style={[styles.modalText, { fontSize: 16 ,marginTop:15}]}>{selectedValue?selectedValue?.name:Translation.select}</Text>
 
       }
     </TouchableOpacity>

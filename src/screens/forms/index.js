@@ -37,6 +37,7 @@ const EventForm = ({ route }) => {
   const [selectIconOne, setSelectIconOne] = useState(null);
   const [selectIcontwo, setSelectIcontwo] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
+  console.log("show event selected value",selectedValue)
   const [frequency, setFrequency] = useState(null);
   const [platform, setPlatform] = useState(null);
   const [startDate, setstartDate] = useState(null);
@@ -59,14 +60,15 @@ const EventForm = ({ route }) => {
 
 
   let routeData = route?.params;
+  console.log("show route data ",routeData)
   const frequencyRecord = () => {
     const res = dataFrequency.find((item) => item.id == routeData?.data.frequency)
-    return res?.id
+    return res
   }
 
   const findEventType = () => {
     const item = eventtypeData.find((item) => item.name == routeData?.data.event_type)
-    return item?.id
+    return item
   }
   useEffect(() => {
     setName(routeData?.data.name);
@@ -203,8 +205,8 @@ const EventForm = ({ route }) => {
 
       let formDataEdit = {
         name: name,
-        event_type: selectedValue,
-        frequency: frequency,
+        event_type: selectedValue?.id,
+        frequency: frequency?.id,
         start: startDate,
         participants: participant,
         phone_visible: phonepublic,
@@ -226,8 +228,8 @@ const EventForm = ({ route }) => {
 
       let formData = {
         name: name,
-        event_type: selectedValue,
-        frequency: frequency,
+        event_type: selectedValue?.id,
+        frequency: frequency?.id,
         start: startDate,
         participants: participant,
         phone_visible: phonepublic,
@@ -331,7 +333,7 @@ const EventForm = ({ route }) => {
               modalVisible={eventTypeModal}
               setModelVisibility={()=>setEventTypeModal(!eventTypeModal)}
               onClose={()=>setEventTypeModal(!eventTypeModal)}
-              heading={'Select Event Type'}
+              heading={Translation.select_event_type}
             />
           </View>
         </View>
@@ -339,7 +341,7 @@ const EventForm = ({ route }) => {
           <Text style={{ color: 'red', left: 10 }}>{Translation.field__s_required}</Text>
         )}
         {
-          selectedValue == 7 && (
+          selectedValue?.id == 7 && (
             <View style={{ marginTop: 20 }}>
               <View style={styles.textHeader}>
                 <Text style={styles.haderStyle}>{Translation.platform}</Text>
@@ -352,7 +354,7 @@ const EventForm = ({ route }) => {
                   modalVisible={showPlatform}
                   setModelVisibility={()=>setShowPlatform(!showPlatform)}
                   onClose={()=>setShowPlatform(!showPlatform)}
-                  heading={'Select Platform'}
+                  heading={Translation.select_platform}
                 />
               </View>
             </View>
@@ -391,7 +393,7 @@ const EventForm = ({ route }) => {
               modalVisible={showFrequencyModel}
               setModelVisibility={()=>setShowFrequencyModel(!showFrequencyModel)}
               onClose={()=>setShowFrequencyModel(!showFrequencyModel)}
-              heading={'Select Frequency'}
+              heading={Translation.select_frequency}
             />
           </View>
         </View>
@@ -417,7 +419,7 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={showDatePicker}>
             <View style={{ ...styles.textHeader }}>
-              <Text style={[styles.haderStyle, { color: routeData ? 'lightgray' : colors.black }]}>{Translation.start_date}</Text>
+              <Text style={[styles.haderStyle, { color: colors.black }]}>{Translation.start_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
@@ -435,7 +437,7 @@ const EventForm = ({ route }) => {
             style={styles.calenderStyle}
             onPress={() => setShowModal(true)}>
             <View style={{ ...styles.textHeader, width: ms(75) }}>
-              <Text style={[styles.haderStyle, { color: routeData ? 'lightgray' : colors.black }]}>{Translation.end_date}</Text>
+              <Text style={[styles.haderStyle, { color: colors.black }]}>{Translation.end_date}</Text>
             </View>
             <View style={styles.firstTextinput}>
               <Text style={{ color: colors.black }}>
