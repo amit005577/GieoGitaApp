@@ -7,7 +7,7 @@ import { colors } from '../../helper/colors';
 const SplashScreen = () => {
   return (
      <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 ,backgroundColor:colors.white}}>
         <ImageBackground
           resizeMode={'stretch'}
           source={mask}
