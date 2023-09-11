@@ -21,8 +21,7 @@ export const videoJson = [
   {
     id: '0',
     title: 'Big Buck Bunny',
-    thumbnailUrl:
-      img1,
+    thumbnailUrl: img1,
     videoUrl: 'qNiYe-KefSM',
   },
   {
