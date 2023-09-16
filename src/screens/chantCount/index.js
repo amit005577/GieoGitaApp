@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,SafeAreaView
+  View, SafeAreaView
 } from 'react-native';
 
 import React, { useEffect } from 'react';
@@ -58,7 +58,7 @@ const ChantCount = ({ navigation, route }) => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
   useEffect(() => {
-    dispatch(handleLanguageListUpdate({ callback: handleCallback })); // For me
+    dispatch(handleLanguageListUpdate({ callback: handleCallback, id: accessToken })); // For me
 
     if (isFocused && previousChent != null) {
       const created_date = moment(previousChent?.create_at).format('DD MMM');
@@ -71,7 +71,7 @@ const ChantCount = ({ navigation, route }) => {
   }, [isFocused])
 
   const handleCallback = async (data) => {
-    if (data?.status) {
+    if (data?.status==1) {
       await AsyncStorage.setItem(data?.name, JSON.stringify(''))
     }
   }
@@ -192,7 +192,7 @@ const ChantCount = ({ navigation, route }) => {
 
 
   return (
-     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.orange }} >
 
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {isLoading ?

@@ -3,7 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { navigationRef } from '../../../App';
 import Constants from '../../utills.js/Constants';
 import * as actions from '../actionTypes';
-import { setIsLoading, setLanguageListUpdate } from '../actions';
+import { languageUpdateSuccess, languageUpdateSuccess1, setIsLoading, setLanguageListUpdate } from '../actions';
 import {
   fetchRecord,
   fetchRecordWithoutToken,
@@ -11,6 +11,8 @@ import {
   registerApi
 } from '../axios';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import configureStore from '../store';
 
 const PledgeSagaFunction = function* (data) {
   try {
@@ -290,17 +292,32 @@ const getTranslationsSaga = function* ({ payload }) {
   }
 };
 
-const getUpdatedLanguage = function* ({payload}) {
+const getUpdatedLanguage = function* ({ payload }) {
+  const store = configureStore();
+  let dataset = store.getState();
+  let token = yield dataset.AuthReducer.accessToken;
+  let token1 = yield dataset.AuthReducer.accessToken1;
+
   try {
     let config = {
       method: 'get',
       url: Constants.SCRIPT_URL,
     };
-    
+
     const res = yield axios.request(config)
-    if (res?.data?.data[0]?.status) {
+    if (res?.data?.data[0]?.status == 1) {
       yield put(setIsLoading(true))
+      if (token) {
+        yield put(languageUpdateSuccess1(token))
+        yield put(languageUpdateSuccess(''))
+      }
       payload.callback(res?.data?.data[0])
+    } else if (res?.data?.data[0]?.status == 2) {
+      if (token1) {
+        payload.callback(res?.data?.data[0],token1)
+        yield put(languageUpdateSuccess(token1))
+        yield put(languageUpdateSuccess1(''))
+      }
     }
   } catch (error) {
   }

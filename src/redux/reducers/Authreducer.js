@@ -11,8 +11,9 @@ const initialState = {
   phoneOtpResponse: '',
   requestOtpData: '',
   accessToken: '',
+  accessToken1: '',
   pledgeStatusWWWW: '',
-  myEvent:''
+  myEvent: ''
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -78,13 +79,19 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
         accessToken: action.payload,
       };
+    case actions.STORE_ACCESS_TOKEN1:
+      // console.log('shw tken form reducer', action.payload);
+      return {
+        ...state,
+        accessToken1: action.payload,
+      };
     case actions.SET_PLEDGE_STATUS_CONDITION:
       // console.log('shw tken form reducer ST-========>', action?.payload);
       return {
         ...state,
         pledgeStatusWWWW: action.payload,
       };
-     
+
 
     default: {
       return state;

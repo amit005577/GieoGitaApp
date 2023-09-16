@@ -320,3 +320,19 @@ export const handleLanguageListUpdate = payload=>{
     payload,
   }
 }
+
+export const languageUpdateSuccess = payload => {
+  // console.log('show action access token', payload);
+  return {
+    type: ActionTypes.STORE_ACCESS_TOKEN,
+    payload,
+  };
+};
+
+export const languageUpdateSuccess1 = payload => {
+  // console.log('show action access token', payload);
+  return {
+    type: ActionTypes.STORE_ACCESS_TOKEN1,
+    payload,
+  };
+};
