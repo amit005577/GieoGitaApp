@@ -43,7 +43,6 @@ const MyChantsCount = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [number, setNumber] = useState(0);
-  const [disable, setDisable] = useState(true);
   const [modalPickerVisible, setModalPickerVisible] = useState(false);
   const [localImage, setLocalImage] = useState('');
   const [localImagePath, setLocalImagePath] = useState('');
@@ -137,38 +136,7 @@ const MyChantsCount = ({ navigation, route }) => {
         console.log('error', error)
       });
 
-    // if (previousChant?.id) {
-    //   var myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
-    //   myHeaders.append("Authorization", "Bearer " + accessToken);
-
-    //   var raw = JSON.stringify({
-    //     "id": previousChant?.id,
-    //     "count": number,
-    //     "photo": localImagePath
-    //   });
-    //   console.log(raw);
-    //   var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: 'follow'
-    //   };
-    //   handleLoader(true)
-    //   fetch(`${Constants.BASE_URL}events-history/update`, requestOptions)
-    //     .then(response => response.text())
-    //     .then(result => {
-    //       handleLoader(false)
-    //       dispatch(setPreviousChant(null))
-    //       navigation.navigate('MyChantsHistory')
-    //     })
-    //     .catch(error => {
-    //       handleLoader(false)
-    //       console.log('error', error)
-    //     });
-    // }
   };
-
 
 
   const numberDecrement = () => {
@@ -330,7 +298,7 @@ const MyChantsCount = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
-                onPress={() => handleGallery()}
+                onPress={() => setModalPickerVisible(!modalPickerVisible)}
                 style={{ alignSelf: 'flex-end', position: 'absolute', bottom: 10, right: 10 }}>
                 <Text style={[styles.titleText, { color: colors.orange, fontSize: 20, fontWeight: '600' }]}>{Translation.close}</Text>
               </TouchableOpacity>
