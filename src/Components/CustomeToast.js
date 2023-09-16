@@ -1,9 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { colors } from '../helper/colors';
 
-const CustomeToast = ({msg}) => {
+const CustomeToast = ({ msg }) => {
   return (
-    <View style={{ position: 'absolute', top: 200, alignSelf: 'center', backgroundColor: '#f2be79', padding: 10, borderRadius: 30, elevation: 5 }}>
+    <View style={{
+      position: 'absolute', top: 400, alignSelf: 'center', backgroundColor: colors.orange, padding: 10,
+      borderRadius: 30, elevation: 5,zIndex:10
+    }}>
       <Text style={{ color: '#f2faf4', fontWeight: '600', fontSize: 16 }} >{msg} </Text>
     </View>
   );

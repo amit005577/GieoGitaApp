@@ -1,17 +1,17 @@
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Clipboard,
-  Dimensions,
   FlatList,
   Image,
   Modal,
   PixelRatio,
   Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,SafeAreaView
+  View
 } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Share from 'react-native-share';
@@ -27,45 +27,51 @@ import CustomeToast from '../../Components/CustomeToast';
 import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
-import { eventConfirmation, subscribeEvent } from '../../redux/actions';
-import { useTranslation } from '../../utills.js/translation-hook';
+import { getAllEvent, setIsLoading, subscribeEvent } from '../../redux/actions';
 import Constants from '../../utills.js/Constants';
+import { useTranslation } from '../../utills.js/translation-hook';
+import { useIsFocused } from '@react-navigation/native';
 
-const DetailEvent = ({ route }) => {
+const DetailEvent = ({ navigation, route }) => {
   const { Translation, isLoading } = useTranslation()
+  const isFocused = useIsFocused();
 
-  const item = route.params.data;
+  // let item = route.params.data;
+  const [item, setItem] = useState(route.params.data)
   const isCurrentUser = route.params.isCurrentUser
-  const url = item?.thumbnail;
+  const url = item?.banner;
   const message = item?.short_content;
-  const title = Translation.shared_by + ' ' + item?.organizer;
+  const title = Translation.shared_by + ': ' + item?.organizer + "Instructions: " + item?.content;
   const dispatch = useDispatch();
-  const [isCopied, setisCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [localImage, setLocalImage] = useState('');
+  const [localImagePath, setLocalImagePath] = useState('');
+
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const [galleryList, setGalleryList] = useState([])
-  const handleImagePick = val => {
+  const handleImagePick = () => {
     setModalVisible(true);
   };
   const subscribeResponse = useSelector(
     state => state.EventReducer.subscribeEventResponse,
   );
-  const [subscription, setsubscription] = useState(item?.subscriptions);
+  const [subscription, setSubscription] = useState(item?.subscriptions);
 
   useEffect(() => {
     if (subscribeResponse.id == item?.id) {
-      setsubscription(subscribeResponse.subscriptions);
+      setSubscription(subscribeResponse.subscriptions);
     }
   }, [subscribeResponse]);
 
   const onPressWhatsApp = async () => {
     const options = {
       title: title,
-      message: message,
+      message: title,
       url: url,
       social: Share.Social.WHATSAPP,
     };
+    console.log(options);
     handleShare(options);
   };
 
@@ -99,10 +105,10 @@ const DetailEvent = ({ route }) => {
       });
   };
 
-  const email = `${message}: ${url}`;
   const onPressCopy = () => {
-    Clipboard.setString(email);
-    setisCopied(true);
+    const data = `${title}: ${url}`;
+    Clipboard.setString(data);
+    setIsCopied(true);
   };
 
   const handleSubscrible = val => {
@@ -111,8 +117,8 @@ const DetailEvent = ({ route }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setisCopied(false);
-    }, 2000);
+      setIsCopied(false);
+    }, 3000);
   }, [isCopied]);
 
   let options = {
@@ -125,6 +131,7 @@ const DetailEvent = ({ route }) => {
       let result = await launchCamera(options);
       let newData = result?.assets[0].uri;
       setLocalImage(newData);
+      setLocalImagePath(result?.assets[0])
       setModalVisible(false);
     } catch (error) {
       // console.log('show error', error);
@@ -136,35 +143,57 @@ const DetailEvent = ({ route }) => {
       const result = await launchImageLibrary(options);
       let newData = result?.assets[0].uri;
       setLocalImage(newData);
+      setLocalImagePath(result?.assets[0])
       setModalVisible(false);
     } catch (error) {
       // console.log('show error', error);
     }
   };
 
-  const handleConfirmationEvent = () => {
-    let data = {
-      params: {
-        image: localImage,
-        id: item?.id,
-      },
-      callback: () => handleClearData(),
-    };
 
-    if (data.params.image != null && data.params.id != null) {
-      const res = dispatch(eventConfirmation(data));
-    }
+  const onAddEventBanner = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+
+    var formData = new FormData();
+    formData.append('banner', {
+      uri: localImagePath.uri,
+      name: localImagePath.fileName,
+      type: localImagePath.type,
+    });
+
+    formData.append("id", item?.id);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formData,
+    };
+    dispatch(setIsLoading(true))
+    fetch(`${Constants.BASE_URL}events-store-banner`, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        const res = JSON.parse(result)
+        setItem(res.data)
+        handleClearData()
+        dispatch(setIsLoading(false))
+      })
+      .catch(error => {
+        dispatch(setIsLoading(false))
+        console.log('error', error)
+      });
+
   };
 
   const handleClearData = () => {
-    alert('Event confirmed successfully');
     setLocalImage(null);
+    dispatch(getAllEvent());
   };
-
 
   useEffect(() => {
     handleGalleryAPI()
-  }, [])
+    handleClearData()
+  }, [isFocused])
 
   const handleGalleryAPI = () => {
     var myHeaders = new Headers();
@@ -174,15 +203,18 @@ const DetailEvent = ({ route }) => {
       method: 'GET',
       headers: myHeaders,
     };
-
+    dispatch(setIsLoading(true))
     fetch(`${Constants.BASE_URL}events-gallery/${item?.id}`, requestOptions)
       .then(response => response.text())
       .then(result => {
         const res = JSON.parse(result)
-        console.log('DetailsEvent:::::::::::::::::', res?.data)
         setGalleryList(res?.data)
+        dispatch(setIsLoading(false))
       })
-      .catch(error => console.log('error', error));
+      .catch(error => {
+        dispatch(setIsLoading(false))
+        console.log('error', error)
+      });
   }
 
 
@@ -191,8 +223,8 @@ const DetailEvent = ({ route }) => {
     return (
       <TouchableOpacity activeOpacity={0.6} style={{ flex: 1, marginTop: 10, alignItems: "center" }} >
         <Image source={{ uri: item.photo }} style={{
-          height: PixelRatio.getPixelSizeForLayoutSize(50),
-          width: PixelRatio.getPixelSizeForLayoutSize(100),
+          height: PixelRatio.getPixelSizeForLayoutSize(80),
+          width: PixelRatio.getPixelSizeForLayoutSize(110),
           borderRadius: 10
         }} />
 
@@ -200,7 +232,7 @@ const DetailEvent = ({ route }) => {
           position: 'absolute',
           bottom: 0,
           backgroundColor: '#0007',
-          width: PixelRatio.getPixelSizeForLayoutSize(100),
+          width: PixelRatio.getPixelSizeForLayoutSize(110),
           borderBottomRightRadius: 9,
           borderBottomLeftRadius: 9,
           textAlign: 'center',
@@ -211,178 +243,198 @@ const DetailEvent = ({ route }) => {
     )
   }
 
+
   return (
-     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.orange }} >
 
       <View style={styles.contaier}>
         {isLoading ?
           <Loader /> : null
         }
         <HeaderPage />
+        {isCopied ? <CustomeToast msg={Translation.clipboard_to_copied} /> : null}
 
 
-        <>
-          {isCopied ? <CustomeToast msg={Translation.clipboard_to_copied} /> : null}
-          <View style={{ paddingHorizontal: 10 }}>
-            <Text style={styles.idstyle}>{Translation.event_id + ':'}{item?.id}</Text>
-            <View style={styles.singleItem}>
-              <IconV color="gray" name="globe" size={24} />
-              <Text style={styles.textstyle}>{item?.event_type}</Text>
-            </View>
 
-            <View style={styles.locationstyle}>
-              <View style={styles.oneItem}>
-                <Icon name="calendar" color="gray" size={25} />
-                <Text style={{ ...styles.textstyle, fontSize: 14 }}>
-                  {moment(item?.create_at).format('ddd-mm-yy')}
-                </Text>
-              </View>
-              <View style={styles.oneItem}>
-                <IconE name="location" size={25} color={colors.black} />
-                <Text style={{ ...styles.textstyle, fontSize: 14 }}>{item?.city}</Text>
-              </View>
-            </View>
-            <Text
-              style={{
-                ...styles.textstyle,
-                fontSize: 17,
-                marginLeft: 0,
-                marginTop: 10,
-              }}>
-              {item?.content}
-            </Text>
-            <Text
-              style={{
-                ...styles.textstyle,
-                fontSize: 14,
-                marginLeft: 0,
-                marginTop: 10,
-                fontWeight: '400',
-              }}>
-              {item?.instraction}
-            </Text>
-            <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {Translation.subscrptions + ":"}{item?.subscriptions}
-            </Text>
-            <View style={styles.addresStyle}>
-              <View style={{ width: '50%', alignSelf: 'flex-end' }}>
-                <Text style={{ fontSize: 18, color: 'black' }}>
-                  {Translation.address + ':'}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.textstyle,
-                    fontSize: 14,
-                    marginLeft: 0,
-                    marginTop: 10,
-                    fontWeight: '400',
-                  }}>
-                  {`${item?.address}, ${item?.country_id}, ${item?.phone_visible == 'Yes' ? item?.place_name : ''}, ${item?.pincode}`}
-                </Text>
-              </View>
-              <View>
-                <Text
-                  style={{
-                    justifyContent: 'flex-end',
-                    alignSelf: 'flex-end',
-                    fontSize: 18,
-                    color: 'black',
-                  }}>
-                  {Translation.organizer + ':'}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.textstyle,
-                    fontSize: 14,
-                    marginLeft: 0,
-                    marginTop: 10,
-                    fontWeight: '400',
-                  }}>
-                  {item?.organizer}{'\n'}{item?.phone_visible == 'Yes' ? item?.phone : ''}
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 10,
-            }}>
-            <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share + ':'}</Text>
-            <IconW
-              onPress={() => {
-                onPressWhatsApp();
-              }}
-              name="whatsapp"
-              color="#189633"
-              size={30}
-            />
-            <IconV
-              onPress={() => {
-                onPressFacebook();
-              }}
-              name="facebook"
-              color="#1b32a1"
-              size={30}
-            />
-            <Icon
-              onPress={() => {
-                onPressTwitter();
-              }}
-              name="twitter"
-              color="#119af5"
-              size={30}
-            />
-            <IconIonic
-              onPress={() => {
-                onPressCopy();
-              }}
-              name="copy-outline"
-              color="gray"
-              size={30}
-            />
-            <TouchableOpacity
-              style={styles.subscribecontainer}
-              onPress={() => handleSubscrible(item?.id)}>
-              <Text style={{ color: 'white' }}>
-                {subscription == '1' ? Translation.subscribed : Translation.subscribe}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {isCurrentUser ? (
-            <TouchableOpacity
-              style={styles.confimationContianer}
-              onPress={() => handleImagePick()}>
-              <Text style={styles.confirmbtn}>{Translation.event_confirmation}</Text>
-            </TouchableOpacity>
-          ) : null}
-          {localImage ? (
-            <>
-              <TouchableOpacity
-                style={{
-                  justifyContent: 'center',
-                  alignContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Image source={{ uri: localImage }} style={styles.bigImagecontainer} />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={{ ...styles.confimationContianer, alignSelf: 'center' }}
-                onPress={handleConfirmationEvent}>
-                <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
-              </TouchableOpacity>
-            </>
-          ) : null}
-        </>
         <View style={{ paddingTop: 5 }} />
         <FlatList
           data={galleryList}
+          ListHeaderComponent={() => {
+            return (
+              <>
+                <View style={{ paddingHorizontal: 10 }}>
+                  <Text style={styles.idstyle}>{Translation.event_id + ':'}{item?.id}</Text>
+                  <View style={styles.singleItem}>
+                    <IconV color="gray" name="globe" size={24} />
+                    <Text style={styles.textstyle}>{item?.event_type}</Text>
+                  </View>
+
+                  <View style={styles.locationstyle}>
+                    <View style={styles.oneItem}>
+                      <Icon name="calendar" color="gray" size={25} />
+                      <Text style={{ ...styles.textstyle, fontSize: 14 }}>
+                        {moment(item?.create_at).format('ddd-mm-yy')}
+                      </Text>
+                    </View>
+                    <View style={styles.oneItem}>
+                      <IconE name="location" size={25} color={colors.black} />
+                      <Text style={{ ...styles.textstyle, fontSize: 14 }}>{item?.city}</Text>
+                    </View>
+                  </View>
+                  <Text
+                    style={{
+                      ...styles.textstyle,
+                      fontSize: 17,
+                      marginLeft: 0,
+                      marginTop: 10,
+                    }}>
+                    {item?.content}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.textstyle,
+                      fontSize: 14,
+                      marginLeft: 0,
+                      marginTop: 10,
+                      fontWeight: '400',
+                    }}>
+                    {item?.instraction}
+                  </Text>
+                  {
+                    item?.banner ?
+                      <Image source={{ uri: item?.banner }} style={styles.bigImageContainer} />
+                      : null
+                  }
+
+                  <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
+                    {Translation.subscrptions + ":"}{item?.subscriptions}
+                  </Text>
+                  <View style={styles.addressStyle}>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 18, color: 'black' }}>
+                        {Translation.address + ':'}
+                      </Text>
+                      <Text
+                        style={{
+                          ...styles.textstyle,
+                          fontSize: 14,
+                          marginLeft: 0,
+                          marginTop: 10,
+                          fontWeight: '400',
+                        }}>
+                        {`${item?.address}, ${item?.country_id}, ${item?.phone_visible == 'Yes' ? item?.place_name : ''}, ${item?.pincode}`}
+                      </Text>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'flex-end' }} >
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'black',
+                        }}>
+                        {Translation.organizer + ':'}
+                      </Text>
+                      <Text
+                        style={{
+                          ...styles.textstyle,
+                          fontSize: 14,
+                          marginLeft: 0,
+                          marginTop: 10,
+                          fontWeight: '400',
+                        }}>
+                        {item?.organizer}{'\n'}{item?.phone_visible == 'Yes' ? item?.phone : ''}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    marginTop: 20,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 10,
+                  }}>
+                  <Text style={{ fontSize: 18, color: 'black' }}>{Translation.share + ':'}</Text>
+                  <IconW
+                    onPress={() => {
+                      onPressWhatsApp();
+                    }}
+                    name="whatsapp"
+                    color="#189633"
+                    size={30}
+                  />
+                  <IconV
+                    onPress={() => {
+                      onPressFacebook();
+                    }}
+                    name="facebook"
+                    color="#1b32a1"
+                    size={30}
+                  />
+                  <Icon
+                    onPress={() => {
+                      onPressTwitter();
+                    }}
+                    name="twitter"
+                    color="#119af5"
+                    size={30}
+                  />
+                  <IconIonic
+                    onPress={() => {
+                      onPressCopy();
+                    }}
+                    name="copy-outline"
+                    color="gray"
+                    size={30}
+                  />
+                  <TouchableOpacity
+                    style={styles.subscribecontainer}
+                    onPress={() => handleSubscrible(item?.id)}>
+                    <Text style={{ color: 'white' }}>
+                      {subscription == '1' ? Translation.subscribed : Translation.subscribe}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }} >
+                  {isCurrentUser ? (
+                    <TouchableOpacity
+                      style={styles.confirmationContainer}
+                      onPress={() => handleImagePick()}>
+                      <Text style={styles.confirmbtn}>{Translation.add_event_banner}</Text>
+                    </TouchableOpacity>
+                  ) : null}
+
+                  {isCurrentUser ? (
+                    <TouchableOpacity
+                      style={styles.confirmationContainer}
+                      onPress={() => navigation.navigate('MyChantsHistory')}>
+                      <Text style={styles.confirmbtn}>{Translation.submission_list}</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+                {localImage ? (
+                  <>
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Image source={{ uri: localImage }} style={styles.bigImageContainer} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={{ ...styles.confirmationContainer, alignSelf: 'center' }}
+                      onPress={() => onAddEventBanner()}>
+                      <Text style={styles.confirmbtn}>{Translation.submit_image} </Text>
+                    </TouchableOpacity>
+                  </>
+                ) : null}
+              </>
+            )
+          }}
           renderItem={renderItemGallery}
-          keyExtractor={(item) => item.create_at}
+          keyExtractor={(item) => item.photo}
           contentContainerStyle={{ paddingBottom: 100, }}
         />
         <Modal
@@ -425,11 +477,15 @@ export default DetailEvent;
 const styles = StyleSheet.create({
   contaier: {
     flex: 1,
-    backgroundColor:colors.white
+    backgroundColor: colors.white
   },
   idstyle: {
     color: colors.black,
     marginTop: 10,
+  },
+  textDetails: {
+    fontSize: 12,
+    color: 'black',
   },
   singleItem: {
     flexDirection: 'row',
@@ -451,9 +507,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     marginTop: 10,
   },
-  addresStyle: {
+  addressStyle: {
     flexDirection: 'row',
-
     justifyContent: 'space-between',
     marginTop: 20,
   },
@@ -465,13 +520,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  confimationContianer: {
-    marginTop: 20,
-    alignSelf: 'flex-end',
-    right: 10,
+  confirmationContainer: {
+    // marginTop: 20,
     backgroundColor: 'brown',
     padding: 10,
     borderRadius: 20,
+    alignItems: 'center',
+    margin: 10,
+    flex: 1
   },
   confirmbtn: {
     color: colors.white,
@@ -492,25 +548,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: ms(30),
   },
-  bigImagecontainer: {
+  bigImageContainer: {
     borderRadius: 20,
-    height: ms(156),
+    height: ms(186),
     width: '95%',
     overflow: 'hidden', // Make sure the content within the container respects the border radius
     borderColor: colors.white,
     marginTop: 10,
+    alignSelf: 'center'
   },
-  smallImagecontainer: {
-    borderRadius: ms(10),
-    height: ms(72),
-    overflow: 'hidden', // Make sure the content within the container respects the border radius
-    borderColor: colors.white,
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.lavender,
-    margin: 2,
-  },
+
   arrowContainer: {
     justifyContent: 'center',
     alignContent: 'center',

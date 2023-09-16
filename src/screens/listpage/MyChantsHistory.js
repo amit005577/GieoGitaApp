@@ -42,7 +42,7 @@ const MyChantsHistory = ({ navigation, route }) => {
 
   const handleChantCountEdit = (val) => {
     dispatch(setPreviousChant(val))
-    navigation.navigate("chant", { chantType: 'my' })
+    navigation.navigate("MyChantsCount", { chantType: 'my' })
   }
 
   const handleMyChantHistory = async () => {
@@ -285,6 +285,8 @@ export default MyChantsHistory;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:colors.white
+
   },
   backContainer: {
     height: 50,
@@ -294,6 +296,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
+    
   },
 
   userNameContainer: {
@@ -307,7 +310,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 15,
     padding: 8,
-    minWidth: "50%"
+    minWidth: "50%",
   },
 
   userText: {

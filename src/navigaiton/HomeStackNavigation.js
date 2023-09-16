@@ -18,6 +18,7 @@ import SettingScreen from '../screens/setting';
 import UpdatePledge from '../screens/updatePledge';
 import BottomTabnavigator from './BottomStackNavigation';
 import MyChantsHistory from '../screens/listpage/MyChantsHistory';
+import MyChantsCount from '../screens/chantCount/MyChantsCount';
 
 const HomeStack = createNativeStackNavigator();
 
@@ -55,6 +56,7 @@ function HomeStackNavigation() {
           <HomeStack.Screen name="myEvent" component={MyEvent} />
           <HomeStack.Screen name="updatedEvent" component={UpdatedEvent} />
           <HomeStack.Screen name="MyChantsHistory" component={MyChantsHistory} />
+          <HomeStack.Screen name="MyChantsCount" component={MyChantsCount} />
 
         </>
       )}

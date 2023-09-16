@@ -77,6 +77,7 @@ const Register = ({ navigation }) => {
       }
     }
   }, [profileData]);
+  
   useEffect(() => {
     dispatch(getCountryName());
     dispatch(getStateName());
@@ -121,12 +122,12 @@ const Register = ({ navigation }) => {
   };
 
   return (
-     <SafeAreaView style={{ flex: 1,backgroundColor:colors.orange }} >  
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.orange }} >
       {isLoading ?
         <Loader /> : null
       }
-      <HeaderPage/>
-      <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
+      <HeaderPage />
+      <ScrollView style={{ flex: 1, paddingHorizontal: 20, backgroundColor: colors.white }}>
         <View style={{ alignItems: 'center', marginTop: 30 }}>
           <Image
             style={{
@@ -160,7 +161,7 @@ const Register = ({ navigation }) => {
             style={styles.TextInputStyle}
             onChangeText={setEmail}
             placeholderTextColor={'#808080'}
-            value={email}
+            value={email ? email.includes('@') ? email : null : null}
             placeholder={Translation.email}
           />
           <TouchableOpacity

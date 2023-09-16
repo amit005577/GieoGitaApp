@@ -17,13 +17,11 @@ import Pdf from 'react-native-pdf';
 import FIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { colors } from '../../../helper/colors';
 import { getPdfData, languageList } from '../../../redux/actions';
 import Constants from '../../../utills.js/Constants';
 import { useTranslation } from '../../../utills.js/translation-hook';
-import { colors } from '../../../helper/colors';
-import Loader from '../../../Components/Loader';
 
 const ReadPdfScreen = () => {
   const [modalVisible, setModalVisible] = React.useState(false);

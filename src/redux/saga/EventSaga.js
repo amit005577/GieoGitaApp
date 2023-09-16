@@ -283,7 +283,7 @@ const confirmationEventSaga = function* (data) {
   let _data = {
     id: data.payload.params.id,
     banner: data.payload.params.image,
-    thumbnail: data.payload.params.image,
+    // thumbnail: data.payload.params.image,  // pass only banner or thumbnail
   }
 
   try {
@@ -292,7 +292,6 @@ const confirmationEventSaga = function* (data) {
     const res = yield call(registerApi, requestUrl, _data);
     if (res.data.data != null) {
       data.payload.callback()
-
     }
     yield put(setIsLoading(false))
   } catch (error) {

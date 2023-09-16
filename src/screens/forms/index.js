@@ -37,7 +37,6 @@ const EventForm = ({ route }) => {
   const [selectIconOne, setSelectIconOne] = useState(null);
   const [selectIcontwo, setSelectIcontwo] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
-  console.log("show event selected value",selectedValue)
   const [frequency, setFrequency] = useState(null);
   const [platform, setPlatform] = useState(null);
   const [startDate, setstartDate] = useState(null);
@@ -60,7 +59,6 @@ const EventForm = ({ route }) => {
 
 
   let routeData = route?.params;
-  console.log("show route data ",routeData)
   const frequencyRecord = () => {
     const res = dataFrequency.find((item) => item.id == routeData?.data.frequency)
     return res
