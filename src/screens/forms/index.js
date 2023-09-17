@@ -68,6 +68,10 @@ const EventForm = ({ route }) => {
     const item = eventtypeData.find((item) => item.name == routeData?.data.event_type)
     return item
   }
+  const findPlatform=()=>{
+    const item = platformData.find((item)=>item.name==routeData?.data?.plateform)
+    return item
+  }
   useEffect(() => {
     setName(routeData?.data.name);
     setSelectIconOne(routeData?.data.public_event);
@@ -84,6 +88,8 @@ const EventForm = ({ route }) => {
     setSelectIconOne(routeData?.data.public_event == 'Yes' ? "1" : "0")
     setPersonPerDay(routeData?.data.targe_chants)
     setPhonepublic(routeData?.data.phone_visible == 'Yes' ? "1" : "0")
+    setJoiningLink(routeData?.data.joing_links)
+    setPlatform(findPlatform())
   }, []);
 
   const pickerRef = useRef();
@@ -215,7 +221,7 @@ const EventForm = ({ route }) => {
         organizer: organizer,
         instraction: description,
         short_content: description,
-        plateform: platform,
+        plateform: platform?.name,
         joing_links: joiningLink,
         targe_chants: personPerDay,
         public_event: selectIconOne,
@@ -238,7 +244,7 @@ const EventForm = ({ route }) => {
         organizer: organizer,
         instraction: description,
         short_content: description,
-        plateform: platform,
+        plateform: platform?.name,
         joing_links: joiningLink,
         targe_chants: personPerDay,
         public_event: selectIconOne,
@@ -359,14 +365,14 @@ const EventForm = ({ route }) => {
           )
         }
         {
-          selectedValue == 7 && (
+          selectedValue?.id == 7 && (
             <View style={{ marginTop: 20 }}>
               <View style={{ ...styles.textHeader, width: ms(100) }}>
                 <Text style={styles.haderStyle}>{Translation.joining_link}</Text>
               </View>
               <View style={styles.firstTextinput}>
                 <TextInput
-                  placeholder={Translation.please_enter_name}
+                  // placeholder={Translation.please_enter_name}
                   onChangeText={setJoiningLink}
                   value={joiningLink}
                   style={styles.textINput}

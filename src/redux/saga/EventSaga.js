@@ -100,7 +100,6 @@ const SearchEventSaga = function* () {
 
 
 const CreateEventSaga = function* (data) {
-  // console.log("enter ",data)
   yield put(setIsLoading(true))
 
   let _data = {
