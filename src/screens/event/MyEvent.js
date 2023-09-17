@@ -12,17 +12,20 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import IconV from 'react-native-vector-icons/Entypo';
 import IconE from 'react-native-vector-icons/EvilIcons';
 import IconF from 'react-native-vector-icons/Feather';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
 import HeaderPage from '../../Components/header';
 import { colors } from '../../helper/colors';
 import { useTranslation } from '../../utills.js/translation-hook';
+import { setMySelectedEvent } from '../../redux/actions';
 const windowWidth = Dimensions.get('window').width;
 const MyEvent = ({ navigation }) => {
   const myEventData = useSelector(state => state.EventReducer.myEvent);
   const { Translation, isLoading } = useTranslation()
+  const dispatch = useDispatch();
 
   const handleOnpress = (item) => {
+    dispatch(setMySelectedEvent(item)) // using data in MyChantsHistory
     navigation.navigate('details', { data: item, isCurrentUser: true });
   }
 

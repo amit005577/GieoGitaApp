@@ -105,7 +105,7 @@ const DetailEvent = ({ navigation, route }) => {
       });
   };
 
-  const onPressCopy = () => {
+  const onPressCopy = () => { 
     const data = `${title}: ${url}`;
     Clipboard.setString(data);
     setIsCopied(true);

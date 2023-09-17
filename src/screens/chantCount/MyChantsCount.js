@@ -62,7 +62,7 @@ const MyChantsCount = ({ navigation, route }) => {
 
 
   useEffect(() => {
-    handleUpdateChants()
+    // handleUpdateChants()
   }, []);
 
   const handleUpdateChants = () => {

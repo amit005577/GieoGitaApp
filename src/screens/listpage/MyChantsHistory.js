@@ -31,7 +31,7 @@ const MyChantsHistory = ({ navigation, route }) => {
   const mySelectedEvent = useSelector(state => state.AppReducers.mySelectedEvent);
   const chantsHistoryList = useSelector(state => state.AppReducers.myChantsList);
 
-
+console.log('mySelectedEvent::::::',mySelectedEvent);
   useEffect(() => {
     if (isFocused) {
       if (mySelectedEvent) {
@@ -42,7 +42,7 @@ const MyChantsHistory = ({ navigation, route }) => {
 
   const handleChantCountEdit = (val) => {
     dispatch(setPreviousChant(val))
-    navigation.navigate("MyChantsCount", { chantType: 'my' })
+    navigation.navigate("MyChantsCount")
   }
 
   const handleMyChantHistory = async () => {
