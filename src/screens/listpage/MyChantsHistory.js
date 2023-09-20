@@ -31,7 +31,6 @@ const MyChantsHistory = ({ navigation, route }) => {
   const mySelectedEvent = useSelector(state => state.AppReducers.mySelectedEvent);
   const chantsHistoryList = useSelector(state => state.AppReducers.myChantsList);
 
-console.log('mySelectedEvent::::::',mySelectedEvent);
   useEffect(() => {
     if (isFocused) {
       if (mySelectedEvent) {
