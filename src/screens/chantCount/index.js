@@ -325,7 +325,7 @@ const ChantCount = ({ navigation, route }) => {
                 placeholder={Translation.mantra}
                 style={{ color: colors.black, fontWeight: '600', fontSize: 22, textAlign: 'center', alignSelf: 'center', minWidth: 10 }}
                 placeholderTextColor={colors.placeholder}
-                maxLength={10}
+                maxLength={previousChent?.count?4:3}
                 value={number ? number.toString() : ''}
                 numberOfLines={1}
               />
