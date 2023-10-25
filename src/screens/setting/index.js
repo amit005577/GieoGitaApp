@@ -130,14 +130,14 @@ const SettingScreen = ({ navigation }) => {
             <Icon name={'right'} size={10} color={'orange'} />
           </View>
         </TouchableOpacity>
-        <View style={styles.onecontainer}>
+        {/* <View style={styles.onecontainer}>
           <View style={styles.textCotaier}>
             <Text style={styles.texstyle}>{Translation.promotional_material}</Text>
           </View>
           <View style={styles.iconStylecontainer}>
             <Icon name={'right'} size={10} color={'orange'} />
           </View>
-        </View>
+        </View> */}
         <TouchableOpacity
           onPress={() => handleLogout()}
           style={{ ...styles.onecontainer, borderBottomWidth: 0.5 }}>

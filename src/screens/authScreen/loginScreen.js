@@ -185,12 +185,12 @@ const LoginPage = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
 
-        <Text style={{ alignSelf: 'center', marginTop: 10, color: '#808080' }}>
+        {/* <Text style={{ alignSelf: 'center', marginTop: 10, color: '#808080' }}>
           {Translation.do_not_have_an_account}{' '}
           <Text style={{ color: '#F7941C', textDecorationLine: 'underline' }}>
             {Translation.register_here}
           </Text>
-        </Text>
+        </Text> */}
       </View>
 
     </SafeAreaView>
