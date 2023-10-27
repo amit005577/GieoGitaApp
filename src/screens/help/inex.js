@@ -5,6 +5,7 @@ import Loader from '../../Components/Loader';
 import { useTranslation } from '../../utills.js/translation-hook';
 import DeviceInfo from 'react-native-device-info';
 import { colors } from '../../helper/colors';
+import { navigationRef } from '../../../App';
 
 const HelpScreen = () => {
   const { Translation, isLoading } = useTranslation()
@@ -81,6 +82,7 @@ const HelpScreen = () => {
           </View>
         </View>
         <TouchableOpacity
+        onPress={()=>navigationRef.navigate("delete")}
           style={{
             padding: 10,
             backgroundColor: '#EF4136',
@@ -91,7 +93,8 @@ const HelpScreen = () => {
             borderRadius: 10,
           }}>
           <Text style={{ color: 'white', fontSize: 20, alignSelf: 'center' }}>
-            {Translation.report_issues_or_feedback}
+            {/* {Translation.report_issues_or_feedback} */}
+            Delete Account
           </Text>
         </TouchableOpacity>
       </View>

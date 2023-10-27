@@ -336,3 +336,11 @@ export const languageUpdateSuccess1 = payload => {
     payload,
   };
 };
+
+export const deleteAcount = payload => {
+  // console.log('show action access token', payload);
+  return {
+    type: ActionTypes.DELETE_ACOUNT,
+    payload,
+  };
+};
