@@ -94,6 +94,7 @@ const GetPhoneOtp = function* (data) {
     yield put(setIsLoading(false));
   } catch (error) {
     console.log('show otp request cache', error);
+    alert("Please enter proper number")
     yield put(setIsLoading(false));
   }
 };
