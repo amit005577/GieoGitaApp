@@ -14,26 +14,16 @@ import React, {useEffect, useState} from 'react';
 
 import {useDispatch, useSelector} from 'react-redux';
 import logo from '../../../assets/images/Logo.png';
-import facebook from '../../../assets/images/facebook.png';
-import Google from '../../../assets/images/google.png';
 import Loader from '../../Components/Loader';
 import {
   getCountryName,
   getPhoneOtp,
-  handleSocialLoginAction,
   requestPhoneData,
 } from '../../redux/actions';
 import {loder} from '../../redux/reducers/selectors/userSelector';
 import {useTranslation} from '../../utills.js/translation-hook';
-import {
-  GoogleSignin,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
-import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+
 import {colors} from '../../helper/colors';
-import Icon from 'react-native-vector-icons/AntDesign';
-import {AppleButton} from '@invertase/react-native-apple-authentication';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
 import CustomCountrySelector from '../../Components/CustomCountrySelector';
 const LoginPage = ({navigation}) => {
   const {Translation, isLoading} = useTranslation();
@@ -57,39 +47,39 @@ const LoginPage = ({navigation}) => {
   useEffect(()=>{
     dispatch(getCountryName());
   },[])
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-    });
-  }, []);
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     webClientId:
+  //       '219115132027-803rl40f31j6d6j0vbpd0tm35j6hlspi.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+  //   });
+  // }, []);
 
-  const signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-      const userInfo = await GoogleSignin.signIn();
-      const data = {
-        name: userInfo.user.name,
-        email: userInfo.user.email,
-        phone: '',
-        profile: userInfo.user.photo,
-        loginType: 'google',
-      };
-      dispatch(handleSocialLoginAction(data));
-    } catch (error) {
-      alert(':::: ' + JSON.stringify(error));
-      console.log(error);
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
-  };
+  // const signIn = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+  //     const userInfo = await GoogleSignin.signIn();
+  //     const data = {
+  //       name: userInfo.user.name,
+  //       email: userInfo.user.email,
+  //       phone: '',
+  //       profile: userInfo.user.photo,
+  //       loginType: 'google',
+  //     };
+  //     dispatch(handleSocialLoginAction(data));
+  //   } catch (error) {
+  //     alert(':::: ' + JSON.stringify(error));
+  //     console.log(error);
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       // user cancelled the login flow
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       // operation (e.g. sign in) is in progress already
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       // play services not available or outdated
+  //     } else {
+  //       // some other error happened
+  //     }
+  //   }
+  // };
 
   // const signOut = async () => {
   //   try {
@@ -101,32 +91,32 @@ const LoginPage = ({navigation}) => {
   // };
 
   // call once facebook developer account activated and live
-  const onSigniInFacebook = async () => {
-    // Attempt login with permissions
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
-    // console.log('facebook::::', result);
+  // const onSigniInFacebook = async () => {
+  //   // Attempt login with permissions
+  //   const result = await LoginManager.logInWithPermissions([
+  //     'public_profile',
+  //     'email',
+  //   ]);
+  //   // console.log('facebook::::', result);
 
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
-    }
+  //   if (result.isCancelled) {
+  //     throw 'User cancelled the login process';
+  //   }
 
-    // Once signed in, get the users AccessToken
-    const data = await AccessToken.getCurrentAccessToken();
+  //   // Once signed in, get the users AccessToken
+  //   const data = await AccessToken.getCurrentAccessToken();
 
-    // console.log('facebook:::::', data);
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
+  //   // console.log('facebook:::::', data);
+  //   if (!data) {
+  //     throw 'Something went wrong obtaining access token';
+  //   }
 
-    // Create a Firebase credential with the AccessToken
-    // const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+  //   // Create a Firebase credential with the AccessToken
+  //   // const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
 
-    // // Sign-in the user with the credential
-    // return auth().signInWithCredential(facebookCredential);
-  };
+  //   // // Sign-in the user with the credential
+  //   // return auth().signInWithCredential(facebookCredential);
+  // };
 
   const handleRequestOtp = () => {
     let data = `+91${text}`;
@@ -140,27 +130,27 @@ const LoginPage = ({navigation}) => {
     }
   };
 
-  useEffect(() => {
-    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
-    return appleAuth.onCredentialRevoked(async () => {
-      console.warn(
-        'If this function executes, User Credentials have been Revoked',
-      );
-    });
-  }, []);
+  // useEffect(() => {
+  //   // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+  //   return appleAuth.onCredentialRevoked(async () => {
+  //     console.warn(
+  //       'If this function executes, User Credentials have been Revoked',
+  //     );
+  //   });
+  // }, []);
 
-  async function onAppleButtonPress() {
-    // performs login request
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-    });
-    console.log("show apple login res",appleAuthRequestResponse)
+  // async function onAppleButtonPress() {
+  //   // performs login request
+  //   const appleAuthRequestResponse = await appleAuth.performRequest({
+  //     requestedOperation: appleAuth.Operation.LOGIN,
+  //     requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+  //   });
+  //   console.log("show apple login res",appleAuthRequestResponse)
 
-    // get current authentication state for user
-    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+  //   // get current authentication state for user
+  //   // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
  
-  }
+  // }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.orange}}>
@@ -244,7 +234,7 @@ const LoginPage = ({navigation}) => {
           </Text>
         </TouchableOpacity>
 
-        <Text
+        {/* <Text
           style={{
             textAlign: 'center',
             marginTop: 20,
@@ -255,10 +245,10 @@ const LoginPage = ({navigation}) => {
           {Translation.side}
         </Text>
         <Text style={{alignSelf: 'center', fontSize: 16, color: '#808080'}}>
-          {Translation.login_with}
-        </Text>
+          {Translation.login_with} */}
+        {/* </Text> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => signIn()}
           style={[
             styles.touchableStyle,
@@ -278,7 +268,7 @@ const LoginPage = ({navigation}) => {
             }}>
             {Translation.sign_in_with_google}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <CustomCountrySelector
           data={countryRespose}
           setModalVisible={setmodalVisible}
@@ -288,7 +278,7 @@ const LoginPage = ({navigation}) => {
           title={Translation.country_name}
         />
 
-        <AppleButton
+        {/* <AppleButton
         buttonStyle={AppleButton.Style.WHITE}
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
@@ -296,7 +286,7 @@ const LoginPage = ({navigation}) => {
           height: 45, // You must specify a height
         }}
         onPress={() => onAppleButtonPress()}
-      />
+      /> */}
 
         {/* {Platform.OS=='ios'?
           <TouchableOpacity
